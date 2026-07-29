@@ -1,0 +1,354 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens — Research NXT
+
+   Direction: "field instrument". Research NXT's output is sample frames,
+   account maps and figures, so the surface behaves like a page of a field
+   report: precise, ruled, measured. Structure comes from hairlines and from
+   the type scale, never from boxes and shadows.
+
+   Colour strategy is Committed. A cool blue-cast off-white body, interrupted by
+   deep ink-blue bands where the brand blue carries 100% of the surface rather
+   than trimming it, with the brand orange as the single signal mark.
+
+   The brand orange is 2.3:1 on the body surface, so it never carries text
+   anywhere. It ticks, underlines the active nav item and marks a required
+   field, where the 3:1 non-text threshold applies instead. No dark mode in v1.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Ink — text. `ink-soft` is deliberately dark: light grey body copy is the
+     fastest way to make a page look designed and read badly. */
+  --color-ink: #0c0e12;
+  --color-ink-soft: #39404d;
+  --color-ink-muted: #626b7a;
+
+  /* Surfaces — off-white with chroma pulled toward the brand hue, never warm.
+     Cream and sand are the saturated default; this reads as daylight on glass. */
+  --color-surface: oklch(0.989 0.004 245);
+  --color-surface-subtle: oklch(0.969 0.006 245);
+  --color-surface-muted: oklch(0.944 0.009 245);
+
+  /* Drench — the deep end of the brand blue. Hero and closing bands sit here,
+     where colour carries the whole surface instead of trimming it. */
+  --color-deep: #04243a;
+  --color-deep-raised: #072f4a;
+  --color-deep-line: #16496c;
+
+  /* Lines — hairlines carry structure instead of shadows. */
+  --color-line: #dde3ea;
+  --color-line-strong: #bfc8d4;
+
+  /* Accent — brand blue from the logo wordmark. Links, CTAs, active state.
+     #0079bf on the body surface is 4.6:1, so it clears WCAG AA for normal text.
+     The hover tone is darker, never lighter, to keep that true. */
+  --color-accent: #0079bf;
+  --color-accent-hover: #005f96;
+  --color-accent-soft: #e4f1fa;
+
+  /* On the drenched bands the accent has to invert: #0079bf on #04243a is only
+     2.6:1. `accent-on-deep` is 7.1:1 there and is the only accent allowed
+     to carry text inside a deep band. */
+  --color-accent-on-deep: #58b6ea;
+
+  /* Body copy on the deep bands. */
+  --color-on-deep: #c9dced;
+
+  /* Brand orange from the logo tile. The single signal mark: the tick that
+     opens a section, the active nav underline, the required-field marker.
+     Never text, on any surface. */
+  --color-signal: #ff7d24;
+
+  /* The light end of the brand blue, used in the placeholder gradients and on
+     the monogram rings. */
+  --color-plate: #58b6ea;
+
+  /* Typography — DM Sans, one family, both axes. The display voice comes from
+     pushing the optical-size axis to 40 and the weight to 800 rather than from
+     a second typeface, which keeps the page sans-only and the payload to a
+     single variable file. Figures run tabular so numbers align in columns. */
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid scale, ratio >= 1.25 between steps. Display max is 5.5rem (88px). */
+  --text-display: clamp(2.75rem, 1.55rem + 5.3vw, 5.5rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-display-sm: clamp(2.25rem, 1.55rem + 3.1vw, 3.75rem);
+  --text-display-sm--line-height: 1.02;
+  --text-display-sm--letter-spacing: -0.03em;
+
+  --text-headline: clamp(1.75rem, 1.35rem + 1.8vw, 2.75rem);
+  --text-headline--line-height: 1.1;
+  --text-headline--letter-spacing: -0.025em;
+
+  --text-title: clamp(1.25rem, 1.12rem + 0.6vw, 1.5rem);
+  --text-title--line-height: 1.25;
+  --text-title--letter-spacing: -0.015em;
+
+  /* Layout */
+  --spacing-gutter: 1.5rem;
+  --container-page: 78rem;
+
+  /* Motion — deceleration curves only. No bounce, no elastic. */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Semantic stacking order. Never arbitrary values like 999. */
+:root {
+  --z-raised: 10;
+  --z-dropdown: 30;
+  --z-sticky: 40;
+  --z-sheet: 60;
+  --z-skip: 70;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-variation-settings: "opsz" 14;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings sit on the display end of the optical-size axis: tighter fit,
+     closer spacing. That axis is what makes headings and body read as two
+     different voices without a second typeface. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-variation-settings: "opsz" 32;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A single visible focus treatment everywhere, including on deep bands. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-deep :focus-visible {
+    outline-color: var(--color-accent-on-deep);
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #fff;
+  }
+}
+
+@layer utilities {
+  /* The display voice: DM Sans at full optical size and heavy weight. */
+  .font-display {
+    font-variation-settings: "opsz" 40;
+    font-weight: 800;
+  }
+
+  .font-display-soft {
+    font-variation-settings: "opsz" 32;
+    font-weight: 700;
+  }
+
+  /* Figures — tabular so columns of numbers align. */
+  .font-figure {
+    font-variation-settings: "opsz" 16;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The measured rule that opens a band: a dotted tick line, like the gridline
+     on a plate. Sentence case at reading size beside it, deliberately not a
+     tracked mini-caps kicker. */
+  .rule-ticks {
+    background-image: linear-gradient(
+      to right,
+      var(--color-line-strong) 0 1px,
+      transparent 1px 100%
+    );
+    background-size: 5px 1px;
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+  }
+
+  .rule-ticks-deep {
+    background-image: linear-gradient(
+      to right,
+      var(--color-deep-line) 0 1px,
+      transparent 1px 100%
+    );
+    background-size: 5px 1px;
+    background-repeat: repeat-x;
+    background-position: 0 50%;
+  }
+
+  /* Truncates a heading to a fixed number of lines with an ellipsis, so a
+     grid of items keeps one hierarchy however long the source titles run. */
+  .clamp-2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .clamp-3 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+
+   The budget is spent on one orchestrated hero load and on feedback that tells
+   you something happened. There is deliberately no fade-and-rise on every
+   scrolled band, which is the tell rather than the choreography.
+
+   Every reveal animates an already-visible default: the keyframes only apply
+   under `[data-motion="on"]`, which script sets before first paint. A headless
+   render, a printed page or a no-JS visit still ships the content.
+--------------------------------------------------------------------------- */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.9rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wipe-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hero question rotator
+
+   The default is a plain ruled list of every question, which is what ships
+   without JavaScript, under reduced motion, in print and to a headless render.
+   Only when motion is available do the items stack into one grid cell and show
+   one at a time, so nothing is ever hidden behind a transition that cannot run.
+
+   Stacking in a single grid area also sizes the block to its tallest question,
+   so advancing never shifts the layout beneath it.
+--------------------------------------------------------------------------- */
+
+.q-rotator {
+  display: flex;
+  flex-direction: column;
+}
+
+.q-rotator-controls {
+  display: none;
+}
+
+[data-motion="on"] .q-rotator {
+  display: grid;
+}
+
+[data-motion="on"] .q-rotator > * {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translate3d(0, 0.75rem, 0);
+  pointer-events: none;
+  transition:
+    opacity 520ms var(--ease-out-expo),
+    transform 520ms var(--ease-out-expo);
+}
+
+[data-motion="on"] .q-rotator > [data-active="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+[data-motion="on"] .q-rotator-controls {
+  display: flex;
+}
+
+@keyframes dwell {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+[data-motion="on"] .q-dwell {
+  transform-origin: left;
+  animation: dwell 4400ms linear both;
+}
+
+/* Dropdown panels grow from the trigger edge rather than fading in place. */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -0.375rem, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-motion="on"] .anim-menu {
+  transform-origin: top left;
+  animation: menu-in 180ms var(--ease-out-quart) both;
+}
+
+/* Headline lines wipe up from behind a mask, so the type reads as being pulled
+   into place rather than fading in. */
+[data-motion="on"] .anim-wipe > span {
+  animation: wipe-up 780ms var(--ease-out-expo) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+[data-motion="on"] .anim-rise {
+  animation: rise-in 640ms var(--ease-out-quart) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Sibling stagger inside one list. Capped: ten items at 55ms is 550ms total. */
+[data-motion="on"] .anim-stagger > * {
+  animation: rise-in 560ms var(--ease-out-quart) both;
+  animation-delay: calc(var(--i, 0) * 55ms + var(--delay, 0ms));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
