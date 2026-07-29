@@ -2,7 +2,13 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Vercel.
 
-Last updated: 2026-07-27
+Last updated: 2026-07-29
+
+## Repository maintenance
+
+- Initialized Git and connected `main` to `Bamboo-Reports/rnxt-website`
+- Replaced the long project README with a concise setup guide; detailed status remains in this file
+- Added `AGENTS.md` and updated `CLAUDE.md` to require agents to record completed work, verification, and remaining issues in `PROGRESS.md` before finishing each task
 
 ---
 
