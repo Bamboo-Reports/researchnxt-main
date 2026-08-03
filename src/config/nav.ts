@@ -1,10 +1,5 @@
 /**
  * Single source of truth for the navbar and footer.
- *
- * PHASE A NOTE — the Resources links point at the live WordPress URLs because
- * /resources does not exist yet. When Phase B lands, each entry below becomes
- * `href: "/resources/…"` with `external` removed. Nothing else changes: the
- * `external` flag already drives the target/rel/icon treatment in NavLink.
  */
 
 export type NavItem = {
@@ -39,31 +34,30 @@ export const solutionsNav: NavItem[] = [
   },
 ];
 
+/**
+ * PHASE B: these now point at internal placeholder pages under /resources
+ * (see `src/content/resources.ts`); real content replaces the placeholders.
+ */
 export const resourcesNav: NavItem[] = [
   {
     label: "Reports & whitepapers",
-    href: "https://researchnxt.com/research-report/",
-    external: true,
+    href: "/resources/reports-whitepapers",
   },
   {
     label: "Experts view",
-    href: "https://researchnxt.com/experts-view/",
-    external: true,
+    href: "/resources/experts-view",
   },
   {
     label: "Insights",
-    href: "https://researchnxt.com/insights/",
-    external: true,
+    href: "/resources/insights",
   },
   {
     label: "Success stories",
-    href: "https://researchnxt.com/success-stories/",
-    external: true,
+    href: "/resources/success-stories",
   },
   {
     label: "Events",
-    href: "https://researchnxt.com/events/",
-    external: true,
+    href: "/resources/events",
   },
 ];
 
