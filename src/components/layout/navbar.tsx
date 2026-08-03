@@ -189,35 +189,21 @@ export function Navbar() {
                       </svg>
                     </button>
 
-                    {/* The panel is sized to its content between a floor and a
-                        ceiling rather than pinned to one width, so a group of
-                        short entries does not leave a column of dead space. */}
+                    {/* Dropdowns are intentionally label-only: the navigation
+                        stays quick to scan instead of becoming a content card. */}
                     {open ? (
-                      <div className="absolute left-0 top-full z-[var(--z-dropdown)] w-max min-w-[17rem] max-w-[23rem] pt-2">
+                      <div className="absolute left-0 top-full z-[var(--z-dropdown)] w-max min-w-56 pt-2">
                         <div className="anim-menu rounded-lg border border-line bg-surface p-1.5 shadow-xl shadow-ink/10">
                           <ul>
                             {entry.items.map((item) => (
                               <li key={item.label}>
-                                {/* The label and its description stack on the
-                                    left; the arrow is pinned to the right edge
-                                    of the row and shared by every entry,
-                                    internal or external. It is rendered here
-                                    rather than by NavLink, which would append
-                                    it after the description. */}
                                 <NavLink
                                   item={item}
                                   withIcon={false}
-                                  className="group flex w-full justify-between gap-6 rounded-md px-3 py-2 transition-colors duration-200 hover:bg-surface-muted"
+                                  className="group flex w-full justify-between gap-6 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-surface-muted"
                                 >
-                                  <span className="flex flex-col gap-0.5">
-                                    <span className="text-sm font-semibold text-ink">
-                                      {item.label}
-                                    </span>
-                                    {item.description ? (
-                                      <span className="text-xs leading-snug text-ink-muted">
-                                        {item.description}
-                                      </span>
-                                    ) : null}
+                                  <span className="text-sm font-semibold text-ink">
+                                    {item.label}
                                   </span>
                                   <TrailingArrow className="text-ink-muted group-hover:text-accent" />
                                 </NavLink>
@@ -239,7 +225,7 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <Button href="/contact" size="sm" className="hidden sm:inline-flex">
-              Get in touch
+              Contact Us
             </Button>
 
             <button
@@ -327,8 +313,8 @@ export function Navbar() {
                 );
               })}
 
-              <Button href="/contact" size="lg" className="w-full">
-                Get in touch
+              <Button href="/contact" className="w-full">
+                Contact Us
               </Button>
             </nav>
           </Container>

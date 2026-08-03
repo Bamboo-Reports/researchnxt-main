@@ -27,5 +27,5 @@ export const site = {
     },
   ],
   /** Sister property for GCC research; stays a separate site for now. */
-  bambooReports: "https://bambooreports.io",
+  bambooReports: "https://bambooreports.com/",
 } as const;

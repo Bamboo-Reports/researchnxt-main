@@ -4,7 +4,7 @@ import type { SolutionPage } from "./types";
 /**
  * Copy transcribed from the live WordPress pages:
  *   /prospect-database/  /account-intelligence/  /research-based-marketing/
- *   /gcc-insights/  (the last becomes a real solution page in the new IA)
+ * GCC Intelligence is represented by an external Bamboo Reports link below.
  */
 
 const prospectDatabase: SolutionPage = {
@@ -177,7 +177,7 @@ const accountIntelligence: SolutionPage = {
   cta: {
     title: "Let's craft a personalized solution for you",
     lede: "Tell us which accounts you are targeting and we will scope an intelligence programme around them.",
-    primary: { label: "Get in touch", href: "/contact" },
+    primary: { label: "Contact Us", href: "/contact" },
   },
 };
 
@@ -252,78 +252,7 @@ const researchBasedMarketing: SolutionPage = {
   cta: {
     title: "Let's craft a personalized solution for you",
     lede: "Bring us a marketing goal and we will design the research programme that supports it.",
-    primary: { label: "Get in touch", href: "/contact" },
-  },
-};
-
-const gccIntelligence: SolutionPage = {
-  slug: "gcc-intelligence",
-  navLabel: "GCC Intelligence",
-  metaTitle: "GCC Intelligence",
-  metaDescription:
-    "Research and intelligence on India's global capability centre ecosystem: how enterprises leverage GCCs for R&D, engineering, analytics and business process management.",
-
-  hero: {
-    eyebrow: "Solution",
-    headline: "Intelligence on India's global capability centre ecosystem",
-    lede: "GCCs in India are crucial for multinational companies, leveraging local talent to drive innovation and efficiency across R&D, software development, data analytics and business process management.",
-    primary: { label: "Talk to our GCC team", href: "/contact" },
-    secondary: {
-      label: "Visit Bamboo Reports",
-      href: site.bambooReports,
-      external: true,
-    },
-  },
-
-  proposition: {
-    title: "A market that moves faster than the research covering it",
-    body: [
-      "The GCC footprint in India has shifted from cost arbitrage to genuine capability ownership: engineering, product, analytics and increasingly customer experience. Vendors selling into that ecosystem are often working from a picture that is two years out of date.",
-      "Our GCC practice tracks how these centres are structured, what they are taking on, and who inside them holds the mandate, published through our dedicated research property, Bamboo Reports.",
-    ],
-  },
-
-  capabilities: {
-    title: "Where we focus",
-    items: [
-      {
-        title: "Ecosystem mapping",
-        description:
-          "Which enterprises operate centres in India, at what scale, and which functions they own.",
-      },
-      {
-        title: "Capability trends",
-        description:
-          "How GCC mandates are expanding across R&D, software development, data analytics and business process management.",
-      },
-      {
-        title: "Customer experience research",
-        description:
-          "Ongoing coverage of how enterprises use the GCC model to run and mature digital CX.",
-      },
-      {
-        title: "Decision maker access",
-        description:
-          "Interview-led research with the leaders who set direction inside these centres.",
-      },
-    ],
-  },
-
-  outcome: {
-    statement: "Sell into GCCs with a current picture, not a dated one",
-    description:
-      "Our GCC research is published continuously through Bamboo Reports, our dedicated property for this market.",
-  },
-
-  cta: {
-    title: "Explore our GCC research",
-    lede: "Bamboo Reports is our dedicated research property covering India's GCC ecosystem.",
-    primary: {
-      label: "Visit Bamboo Reports",
-      href: site.bambooReports,
-      external: true,
-    },
-    secondary: { label: "Talk to our team", href: "/contact" },
+    primary: { label: "Contact Us", href: "/contact" },
   },
 };
 
@@ -331,8 +260,16 @@ export const solutions: SolutionPage[] = [
   prospectDatabase,
   accountIntelligence,
   researchBasedMarketing,
-  gccIntelligence,
 ];
+
+export const gccIntelligenceLink = {
+  slug: "gcc-intelligence",
+  label: "GCC Intelligence",
+  href: site.bambooReports,
+  external: true,
+  description:
+    "Research and intelligence on India's global capability centre ecosystem, published through Bamboo Reports.",
+} as const;
 
 export function getSolution(slug: string) {
   return solutions.find((solution) => solution.slug === slug);

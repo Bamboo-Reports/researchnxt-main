@@ -1,48 +1,19 @@
-import type { FeaturedResource, Stat } from "./types";
+import type { FeaturedResource } from "./types";
 
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
   headline: "Turnkey research solutions personalized to your marketing goals.",
-  /**
-   * The headline broken where the display type should break. Each line is
-   * masked and wiped into place on load, so the breaks are a design decision
-   * rather than whatever the measure happens to produce.
-   */
-  headlineLines: [
-    "Turnkey research",
-    "solutions, personalized",
-    "to your marketing goals.",
-  ],
+  cta: {
+    label: "Let's craft your solution",
+    href: "/contact",
+  },
   questions: [
     "Is the quality of your marketing leads impacting revenue?",
     "Is your customer engagement based on account intelligence?",
     "Is a bad prospect database impacting marketing ROI?",
   ],
-  primary: { label: "Let's craft a personalized solution", href: "/contact" },
-  secondary: { label: "Explore solutions", href: "/solutions" },
 } as const;
-
-export const solutionCards = [
-  {
-    title: "Prospect Database",
-    href: "/solutions/prospect-database",
-    description:
-      "ICP assessment, list building & contact discovery, data enrichment & management.",
-  },
-  {
-    title: "Account Intelligence",
-    href: "/solutions/account-intelligence",
-    description:
-      "Custom key account reports, sales battle cards, competitor intelligence.",
-  },
-  {
-    title: "Research-based Marketing",
-    href: "/solutions/research-based-marketing",
-    description:
-      "Research-based content, thought leadership content, account based marketing campaigns.",
-  },
-] as const;
 
 export const differentiators = {
   eyebrow: "Why Research NXT",
@@ -52,7 +23,7 @@ export const differentiators = {
     {
       title: "7+ years of experience",
       description:
-        "A sustained track record providing research-based solutions to B2B technology marketers.",
+        "A sustained track record of research-based solutions for B2B marketers.",
     },
     {
       title: "Ecosystem partners",
@@ -72,34 +43,25 @@ export const differentiators = {
   ],
 } as const;
 
-export const recognition = {
-  eyebrow: "Recognition",
-  title: "Recognised for the work, not the marketing",
-  awards: ["LinkedIn Content 50", "Adobe Digi100"],
-} as const;
-
-/** Names drawn from published case studies, report partnerships and events. */
-export const ecosystem = {
-  eyebrow: "Ecosystem",
-  title: "Trusted by enterprise brands and event partners",
-  lede: "A selection of the organisations we have delivered research programmes and campaigns with.",
-  names: [
-    "Netcore",
-    "InsideView",
-    "WebEngage",
-    "Zycus",
-    "Salesforce",
-    "NASSCOM",
-    "HYSEA",
-  ],
-} as const;
-
-export const homeStats: Stat[] = [
-  { value: "500k+", label: "Custom prospect lists" },
-  { value: "1.5k+", label: "Key account maps" },
-  { value: "250+", label: "CXO interviews" },
-  { value: "20+", label: "Research reports" },
-];
+export const trustedLogos = [
+  { name: "Ampera", src: "/logos/trusted/ampera.png" },
+  { name: "Cytiva", src: "/logos/trusted/cytvia.png" },
+  { name: "HCLTech", src: "/logos/trusted/hcl-tech.png" },
+  { name: "Harman", src: "/logos/trusted/harman.png" },
+  { name: "Mindtree", src: "/logos/trusted/mindtree.png" },
+  { name: "Motherson", src: "/logos/trusted/motherson.png" },
+  { name: "MoveInSync", src: "/logos/trusted/moveinsync.png" },
+  { name: "Nasscom", src: "/logos/trusted/nasscom.png" },
+  { name: "Pando", src: "/logos/trusted/pando.png" },
+  { name: "Qyrus", src: "/logos/trusted/qyrus.png" },
+  { name: "Ramco", src: "/logos/trusted/ramco.png" },
+  { name: "Salesforce", src: "/logos/trusted/salesforce.png" },
+  { name: "SLK", src: "/logos/trusted/slk.png" },
+  { name: "Thoughtworks", src: "/logos/trusted/thoughtworks.png" },
+  { name: "Yethi", src: "/logos/trusted/yethi.png" },
+  { name: "Zoho", src: "/logos/trusted/zoho.png" },
+  { name: "Zycus", src: "/logos/trusted/zycus.png" },
+] as const;
 
 /**
  * PHASE A: these three lists point at the live WordPress URLs because the

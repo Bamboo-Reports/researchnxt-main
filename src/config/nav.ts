@@ -10,7 +10,6 @@
 export type NavItem = {
   label: string;
   href: string;
-  description?: string;
   external?: boolean;
 };
 
@@ -24,22 +23,19 @@ export const solutionsNav: NavItem[] = [
   {
     label: "Prospect Database",
     href: "/solutions/prospect-database",
-    description: "ICP assessment, list building and data enrichment.",
   },
   {
     label: "Account Intelligence",
     href: "/solutions/account-intelligence",
-    description: "Key account reports, battle cards, competitor intelligence.",
   },
   {
     label: "Research-based Marketing",
     href: "/solutions/research-based-marketing",
-    description: "Original research, thought leadership and ABM campaigns.",
   },
   {
     label: "GCC Intelligence",
-    href: "/solutions/gcc-intelligence",
-    description: "Research on India's global capability centre ecosystem.",
+    href: "https://bambooreports.com/",
+    external: true,
   },
 ];
 
@@ -47,31 +43,26 @@ export const resourcesNav: NavItem[] = [
   {
     label: "Reports & Whitepapers",
     href: "https://researchnxt.com/research-report/",
-    description: "Original research reports and downloadable guides.",
     external: true,
   },
   {
     label: "Experts View",
     href: "https://researchnxt.com/experts-view/",
-    description: "Interviews with thought leaders, buyers and vendors.",
     external: true,
   },
   {
     label: "Insights",
     href: "https://researchnxt.com/insights/",
-    description: "Short reads on B2B marketing and technology.",
     external: true,
   },
   {
     label: "Success Stories",
     href: "https://researchnxt.com/success-stories/",
-    description: "How we have delivered for our clients.",
     external: true,
   },
   {
     label: "Events",
     href: "https://researchnxt.com/events/",
-    description: "Report launches, roundtables and summit appearances.",
     external: true,
   },
 ];
@@ -90,7 +81,7 @@ export const footerNav: NavGroup[] = [
     items: [
       { label: "About Research NXT", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Get in touch", href: "/contact" },
+      { label: "Contact Us", href: "/contact" },
       { label: "Privacy Policy", href: "/privacy-policy" },
     ],
   },

@@ -21,7 +21,7 @@ export default function NotFound() {
             Back to home
           </Button>
           <Button href="/contact" variant="on-deep-quiet" className="group">
-            Get in touch
+            Contact Us
             <TrailingArrow />
           </Button>
         </div>

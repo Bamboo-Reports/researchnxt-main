@@ -16,8 +16,12 @@ const redirectMap: { source: string; destination: string }[] = [
   { source: "/contact-us", destination: "/contact" },
   { source: "/policy", destination: "/privacy-policy" },
 
-  // GCC: the orphaned on-site page becomes a real solution page
-  { source: "/gcc-insights", destination: "/solutions/gcc-intelligence" },
+  // GCC Intelligence now lives entirely on Bamboo Reports.
+  { source: "/gcc-insights", destination: "https://bambooreports.com/" },
+  {
+    source: "/solutions/gcc-intelligence",
+    destination: "https://bambooreports.com/",
+  },
 
   // NOTE: the survey and raffle terms routes were pulled for now, so the three
   // legacy WordPress terms URLs have no target and are deliberately absent

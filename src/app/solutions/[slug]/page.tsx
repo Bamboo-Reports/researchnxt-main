@@ -50,7 +50,6 @@ export default async function SolutionPage({ params }: Params) {
           <Button
             href={solution.hero.primary.href}
             external={solution.hero.primary.external}
-            size="lg"
             variant="on-deep"
           >
             {solution.hero.primary.label}
@@ -59,7 +58,6 @@ export default async function SolutionPage({ params }: Params) {
             <Button
               href={solution.hero.secondary.href}
               external={solution.hero.secondary.external}
-              size="lg"
               variant="on-deep-quiet"
               className="group"
             >

@@ -29,10 +29,12 @@ export function NavLink({
   className,
   children,
   withIcon = true,
+  style,
 }: {
   item: NavItem;
   className?: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
   /**
    * Set false when the caller stacks its children in a column and wants to
    * place the external icon itself. Left on, the icon becomes its own row and
@@ -55,6 +57,7 @@ export function NavLink({
         target="_blank"
         rel="noopener noreferrer"
         className={cn("inline-flex items-center gap-1.5", className)}
+        style={style}
       >
         {content}
         <span className="sr-only">(opens in a new tab)</span>
@@ -66,6 +69,7 @@ export function NavLink({
     <Link
       href={item.href}
       className={cn("inline-flex items-center gap-1.5", className)}
+      style={style}
     >
       {content}
     </Link>

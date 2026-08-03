@@ -29,7 +29,7 @@ const sizes = {
  * before the navigation resolves.
  */
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-semibold " +
+  "inline-flex items-center justify-center gap-2 rounded-full font-semibold " +
   "transition-[background-color,border-color,color,transform] duration-150 " +
   "[transition-timing-function:var(--ease-out-quart)] active:scale-[0.98] " +
   "disabled:pointer-events-none disabled:opacity-50";

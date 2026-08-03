@@ -98,7 +98,7 @@ export function ContactForm() {
       />
 
       <div className="flex flex-wrap items-center gap-4 pt-1">
-        <Button type="submit" size="lg">
+        <Button type="submit">
           Send enquiry
         </Button>
         <p className="text-sm text-ink-muted">

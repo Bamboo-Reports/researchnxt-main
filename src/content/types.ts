@@ -16,7 +16,7 @@ export type Capability = {
 };
 
 /**
- * All four solution pages share one template — only this data differs.
+ * All internal solution pages share one template; only this data differs.
  * Section order in the template: hero → proposition → capabilities →
  * (optional) detail → outcome → CTA band.
  */

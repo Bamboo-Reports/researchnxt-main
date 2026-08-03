@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CTABand } from "@/components/layout/cta-band";
+import { ExternalIcon, NavLink } from "@/components/layout/nav-link";
 import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { TrailingArrow } from "@/components/ui/button";
@@ -8,7 +8,11 @@ import { Container } from "@/components/ui/container";
 import { DataPlate } from "@/components/ui/data-plate";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { solutions, solutionsHub } from "@/content/solutions";
+import {
+  gccIntelligenceLink,
+  solutions,
+  solutionsHub,
+} from "@/content/solutions";
 import { step } from "@/lib/motion";
 
 export const metadata: Metadata = {
@@ -16,6 +20,17 @@ export const metadata: Metadata = {
   description: solutionsHub.lede,
   alternates: { canonical: "/solutions" },
 };
+
+const solutionCards = [
+  ...solutions.map((solution) => ({
+    slug: solution.slug,
+    label: solution.navLabel,
+    href: `/solutions/${solution.slug}`,
+    description: solution.hero.lede,
+    external: false,
+  })),
+  gccIntelligenceLink,
+];
 
 export default function SolutionsPage() {
   return (
@@ -29,31 +44,33 @@ export default function SolutionsPage() {
       <Section spacing="default">
         <Container>
           <Reveal className="grid gap-x-10 gap-y-12 sm:grid-cols-2">
-            {solutions.map((solution, index) => (
-              <Link
-                key={solution.slug}
-                href={`/solutions/${solution.slug}`}
+            {solutionCards.map((solution, index) => (
+              <NavLink
+                key={solution.href}
+                item={solution}
+                withIcon={false}
                 className="group flex flex-col gap-5"
                 style={step(index)}
               >
                 <DataPlate
                   seed={solution.slug}
                   aspect="wide"
-                  label={solution.navLabel}
+                  label={solution.label}
                 />
                 <div className="flex flex-1 flex-col gap-3 border-t border-line pt-5 transition-colors duration-200 group-hover:border-accent">
                   <h2 className="text-title font-display-soft transition-colors duration-200 group-hover:text-accent">
-                    {solution.navLabel}
+                    {solution.label}
                   </h2>
                   <p className="clamp-3 text-sm leading-relaxed text-ink-soft">
-                    {solution.hero.lede}
+                    {solution.description}
                   </p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-                    Explore {solution.navLabel}
+                    Explore {solution.label}
                     <TrailingArrow />
+                    {solution.external ? <ExternalIcon /> : null}
                   </span>
                 </div>
-              </Link>
+              </NavLink>
             ))}
           </Reveal>
         </Container>
