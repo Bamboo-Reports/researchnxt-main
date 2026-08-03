@@ -1,11 +1,12 @@
 # Progress
 
-Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Vercel.
+Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
 Last updated: 2026-08-03
 
 ## Repository maintenance
 
+- Added `netlify.toml`, Netlify's recognized repository configuration format, with `npm run build`, the `.next` publish directory, and Node.js 20 for the Next.js 16 deployment runtime; verified by source and diff inspection. No build or deployment was run because project commands require explicit permission
 - Git was already initialized on `main`; updated the `origin` fetch/push URL from `Bamboo-Reports/rnxt-website` to `git@github.com:Bamboo-Reports/researchnxt-main.git`
 - Verified `git remote -v` reports the new `origin` URL for both fetch and push
 - Preserved the destination repository's unrelated placeholder commit with a merge commit while retaining the complete local project, avoiding a force push
