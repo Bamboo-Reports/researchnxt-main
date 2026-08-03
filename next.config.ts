@@ -16,11 +16,6 @@ const redirectMap: { source: string; destination: string }[] = [
   { source: "/contact-us", destination: "/contact" },
   { source: "/policy", destination: "/privacy-policy" },
 
-  // The solutions hub page was retired; the four solution destinations are
-  // reachable from the navbar dropdown. Exact-match source, so the
-  // /solutions/[slug] pages are unaffected.
-  { source: "/solutions", destination: "/" },
-
   // GCC Intelligence now lives entirely on Bamboo Reports.
   { source: "/gcc-insights", destination: "https://bambooreports.com/" },
   {
@@ -39,10 +34,6 @@ const redirectMap: { source: string; destination: string }[] = [
   { source: "/account-intelligence-peq", destination: "/contact" },
   { source: "/research-based-marketing-peq", destination: "/contact" },
   { source: "/pre-engagement-questionnaire", destination: "/contact" },
-
-  // Superseded confirmation / download landings
-  { source: "/pd-datasheet-download", destination: "/thank-you" },
-  { source: "/thank-you-for-early-access-req", destination: "/thank-you" },
 
   // Elementor scaffolding and an expired 2021 survey — no equivalent content
   { source: "/element-page", destination: "/" },

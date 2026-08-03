@@ -3,7 +3,7 @@ import type { FeaturedResource } from "./types";
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
-  headline: "Turnkey research solutions personalized to your marketing goals.",
+  headline: "Turnkey research solutions personalised to your marketing goals.",
   cta: {
     label: "Let's craft your solution",
     href: "/contact",
@@ -120,7 +120,7 @@ export const featuredInterviews: FeaturedResource[] = [
     kind: "Interview",
     title:
       "Lloyd Mathias on the positive side of AI and the importance of data privacy",
-    summary: "On balancing personalization against privacy obligations.",
+    summary: "On balancing personalisation against privacy obligations.",
     href: "https://researchnxt.com/experts-view/lloyd-mathias-ai-led-personalization/",
     external: true,
   },

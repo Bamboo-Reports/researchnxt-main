@@ -95,10 +95,7 @@ export type SolutionPage = {
 export type JobOpening = {
   slug: string;
   title: string;
-  type: string;
-  location: string;
   summary: string;
-  responsibilities: string[];
 };
 
 export type FeaturedResource = {

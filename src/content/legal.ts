@@ -24,40 +24,40 @@ export type LegalDocument = {
 export const privacyPolicy: LegalDocument = {
   slug: "privacy-policy",
   title: "Privacy Statement",
-  effectiveDate: "July 1, 2024",
+  effectiveDate: "1 July 2024",
   intro: [
     "At Research NXT (www.researchnxt.com), your privacy is a top priority. This Privacy Statement explains what types of information we collect, how we use and protect that information, and your rights regarding your personal data when you use our website. By using our website, you agree to the terms outlined in this Privacy Statement.",
     "Should you have any questions or require more information about our Privacy Statement, please contact us at privacy@researchnxt.com.",
   ],
   sections: [
     {
-      heading: "Information We Collect",
+      heading: "Information we collect",
       paragraphs: [
         "We collect a variety of information from visitors to our website, including:",
       ],
       list: [
-        "Personal Information: Name, job title, email address, and demographic data such as postal code.",
-        "Survey Data: Information you provide when participating in our surveys, which may include your feedback, preferences, and any other information relevant to the survey.",
-        "Log File Data: Information like your IP address, browser type, referring/exit pages, and the date and time of your visit. This helps us analyze trends and improve the functionality of our website.",
-        "Cookies: Data regarding your website preferences and interaction with our site. Cookies help us optimize your browsing experience.",
+        "Personal information: Name, job title, email address, and demographic data such as postal code.",
+        "Survey data: Information you provide when participating in our surveys, which may include your feedback, preferences, and any other information relevant to the survey.",
+        "Log file data: Information like your IP address, browser type, referring/exit pages, and the date and time of your visit. This helps us analyse trends and improve the functionality of our website.",
+        "Cookies: Data regarding your website preferences and interaction with our site. Cookies help us optimise your browsing experience.",
       ],
     },
     {
-      heading: "How We Use the Information",
+      heading: "How we use the information",
       paragraphs: [
         "We gather this information to better understand your needs and provide you with enhanced services, including:",
       ],
       list: [
-        "Improving User Experience: Analyzing data to customize content, improve website functionality, and tailor services to user preferences.",
-        "Internal Record Keeping: Maintaining accurate data about website visitors and user activities for analytics and security.",
-        "Surveys and Reports: To conduct surveys, publish reports, and allow participants to receive any applicable rewards. Survey participation may involve sharing collected data with third-party sponsors (as outlined in each survey's specific terms).",
-        "Marketing and Promotions: With your consent, we may use the information you provide to send promotional emails regarding new products, reports, services, or special offers that we think may be of interest to you.",
+        "Improving user experience: Analysing data to customise content, improve website functionality, and tailor services to user preferences.",
+        "Internal record keeping: Maintaining accurate data about website visitors and user activities for analytics and security.",
+        "Surveys and reports: To conduct surveys, publish reports, and allow participants to receive any applicable rewards. Survey participation may involve sharing collected data with third-party sponsors (as outlined in each survey's specific terms).",
+        "Marketing and promotions: With your consent, we may use the information you provide to send promotional emails regarding new products, reports, services, or special offers that we think may be of interest to you.",
       ],
     },
     {
-      heading: "Surveys and Sponsored Research Activities",
+      heading: "Surveys and sponsored research activities",
       paragraphs: [
-        "As a research organization, we conduct surveys that may be sponsored by third-party partners. By participating in these surveys:",
+        "As a research organisation, we conduct surveys that may be sponsored by third-party partners. By participating in these surveys:",
       ],
       list: [
         "You may be eligible for incentives, as outlined in the survey's specific terms and conditions.",
@@ -66,7 +66,7 @@ export const privacyPolicy: LegalDocument = {
       ],
     },
     {
-      heading: "Sponsored Reports and Downloads",
+      heading: "Sponsored reports and downloads",
       paragraphs: [
         "We publish reports, some of which are sponsored by our partners. When you download a sponsored report from our website:",
       ],
@@ -79,28 +79,28 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "Security",
       paragraphs: [
-        "We are committed to ensuring that your information is secure. To prevent unauthorized access or disclosure, we have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online.",
+        "We are committed to ensuring that your information is secure. To prevent unauthorised access or disclosure, we have implemented appropriate physical, electronic, and managerial procedures to safeguard and secure the information we collect online.",
       ],
     },
     {
-      heading: "How We Use Cookies",
+      heading: "How we use cookies",
       paragraphs: [
-        "Cookies are small files placed on your device to analyze web traffic and tailor content to your preferences. Cookies help us identify which pages are useful to you and improve your browsing experience. You can choose to accept or decline cookies through your browser settings. However, declining cookies may prevent you from fully utilizing all features of our website.",
+        "Cookies are small files placed on your device to analyse web traffic and tailor content to your preferences. Cookies help us identify which pages are useful to you and improve your browsing experience. You can choose to accept or decline cookies through your browser settings. However, declining cookies may prevent you from fully utilising all features of our website.",
         "We use cookies for:",
       ],
       list: [
-        "Analyzing Web Traffic: To identify which pages are being used, allowing us to improve our website's performance.",
-        "User Preferences: Customizing content based on the visitor's previous interaction with our site.",
+        "Analysing web traffic: To identify which pages are being used, allowing us to improve our website's performance.",
+        "User preferences: Customising content based on the visitor's previous interaction with our site.",
       ],
     },
     {
-      heading: "Links to Other Websites",
+      heading: "Links to other websites",
       paragraphs: [
         "Our website may contain links to other websites of interest. However, once you leave our site via these links, we are not responsible for the privacy practices of those external websites. We encourage you to review the privacy statements of any website you visit from ours.",
       ],
     },
     {
-      heading: "Controlling Your Personal Information",
+      heading: "Controlling your personal information",
       paragraphs: [
         "You have the right to control the use of your personal information. If you have previously consented to us using your personal data for direct marketing purposes, you may opt out at any time by contacting us at privacy@researchnxt.com.",
         "We do not sell, distribute, or lease your personal information to third parties unless we have your permission or are required by law. We may share your data with trusted partners, but only if you have consented to this during the collection process or if it is necessary to provide services.",
@@ -108,7 +108,7 @@ export const privacyPolicy: LegalDocument = {
       ],
     },
     {
-      heading: "Your Rights",
+      heading: "Your rights",
       paragraphs: [
         "Depending on the jurisdiction, you may have rights under applicable data protection laws, including:",
       ],
@@ -120,13 +120,13 @@ export const privacyPolicy: LegalDocument = {
       ],
     },
     {
-      heading: "Updates to This Privacy Statement",
+      heading: "Updates to this Privacy Statement",
       paragraphs: [
         "We may update this Privacy Statement periodically. When we do, we will post the updated version on this page with the new effective date. Please review this page from time to time to stay informed of any changes.",
       ],
     },
     {
-      heading: "Contact Us",
+      heading: "Contact us",
       paragraphs: [
         "If you have any questions about this Privacy Statement or the data we collect, please contact us at:",
         "Research NXT, 91 Springboard Sky Loft, Creaticity Mall, Opposite Golf Course, Shastrinagar, Pune, Maharashtra 411006.",

@@ -4,16 +4,34 @@
 // The file input below accepts a file but nothing is uploaded or read.
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { formConfirmation } from "@/content/contact";
 import { Checkbox, Field, Input, Textarea } from "./fields";
 
-export function ApplicationForm({ role }: { role: string }) {
-  const router = useRouter();
+export function ApplicationForm({
+  role,
+  submitLabel = "Submit application",
+}: {
+  role: string;
+  submitLabel?: string;
+}) {
+  const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push("/thank-you");
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div role="status" className="flex flex-col gap-3 border-t border-line pt-6">
+        <h2 className="text-title font-display-soft">{formConfirmation.title}</h2>
+        <p className="text-sm leading-relaxed text-ink-soft">
+          {formConfirmation.lede}
+        </p>
+      </div>
+    );
   }
 
   // Namespaced ids so multiple openings can render forms on the same page.
@@ -59,7 +77,7 @@ export function ApplicationForm({ role }: { role: string }) {
       </div>
 
       <Field
-        label="Resume"
+        label="CV"
         htmlFor={id("resume")}
         hint="PDF or DOCX, up to 5 MB."
       >
@@ -98,7 +116,7 @@ export function ApplicationForm({ role }: { role: string }) {
       />
 
       <div className="pt-1">
-        <Button type="submit">Submit application</Button>
+        <Button type="submit">{submitLabel}</Button>
       </div>
     </form>
   );

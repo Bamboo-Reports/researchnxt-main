@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { StatsBand } from "@/components/stats-band";
 import { accentedTitle } from "@/components/ui/accented-title";
@@ -93,40 +94,31 @@ export default async function SolutionPage({ params }: Params) {
 
   return (
     <main id="main">
-      {/* Hero. Light surface and no plate: a background image lands here later;
-          until then a light brand-colour wash carries the band. */}
-      <Section spacing="tight" className="hero-wash border-b border-line">
-        <Container>
-          <div className="anim-rise flex flex-col gap-8" style={step(0)}>
-            <SectionHeading
-              as="h1"
-              size="display-sm"
-              eyebrow={solution.hero.eyebrow || undefined}
-              title={solution.hero.headline}
-              lede={solution.hero.lede}
-            />
-            <div className="flex flex-wrap gap-3">
-              <Button
-                href={solution.hero.primary.href}
-                external={solution.hero.primary.external}
-              >
-                {solution.hero.primary.label}
-              </Button>
-              {solution.hero.secondary ? (
-                <Button
-                  href={solution.hero.secondary.href}
-                  external={solution.hero.secondary.external}
-                  variant="secondary"
-                  className="group"
-                >
-                  {solution.hero.secondary.label}
-                  <TrailingArrow />
-                </Button>
-              ) : null}
-            </div>
-          </div>
-        </Container>
-      </Section>
+      <PageHero
+        eyebrow={solution.hero.eyebrow || undefined}
+        title={solution.hero.headline}
+        lede={solution.hero.lede}
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button
+            href={solution.hero.primary.href}
+            external={solution.hero.primary.external}
+          >
+            {solution.hero.primary.label}
+          </Button>
+          {solution.hero.secondary ? (
+            <Button
+              href={solution.hero.secondary.href}
+              external={solution.hero.secondary.external}
+              variant="secondary"
+              className="group"
+            >
+              {solution.hero.secondary.label}
+              <TrailingArrow />
+            </Button>
+          ) : null}
+        </div>
+      </PageHero>
 
       {/* Proposition. Mirrors the old page's structure: two-tone headline,
           a short orange rule, then the argument beneath. */}

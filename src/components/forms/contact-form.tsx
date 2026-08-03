@@ -1,21 +1,33 @@
 "use client";
 
 // TODO(phase-c): wire to a real backend (HubSpot / route handler + email).
-// Nothing here submits anywhere — onSubmit is intercepted and routed to
-// /thank-you so the flow can be reviewed end to end without a provider.
+// Nothing here submits anywhere — onSubmit is intercepted and acknowledged
+// inline so the flow can be reviewed without a provider.
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { solutionsNav } from "@/config/nav";
+import { formConfirmation } from "@/content/contact";
 import { Checkbox, Field, Input, Select, Textarea } from "./fields";
 
 export function ContactForm() {
-  const router = useRouter();
+  const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push("/thank-you");
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div role="status" className="flex flex-col gap-3 border-t border-line pt-6">
+        <h2 className="text-title font-display-soft">{formConfirmation.title}</h2>
+        <p className="text-sm leading-relaxed text-ink-soft">
+          {formConfirmation.lede}
+        </p>
+      </div>
+    );
   }
 
   return (

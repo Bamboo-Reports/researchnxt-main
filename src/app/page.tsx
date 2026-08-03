@@ -70,7 +70,7 @@ export default function HomePage() {
         <Container>
           <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Research"
+              eyebrow="Featured reports"
               title="Latest reports and guides"
               lede="Original research published for business and marketing leaders."
             />
@@ -126,7 +126,9 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Why Research NXT. Each claim leads with the thing that proves it. */}
+      {/* Why Research NXT. Bento tiles in the same system as the About stats:
+          the lead claim carries the brand blue as the double-height feature
+          tile, the rest stay quiet white so the highlight reads once. */}
       <Section bordered spacing="default">
         <Container>
           <SectionHeading
@@ -134,19 +136,47 @@ export default function HomePage() {
             title={differentiators.title}
             className="mb-12 max-w-4xl"
           />
-          <Reveal className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {differentiators.items.map((item, index) => (
-              <div
-                key={item.title}
-                className="flex flex-col gap-2 border-t border-line pt-5"
-                style={step(index)}
-              >
-                <h3 className="text-base font-semibold">{item.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+          <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-fr">
+            {differentiators.items.map((item, index) => {
+              const tiles = [
+                "sm:col-span-2 lg:row-span-2 bg-accent text-white",
+                "sm:col-span-2 border border-line bg-surface",
+                "border border-line bg-surface",
+                "border border-line bg-surface",
+              ] as const;
+              const inverted = index === 0;
+
+              return (
+                <div
+                  key={item.title}
+                  className={`flex min-h-36 flex-col justify-between gap-6 rounded-md p-6 sm:p-7 ${tiles[index % tiles.length]}`}
+                  style={step(index)}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`h-1 w-6 rounded-[1px] ${
+                      inverted ? "bg-white/60" : "bg-signal"
+                    }`}
+                  />
+                  <div className="flex flex-col gap-1.5">
+                    <h3
+                      className={`font-display-soft ${
+                        index === 0 ? "text-headline" : "text-title"
+                      }`}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className={`text-sm leading-relaxed ${
+                        inverted ? "text-white" : "text-ink-soft"
+                      }`}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </Reveal>
         </Container>
       </Section>
@@ -156,7 +186,7 @@ export default function HomePage() {
       <Section bordered spacing="default">
         <Container>
           <SectionHeading
-            eyebrow="Trusted By"
+            eyebrow="Trusted by"
             title="Teams building what comes next"
             lede="Organisations that have trusted our research, intelligence and engagement programmes."
             className="mb-12 max-w-3xl"

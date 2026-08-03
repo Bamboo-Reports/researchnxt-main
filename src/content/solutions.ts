@@ -12,79 +12,79 @@ const prospectDatabase: SolutionPage = {
   navLabel: "Prospect Database",
   metaTitle: "Prospect Database",
   metaDescription:
-    "On-Demand Custom Prospect Database with Industry-Best Accuracy rate & TAT Commitment",
+    "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
 
   hero: {
     eyebrow: "",
     headline: "Prospect Database",
     lede:
-      "On-Demand Custom Prospect Database with Industry-Best Accuracy rate & TAT Commitment",
+      "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
     primary: {
-      label: "Get a Free Database Quality Assessment",
+      label: "Get a free database quality assessment",
       href: "/contact",
     },
   },
 
   proposition: {
     title:
-      "Achieve greater campaigns success with our **On-Demand Custom Prospect Databases**",
+      "Achieve greater campaigns success with our **on-demand custom prospect databases**",
     body: [
-      "The impact of any marketing campaign relies on the quality of the prospect data in terms of accuracy of intended targets, preciseness of information, standardized quality of records and lowest bounce rate of emails.",
+      "The impact of any marketing campaign relies on the quality of the prospect data in terms of accuracy of intended targets, preciseness of information, standardised quality of records and lowest bounce rate of emails.",
       "Nevertheless, the marketing campaign’s success depends upon an effective strategy that you are already amazing at, and your focus should be only that. On the other hand, we are good at getting the right data to make your marketing campaigns successful. So, leave that part to us.",
     ],
   },
 
   capabilities: {
-    title: "**Data Append & Management:** Guaranteed Campaign Success",
+    title: "**Data append & management:** guaranteed campaign success",
     lede:
-      "Power up your New Market Entry strategy with a Custom OnDemand Prospect Database and maximize your campaign effectiveness.",
+      "Power up your new market entry strategy with a custom on-demand prospect database and maximise your campaign effectiveness.",
     items: [
       {
-        title: "ICP Assessment & Market Sizing",
+        title: "ICP assessment & market sizing",
         icon: "target",
         points: [
-          "Get Estimates of Target Market Data Availability",
+          "Get estimates of target market data availability",
           {
-            label: "Company Information",
-            tooltip: "12 Firmographic Data Points",
+            label: "Company information",
+            tooltip: "12 firmographic data points",
           },
-          { label: "Contact Information", tooltip: "8 Data Points" },
+          { label: "Contact information", tooltip: "8 data points" },
         ],
       },
       {
-        title: "Custom List Building & Contact Discovery",
+        title: "Custom list building & contact discovery",
         icon: "list-search",
         points: [
-          "Get Estimates of Target Market Data Availability",
+          "Get estimates of target market data availability",
           {
-            label: "Company Information",
-            tooltip: "12 Firmographic Data Points",
+            label: "Company information",
+            tooltip: "12 firmographic data points",
           },
-          { label: "Contact Information", tooltip: "8 Data Points" },
+          { label: "Contact information", tooltip: "8 data points" },
         ],
       },
       {
-        title: "Net New Append\n& Account Coverage",
+        title: "Net new append\n& account coverage",
         icon: "append",
         points: [
-          "Get Estimates of Key Account Data Availability",
-          "Append New Custom Titles in Key Accounts",
+          "Get estimates of key account data availability",
+          "Append new custom titles in key accounts",
         ],
       },
       {
-        title: "Data Cleansing & Enrichment",
+        title: "Data cleansing & enrichment",
         icon: "cleanse",
         points: [
-          "Get Data Health Analysis",
-          "Check and Update your existing",
-          "Databases Run Regular Data Enrichment Projects",
+          "Get data health analysis",
+          "Check and update your existing",
+          "Databases run regular data enrichment projects",
         ],
       },
     ],
   },
 
   outcome: {
-    statement: "Hyper-focused B2B Campaign Data = Meaningful Brand Connects",
+    statement: "Hyper-focused B2B campaign data = Meaningful brand connects",
   },
 };
 
@@ -101,14 +101,14 @@ const accountIntelligence: SolutionPage = {
     lede:
       "Ensures you gain heightened target account control, understand opportunities within whitespaces, and strategically develop your unique selling propositions.",
     primary: {
-      label: "Let’s craft a personalized solution for you",
+      label: "Let’s craft a personalised solution for you",
       href: "/contact",
     },
   },
 
   proposition: {
     title:
-      "Get insider information with our **Account Intelligence Solutions**",
+      "Get insider information with our **Account Intelligence solutions**",
     singleLine: true,
     body: [
       "Bespoke key account intelligence reports custom crafted to give you that much needed competitive edge.",
@@ -118,43 +118,43 @@ const accountIntelligence: SolutionPage = {
 
   capabilities: {
     title:
-      "Know your customers and prospects better with our **Account Intelligence Solutions**",
+      "Know your customers and prospects better with our **Account Intelligence solutions**",
     body: [
-      "Bespoke Key Account Reports with Deal Insights, Outsourcing Heat Maps, Competitor Intelligence, Org Charts, Decision Maker Database, and Strategic Recommendations.",
+      "Bespoke key account reports with deal insights, outsourcing heat maps, competitor intelligence, org charts, decision maker database, and strategic recommendations.",
     ],
     items: [
       {
-        title: "Key Account Intelligence",
+        title: "Key account intelligence",
         icon: "account",
         points: [
-          "Business Snapshot",
-          "Key Financials",
-          "Products & Services Mix",
-          "Growth Track",
-          "Org Structure",
-          "IT Landscape",
-          "IT Outsourcing and Deal Insights",
-          "Decision Makers & Executive Bios",
+          "Business snapshot",
+          "Key financials",
+          "Products & services mix",
+          "Growth track",
+          "Org structure",
+          "IT landscape",
+          "IT outsourcing and deal insights",
+          "Decision makers & executive bios",
         ],
       },
       {
-        title: "Competitor Intelligence",
+        title: "Competitor intelligence",
         icon: "competitor",
         points: [
-          "Competitor Business Snapshot",
-          "Products & Services Mix",
-          "Product Strategy",
-          "Sales & Marketing Strategy",
-          "SWOT Analysis & Business Comparison",
-          "Major Deals",
-          "Decision Makers & Executive Bios",
+          "Competitor business snapshot",
+          "Products & services mix",
+          "Product strategy",
+          "Sales & marketing strategy",
+          "SWOT analysis & business comparison",
+          "Major deals",
+          "Decision makers & executive bios",
         ],
       },
     ],
   },
 
   outcome: {
-    statement: "360 Degree Account Intelligence = Actionable Prospect Insights",
+    statement: "360-degree account intelligence = Actionable prospect insights",
   },
 };
 
@@ -163,40 +163,40 @@ const researchBasedMarketing: SolutionPage = {
   navLabel: "Research-based Marketing",
   metaTitle: "Research-Based Marketing",
   metaDescription:
-    "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimization.",
+    "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",
 
   hero: {
     eyebrow: "",
     headline: "Research-Based Marketing",
     lede:
-      "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimization.",
+      "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",
     primary: {
-      label: "Let’s craft a personalized solution for you",
+      label: "Let’s craft a personalised solution for you",
       href: "/contact",
     },
   },
 
   proposition: {
-    title: "Connect Effectively through **Research-Based Marketing**",
+    title: "Connect effectively through **Research-Based Marketing**",
     body: [
-      "Hight impact thought leadership marketing campaigns backed up with well researched and targeted content.",
-      "Our Research-Based Marketing approach ensures you gain visibility, credibility, and personalized engagement opportunities within your target accounts’ power structures.",
+      "High impact thought leadership marketing campaigns backed up with well researched and targeted content.",
+      "Our Research-Based Marketing approach ensures you gain visibility, credibility, and personalised engagement opportunities within your target accounts’ power structures.",
     ],
   },
 
   capabilities: {
-    title: "**Creditable & Unique Brand Voice** aligned with your positioning",
+    title: "**Credible & unique brand voice** aligned with your positioning",
     body: [
-      "Today’s savvy marketplace have very short attention spans, and to counter such acute snap judgements, careful content positioning is the key.",
-      "You will need to ensure that your communications cut through the noise. To gain visibility, credibility, and initiate personalized engagement with your target accounts’ power structures, your stories have to be compelling and yet insightful. Our Research-Based Marketing approach ensures you excel at it.",
+      "Today’s savvy marketplace has very short attention spans, and to counter such acute snap judgements, careful content positioning is the key.",
+      "You will need to ensure that your communications cut through the noise. To gain visibility, credibility, and initiate personalised engagement with your target accounts’ power structures, your stories have to be compelling and yet insightful. Our Research-Based Marketing approach ensures you excel at it.",
     ],
     items: [
       {
-        title: "Thought Leadership\nContent",
+        title: "Thought leadership\ncontent",
         icon: "content",
         points: [
-          "Expert Interviews",
-          "Blog Posts",
+          "Expert interviews",
+          "Blog posts",
           "Podcasts",
           "Video",
           "Infographics",
@@ -204,24 +204,24 @@ const researchBasedMarketing: SolutionPage = {
         ],
       },
       {
-        title: "ABM\nCampaigns",
+        title: "ABM\ncampaigns",
         icon: "campaign",
         points: [
-          "Interview Series with Key",
-          "Account Executives",
-          "Key Account Surveys",
-          "Branded Downloadable Content Assets - MQLs",
+          "Interview series with key",
+          "Account executives",
+          "Key account surveys",
+          "Branded downloadable content assets - MQLs",
         ],
       },
       {
-        title: "Targeted Leads\nCampaigns",
+        title: "Targeted leads\ncampaigns",
         icon: "funnel",
         points: [
-          "LookaLike ICP Market Surveys",
+          "Lookalike ICP market surveys",
           "White paper",
-          "MQL's",
+          "MQLs",
           "Ebooks",
-          "Research Report's",
+          "Research reports",
         ],
       },
     ],
@@ -229,7 +229,7 @@ const researchBasedMarketing: SolutionPage = {
 
   outcome: {
     statement:
-      "Original Research + Custom Marketing = Exclusive Engagement & Personalized Experience",
+      "Original research + custom marketing = Exclusive engagement & personalised experience",
   },
 };
 

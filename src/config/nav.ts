@@ -29,7 +29,7 @@ export const solutionsNav: NavItem[] = [
     href: "/solutions/account-intelligence",
   },
   {
-    label: "Research-based Marketing",
+    label: "Research-Based Marketing",
     href: "/solutions/research-based-marketing",
   },
   {
@@ -41,12 +41,12 @@ export const solutionsNav: NavItem[] = [
 
 export const resourcesNav: NavItem[] = [
   {
-    label: "Reports & Whitepapers",
+    label: "Reports & whitepapers",
     href: "https://researchnxt.com/research-report/",
     external: true,
   },
   {
-    label: "Experts View",
+    label: "Experts view",
     href: "https://researchnxt.com/experts-view/",
     external: true,
   },
@@ -56,7 +56,7 @@ export const resourcesNav: NavItem[] = [
     external: true,
   },
   {
-    label: "Success Stories",
+    label: "Success stories",
     href: "https://researchnxt.com/success-stories/",
     external: true,
   },
@@ -81,7 +81,7 @@ export const footerNav: NavGroup[] = [
     items: [
       { label: "About Research NXT", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Contact Us", href: "/contact" },
+      { label: "Contact us", href: "/contact" },
       { label: "Privacy Policy", href: "/privacy-policy" },
     ],
   },

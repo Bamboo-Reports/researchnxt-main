@@ -225,7 +225,7 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <Button href="/contact" size="sm" className="hidden sm:inline-flex">
-              Contact Us
+              Contact us
             </Button>
 
             <button
@@ -314,7 +314,7 @@ export function Navbar() {
               })}
 
               <Button href="/contact" className="w-full">
-                Contact Us
+                Contact us
               </Button>
             </nav>
           </Container>

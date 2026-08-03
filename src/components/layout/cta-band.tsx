@@ -10,9 +10,9 @@ import { SectionHeading } from "@/components/ui/section-heading";
  */
 export function CTABand({
   eyebrow,
-  title = "Let's craft a personalized solution for you",
+  title = "Let's craft a personalised solution for you",
   lede,
-  primary = { label: "Contact Us", href: "/contact" },
+  primary = { label: "Contact us", href: "/contact" },
   secondary,
 }: {
   eyebrow?: string;
