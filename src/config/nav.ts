@@ -68,7 +68,7 @@ export const resourcesNav: NavItem[] = [
 ];
 
 export const primaryNav: (NavItem | NavGroup)[] = [
-  { label: "Solutions", href: "/solutions", items: solutionsNav },
+  { label: "Solutions", items: solutionsNav },
   { label: "Resources", items: resourcesNav },
   { label: "About", href: "/about" },
   { label: "Careers", href: "/careers" },

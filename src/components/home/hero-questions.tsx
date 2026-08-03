@@ -54,7 +54,7 @@ export function HeroQuestions({
             data-active={index === active}
             className="flex items-start"
           >
-            <p className="max-w-[44ch] text-title font-display-soft text-ink-soft">
+            <p className="max-w-[44ch] text-title font-semibold text-ink-soft sm:whitespace-pre-line">
               {question}
             </p>
           </li>

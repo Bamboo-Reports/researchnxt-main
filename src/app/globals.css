@@ -197,6 +197,24 @@
     background-position: 0 50%;
   }
 
+  /* Light brand wash for the solution-page heroes, standing in until real
+     background images land. Blue-led from the accent tints, with a whisper of
+     the signal orange in one corner; light enough that ink text keeps AA. */
+  .hero-wash {
+    background:
+      radial-gradient(
+        52rem 30rem at 88% -12%,
+        color-mix(in oklab, var(--color-signal) 12%, transparent),
+        transparent 65%
+      ),
+      radial-gradient(
+        60rem 34rem at -8% 115%,
+        color-mix(in oklab, var(--color-plate) 20%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(115deg, var(--color-accent-soft), var(--color-surface) 62%);
+  }
+
   /* Truncates a heading to a fixed number of lines with an ellipsis, so a
      grid of items keeps one hierarchy however long the source titles run. */
   .clamp-2 {

@@ -6,7 +6,6 @@ import { solutions } from "@/content/solutions";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: { path: string; priority: number }[] = [
     { path: "/", priority: 1 },
-    { path: "/solutions", priority: 0.9 },
     { path: "/about", priority: 0.7 },
     { path: "/careers", priority: 0.6 },
     { path: "/contact", priority: 0.8 },

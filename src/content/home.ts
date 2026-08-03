@@ -8,10 +8,12 @@ export const hero = {
     label: "Let's craft your solution",
     href: "/contact",
   },
+  /** A "\n" in a question is a chosen line break at larger widths; it
+      collapses to a space in the narrow mobile column. */
   questions: [
-    "Is the quality of your marketing leads impacting revenue?",
+    "Is the quality of your marketing leads\nimpacting revenue?",
     "Is your customer engagement based on account intelligence?",
-    "Is a bad prospect database impacting marketing ROI?",
+    "Is a bad prospect database impacting\nmarketing ROI?",
   ],
 } as const;
 

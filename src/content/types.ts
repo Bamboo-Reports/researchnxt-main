@@ -9,16 +9,37 @@ export type CTA = {
   external?: boolean;
 };
 
+/** Glyph names rendered by `CapabilityIcon`; one per capability card. */
+export type CapabilityIconName =
+  | "target"
+  | "list-search"
+  | "append"
+  | "cleanse"
+  | "account"
+  | "competitor"
+  | "content"
+  | "campaign"
+  | "funnel";
+
 export type Capability = {
+  /** May contain "\n" to force a chosen line break, so short titles can match
+      the two-line rhythm of their neighbours in the grid. */
   title: string;
-  description: string;
-  points?: string[];
+  icon?: CapabilityIconName;
+  description?: string;
+  points?: Array<
+    | string
+    | {
+        label: string;
+        tooltip: string;
+      }
+  >;
 };
 
 /**
  * All internal solution pages share one template; only this data differs.
- * Section order in the template: hero → proposition → capabilities →
- * (optional) detail → outcome → CTA band.
+ * Section order in the template: hero → proposition → outcome →
+ * capabilities → (optional) detail.
  */
 export type SolutionPage = {
   slug: string;
@@ -34,14 +55,23 @@ export type SolutionPage = {
     secondary?: CTA;
   };
 
+  /** Section titles may wrap a key phrase in `**` markers; the template
+      renders that segment in the brand accent, echoing the old site's
+      two-tone headlines. */
   proposition: {
     title: string;
+    /** Keeps the title on one desktop line by clamping its size against the
+        viewport, as the outcome statement does. Only for titles short enough
+        to fit at a readable size (roughly 65 characters). */
+    singleLine?: boolean;
     body: string[];
   };
 
   capabilities: {
+    eyebrow?: string;
     title: string;
     lede?: string;
+    body?: string[];
     items: Capability[];
   };
 
@@ -52,16 +82,13 @@ export type SolutionPage = {
     stats: Stat[];
   };
 
+  /**
+   * Closing statement. When the copy reads as an equation ("X = Y") the
+   * template splits on " = " and draws the equals sign as an orange mark.
+   */
   outcome: {
     statement: string;
-    description: string;
-  };
-
-  cta: {
-    title: string;
-    lede: string;
-    primary: CTA;
-    secondary?: CTA;
+    description?: string;
   };
 };
 
