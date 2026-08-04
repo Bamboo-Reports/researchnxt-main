@@ -23,13 +23,8 @@ export const resourcePages: ResourcePage[] = [
   },
   /* Experts view has its own route now (`app/resources/experts-view`), so it
      is deliberately absent from this placeholder list. */
-  {
-    slug: "insights",
-    navLabel: "Insights",
-    metaTitle: "Insights",
-    title: "Insights",
-    lede: "Articles and analysis from the Research NXT team.",
-  },
+  /* Insights has its own route now (`app/resources/insights`), so it is
+     deliberately absent from this placeholder list. */
   {
     slug: "success-stories",
     navLabel: "Success stories",
@@ -188,20 +183,38 @@ const implementersGuideToAI: ReportLanding = {
   quickReads: {
     title: "Quick reads and toolkits for AI adoption",
     items: [
-      { title: "AI is the Future, and the Future is Now" },
+      {
+        title: "AI is the Future, and the Future is Now",
+        href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+        image: "/insights/ai-is-the-future-and-the-future-is-now.png",
+      },
       {
         title:
           "Implementer's Guide to AI: Finance Leaders Transition from Caution to Customer-Centric Scale",
+        href: "/resources/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
+        image:
+          "/insights/finance-leaders-transition-from-caution-to-customer-centric-scale.png",
       },
       {
         title:
           "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
+        href: "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
+        image:
+          "/insights/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
       },
       {
         title:
           "Implementer's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
+        href: "/resources/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
+        image:
+          "/insights/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
       },
-      { title: "The Four Waves of AI: A Ready Guide for Business Leaders" },
+      {
+        title: "The Four Waves of AI: A Ready Guide for Business Leaders",
+        href: "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
+        image:
+          "/insights/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
+      },
     ],
   },
 
