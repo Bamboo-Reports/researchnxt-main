@@ -1,0 +1,101 @@
+import type { ExpertInterview } from "../types";
+
+export const rahulMishra: ExpertInterview = {
+  slug: "rahul-mishra",
+  project: "ai-led-personalization",
+  perspective: "buyer",
+
+  metaTitle: "How ShemarooME is Carving Its Identity in the Crowded OTT Space",
+  metaDescription:
+    "Rahul Mishra, Head of Marketing and Communications at ShemarooME, on audiences becoming customers, simulcasting a TV channel on Facebook, and empathy during lockdown.",
+
+  title: "How ShemarooME is Carving Its Identity in the Crowded OTT Space",
+  person: {
+    name: "Rahul Mishra",
+    role: "Head of Marketing & Communications",
+    company: "ShemarooME",
+  },
+
+  thumbnail: "/experts/rahul-mishra.png",
+  thumbnailAlt:
+    "Rahul Mishra, Head of Marketing and Communications at ShemarooME",
+
+  intro: [
+    "Rahul Mishra, Head of Marketing and Communications at ShemarooME, part of Shemaroo Entertainment, speaks to Research NXT about marketing in the OTT streaming media space. We discussed the shift in terms of customer experience and personalisation and the impact of technology on marketers. Rahul explains Shemaroo's go-to-market strategy for its OTT platform ShemarooME. He discusses the importance of using technology to make the customer experience better and talks about the need to develop a brand association in a battle for customer attention. He also shares how Shemaroo has tried to develop deeper relationships and be empathetic to customer needs amid a surge in usage due to the lockdown.",
+  ],
+
+  highlights: [],
+
+  pullQuote:
+    "With the advent of OTT, we have seen, for the first time, marketers in the media industry moving away from the term audience to now using the term customers.",
+
+  exchanges: [
+    {
+      question:
+        "You have been in the media and entertainment broadcast industry, and now in the OTT space. What are your observations of how marketing has evolved in this industry and the direction it is taking?",
+      answer: [
+        "I have spent over a decade in the marketing function for media and entertainment companies. I spent a lot of time on the news side of it, where I have seen early success stories on the digital front as well. One of the early movers on digital content was news, and I learned the power of digital as a publisher. Then I worked with mainstream broadcast brands, to eventually now working with Shemaroo, where we operate both broadcast and OTT. The kind of shift as marketers in media that we have seen in the last five to six years has been mind-boggling.",
+        "With the advent of OTT, we have seen, for the first time, marketers in the media industry moving away from the term audience to now using the term customers. That is a big shift that we are seeing right now. If you are to define an audience, it is an assembled spread of spectators or listeners at a public event or watching something together. However, a customer is somebody who buys something from you directly. That has happened very rapidly in entertainment. From a broadcast mindset where you would be sending out one piece of content to watch together, now you are trying to personalise your offering and talk to a customer so that the customer comes onto your platform and pays for it or spends time. That shift is also taking place in the way traditional media has been operating. Even the broadcast business is starting to refer to them as customers, because customers are now paying for those television channels as well. This shift is very interesting to see.",
+        "Earlier I would look at basic audience demographics before I planned a marketing campaign or worked with content teams on a content idea. Now we are moving more towards buyer personas. So, it is different from how we would typically target audiences. When you target audiences, you define a crowd or a set of customers. But when you create buyer personas, you create archetypes of individual customers and go deep into what their thought process or buying process is. Then you can determine how to market to each of them effectively.",
+        "Earlier in a broadcast set up, you would have, say, four to five consumer cohorts for audiences I want to talk to: young, urban, rural. But now the number of consumer cohorts we are creating, thanks to the data and technology available to us, and specifically marketing to those audiences, and this customised approach, is very interesting.",
+        "Overall that is the major shift I am seeing right now: how we are moving away from mass dissemination to personalisation in the media industry.",
+      ],
+    },
+    {
+      question:
+        "Shemaroo has been around for a very long time with such a large content library. What kind of distribution and partnerships are you focused on, and what is the go-to-market strategy for the OTT platform in different markets? What type of data are you using to determine things like pricing and content promotion?",
+      answer: [
+        "To give you a quick background, Shemaroo has been in the business for over 57 years now, and we have been pioneers in getting Bollywood to people's homes. VHS is what took Bollywood to people's homes for the first time, and we were pioneers in that. Then we evolved as technology changed and as content preferences changed in India, from VHS to new formats like DVDs and Blu-ray, going to digital, and finally the OTT avatar we are in right now.",
+        "In the last decade, Shemaroo was operating as a business to business brand. Because it was working with multiple partners, be it broadcast, OTT players, digital platforms, or telecom providers, we were enabling their content requirements very well. So when we entered OTT, we knew we had to ensure that business is secure.",
+        "We were the 34th player to enter the OTT space in India, so the question is why did we launch our OTT? Because we have a great understanding of the Indian audience, as one of the oldest media organisations which continues to thrive and entertain Indians, true to our tagline, India Khush Hua. We knew that when we enter the OTT space, we have great content to offer: content from Bollywood and curated regional content, and niches like devotional, which are emerging as popular content buckets.",
+        "But at the same time, we also had to ensure that while we build a consumer journey, we also secure our B2B business. To do that, when we launched, our initial focus was to ensure that we still work with all the partners in the ecosystem. It is a journey we have started, and we did some amazing partnerships and built a strong model.",
+        "Within a year of launching ShemarooME, we had partnerships with most telecom players in the country, and with OEMs. We did partnerships with large audience websites like Ixigo, where consumers are coming to do a transaction, and to increase engagement Shemaroo could provide video content there.",
+        "There are many such unique partnerships we have forged over the last year, including international partnerships and taking Shemaroo to different countries through alliances.",
+        "For the last 12 to 14 months, the product was also evolving. As you know, these products take time for machine learning to set in; you need large sets of data to come in and make it work. We used this time to understand our end consumers, partners, and partners' consumers. That was the go-to-market strategy initially, and as we are securing that, we keep evaluating the consumer business.",
+        "How does data help us in all of this? For Shemaroo, the term big data may not apply to us as much at this stage, because we are not playing with the volume of data of an Amazon or Netflix. But we have a great sense of understanding the data and making it useful for ourselves. That is something we are doing very well.",
+        "Data comes to us in various formats, including content data on how a piece of content performs. As an example, how does a piece of content perform in a theatre? What was the revenue, the outcome, and how did content perform on a TV channel versus an OTT platform? We capture all of that and use it for better buying decisions of content. So a combination of all that is what we use data for, and it is still fairly early days for me to comment on how much data helps us in all aspects of an OTT, which is pricing, content, and advertising.",
+      ],
+    },
+    {
+      question:
+        "OTT leaders like Netflix pioneered using AI-driven personalisation to boost user engagement and retention on their platforms. What is your approach towards personalising the experience, and what tools are you using?",
+      answer: [
+        "Investment in technology and AI-driven personalisation is the buzzword right now; companies are making sizable investments in it. The reason why we do it is to make it convenient for customers. Not only Netflix, but many organisations are using AI very well. Large organisations like Uber and Ola do a high level of personalisation to ensure that the customer journey is as smooth as possible.",
+        "You also notice that the overdoing of personalisation can cause a bit of retaliation from the customer. It could be around privacy, or around not getting to see other parts of what the brand has to offer. Even Netflix has started to offer the top 10 in every region, and the reason they have done it is that customers want to know about things beyond their interests and requirements. A good balance is what we need to have, keeping the customer in mind always.",
+        "As marketers, we should use technology to make consumers' lives better. I think that is something that every organisation, including OTT platforms, should adopt.",
+        "Most of our tech stack at present is around marketing automation. We have built some of our stack through the app developer, and apart from that, we work closely with Netcore. Though we also use attribution and programmatic tools.",
+      ],
+    },
+    {
+      question:
+        "How are we seeing OTT platforms enabling marketers or brands with video-based content?",
+      answer: [
+        "With the lockdown, people essentially had two screens at hand: a TV screen and a mobile screen. These became the two most important outlets for any brand to reach consumers. In the absence of outdoor and with reduced print or other options, these became the only options available, and I would say many brands have used them very well. For brands to create segmentation, geographic and psychographic, OTT is great. Brands that are looking at impact and reach have benefited greatly by partnering with OTT platforms for advertising.",
+        "The second part is that OTT platforms can incorporate the brand story very well because they are in the business of storytelling. It is somewhat in the range of content marketing, and that is another opportunity which OTT players offer many brands, as against broadcast or more mass dissemination media outlets with limited personalisation. So that is the real benefit of OTT platforms.",
+      ],
+    },
+    {
+      question:
+        "The Indian OTT space is booming, and there are many different types of OTT platforms producing different kinds of content. There is this battle of gaining consumer attention, so how are marketers leveraging technology to do that?",
+      answer: [
+        "I think every marketer is using technology to get customer attention. Technology is here to stay, and the sooner we adopt it, the more benefit we can extract for our brands. For OTT players, technology needs to identify the overlap between good content and the consumer set that will appreciate it.",
+        "At Shemaroo, we run multiple consumer-facing businesses, so let me share an example of how we use technology even for what is considered a traditional business. We recently launched our Hindi general entertainment TV channel, ShemarooTV, on 1 May 2020 in the lockdown. We did a very interesting partnership with Facebook, where we were simulcasting our TV channel on Facebook to build higher loyalty with our Facebook fans, and it gave us about 1.6 million views. So we have taken a traditional medium onto a technology platform, and that is boosting both platforms at the same time.",
+        "We have data that many people watched the channel on Facebook, but I am sure many people from Facebook probably went on to ShemarooTV and watched content there. So these fans sampled our content, followed us, and saw our simulcast on Facebook, and we engaged with them and got them to watch us on television as well.",
+      ],
+    },
+    {
+      question:
+        "During the current lockdown, OTT apps have witnessed a surge in usage, as you have already mentioned. How have you been able to respond and calibrate your marketing communications for the current pandemic and still be empathetic to users who are on your platform?",
+      answer: [
+        "Streaming services, not only in India but around the world, have been capitalising on the increase in subscribers they have seen due to lockdown. What we discuss right now within Shemaroo is that we hope this passes off soon and things return to normalcy. However, at the same time, it is bound to happen that our viewership and subscriber numbers will fall as people start to resume their day to day activities, including socialising and going out for work. How can we still play an important role in a consumer's life is a question we keep asking ourselves. How can we ensure that subscriptions are renewed, and we are still having good engagement with the platform?",
+        "To stand out, we are looking at various ways to retain our customers. It could be on the back of differential content offerings or differential models of subscriptions. It is also critical for us as an organisation to have a deep understanding of the content preferences each of our consumer cohorts have: understanding the product requirements well, changing the product requirements as required, and adapting to changes for consumers like payments and subscription plans.",
+        "During the lockdown we wanted our OTT platform to have a connection with the customers as well, more than just be a content platform. We are confident about our content, and if we can couple that with brand love, we are sure audiences will continue to renew and come back to us, and also bring new customers to us.",
+        "So we did a series of exercises for that, like a partnership with India's leading medical services app, DocsApp, which offers online medical doctor services. Now our customers do not have to step out of the house; through their phones, one can have a video chat with doctors. So we did a partnership with DocsApp, where we were offering ShemarooME customers a DocsApp subscription worth 999 rupees for free. Apart from being entertained, our audiences know what is happening on the outside in terms of any COVID-related information. They could actually use the DocsApp subscription they are getting almost free with our subscription.",
+        "We also realised that because of the lockdown of temples, people's devotional needs were getting disrupted. So, we tied up with more than 15 major temples and offered live streaming of those temples to our customers on ShemarooME, so that they can continue their daily routine of visiting a temple, only this time virtually but live.",
+        "There were a lot of small initiatives as well, like when you click on ShemarooME, the first pop up will ask you to ensure you wipe your screen and be safe and healthy, just as a reminder for people as they continue to engage more with ShemarooME.",
+        "So at a brand level, we have played a couple of roles, and on the content side, we have tried to make more content for our audiences. We have created interesting comedy movie buckets for family viewing. We also did a campaign, Ab rumor nahi, humor phailega. Essentially we tried to educate consumers not to go around spreading rumours, but rather watch some interesting comedy films and stay calm during the lockdown on ShemarooME.",
+        "We did a series of such activities to ensure that our audiences engage, and that new audiences that come to us are also engaged.",
+      ],
+    },
+  ],
+};
