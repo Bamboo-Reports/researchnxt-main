@@ -2,7 +2,7 @@
 
 export const contactPage = {
   eyebrow: "Contact",
-  title: "Let's craft a personalized solution for you",
+  title: "Let's craft a personalised solution for you",
   lede: "Fill in your queries and requirements through the form below, and we will ensure to respond within 24 hours on business days.",
   aside: {
     title: "We are listening",
@@ -10,8 +10,7 @@ export const contactPage = {
   },
 } as const;
 
-export const thankYouPage = {
-  eyebrow: "Thank you",
+export const formConfirmation = {
   title: "We have got it. Thanks for reaching out",
   lede: "A member of the Research NXT team will respond within 24 hours on business days.",
 } as const;

@@ -197,6 +197,24 @@
     background-position: 0 50%;
   }
 
+  /* Light brand wash for the solution-page heroes, standing in until real
+     background images land. Blue-led from the accent tints, with a whisper of
+     the signal orange in one corner; light enough that ink text keeps AA. */
+  .hero-wash {
+    background:
+      radial-gradient(
+        52rem 30rem at 88% -12%,
+        color-mix(in oklab, var(--color-signal) 12%, transparent),
+        transparent 65%
+      ),
+      radial-gradient(
+        60rem 34rem at -8% 115%,
+        color-mix(in oklab, var(--color-plate) 20%, transparent),
+        transparent 60%
+      ),
+      linear-gradient(115deg, var(--color-accent-soft), var(--color-surface) 62%);
+  }
+
   /* Truncates a heading to a fixed number of lines with an ellipsis, so a
      grid of items keeps one hierarchy however long the source titles run. */
   .clamp-2 {
@@ -246,6 +264,84 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Trusted customer logos
+
+   The no-motion default is a calm wrapping grid. The continuous track is only
+   enabled by the page-level motion gate, so reduced-motion and no-JS visitors
+   get every logo without duplicated content or horizontal clipping.
+--------------------------------------------------------------------------- */
+
+.trusted-logos-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 2rem;
+  align-items: center;
+}
+
+.trusted-logos-list > li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.trusted-logos-list[aria-hidden="true"] {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .trusted-logos-list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .trusted-logos-list {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@keyframes trusted-logos-scroll {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+[data-motion="on"] .trusted-logos-viewport {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    black 7%,
+    black 93%,
+    transparent
+  );
+}
+
+[data-motion="on"] .trusted-logos-track {
+  display: flex;
+  width: max-content;
+  animation: trusted-logos-scroll 38s linear infinite;
+}
+
+[data-motion="on"] .trusted-logos-track:hover {
+  animation-play-state: paused;
+}
+
+[data-motion="on"] .trusted-logos-list,
+[data-motion="on"] .trusted-logos-list[aria-hidden="true"] {
+  display: flex;
+  flex-shrink: 0;
+  gap: 3rem;
+  padding-right: 3rem;
+}
+
+[data-motion="on"] .trusted-logos-list > li {
+  width: 11rem;
+  flex-shrink: 0;
 }
 
 /* ---------------------------------------------------------------------------

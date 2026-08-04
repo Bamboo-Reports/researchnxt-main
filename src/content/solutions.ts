@@ -4,7 +4,7 @@ import type { SolutionPage } from "./types";
 /**
  * Copy transcribed from the live WordPress pages:
  *   /prospect-database/  /account-intelligence/  /research-based-marketing/
- *   /gcc-insights/  (the last becomes a real solution page in the new IA)
+ * GCC Intelligence is represented by an external Bamboo Reports link below.
  */
 
 const prospectDatabase: SolutionPage = {
@@ -12,95 +12,79 @@ const prospectDatabase: SolutionPage = {
   navLabel: "Prospect Database",
   metaTitle: "Prospect Database",
   metaDescription:
-    "On-demand custom prospect database with industry-best accuracy rate and turnaround-time commitment: ICP assessment, list building, contact discovery and data enrichment.",
+    "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
 
   hero: {
-    eyebrow: "Solution",
-    headline:
-      "On-demand custom prospect database with industry-best accuracy and TAT commitment",
-    lede: "Your campaign's success depends on an effective strategy, something you are already amazing at. Your focus should be only that. Leave the data to us.",
+    eyebrow: "",
+    headline: "Prospect Database",
+    lede:
+      "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
     primary: {
       label: "Get a free database quality assessment",
       href: "/contact",
     },
-    secondary: { label: "Talk to our team", href: "/contact" },
   },
 
   proposition: {
-    title: "Hyper-focused B2B campaign data means meaningful brand connects",
+    title:
+      "Achieve greater campaigns success with our **on-demand custom prospect databases**",
     body: [
-      "Marketing success depends on the quality of the data underneath it. A stale or poorly targeted database quietly erodes deliverability, wastes campaign spend and distorts every downstream metric you report on.",
-      "We build prospect data to the shape of your ideal customer profile, verify it against multiple sources, and commit to a turnaround time, so your team spends its energy on strategy and creative rather than on chasing records.",
+      "The impact of any marketing campaign relies on the quality of the prospect data in terms of accuracy of intended targets, preciseness of information, standardised quality of records and lowest bounce rate of emails.",
+      "Nevertheless, the marketing campaign’s success depends upon an effective strategy that you are already amazing at, and your focus should be only that. On the other hand, we are good at getting the right data to make your marketing campaigns successful. So, leave that part to us.",
     ],
   },
 
   capabilities: {
-    title: "What we do",
-    lede: "Four capabilities that can be engaged individually or as an end-to-end programme.",
+    title: "**Data append & management:** guaranteed campaign success",
+    lede:
+      "Power up your new market entry strategy with a custom on-demand prospect database and maximise your campaign effectiveness.",
     items: [
       {
-        title: "ICP assessment",
-        description:
-          "We size the addressable market and tell you what data actually exists before you commit budget to a campaign.",
+        title: "ICP assessment & market sizing",
+        icon: "target",
         points: [
-          "Market data availability estimates",
-          "12 firmographic data points",
-          "8 contact data points",
+          "Get estimates of target market data availability",
+          {
+            label: "Company information",
+            tooltip: "12 firmographic data points",
+          },
+          { label: "Contact information", tooltip: "8 data points" },
         ],
       },
       {
         title: "Custom list building & contact discovery",
-        description:
-          "Target market analysis and prospect identification built to your segment definition, not pulled off a shelf.",
+        icon: "list-search",
         points: [
-          "Target market analysis",
-          "Prospect identification and verification",
-          "Segment-specific list construction",
+          "Get estimates of target market data availability",
+          {
+            label: "Company information",
+            tooltip: "12 firmographic data points",
+          },
+          { label: "Contact information", tooltip: "8 data points" },
         ],
       },
       {
-        title: "Net new append & account coverage",
-        description:
-          "Deepen coverage inside the accounts that matter with the specific titles your campaign needs to reach.",
+        title: "Net new append\n& account coverage",
+        icon: "append",
         points: [
-          "Key account data",
-          "Custom title appending",
-          "Coverage gap analysis",
+          "Get estimates of key account data availability",
+          "Append new custom titles in key accounts",
         ],
       },
       {
         title: "Data cleansing & enrichment",
-        description:
-          "Regular health analysis and updates so the database you invested in does not decay between campaigns.",
+        icon: "cleanse",
         points: [
-          "Database health analysis",
-          "Regular database updates",
-          "Deduplication and standardisation",
+          "Get data health analysis",
+          "Check and update your existing",
+          "Databases run regular data enrichment projects",
         ],
       },
     ],
   },
 
-  detail: {
-    title: "What an ICP assessment covers",
-    lede: "Before any list is built, we establish what is knowable about your market.",
-    stats: [
-      { value: "12", label: "Firmographic data points" },
-      { value: "8", label: "Contact data points" },
-      { value: "500k+", label: "Custom prospect records delivered" },
-    ],
-  },
-
   outcome: {
-    statement: "Hyper-focused B2B campaign data = meaningful brand connects",
-    description:
-      "Accurate, well-segmented data is the difference between a campaign that reaches an inbox and one that reaches a decision maker.",
-  },
-
-  cta: {
-    title: "Get a free database quality assessment",
-    lede: "Send us a sample of your current database and we will tell you what it is costing you.",
-    primary: { label: "Request an assessment", href: "/contact" },
+    statement: "Hyper-focused B2B campaign data = Meaningful brand connects",
   },
 };
 
@@ -109,134 +93,134 @@ const accountIntelligence: SolutionPage = {
   navLabel: "Account Intelligence",
   metaTitle: "Account Intelligence",
   metaDescription:
-    "Bespoke key account and competitor intelligence reports giving 360-degree visibility inside your target accounts.",
+    "Ensures you gain heightened target account control, understand opportunities within whitespaces, and strategically develop your unique selling propositions.",
 
   hero: {
-    eyebrow: "Solution",
-    headline:
-      "360-degree visibility inside the accounts you are trying to win",
-    lede: "Gain heightened target account control, understand the opportunities within whitespaces, and strategically develop your unique selling propositions.",
-    primary: { label: "Let's craft a personalized solution", href: "/contact" },
-    secondary: { label: "Request the datasheet", href: "/contact" },
+    eyebrow: "",
+    headline: "Account Intelligence",
+    lede:
+      "Ensures you gain heightened target account control, understand opportunities within whitespaces, and strategically develop your unique selling propositions.",
+    primary: {
+      label: "Let’s craft a personalised solution for you",
+      href: "/contact",
+    },
   },
 
   proposition: {
-    title: "Bespoke intelligence, not a database subscription",
+    title:
+      "Get insider information with our **Account Intelligence solutions**",
+    singleLine: true,
     body: [
-      "Generic account data tells you who a company is. It does not tell you where your opportunity sits, who decides, or what your competitor has already sold them.",
-      "We combine account data with competitive analysis into reports built for a specific pursuit, so your sellers walk into the room knowing the org chart, the IT landscape and the deals that came before them.",
+      "Bespoke key account intelligence reports custom crafted to give you that much needed competitive edge.",
+      "Our custom account and competitive intelligence approach ensure you gain 360-degree visibility within your target accounts and stay updated with competitor activities.",
     ],
   },
 
   capabilities: {
-    title: "Two intelligence streams",
-    lede: "Commissioned per account, per competitor, or as an ongoing programme.",
+    title:
+      "Know your customers and prospects better with our **Account Intelligence solutions**",
+    body: [
+      "Bespoke key account reports with deal insights, outsourcing heat maps, competitor intelligence, org charts, decision maker database, and strategic recommendations.",
+    ],
     items: [
       {
         title: "Key account intelligence",
-        description:
-          "Everything your team needs to build a credible, specific point of view on a target account.",
+        icon: "account",
         points: [
-          "Business snapshot and financial data",
-          "Products and services analysis",
-          "Organizational structure and IT landscape",
-          "Decision maker database with executive biographies",
-          "Deal insights and outsourcing heat maps",
+          "Business snapshot",
+          "Key financials",
+          "Products & services mix",
+          "Growth track",
+          "Org structure",
+          "IT landscape",
+          "IT outsourcing and deal insights",
+          "Decision makers & executive bios",
         ],
       },
       {
         title: "Competitor intelligence",
-        description:
-          "A clear read on who else is in the account and how they are positioning against you.",
+        icon: "competitor",
         points: [
-          "Business snapshot and product/service mix",
-          "Product, sales and marketing strategy",
-          "SWOT analysis and business comparison",
-          "Major deals tracking",
-          "Executive information",
+          "Competitor business snapshot",
+          "Products & services mix",
+          "Product strategy",
+          "Sales & marketing strategy",
+          "SWOT analysis & business comparison",
+          "Major deals",
+          "Decision makers & executive bios",
         ],
       },
     ],
   },
 
-  detail: {
-    title: "Delivered at scale",
-    stats: [
-      { value: "1.5k+", label: "Key account maps delivered" },
-      { value: "250+", label: "CXO interviews conducted" },
-      { value: "20+", label: "Research reports published" },
-    ],
-  },
-
   outcome: {
-    statement: "Whitespace becomes a plan, not a guess",
-    description:
-      "When your team can see the structure, spend and existing commitments inside an account, the sales conversation changes from pitching to positioning.",
-  },
-
-  cta: {
-    title: "Let's craft a personalized solution for you",
-    lede: "Tell us which accounts you are targeting and we will scope an intelligence programme around them.",
-    primary: { label: "Get in touch", href: "/contact" },
+    statement: "360-degree account intelligence = Actionable prospect insights",
   },
 };
 
 const researchBasedMarketing: SolutionPage = {
   slug: "research-based-marketing",
   navLabel: "Research-based Marketing",
-  metaTitle: "Research-based Marketing",
+  metaTitle: "Research-Based Marketing",
   metaDescription:
-    "Original research combined with custom marketing: thought leadership content, ABM campaigns and targeted lead campaigns for B2B technology brands.",
+    "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",
 
   hero: {
-    eyebrow: "Solution",
-    headline: "Original research + custom marketing = exclusive engagement",
-    lede: "Ensures greater visibility, increased coverage, industry authority and marketing spend optimization.",
-    primary: { label: "Let's craft a personalized solution", href: "/contact" },
-    secondary: { label: "Request the datasheet", href: "/contact" },
+    eyebrow: "",
+    headline: "Research-Based Marketing",
+    lede:
+      "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",
+    primary: {
+      label: "Let’s craft a personalised solution for you",
+      href: "/contact",
+    },
   },
 
   proposition: {
-    title: "Cut through the noise with something only you can say",
+    title: "Connect effectively through **Research-Based Marketing**",
     body: [
-      "The marketplace is saturated with content that restates what everyone already knows. Compelling, insightful material, the kind that earns a download and a conversation, has to be grounded in something original.",
-      "We run the research, then build the campaign around it: interviews, surveys and reports that give your brand a position no competitor can copy, and that keep working long after the launch.",
+      "High impact thought leadership marketing campaigns backed up with well researched and targeted content.",
+      "Our Research-Based Marketing approach ensures you gain visibility, credibility, and personalised engagement opportunities within your target accounts’ power structures.",
     ],
   },
 
   capabilities: {
-    title: "Three campaign types",
-    lede: "Each built on primary research we conduct for you.",
+    title: "**Credible & unique brand voice** aligned with your positioning",
+    body: [
+      "Today’s savvy marketplace has very short attention spans, and to counter such acute snap judgements, careful content positioning is the key.",
+      "You will need to ensure that your communications cut through the noise. To gain visibility, credibility, and initiate personalised engagement with your target accounts’ power structures, your stories have to be compelling and yet insightful. Our Research-Based Marketing approach ensures you excel at it.",
+    ],
     items: [
       {
-        title: "Thought leadership content",
-        description:
-          "Establish authority with a body of work built on expert perspectives from your market.",
+        title: "Thought leadership\ncontent",
+        icon: "content",
         points: [
           "Expert interviews",
           "Blog posts",
-          "Podcasts and video",
+          "Podcasts",
+          "Video",
           "Infographics",
-          "Events and webinars",
+          "Events/webinar",
         ],
       },
       {
-        title: "ABM campaigns",
-        description:
-          "Research-led programmes designed around a named account list rather than a broad audience.",
+        title: "ABM\ncampaigns",
+        icon: "campaign",
         points: [
-          "Interview series",
+          "Interview series with key",
+          "Account executives",
           "Key account surveys",
-          "Branded downloadable content assets",
+          "Branded downloadable content assets - MQLs",
         ],
       },
       {
-        title: "Targeted leads campaigns",
-        description:
-          "Gated research assets built to attract and qualify the specific buyer you are after.",
+        title: "Targeted leads\ncampaigns",
+        icon: "funnel",
         points: [
-          "ICP market surveys",
-          "Whitepapers and eBooks",
+          "Lookalike ICP market surveys",
+          "White paper",
+          "MQLs",
+          "Ebooks",
           "Research reports",
         ],
       },
@@ -244,86 +228,8 @@ const researchBasedMarketing: SolutionPage = {
   },
 
   outcome: {
-    statement: "Original research + custom marketing = exclusive engagement",
-    description:
-      "Research gives your campaign a reason to exist. Custom marketing gives it reach. Together they produce engagements your competitors cannot replicate.",
-  },
-
-  cta: {
-    title: "Let's craft a personalized solution for you",
-    lede: "Bring us a marketing goal and we will design the research programme that supports it.",
-    primary: { label: "Get in touch", href: "/contact" },
-  },
-};
-
-const gccIntelligence: SolutionPage = {
-  slug: "gcc-intelligence",
-  navLabel: "GCC Intelligence",
-  metaTitle: "GCC Intelligence",
-  metaDescription:
-    "Research and intelligence on India's global capability centre ecosystem: how enterprises leverage GCCs for R&D, engineering, analytics and business process management.",
-
-  hero: {
-    eyebrow: "Solution",
-    headline: "Intelligence on India's global capability centre ecosystem",
-    lede: "GCCs in India are crucial for multinational companies, leveraging local talent to drive innovation and efficiency across R&D, software development, data analytics and business process management.",
-    primary: { label: "Talk to our GCC team", href: "/contact" },
-    secondary: {
-      label: "Visit Bamboo Reports",
-      href: site.bambooReports,
-      external: true,
-    },
-  },
-
-  proposition: {
-    title: "A market that moves faster than the research covering it",
-    body: [
-      "The GCC footprint in India has shifted from cost arbitrage to genuine capability ownership: engineering, product, analytics and increasingly customer experience. Vendors selling into that ecosystem are often working from a picture that is two years out of date.",
-      "Our GCC practice tracks how these centres are structured, what they are taking on, and who inside them holds the mandate, published through our dedicated research property, Bamboo Reports.",
-    ],
-  },
-
-  capabilities: {
-    title: "Where we focus",
-    items: [
-      {
-        title: "Ecosystem mapping",
-        description:
-          "Which enterprises operate centres in India, at what scale, and which functions they own.",
-      },
-      {
-        title: "Capability trends",
-        description:
-          "How GCC mandates are expanding across R&D, software development, data analytics and business process management.",
-      },
-      {
-        title: "Customer experience research",
-        description:
-          "Ongoing coverage of how enterprises use the GCC model to run and mature digital CX.",
-      },
-      {
-        title: "Decision maker access",
-        description:
-          "Interview-led research with the leaders who set direction inside these centres.",
-      },
-    ],
-  },
-
-  outcome: {
-    statement: "Sell into GCCs with a current picture, not a dated one",
-    description:
-      "Our GCC research is published continuously through Bamboo Reports, our dedicated property for this market.",
-  },
-
-  cta: {
-    title: "Explore our GCC research",
-    lede: "Bamboo Reports is our dedicated research property covering India's GCC ecosystem.",
-    primary: {
-      label: "Visit Bamboo Reports",
-      href: site.bambooReports,
-      external: true,
-    },
-    secondary: { label: "Talk to our team", href: "/contact" },
+    statement:
+      "Original research + custom marketing = Exclusive engagement & personalised experience",
   },
 };
 
@@ -331,36 +237,17 @@ export const solutions: SolutionPage[] = [
   prospectDatabase,
   accountIntelligence,
   researchBasedMarketing,
-  gccIntelligence,
 ];
+
+export const gccIntelligenceLink = {
+  slug: "gcc-intelligence",
+  label: "GCC Intelligence",
+  href: site.bambooReports,
+  external: true,
+  description:
+    "Research and intelligence on India's global capability centre ecosystem, published through Bamboo Reports.",
+} as const;
 
 export function getSolution(slug: string) {
   return solutions.find((solution) => solution.slug === slug);
 }
-
-export const solutionsHub = {
-  eyebrow: "Solutions",
-  title: "Custom engagement solutions built on high-quality research",
-  lede: "Research NXT offers custom engagement solutions based on high-quality research to business and marketing leaders. Every engagement combines original research, custom content and exclusive access.",
-  methodology: {
-    title: "How we work",
-    lede: "Our methodology merges original research, custom content and exclusive engagements into tailored B2B marketing campaign solutions, with industry experts handpicked for quality assurance.",
-    steps: [
-      {
-        title: "Original research",
-        description:
-          "Primary surveys and interviews conducted in your market, not repackaged secondary data.",
-      },
-      {
-        title: "Custom content",
-        description:
-          "Reports, interview series and campaign assets built around the findings and your brand.",
-      },
-      {
-        title: "Exclusive engagements",
-        description:
-          "Roundtables, launches and interview programmes that put your brand in the room with buyers.",
-      },
-    ],
-  },
-} as const;

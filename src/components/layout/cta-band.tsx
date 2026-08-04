@@ -2,18 +2,17 @@ import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { site } from "@/config/site";
 
 /**
- * The recurring closing CTA, and the page's second drenched band. Copy defaults
- * to the line the live site uses on nearly every page, but each page can
- * override it.
+ * The recurring closing CTA: one line and one button. The eyebrow and lede are
+ * opt-in, so the default band stays a single statement and only the pages that
+ * genuinely need more context ask for it.
  */
 export function CTABand({
-  eyebrow = "Get started",
-  title = "Let's craft a personalized solution for you",
-  lede = "Tell us what you are trying to achieve and we will come back within 24 hours on business days.",
-  primary = { label: "Get in touch", href: "/contact" },
+  eyebrow,
+  title = "Let's craft a personalised solution for you",
+  lede,
+  primary = { label: "Contact us", href: "/contact" },
   secondary,
 }: {
   eyebrow?: string;
@@ -23,40 +22,29 @@ export function CTABand({
   secondary?: { label: string; href: string; external?: boolean };
 }) {
   return (
-    <Section surface="deep" spacing="default">
+    <Section surface="muted" bordered spacing="tight">
       <Container>
-        <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
           <SectionHeading
-            inverted
             eyebrow={eyebrow}
             title={title}
             lede={lede}
-            className="max-w-2xl"
+            className="max-w-[20ch]"
           />
 
-          <div className="flex flex-wrap items-center gap-4">
-            <Button href={primary.href} size="lg" variant="on-deep">
-              {primary.label}
-            </Button>
+          <div className="flex shrink-0 flex-wrap items-center gap-4">
+            <Button href={primary.href}>{primary.label}</Button>
             {secondary ? (
               <Button
                 href={secondary.href}
                 external={secondary.external}
-                size="lg"
-                variant="on-deep-quiet"
+                variant="secondary"
                 className="group"
               >
                 {secondary.label}
                 <TrailingArrow />
               </Button>
-            ) : (
-              <a
-                href={`mailto:${site.email}`}
-                className="text-sm font-semibold text-on-deep underline underline-offset-4 transition-colors duration-200 hover:text-white"
-              >
-                or email {site.email}
-              </a>
-            )}
+            ) : null}
           </div>
         </div>
       </Container>

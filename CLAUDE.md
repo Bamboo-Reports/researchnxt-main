@@ -6,19 +6,17 @@ Guidance for Claude Code working in this repository.
 
 Always update `PROGRESS.md` before finishing a task. Record the current state of the work, including what changed, what was verified, and anything that remains incomplete or blocked. Keep the file accurate enough for another agent to continue without relying on chat history.
 
-## Do not start servers
+## Project command permission
 
-**Never run `npm run dev`, `next dev`, `next start`, or any other dev/production
-server unless the user explicitly asks for it.** The user manages their own
-server processes. Starting one competes for ports with the session they already
-have open.
+Do not run project or development commands unless the user explicitly gives
+permission. This includes builds, development or production servers, tests,
+package installation or updates, database migrations, code generation,
+deployments, and similar commands.
 
-To verify work, use `npm run build` and `npm run lint` — both are non-interactive
-and prove type-safety, lint cleanliness and the full route table without binding
-a port.
-
-If a check genuinely requires a running server (redirect behaviour, rendered
-HTML, link crawling), ask first.
+Lint checks are the sole standing exception and may be run without asking first.
+Read-only shell inspection and Git status/diff checks are also allowed. If any
+other command is needed to verify or complete work, ask the user before running
+it.
 
 ## Project
 

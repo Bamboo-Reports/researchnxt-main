@@ -1,7 +1,7 @@
 export const site = {
   name: "Research NXT",
   url: "https://researchnxt.com",
-  tagline: "Turnkey research solutions personalized to your marketing goals.",
+  tagline: "Turnkey research solutions personalised to your marketing goals.",
   description:
     "Research NXT offers custom engagement solutions based on high-quality research to business and marketing leaders.",
   email: "enquiry@researchnxt.com",
@@ -27,5 +27,5 @@ export const site = {
     },
   ],
   /** Sister property for GCC research; stays a separate site for now. */
-  bambooReports: "https://bambooreports.io",
+  bambooReports: "https://bambooreports.com/",
 } as const;

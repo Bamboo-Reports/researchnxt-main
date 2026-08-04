@@ -1,7 +1,7 @@
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { TrailingArrow } from "@/components/ui/button";
 import { Card, CardBody, CardTitle } from "@/components/ui/card";
-import { DataPlate } from "@/components/ui/data-plate";
 import type { FeaturedResource } from "@/content/types";
 
 /**
@@ -30,11 +30,12 @@ export function ResourceCard({
       style={style}
     >
       {withPlate ? (
-        <DataPlate
-          seed={resource.title}
-          aspect="video"
-          label={resource.kind}
-          className="mt-1 w-full"
+        <Image
+          src="/resource-placeholder.svg"
+          alt=""
+          width={640}
+          height={360}
+          className="mt-1 aspect-video w-full rounded-md object-cover"
         />
       ) : (
         <Badge className="self-start">{resource.kind}</Badge>
@@ -47,7 +48,10 @@ export function ResourceCard({
       ) : null}
 
       <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-        Read More
+        Read more
+        {resource.external ? (
+          <span className="sr-only">(opens in a new tab)</span>
+        ) : null}
         <TrailingArrow />
       </span>
     </Card>
