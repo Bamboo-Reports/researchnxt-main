@@ -1,5 +1,5 @@
 /**
- * PHASE B: placeholder pages for the five Resources destinations, created so
+ * PHASE B: placeholder pages for the remaining Resources destinations, created so
  * navigation stays on this site instead of linking to the live WordPress
  * pages. Every title and lede below is stand-in copy awaiting real content;
  * replace the strings here and the pages update without touching markup.
@@ -21,13 +21,8 @@ export const resourcePages: ResourcePage[] = [
     title: "Reports & whitepapers",
     lede: "Original research reports and whitepapers for business and marketing leaders.",
   },
-  {
-    slug: "experts-view",
-    navLabel: "Experts view",
-    metaTitle: "Experts view",
-    title: "Experts view",
-    lede: "Interviews and perspectives from thought leaders, buyers and vendors across B2B technology.",
-  },
+  /* Experts view has its own route now (`app/resources/experts-view`), so it
+     is deliberately absent from this placeholder list. */
   {
     slug: "insights",
     navLabel: "Insights",
@@ -65,6 +60,8 @@ export type ReportCardItem = {
   /** Optional; card renders without a link until the article page exists. */
   href?: string;
   external?: boolean;
+  /** Optional plate under /public; falls back to the placeholder. */
+  image?: string;
 };
 
 /** A run of consent text; segments with an `href` render as links. */
@@ -217,9 +214,13 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "Transforming SaaS, Reviving Storytelling, and Redefining the Future of Creativity",
+            href: "/resources/experts-view/implementers-guide-to-ai/diptarup-chakraborti",
+            image: "/experts/diptarup-chakraborti.png",
           },
           {
             title: "How Spacewood Leverages AI to Redefine Customer Experience",
+            href: "/resources/experts-view/implementers-guide-to-ai/nimish-thaker",
+            image: "/experts/nimish-thaker.png",
           },
         ],
       },
@@ -229,9 +230,13 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "How Carat Lane is Redefining Customer Experience in the Jewellery Industry",
+            href: "/resources/experts-view/implementers-guide-to-ai/avnish-anand",
+            image: "/experts/avnish-anand.png",
           },
           {
             title: "SkinQ's AI-Powered Vision and Strategic Marketing Insights",
+            href: "/resources/experts-view/implementers-guide-to-ai/meera-iyer",
+            image: "/experts/meera-iyer.png",
           },
         ],
       },
@@ -241,45 +246,71 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "AI-Driven Branding & Digital Marketing: Insights from Hansveen Kaur",
+            href: "/resources/experts-view/implementers-guide-to-ai/hansveen-kaur",
+            image: "/experts/hansveen-kaur.png",
           },
           {
             title:
               "AI's Role in Engineering & Infrastructure: Insights from Manish",
+            href: "/resources/experts-view/implementers-guide-to-ai/manish-kumar",
+            image: "/experts/manish-kumar.png",
           },
           {
             title:
               "Transforming Retail with AI: Insights from Pressto's Marketing Evolution",
+            href: "/resources/experts-view/implementers-guide-to-ai/akshay-matkar",
+            image: "/experts/akshay-matkar.png",
           },
           {
             title:
               "AI in Manufacturing: Driving Digital Transformation and Intelligent Operations",
+            href: "/resources/experts-view/implementers-guide-to-ai/madhav-vemuri",
+            image: "/experts/madhav-vemuri.png",
           },
           {
             title:
               "Insights on Data Unification, Customer Experience, and Ethical Innovation",
+            href: "/resources/experts-view/implementers-guide-to-ai/prasad-pimple",
+            image: "/experts/prasad-pimple.png",
           },
           {
             title:
               "How Edelweiss Life Insurance is Redefining Industry Standards Through Innovation and AI",
+            href: "/resources/experts-view/implementers-guide-to-ai/abhishek-gupta",
+            image: "/experts/abhishek-gupta.png",
           },
         ],
       },
       {
         stage: "Deployed",
         items: [
-          { title: "AI-Led Transformation in Automotive Manufacturing" },
-          { title: "How AI Powers Kissht's Customer-Centric Approach" },
+          {
+            title: "AI-Led Transformation in Automotive Manufacturing",
+            href: "/resources/experts-view/implementers-guide-to-ai/sanjiv-kumar-jain",
+            image: "/experts/sanjiv-kumar-jain.png",
+          },
+          {
+            title: "How AI Powers Kissht's Customer-Centric Approach",
+            href: "/resources/experts-view/implementers-guide-to-ai/shwetha-iyer",
+            image: "/experts/shwetha-iyer.png",
+          },
           {
             title:
               "Transforming Customer Engagement, Decision-Making, and Operational Efficiency",
+            href: "/resources/experts-view/implementers-guide-to-ai/gaurav-suri",
+            image: "/experts/gaurav-suri.png",
           },
           {
             title:
               "How PolicyBoss is Leveraging AI to Redefine Distribution, Personalisation, and Customer Experience",
+            href: "/resources/experts-view/implementers-guide-to-ai/varun-kaushik",
+            image: "/experts/varun-kaushik.png",
           },
           {
             title:
               "Transforming Insurance Sales and Distribution at Allianz Partners",
+            href: "/resources/experts-view/implementers-guide-to-ai/suman-tewary",
+            image: "/experts/suman-tewary.png",
           },
           {
             title:

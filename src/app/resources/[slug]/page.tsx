@@ -7,7 +7,8 @@ import { Section } from "@/components/ui/section";
 import { getResourcePage, resourcePages } from "@/content/resources";
 
 /**
- * PHASE B: one shared placeholder template for the five Resources pages.
+ * PHASE B: one shared placeholder template for the Resources pages that do not
+ * have real content yet (Experts view has its own route).
  * The pages are noindexed and absent from the sitemap until real content
  * lands; drop the robots override and add them to `sitemap.ts` then.
  */

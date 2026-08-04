@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Logo } from "@/components/layout/logo";
 import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
+import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getReportLanding, reportLandings } from "@/content/resources";
+import { cn } from "@/lib/cn";
 import { delay, step } from "@/lib/motion";
 import type { ReportCardItem } from "@/content/resources";
 
@@ -22,41 +25,57 @@ import type { ReportCardItem } from "@/content/resources";
 
 type Params = { params: Promise<{ slug: string }> };
 
-/** Renders `**` emphasis in body copy as bold ink. */
-function emphasised(text: string) {
-  return text.split(/\*\*(.+?)\*\*/g).map((part, index) =>
-    index % 2 === 1 ? (
-      <strong key={part} className="font-semibold text-ink">
-        {part}
-      </strong>
-    ) : (
-      part
-    ),
-  );
-}
-
 /** Card grid shared by the quick-reads and expert-insights sections.
-    PHASE B: items render with the homepage placeholder image and no link
-    until the article pages exist; add `href` to an item to make it a link. */
+    PHASE B: items without an `href` still render as inert plates with the
+    placeholder image, until their article pages exist. */
 function ReportCardGrid({ items }: { items: ReportCardItem[] }) {
   return (
     <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((item, index) => (
-        <div
-          key={item.title}
-          className="flex flex-col gap-4 border-t border-line pt-4"
-          style={step(index)}
-        >
-          <Image
-            src="/resource-placeholder.svg"
-            alt=""
-            width={640}
-            height={360}
-            className="mt-1 aspect-video w-full rounded-md object-cover"
-          />
-          <h3 className="clamp-3 text-base font-semibold">{item.title}</h3>
-        </div>
-      ))}
+      {items.map((item, index) => {
+        const inner = (
+          <>
+            <Image
+              src={item.image ?? "/resource-placeholder.svg"}
+              alt=""
+              width={640}
+              height={360}
+              className="mt-1 aspect-video w-full rounded-md object-cover"
+            />
+            <h3
+              className={cn(
+                "clamp-3 text-base font-semibold",
+                item.href &&
+                  "transition-colors duration-200 group-hover:text-accent",
+              )}
+            >
+              {item.title}
+            </h3>
+          </>
+        );
+
+        if (!item.href) {
+          return (
+            <div
+              key={item.title}
+              className="flex flex-col gap-4 border-t border-line pt-4"
+              style={step(index)}
+            >
+              {inner}
+            </div>
+          );
+        }
+
+        return (
+          <Link
+            key={item.title}
+            href={item.href}
+            className="group flex flex-col gap-4 border-t border-line pt-4 transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+            style={step(index)}
+          >
+            {inner}
+          </Link>
+        );
+      })}
     </Reveal>
   );
 }
@@ -149,7 +168,7 @@ export default async function ReportLandingPage({ params }: Params) {
                 key={paragraph}
                 className="text-lg leading-relaxed text-ink-soft"
               >
-                {emphasised(paragraph)}
+                <Emphasised text={paragraph} />
               </p>
             ))}
           </div>
