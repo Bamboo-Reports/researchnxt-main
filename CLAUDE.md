@@ -29,6 +29,11 @@ library.
 
 ## Conventions
 
+- **Content URLs are `/resources/<library>/<project>/<leaf>`** — the programme
+  a piece belongs to is always the middle segment, and a leaf slug never
+  repeats it. The full rule, including where modules and images go and how
+  redirects are handled, is the "Content URLs" section of `README.md`. Read it
+  before adding a report, an interview or an article.
 - **Design tokens live in one place** — `src/app/globals.css` under `@theme`.
   Components reference tokens (`bg-accent`, `text-ink-soft`, `border-line`),
   never raw hex. The accent is the brand blue `#0079bf` from the logo.
@@ -54,8 +59,9 @@ library.
   modules so copy edits never touch markup.
 - **Nav and site identity live in `src/config/`** — `nav.ts` and `site.ts` are
   the single source of truth for the navbar, footer, address and socials.
-- **Server components by default.** The navbar, the two forms and the two motion
-  components (`Reveal`, `FigureValue`) are the only client components.
+- **Server components by default.** The navbar, the two forms, the two motion
+  components (`Reveal`, `FigureValue`) and the two scrolling rails
+  (`QuoteCarousel`, `ReportCardRail`) are the only client components.
 - Run `npm run lint` before considering work done; `src/` must be warning-free.
 
 ## Phase markers

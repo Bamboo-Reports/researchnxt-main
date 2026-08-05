@@ -230,38 +230,27 @@ export default async function ExpertInterviewPage({ params }: Params) {
               </div>
             </article>
 
+            {/* The form sits on the page with no panel and no heading of its
+                own: the embed carries its own title and framing. */}
             {showForm ? (
               <aside className="lg:sticky lg:top-24 lg:self-start">
                 <div
                   id="download"
-                  className="anim-rise scroll-mt-24 rounded-lg border border-line bg-white p-5 sm:p-7"
+                  className="anim-rise scroll-mt-24"
                   style={delay(160)}
                 >
-                  <div className="flex flex-col gap-2 pb-5">
-                    <h2 className="text-title font-display-soft">
-                      Get the full report
-                    </h2>
-                    <p className="text-sm leading-relaxed text-ink-soft">
-                      This interview is one of the conversations behind the{" "}
-                      {projectMeta.name}. Free download, sent straight to your
-                      work email.
-                    </p>
-                  </div>
-                  <span aria-hidden="true" className="rule-ticks block h-px" />
-                  <div className="pt-5">
-                    {jotformId ? (
-                      <JotformEmbed
-                        formId={jotformId}
-                        title="Download the report"
-                      />
-                    ) : report ? (
-                      <DownloadForm
-                        report={report.hero.title}
-                        submitLabel={report.download.submitLabel}
-                        consent={report.download.consent}
-                      />
-                    ) : null}
-                  </div>
+                  {jotformId ? (
+                    <JotformEmbed
+                      formId={jotformId}
+                      title="Download the report"
+                    />
+                  ) : report ? (
+                    <DownloadForm
+                      report={report.hero.title}
+                      submitLabel={report.download.submitLabel}
+                      consent={report.download.consent}
+                    />
+                  ) : null}
                 </div>
               </aside>
             ) : null}

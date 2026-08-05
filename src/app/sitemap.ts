@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/config/site";
 import { expertInterviews, interviewHref } from "@/content/experts-view";
+import { eventHref, events } from "@/content/events";
+import { insightHref, insights } from "@/content/insights";
 import { reportLandings } from "@/content/resources";
 import { solutions } from "@/content/solutions";
 
@@ -16,7 +18,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/careers", priority: 0.6 },
     { path: "/contact", priority: 0.8 },
     { path: "/privacy-policy", priority: 0.3 },
+    { path: "/resources/reports-whitepapers", priority: 0.7 },
     { path: "/resources/experts-view", priority: 0.7 },
+    { path: "/resources/insights", priority: 0.7 },
+    { path: "/resources/events", priority: 0.6 },
   ];
 
   const solutionRoutes = solutions.map((solution) => ({
@@ -34,6 +39,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
+  // Only page 1 of the insights library is listed; the ?page=N URLs are
+  // crawlable from the pager.
+  const insightRoutes = insights.map((insight) => ({
+    path: insightHref(insight),
+    priority: 0.6,
+  }));
+
+  const eventRoutes = events.map((event) => ({
+    path: eventHref(event),
+    priority: 0.5,
+  }));
+
   const lastModified = new Date();
 
   return [
@@ -41,6 +58,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...solutionRoutes,
     ...reportRoutes,
     ...interviewRoutes,
+    ...insightRoutes,
+    ...eventRoutes,
   ].map((route) => ({
     url: `${site.url}${route.path}`,
     lastModified,
