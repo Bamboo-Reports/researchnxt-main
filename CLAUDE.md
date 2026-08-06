@@ -60,8 +60,13 @@ library.
 - **Nav and site identity live in `src/config/`** — `nav.ts` and `site.ts` are
   the single source of truth for the navbar, footer, address and socials.
 - **Server components by default.** The navbar, the two forms, the two motion
-  components (`Reveal`, `FigureValue`) and the two scrolling rails
-  (`QuoteCarousel`, `ReportCardRail`) are the only client components.
+  components (`Reveal`, `FigureValue`), the two scrolling rails
+  (`QuoteCarousel`, `ReportCardRail`) and the three hero components
+  (`HeroQuestions`, `HeroIntro`, `HeroField`) are the only client components.
+- **GSAP is in the stack for authored motion** (`HeroIntro` owns the hero
+  entrance timeline). Content must stay visible by default: GSAP animates
+  FROM hidden states only when `data-motion="on"`, never hides content in
+  CSS awaiting a script. CSS keyframes remain the tool for ambient loops.
 - Run `npm run lint` before considering work done; `src/` must be warning-free.
 
 ## Phase markers

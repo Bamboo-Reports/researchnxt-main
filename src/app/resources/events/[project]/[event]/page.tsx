@@ -95,7 +95,13 @@ export default async function EventPage({ params }: Params) {
 
       <Section spacing="default">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16">
+          <div
+            className={
+              event.facts?.length
+                ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16"
+                : "grid gap-10"
+            }
+          >
             <div className="flex flex-col gap-8">
               <Image
                 src={event.image}
@@ -107,38 +113,64 @@ export default async function EventPage({ params }: Params) {
               />
               {event.body?.length ? (
                 <div className="flex max-w-[68ch] flex-col gap-5">
-                  {event.body.map((paragraph) => (
-                    <p
-                      key={paragraph}
-                      className="text-base leading-relaxed text-ink-soft"
-                    >
-                      <Emphasised text={paragraph} />
-                    </p>
-                  ))}
+                  {event.body.map((block) =>
+                    typeof block === "string" ? (
+                      <p
+                        key={block}
+                        className="text-base leading-relaxed text-ink-soft"
+                      >
+                        <Emphasised text={block} />
+                      </p>
+                    ) : (
+                      <ul
+                        key={block.list.join("")}
+                        className="flex flex-col gap-3"
+                      >
+                        {block.list.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-3 text-base leading-relaxed text-ink-soft"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2.5 h-1 w-3 shrink-0 rounded-[1px] bg-signal"
+                            />
+                            <span>
+                              <Emphasised text={item} />
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    ),
+                  )}
                 </div>
               ) : null}
             </div>
 
-            {/* The event's own facts, as the source page lists them. */}
-            <aside className="lg:sticky lg:top-24 lg:self-start">
-              <dl className="flex flex-col">
-                {event.facts.map((fact, index) => (
-                  <div
-                    key={fact.label}
-                    className={`flex flex-col gap-1 py-4 ${
-                      index > 0 ? "border-t border-line" : "pt-0"
-                    }`}
-                  >
-                    <dt className="text-sm font-semibold text-ink-muted">
-                      {fact.label}
-                    </dt>
-                    <dd className="text-base leading-relaxed text-ink">
-                      {fact.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </aside>
+            {/* The event's own facts, where the source page lists them. The
+                conference participations have none, so the aside is dropped
+                and the body runs the full width. */}
+            {event.facts?.length ? (
+              <aside className="lg:sticky lg:top-24 lg:self-start">
+                <dl className="flex flex-col">
+                  {event.facts.map((fact, index) => (
+                    <div
+                      key={fact.label}
+                      className={`flex flex-col gap-1 py-4 ${
+                        index > 0 ? "border-t border-line" : "pt-0"
+                      }`}
+                    >
+                      <dt className="text-sm font-semibold text-ink-muted">
+                        {fact.label}
+                      </dt>
+                      <dd className="text-base leading-relaxed text-ink">
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </aside>
+            ) : null}
           </div>
         </Container>
       </Section>

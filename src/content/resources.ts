@@ -1,36 +1,9 @@
+import { eventHref, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
-
-/**
- * PHASE B: placeholder pages for the remaining Resources destinations, created so
- * navigation stays on this site instead of linking to the live WordPress
- * pages. Every title and lede below is stand-in copy awaiting real content;
- * replace the strings here and the pages update without touching markup.
- */
-
-export type ResourcePage = {
-  slug: string;
-  navLabel: string;
-  metaTitle: string;
-  title: string;
-  lede: string;
-};
-
-export const resourcePages: ResourcePage[] = [
-  /* Reports & whitepapers, Experts view, Insights and Events all have their
-     own routes now, so they are deliberately absent from this placeholder
-     list. Success stories is the last one still standing. */
-  {
-    slug: "success-stories",
-    navLabel: "Success stories",
-    metaTitle: "Success stories",
-    title: "Success stories",
-    lede: "How business and marketing leaders put our research to work.",
-  },
-];
-
-export function getResourcePage(slug: string) {
-  return resourcePages.find((page) => page.slug === slug);
-}
+import {
+  getSuccessStory,
+  successStoryHref,
+} from "@/content/success-stories";
 
 /* ---------------------------------------------------------------------------
    Report landing pages. Every report gets its own page under
@@ -76,6 +49,65 @@ const seaCard = (person: string) =>
 const aiCard = (person: string) =>
   interviewCard("ai-led-personalization", person);
 
+const cmCard = (person: string) =>
+  interviewCard("content-marketing-done-right", person);
+
+const abmCard = (person: string) =>
+  interviewCard("abm-best-practices-report-india-2018", person);
+
+const b2cMasCard = (person: string) =>
+  interviewCard("b2c-marketing-automation-india-2017", person);
+
+const gccEngagementCard = (person: string) =>
+  interviewCard("state-of-consumer-engagement-gcc-2019", person);
+
+const etutoringCard = (person: string) =>
+  interviewCard("etutoring-best-practices-whitepaper-2016", person);
+
+const publisherCard = (person: string) =>
+  interviewCard("publishers-guide-to-smarter-monetization", person);
+
+/**
+ * A card for one published event, so a landing's launch band names the event
+ * rather than restating a title, a URL and artwork that already live in the
+ * events registry. A typo in a slug fails the build.
+ */
+function eventCard(project: string, slug: string): ReportCardItem {
+  const event = getEvent(project, slug);
+  if (!event) {
+    throw new Error(`Unknown event: ${project}/${slug}`);
+  }
+  return {
+    title: event.title,
+    href: eventHref(event),
+    image: event.image,
+  };
+}
+
+/**
+ * A card for one published success story, for a landing whose source page
+ * carries a "Client Testimonial" band with a link through to the full case
+ * study. Resolved from the success stories registry for the same reason
+ * `eventCard` resolves events.
+ */
+function successStoryCard(
+  project: string,
+  slug: string,
+  image?: string,
+): ReportCardItem {
+  const story = getSuccessStory(project, slug);
+  if (!story) {
+    throw new Error(`Unknown success story: ${project}/${slug}`);
+  }
+  return {
+    title: story.title,
+    href: successStoryHref(story),
+    /* The story's own image is the testimonial card, which the landing already
+       runs as a voice card, so a landing may pass its own artwork instead. */
+    image: image ?? story.image,
+  };
+}
+
 export type ReportCardItem = {
   title: string;
   /** Optional; card renders without a link until the article page exists. */
@@ -94,6 +126,12 @@ export type ConsentSegment = {
 
 export type ReportLanding = {
   slug: string;
+  /**
+   * When the report was published, ISO `YYYY-MM-DD`. Used to order the
+   * "Latest reports" band on the home page, so that band stays correct as
+   * programmes are added rather than being hand-maintained.
+   */
+  published: string;
   metaTitle: string;
   metaDescription: string;
 
@@ -172,13 +210,42 @@ export type ReportLanding = {
     }[];
   };
 
-  quickReads: { title: string; items: ReportCardItem[] };
+  /**
+   * The programme's own facts, as the 2019 GCC microsite lists them beside the
+   * highlights: research focus, technology, geography, timeframe. Rendered as
+   * a definition list, the same device the event pages use.
+   */
+  facts?: { label: string; value: string }[];
 
-  /** Expert interviews grouped by AI maturity stage, in stage order. */
-  expertInsights: {
+  /**
+   * Optional: a programme with no published articles runs no rail rather than
+   * an empty one.
+   */
+  quickReads?: { title: string; items: ReportCardItem[] };
+
+  /**
+   * Expert interviews grouped by AI maturity stage, in stage order. Optional
+   * for the same reason as `quickReads`: not every programme ran interviews.
+   */
+  expertInsights?: {
     title: string;
     groups: { stage: string; items: ReportCardItem[] }[];
   };
+
+  /**
+   * The things the source landing points at in bands of their own: a launch
+   * event, a client success story. Each card's title, artwork and URL are
+   * resolved from the relevant registry by `eventCard` or `successStoryCard`,
+   * so the piece stays described in exactly one place; only the landing's own
+   * sentence about it lives here. A list, because the 2017 microsite points at
+   * both its webinar and its case study.
+   */
+  spotlights?: {
+    title: string;
+    description: string;
+    linkLabel: string;
+    card: ReportCardItem;
+  }[];
 
   /**
    * Quote cards from the research participants. The source artwork bakes the
@@ -213,6 +280,7 @@ export type ReportLanding = {
 /** Copy transcribed from researchnxt.com/microsite/implementer-guide-to-ai/ */
 const implementersGuideToAI: ReportLanding = {
   slug: "implementers-guide-to-ai",
+  published: "2025-02-20",
   metaTitle: "Implementer's Guide to AI",
   metaDescription:
     "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
@@ -582,6 +650,7 @@ const implementersGuideToAI: ReportLanding = {
     researchnxt.com/microsite/automation-campaign-management-for-functional-experts/ */
 const automationCampaignManagement: ReportLanding = {
   slug: "automation-campaign-management",
+  published: "2024-12-07",
   metaTitle: "Automation & Campaign Management Handbook for Functional Experts",
   metaDescription:
     "Explore current campaign management nuances and opportunities tailored to Indian market dynamics, from 150+ survey responses and 20 expert interviews.",
@@ -902,6 +971,7 @@ const automationCampaignManagement: ReportLanding = {
     face; the microsite's Arabic toggle and Arabic content are not carried). */
 const unlockingThePowerUnifiedCX: ReportLanding = {
   slug: "unlocking-the-power-unified-cx",
+  published: "2025-02-06",
   metaTitle: "Unlocking the Power of Unified CX",
   metaDescription:
     "Explore the latest insights, strategies and innovations driving customer centric transformations in Qatar, from 100 survey responses and 6 expert interviews.",
@@ -1057,6 +1127,7 @@ const unlockingThePowerUnifiedCX: ReportLanding = {
     researchnxt.com/microsite/navigating-corporate-commute-for-gccs-in-india/ */
 const navigatingCorporateCommute: ReportLanding = {
   slug: "navigating-corporate-commute-for-gccs-in-india",
+  published: "2026-02-13",
   metaTitle: "Navigating Corporate Commute for GCCs in India",
   metaDescription:
     "How India's global capability centres can move employee transport beyond fragmented, manual processes, with commute maturity benchmarks and data-driven insights.",
@@ -1210,6 +1281,7 @@ const navigatingCorporateCommute: ReportLanding = {
     E-book will acquaint you with" bullets stand in for the chapter band. */
 const transformingCxThroughGccs: ReportLanding = {
   slug: "transforming-cx-through-gccs",
+  published: "2024-04-02",
   metaTitle: "Transforming CX through GCCs",
   metaDescription:
     "How top global brands tech-enable their digital customer experience through the Indian GCC model, with real-world use cases and insights from GCC leaders.",
@@ -1312,6 +1384,7 @@ const transformingCxThroughGccs: ReportLanding = {
     it carries no Jotform: the landing uses the project's 2021 report form. */
 const cloudComputingNewNormal: ReportLanding = {
   slug: "cloud-computing-new-normal-beyond",
+  published: "2021-06-22",
   metaTitle: "Cloud Computing in the New Normal & Beyond",
   metaDescription:
     "India's progressing cloud computing market in 2021: adoption trends by service and deployment type, sector priorities, and the top adoption and management challenges.",
@@ -1427,6 +1500,7 @@ const cloudComputingNewNormal: ReportLanding = {
     project's 2021 report form. */
 const southEastAsiaResponseGuide: ReportLanding = {
   slug: "south-east-asia-response-guide",
+  published: "2021-07-08",
   metaTitle: "Southeast Asia Response Guide 2021",
   metaDescription:
     "The Best of Business Strategies In The New Normal: bounce-back strategies for emerging industries and business functions across Southeast Asia.",
@@ -1594,6 +1668,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
     is absent from the groups here too. */
 const aiLedPersonalization: ReportLanding = {
   slug: "ai-led-personalization",
+  published: "2020-09-30",
   metaTitle: "AI Led Personalization: Strategy and Trends, India 2020",
   metaDescription:
     "AI powered business strategies of B2C brands in India: interviews with marketing leaders across BFSI, OTT, e-commerce and D2C, and digital-first businesses.",
@@ -1720,6 +1795,16 @@ const aiLedPersonalization: ReportLanding = {
     ],
   },
 
+  spotlights: [
+    {
+      title: "Client success story",
+      description:
+        "Netcore commissioned this research to understand how India's consumer brands were using AI powered tools through the pandemic. The full case study covers what the research delivered.",
+      linkLabel: "Read the story",
+      card: successStoryCard("ai-led-personalization", "netcore"),
+    },
+  ],
+
   credits: {
     sponsor: {
       label: "In association with",
@@ -1727,6 +1812,684 @@ const aiLedPersonalization: ReportLanding = {
       logo: "/logos/trusted/netcore.png",
     },
     partnerLabel: "Research partner",
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/research-report/content-marketing-done-right-trends-and-best-practices-report/.
+    That page lists its findings as short labels under "Report Highlights" and
+    runs no chapter band, so the landing carries `highlights` and no `expect`.
+    It also carries its own Jotform, distinct from the one the interviews and
+    articles use, so the id here is the landing's own. */
+const contentMarketingDoneRight: ReportLanding = {
+  slug: "content-marketing-done-right",
+  published: "2019-11-28",
+  metaTitle: "Content Marketing Done Right: Trends and Best Practices Report",
+  metaDescription:
+    "The state of content marketing in India, with the first of its kind Content Marketing Technology Stack for the Indian market, a maturity model, and B2B against B2C trends.",
+
+  hero: {
+    title: "Content Marketing Done Right",
+    lede: "Trends and best practices in Indian content marketing, 2020",
+    cover: "/covers/content-marketing-done-right.png",
+    coverAlt: "Cover of the Content Marketing Done Right report",
+  },
+
+  cardImage: "/covers/content-marketing-done-right-card.png",
+
+  download: {
+    jotformId: "90447985712467",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "Content marketing continues to have a very impactful influence on the decision to purchase a company's product or services. Marketers are increasingly using content marketing tactics, along with technology, to better engage with their buyers to educate, update, and guide them.",
+    "To understand the buzz around the growing popularity of content marketing, we at Research NXT conducted **in-depth market research to compile key data points** to learn the current state of content marketing in India.",
+  ],
+
+  highlights: {
+    title: "Report highlights",
+    items: [
+      "First of its kind Content Marketing Technology Stack for the Indian market",
+      "93% of Indian marketers use content marketing as an audience engagement strategy",
+      "37% consider social media the most effective channel to reach the target audience",
+      "80% of video production is outsourced by Indian marketers",
+      "60% of survey participants plan to implement a content marketing strategy in 2020",
+    ],
+  },
+
+  quickReads: {
+    title: "Insights",
+    items: [
+      {
+        title: "Evolution of Content Marketing in India",
+        href: "/resources/insights/content-marketing-done-right/evolution-of-content-marketing-in-india",
+        image:
+          "/insights/content-marketing-done-right/evolution-of-content-marketing-in-india.jpg",
+      },
+      {
+        title: "How to Combine your Social Media and Content Marketing",
+        href: "/resources/insights/content-marketing-done-right/combine-your-social-media-and-content-marketing",
+        image:
+          "/insights/content-marketing-done-right/combine-your-social-media-and-content-marketing.jpg",
+      },
+      {
+        title: "How Content Marketing Impacts Your SEO Strategy",
+        href: "/resources/insights/content-marketing-done-right/how-content-marketing-impacts-your-seo-strategy",
+        image:
+          "/insights/content-marketing-done-right/how-content-marketing-impacts-your-seo-strategy.jpg",
+      },
+      {
+        title: "Best Practices for Your 2019 Content Marketing Strategy",
+        href: "/resources/insights/content-marketing-done-right/best-practices-for-your-2019-content-marketing-strategy",
+        image:
+          "/insights/content-marketing-done-right/best-practices-for-your-2019-content-marketing-strategy.jpg",
+      },
+      {
+        title: "Content Marketing and CRM: The Keys to Boost Email Campaigns",
+        href: "/resources/insights/content-marketing-done-right/content-marketing-and-crm-boost-email-campaigns",
+        image:
+          "/insights/content-marketing-done-right/content-marketing-and-crm-boost-email-campaigns.jpg",
+      },
+      {
+        title: "7 Must-have Features for Content Marketing System",
+        href: "/resources/insights/content-marketing-done-right/7-must-have-features-for-a-content-marketing-system",
+        image:
+          "/insights/content-marketing-done-right/7-must-have-features-for-a-content-marketing-system.jpg",
+      },
+      {
+        title: "How to implement a killer Omni-channel marketing strategy",
+        href: "/resources/insights/content-marketing-done-right/how-to-implement-a-killer-omni-channel-marketing-strategy",
+        image:
+          "/insights/content-marketing-done-right/how-to-implement-a-killer-omni-channel-marketing-strategy.png",
+      },
+    ],
+  },
+
+  /* One flat list on the source page, so a single group and no tab rail. */
+  expertInsights: {
+    title: "Experts view",
+    groups: [
+      {
+        stage: "Marketing leaders",
+        items: [
+          "ranjit-behera",
+          "sooraj-divakaran",
+          "apurva-chamaria",
+          "amit-kapoor",
+          "gaurav-suri",
+          /* Two more interviews from the same 2019 series that the source
+             landing does not list in its Experts View band, but which belong
+             to this programme and are published under it. */
+          "rickard-lawson",
+          "allison-munro",
+        ].map(cmCard),
+      },
+    ],
+  },
+
+  spotlights: [
+    {
+      title: "Check out the launch event",
+      description:
+        "The Content Marketing Report 2020 was launched at NASSCOM's flagship one-day event, NASSCOM MarTech, on 28 November 2019 at Courtyard by Marriott, Mumbai.",
+      linkLabel: "See the event",
+      card: eventCard(
+        "content-marketing-done-right",
+        "content-marketing-report-launch",
+      ),
+    },
+  ],
+};
+
+/** Copy transcribed from
+    researchnxt.com/microsite/state-of-consumer-engagement-report-gcc-2019/.
+    That microsite runs no chapter band and links no articles or interviews, so
+    the landing carries `highlights` and `facts` and neither `expect` nor
+    `expertInsights`. Its one "Client Testimonial" band is the WebEngage story,
+    carried here as the single voice card it is and as the one quick read, and
+    published in full under Success stories. */
+const stateOfConsumerEngagementGcc2019: ReportLanding = {
+  slug: "state-of-consumer-engagement-gcc-2019",
+  published: "2019-09-30",
+  metaTitle: "State of Consumer Engagement, GCC 2019",
+  metaDescription:
+    "A three-dimensional report on B2C consumer engagement in the GCC region: the channels consumers prefer, the content they want, and the challenges marketers name.",
+
+  hero: {
+    title: "State of Consumer Engagement, GCC 2019",
+    lede: "A three-dimensional report on B2C consumer engagement in the GCC region",
+    cover: "/covers/state-of-consumer-engagement-gcc-2019.jpg",
+    coverAlt:
+      "Cover of the State of Consumer Engagement, GCC 2019 report, in print and on a tablet",
+  },
+
+  cardImage: "/covers/state-of-consumer-engagement-gcc-2019-card.png",
+
+  download: {
+    jotformId: "92538569205465",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "New-age consumers are evolving from being informed and aware buyers to being designers and creators of their user journeys. This massive shift is underway owing to consumers' access to sophisticated digital technologies and on-demand data on products, services, brands, markets, and trends, for both the present and the predicted future.",
+    "Brands, which until now have controlled engagements and experiences based on consumer behaviours, must acknowledge the changing buying landscape and **incorporate innovative marketing technologies to deliver on the evolving customer expectations**.",
+  ],
+
+  highlights: {
+    title: "Report highlights",
+    items: [
+      "83% of consumers in the GCC region choose email as their preferred channel for brand engagement",
+      "83% of consumers in the GCC region use their mobile phones to consume content",
+      "53% of consumers in the GCC region love to receive informational content",
+      "43% of consumers engage most with brand communication on their mobile phones during late evening",
+      "55% of marketers in the GCC region say that scattered user engagement strategies and the lack of technology are the top challenges for driving effective consumer engagement",
+    ],
+  },
+
+  facts: [
+    { label: "Research focus", value: "B2C" },
+    { label: "Technology", value: "Digital consumer engagement" },
+    { label: "Geography", value: "GCC" },
+    { label: "Timeframe of research", value: "August 2019 to September 2019" },
+  ],
+
+  /* No articles were published from this programme, so the landing runs no
+     quick reads rail. The source page links no interviews either, but the
+     sponsor's own interview belongs to this programme and is published under
+     it, so it gets a band. */
+  expertInsights: {
+    title: "Experts view",
+    groups: [
+      {
+        stage: "The sponsor's view",
+        items: ["avlesh-singh"].map(gccEngagementCard),
+      },
+    ],
+  },
+
+  /* The microsite's "Client Testimonial", carried as the one voice card it is:
+     the quote is baked into the artwork, so it is quoted here too. */
+  voices: {
+    items: [
+      {
+        image:
+          "/success-stories/state-of-consumer-engagement-gcc-2019/webengage.png",
+        quote:
+          "We want marketers in the GCC region to refer to this study as a benchmark report for measuring and creating consumer engagement strategies.",
+        name: "Avlesh Singh",
+        role: "Co-founder and CEO",
+        company: "WebEngage",
+      },
+    ],
+  },
+
+  spotlights: [
+    {
+      title: "Client success story",
+      description:
+        "WebEngage commissioned this study to understand consumer engagement across the GCC region. The full case study covers what the research delivered.",
+      linkLabel: "Read the story",
+      card: successStoryCard(
+        "state-of-consumer-engagement-gcc-2019",
+        "webengage",
+        "/success-stories/state-of-consumer-engagement-gcc-2019/webengage-card.png",
+      ),
+    },
+  ],
+
+  credits: {
+    sponsor: {
+      label: "In association with",
+      name: "WebEngage",
+      logo: "/logos/trusted/webengage.png",
+    },
+    partnerLabel: "Research partner",
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/microsite/abm-best-practices-report-india-2018/. Like the
+    2019 GCC microsite it runs no chapter band, listing its findings as short
+    labels under "Reports Highlights" and its own facts beside them. Its
+    "Client Testimonial" is the InsideView story, carried here as the one voice
+    card it is and published in full under Success stories. */
+const abmBestPracticesIndia2018: ReportLanding = {
+  slug: "abm-best-practices-report-india-2018",
+  published: "2018-06-30",
+  metaTitle: "ABM Best Practices Report: India, 2018",
+  metaDescription:
+    "A definitive guide for every B2B marketer, from conversations with more than 100 Indian B2B marketing leaders: ABM adoption, effectiveness, the tech stack, and aligning sales with marketing.",
+
+  hero: {
+    title: "ABM Best Practices Report: India, 2018",
+    lede: "A definitive guide for every B2B marketer",
+    cover: "/covers/abm-best-practices-report-india-2018.png",
+    coverAlt:
+      "Cover of the ABM Best Practices Report: India, 2018, in print and on a tablet",
+  },
+
+  cardImage: "/covers/abm-best-practices-report-india-2018-card.png",
+
+  download: {
+    jotformId: "80661672684465",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "In this report, we identified what you need to know to make the most of your ABM efforts, and where you can find further opportunities for competitive advantage.",
+    "This research was conducted over two months, during which we connected with **more than 100 Indian B2B marketing leaders** to discuss their views on ABM. This comprehensive guide details the concept of ABM to simplify the process of its implementation.",
+  ],
+
+  highlights: {
+    title: "Report highlights",
+    items: [
+      "62% of survey participants have already implemented ABM in their marketing strategy",
+      "50% of those who have not implemented ABM intend to do it next year",
+      "83% find ABM to be extremely or somewhat effective",
+      "51% of respondents optimised their marketing programmes for target accounts with ABM",
+      "65% of participants use CRM as part of the ABM tech stack",
+      "44% of respondents said that to align sales and marketing, both should collaborate to build a healthy pipeline",
+    ],
+  },
+
+  facts: [
+    { label: "Research focus", value: "B2B" },
+    {
+      label: "Engagement",
+      value: "Interviews, virtual event, social media promotion",
+    },
+    { label: "Geography", value: "India" },
+    { label: "Timeframe of research", value: "May 2018 to June 2018" },
+  ],
+
+  quickReads: {
+    title: "Blogs",
+    items: [
+      {
+        title:
+          "Account Based Marketing Essentials: Steps to Define your Key Accounts",
+        href: "/resources/insights/abm-best-practices-report-india-2018/steps-to-define-your-key-accounts",
+        image:
+          "/insights/abm-best-practices-report-india-2018/steps-to-define-your-key-accounts.png",
+      },
+      {
+        title: "How to implement an effective Account Based Marketing Strategy",
+        href: "/resources/insights/abm-best-practices-report-india-2018/how-to-implement-an-effective-abm-strategy",
+        image:
+          "/insights/abm-best-practices-report-india-2018/how-to-implement-an-effective-abm-strategy.jpg",
+      },
+    ],
+  },
+
+  /* One flat list on the source page, so a single group and no tab rail. */
+  expertInsights: {
+    title: "Interviews",
+    groups: [
+      {
+        stage: "Marketing leaders",
+        items: [
+          "ojas-kulkarni",
+          "sushant-shetty",
+          "diptarup-chakraborti",
+          "satinder-juneja",
+        ].map(abmCard),
+      },
+    ],
+  },
+
+  /* The microsite's "Client Testimonial", carried as the one voice card it is:
+     the quote is baked into the artwork, so it is quoted here too. */
+  voices: {
+    items: [
+      {
+        image:
+          "/success-stories/abm-best-practices-report-india-2018/insideview.png",
+        quote:
+          "Research NXT did a fantastic job by creating one of the most comprehensive pieces of research on Account Based Marketing (ABM) for the Indian market.",
+        name: "Sesha Rao",
+        role: "Former MD, India operations",
+        company: "InsideView",
+      },
+    ],
+  },
+
+  spotlights: [
+    {
+      title: "Client success story",
+      description:
+        "InsideView commissioned this research to understand the growth of ABM in the Indian market. The full case study covers what the research delivered.",
+      linkLabel: "Read the story",
+      card: successStoryCard(
+        "abm-best-practices-report-india-2018",
+        "insideview",
+      ),
+    },
+  ],
+
+  credits: {
+    sponsor: {
+      label: "In association with",
+      name: "InsideView",
+      logo: "/logos/trusted/insideview.png",
+    },
+    partnerLabel: "Research partner",
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/research-report/b2c-marketing-automation-report-india-2017/.
+    The 2017 microsite runs no highlights list and no chapter band: it opens
+    with the report's aim, states the research focus, then runs the eighteen
+    interviews, the launch webinar and the Netcore testimonial. So this landing
+    carries `description`, `facts`, `expertInsights`, `spotlight` and `voices`,
+    and neither `highlights` nor `expect` nor `quickReads`. */
+const b2cMarketingAutomationIndia2017: ReportLanding = {
+  slug: "b2c-marketing-automation-india-2017",
+  published: "2017-09-07",
+  metaTitle: "B2C Marketing Automation Report: India, 2017",
+  metaDescription:
+    "All you need to know about marketing automation solutions in India: adoption in B2C organisations, the most commonly used features, drivers and restraints, pricing models, ROI measurement and challenges.",
+
+  hero: {
+    title: "B2C Marketing Automation Report: India, 2017",
+    lede: "All you need to know about marketing automation solutions",
+    cover: "/covers/b2c-marketing-automation-india-2017.png",
+    coverAlt:
+      "Cover of the B2C Marketing Automation Report: India, 2017, in print and on a tablet",
+  },
+
+  cardImage: "/covers/b2c-marketing-automation-india-2017-card.png",
+
+  download: {
+    jotformId: "81703707306453",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "A report that tracked the implementation and adoption of B2C marketing automation in India.",
+    "This report aims to understand the adoption of marketing automation solutions in Indian B2C organisations and identify the most commonly used features, drivers and restraints. It shares insights on pricing models, ROI measurement and the challenges of implementing MAS, and helps B2C marketers make the right decision while evaluating and implementing MAS in their organisations.",
+    "**More than 150 marketing professionals** of leading B2C brands from India took part in the survey, giving us a rich pool of data. The survey was conducted across the country, focused on seven industry segments: BFSI, telecom, travel, ecommerce, pharma, auto, and FMCG and consumer electronics. We also got the opportunity to speak with CMOs and experts from leading brands across India and get their perspective on the topic.",
+  ],
+
+  facts: [
+    { label: "Research focus", value: "B2C marketing automation" },
+    {
+      label: "Engagement",
+      value: "Interviews, virtual event, social media promotion",
+    },
+    { label: "Geography", value: "India" },
+    { label: "Timeframe of research", value: "February 2017 to May 2017" },
+  ],
+
+  /* One flat list on the source page, so a single group and no tab rail. The
+     order is the source page's: newest interview first. */
+  expertInsights: {
+    title: "Experts view",
+    groups: [
+      {
+        stage: "Insights and best practices on B2C marketing automation",
+        items: [
+          "kalpit-jain",
+          "prasad-pimple",
+          "harkirat-singh",
+          "anil-menghani",
+          "molly-kapoor",
+          "binu-george",
+          "abhishek-gupta",
+          "amit-shah",
+          "sachin-sharma",
+          "veerchand-bothra",
+          "meera-iyer",
+          "deepak-malhotra",
+          "karun-thareja",
+          "pradeep-dwivedi",
+          "kamini-rupani",
+          "varun-kaushik",
+          "karthik-anantharaman",
+          "pratik-mazumder",
+        ].map(b2cMasCard),
+      },
+    ],
+  },
+
+  spotlights: [
+    {
+      title: "Check out the launch event",
+      description:
+        "The report was launched in a 45 minute panel webinar in association with Netcore, on how marketing automation has evolved in India, what preparation implementing it takes, and how AI in marketing is impacting businesses.",
+      linkLabel: "See the event",
+      card: eventCard(
+        "b2c-marketing-automation-india-2017",
+        "report-launch-webinar",
+      ),
+    },
+    {
+      title: "Client success story",
+      description:
+        "Netcore commissioned this research to supplement the launch of their Smartech suite. The full case study covers what the research delivered.",
+      linkLabel: "Read the story",
+      card: successStoryCard("b2c-marketing-automation-india-2017", "netcore"),
+    },
+  ],
+
+  /* The microsite's "Client Testimonial", carried as the one voice card it is:
+     the quote is baked into the artwork, so it is quoted here too. */
+  voices: {
+    items: [
+      {
+        image: "/success-stories/b2c-marketing-automation-india-2017/netcore.png",
+        quote:
+          "Research NXT is our partner of choice for prospect databases, as the team understands our requirements and enables our campaigns with an accurate database with maximum coverage in our target accounts.",
+        name: "Kalpit Jain",
+        role: "Chief Executive Officer",
+        company: "Netcore Solutions",
+      },
+    ],
+  },
+
+  credits: {
+    sponsor: {
+      label: "Report sponsor",
+      name: "Netcore",
+      logo: "/logos/trusted/netcore.png",
+    },
+    partnerLabel: "Research partner",
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/research-report/a-publishers-guide-to-smarter-monetization-ad-revenue-optimization-techniques-2020/.
+    The smallest of the migrated landings: the source page is a description, two
+    highlights and the download form, with no interviews, articles, event, case
+    study or sponsor, so this landing carries nothing that the page does not. */
+const publishersGuideToSmarterMonetization: ReportLanding = {
+  slug: "publishers-guide-to-smarter-monetization",
+  published: "2020-02-01",
+  metaTitle: "A Publisher's Guide to Smarter Monetization",
+  metaDescription:
+    "Ad revenue optimization techniques for 2020: the top three ways to inform your ad strategy, from market trends, analysis of ad solutions and the data behind them.",
+
+  hero: {
+    title: "A Publisher's Guide to Smarter Monetization",
+    lede: "Ad revenue optimization techniques 2020",
+    cover: "/covers/publishers-guide-to-smarter-monetization.png",
+    coverAlt:
+      "Cover of A Publisher's Guide to Smarter Monetization on a tablet",
+  },
+
+  cardImage: "/covers/publishers-guide-to-smarter-monetization-card.png",
+
+  download: {
+    jotformId: "200331930902443",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "Monetization through ads can be tricky and time-consuming. With new products and services being advertised in the market daily, it can get difficult to create an effective strategy to drive maximum revenues.",
+    "With this guide, we help you understand the **top three ways in which you can inform your ad strategy in 2020**. Through in-depth research on market trends, analysis of various ad solutions and relevant data, we have charted a roadmap that will not only help create a revenue plan that works for you, but also offer the right advice to help you sustain and eventually scale your strategy.",
+  ],
+
+  highlights: {
+    title: "Report highlights",
+    items: [
+      "$385 billion worth of ad budgets are open for publishers to tap into in 2020",
+      "100% more to be invested in digital ads compared with traditional media by 2023",
+    ],
+  },
+
+  /* The source page links no interviews, but one from this programme is
+     published under it, so it gets a band. */
+  expertInsights: {
+    title: "Experts view",
+    groups: [
+      {
+        stage: "Platform view",
+        items: ["rajesh-pantina"].map(publisherCard),
+      },
+    ],
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/microsite/corporate-gifting-trends-report-india-2019/.
+    The source page runs a description, six highlights and the download form,
+    and links nothing. Its "Table of Content" band is empty on the live page,
+    so there is no contents list to carry. The cover artwork carries a GIFTEX
+    mark, but the page runs no credit band, so none is invented here. */
+const corporateGiftingTrendsIndia2019: ReportLanding = {
+  slug: "corporate-gifting-trends-india-2019",
+  published: "2019-03-01",
+  metaTitle: "Corporate Gifting Trends Report: India, 2019",
+  metaDescription:
+    "How Indian companies buy corporate gifts: budgets, spend per unit, the sectors buying most, what buyers weigh, and the gap between where sellers list and where buyers buy.",
+
+  hero: {
+    title: "Corporate Gifting Trends Report: India, 2019",
+    lede: "Trends in the Indian corporate gifting industry",
+    cover: "/covers/corporate-gifting-trends-india-2019.png",
+    coverAlt:
+      "Cover of the Corporate Gifting Trends Report: India, 2019 on a tablet",
+  },
+
+  cardImage: "/covers/corporate-gifting-trends-india-2019-card.png",
+
+  download: {
+    jotformId: "83171595973469",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "The gifting industry in India has registered strong growth over the past decade, thanks to consumers' rising income levels and ambitions. Of the overall industry, the corporate sector enjoys the lion's share.",
+    "It is of utmost importance for an organisation to make sure they keep in touch with their customers, to nurture the relationship and encourage future business. This is the reason why **corporate gifting has become an integral part of the marketing and branding efforts** of many companies. Along with customers, gifting has also been part of employee rewards and recognition programmes across many corporations in India.",
+  ],
+
+  highlights: {
+    title: "Report highlights",
+    items: [
+      "67% of respondents have a well-defined budget for corporate gifting",
+      "37% of respondents spend an average of INR 500 to 1,000 per unit on corporate gifts",
+      "Pharma is the top buyer of corporate gifts, followed by BFSI, TTHL and IT",
+      "73% of respondents consider innovation and packaging very important while buying corporate gifts",
+      "68% of sellers list their products on online portals like Amazon and Flipkart, while only 29% of buyers buy from online venues",
+      "64% of respondents consider quality of participants the most important factor when considering a gifting exhibition",
+    ],
+  },
+};
+
+/** Copy transcribed from
+    researchnxt.com/research-report/etutoring-best-practices-whitepaper-2016/.
+    The oldest report migrated. The source page is a description, an empty
+    "Table of Contents" band and the download form, and links nothing. The
+    cover artwork reads "Sponsored By: eSolve", but the page runs no credit
+    band, so none is invented here. */
+const etutoringBestPracticesWhitepaper2016: ReportLanding = {
+  slug: "etutoring-best-practices-whitepaper-2016",
+  published: "2016-03-01",
+  metaTitle: "eTutoring Best Practices Whitepaper 2016",
+  metaDescription:
+    "One of the fastest growing eLearning industries, yet shrinking in company count. Industry best practices, challenges, and how e-tutoring leaders have grown their business with innovative solutions.",
+
+  hero: {
+    title: "eTutoring Best Practices Whitepaper 2016",
+    lede: "Best practices, challenges and growth in the e-tutoring industry",
+    cover: "/covers/etutoring-best-practices-whitepaper-2016.png",
+    coverAlt:
+      "Cover of the E-Tutoring Best Practices Whitepaper on a tablet",
+  },
+
+  cardImage: "/covers/etutoring-best-practices-whitepaper-2016-card.png",
+
+  download: {
+    jotformId: "81703041906450",
+    submitLabel: "Download",
+    consent: [
+      {
+        text: "By submitting this form, you agree that you have read and agree to the ",
+      },
+      { text: "Research NXT Privacy Policy", href: "/privacy-policy" },
+      { text: "." },
+    ],
+  },
+
+  description: [
+    "One of the fastest growing eLearning industries, yet shrinking in terms of the number of companies. **The number of e-tutoring companies has gone down from 450 plus companies in 2010 to less than 250 companies in 2015.**",
+    "CEOs, COOs, strategy and business leaders from leading e-tutoring companies have participated and shared their perspective with us.",
+    "The E-Tutoring Best Practices Whitepaper 2016 covers industry best practices and challenges, and more importantly insights on how industry leaders have been able to manage and grow their business with innovative solutions.",
+  ],
+
+  /* The source page links no interviews, but one from this programme is
+     published under it, so it gets a band. */
+  expertInsights: {
+    title: "Experts view",
+    groups: [
+      {
+        stage: "Industry view",
+        items: ["tanmay-chandresa"].map(etutoringCard),
+      },
+    ],
   },
 };
 
@@ -1739,8 +2502,29 @@ export const reportLandings: ReportLanding[] = [
   cloudComputingNewNormal,
   southEastAsiaResponseGuide,
   aiLedPersonalization,
+  contentMarketingDoneRight,
+  stateOfConsumerEngagementGcc2019,
+  abmBestPracticesIndia2018,
+  b2cMarketingAutomationIndia2017,
+  publishersGuideToSmarterMonetization,
+  corporateGiftingTrendsIndia2019,
+  etutoringBestPracticesWhitepaper2016,
 ];
 
 export function getReportLanding(slug: string) {
   return reportLandings.find((report) => report.slug === slug);
+}
+
+/**
+ * The most recently published reports, newest first. The home page's "Latest
+ * reports" band reads this, so adding a landing is enough to update it.
+ */
+export function latestReports(count: number) {
+  return [...reportLandings]
+    .sort(
+      (a, b) =>
+        b.published.localeCompare(a.published) ||
+        a.metaTitle.localeCompare(b.metaTitle, "en"),
+    )
+    .slice(0, count);
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { HeroField } from "@/components/home/hero-field";
+import { HeroIntro } from "@/components/home/hero-intro";
 import { HeroQuestions } from "@/components/home/hero-questions";
 import { TrustedLogos } from "@/components/home/trusted-logos";
 import { NavLink } from "@/components/layout/nav-link";
@@ -27,40 +28,59 @@ export default function HomePage() {
 
   return (
     <main id="main">
-      {/* Problem-to-promise over the work itself. The photograph runs full
-          bleed behind the band; a white scrim keeps the copy side opaque and
-          clears to nothing on the right, so the type reads on paper and the
-          room emerges beside it rather than sitting in a boxed panel. */}
-      <Section spacing="none" className="relative isolate overflow-hidden bg-white">
-        <Image
-          src="/hero2.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="-z-20 object-cover object-[68%_center] lg:object-center"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-white/88 sm:hidden"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-white from-30% via-white/90 to-white/10 sm:block lg:via-white/80 lg:to-transparent"
-        />
+      {/* Problem-to-promise over a luminous beam field, after the Shinkei
+          reference the user supplied. The field renders in `HeroField`: four
+          CSS layers documented with the `.hero-field` block in globals.css
+          (vivid base wash, stepped beam system, counter-flowing light sweep,
+          grain), with GSAP adding the load settle and pointer parallax on
+          their shared wrapper. White copy sits straight on the field as in
+          the reference; the base wash weights its deep pocket through the
+          copy column so the headline clears display contrast.
+
+          Nothing here is an image, so the field costs no download and scales
+          to any viewport. The drift is gated behind `data-motion`, and the
+          reduced-motion block stops it outright. */}
+      <Section
+        spacing="none"
+        className="on-deep relative isolate overflow-hidden bg-signal"
+      >
+        <HeroField />
 
         <Container className="py-24 sm:py-28 lg:py-36">
-          <div className="max-w-xl lg:max-w-2xl">
-            <HeroQuestions questions={hero.questions} />
+          {/* Centred composition, as in the reference: question, promise, then
+              the one action, arriving in that order. HeroIntro choreographs
+              the entrance as a GSAP timeline; the words of the headline are
+              split into spans so it can resolve word by word. The whitespace
+              between spans keeps the accessible name one sentence. */}
+          <HeroIntro className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            <div data-hero-questions className="w-full">
+              <HeroQuestions
+                questions={hero.questions}
+                toneClass="text-white"
+                dotClass="bg-white/60"
+                centered
+              />
+            </div>
 
-            <h1 className="mt-7 max-w-[19ch] text-display-sm font-display text-ink">
-              {hero.headline}
+            {/* mt-3, not the mt-7 the scale suggests: the dot row above ends
+                with ~19px of its 44px touch targets' invisible padding, so
+                the visible gap here is already ~31px. */}
+            <h1 className="mt-3 max-w-[22ch] text-balance text-display-sm font-display text-white">
+              {hero.headline.split(" ").map((word, index) => (
+                <span key={index}>
+                  <span data-hero-word className="inline-block">
+                    {word}
+                  </span>{" "}
+                </span>
+              ))}
             </h1>
 
-            <div className="mt-9">
-              <Button href={hero.cta.href}>{hero.cta.label}</Button>
+            <div data-hero-cta className="mt-9">
+              <Button href={hero.cta.href} variant="on-deep">
+                {hero.cta.label}
+              </Button>
             </div>
-          </div>
+          </HeroIntro>
         </Container>
       </Section>
 

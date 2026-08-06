@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExpertInsightsTabs } from "@/components/expert-insights-tabs";
 import { ReportCardGrid } from "@/components/report-card-grid";
@@ -10,6 +11,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { QuoteCarousel } from "@/components/quote-carousel";
 import { ReportCardRail } from "@/components/report-card-rail";
 import { StatsBento } from "@/components/stats-band";
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
@@ -314,37 +316,117 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      <Section bordered spacing="tight">
-        <Container>
-          <SectionHeading
-            title={report.quickReads.title}
-            align="center"
-            className="mb-10"
-          />
-          <ReportCardRail
-            items={report.quickReads.items}
-            label={report.quickReads.title}
-          />
-        </Container>
-      </Section>
+      {/* The programme's own facts, where the source page states them. A short
+          definition list, the same device the event pages use. */}
+      {report.facts?.length ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <Reveal
+              as="dl"
+              className="mx-auto grid max-w-4xl gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-4"
+            >
+              {report.facts.map((fact, index) => (
+                <div
+                  key={fact.label}
+                  className="flex flex-col gap-1 border-t border-line pt-4"
+                  style={step(index)}
+                >
+                  <dt className="text-sm font-semibold text-ink-muted">
+                    {fact.label}
+                  </dt>
+                  <dd className="text-base leading-relaxed text-ink">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
+      {report.quickReads ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <SectionHeading
+              title={report.quickReads.title}
+              align="center"
+              className="mb-10"
+            />
+            <ReportCardRail
+              items={report.quickReads.items}
+              label={report.quickReads.title}
+            />
+          </Container>
+        </Section>
+      ) : null}
 
       {/* Expert insights, one tab per AI maturity stage rather than all four
-          stacked, so the band stays short enough to read. */}
-      <Section surface="subtle" bordered spacing="tight">
-        <Container>
-          <SectionHeading
-            title={report.expertInsights.title}
-            align="center"
-            className="mb-8"
-          />
-          {/* A single group needs no tab rail; the cards stand alone. */}
-          {report.expertInsights.groups.length === 1 ? (
-            <ReportCardGrid items={report.expertInsights.groups[0].items} />
-          ) : (
-            <ExpertInsightsTabs groups={report.expertInsights.groups} />
-          )}
-        </Container>
-      </Section>
+          stacked, so the band stays short enough to read. Not every programme
+          ran interviews, so the band is skipped rather than left empty. */}
+      {report.expertInsights ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <SectionHeading
+              title={report.expertInsights.title}
+              align="center"
+              className="mb-8"
+            />
+            {/* A single group needs no tab rail; the cards stand alone. */}
+            {report.expertInsights.groups.length === 1 ? (
+              <ReportCardGrid items={report.expertInsights.groups[0].items} />
+            ) : (
+              <ExpertInsightsTabs groups={report.expertInsights.groups} />
+            )}
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* What the source landing points at in bands of its own: a launch
+          event, a client success story. A single card apiece rather than a
+          rail, since each band reads as a pointer rather than as another
+          library. */}
+      {report.spotlights?.map((spotlight, bandIndex) =>
+        spotlight.card.href ? (
+          <Section key={spotlight.title} bordered spacing="tight">
+            <Container>
+              <div
+                className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${
+                  bandIndex % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
+                }`}
+              >
+                <div className="anim-rise flex flex-col gap-5">
+                  <SectionHeading title={spotlight.title} />
+                  <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
+                    <Emphasised text={spotlight.description} />
+                  </p>
+                  <div className="pt-1">
+                    <Button href={spotlight.card.href} variant="secondary">
+                      {spotlight.linkLabel}
+                    </Button>
+                  </div>
+                </div>
+
+                <Link
+                  href={spotlight.card.href}
+                  className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+                  style={delay(120)}
+                >
+                  {spotlight.card.image ? (
+                    <Image
+                      src={spotlight.card.image}
+                      alt={spotlight.card.title}
+                      width={1280}
+                      height={720}
+                      sizes="(min-width: 1024px) 32rem, 100vw"
+                      className="aspect-video w-full object-cover"
+                    />
+                  ) : null}
+                </Link>
+              </div>
+            </Container>
+          </Section>
+        ) : null,
+      )}
 
       {/* The participants' own words, straight from the microsite's quote
           cards, sitting between the interviews and the credits. No heading:

@@ -34,6 +34,7 @@ programme, so the programme slug is always the middle segment:
 /resources/experts-view/<project>/<person>         one interview
 /resources/insights/<project>/<article>            one article
 /resources/events/<project>/<event>                one event
+/resources/success-stories/<project>/<story>       one client engagement
 ```
 
 Concretely:
@@ -64,9 +65,10 @@ The rules that follow from this:
   (`public/experts/` predates this and is flat, with a company suffix where two
   projects carry the same person.)
 - **The library index is the parent path**: `/resources/insights`,
-  `/resources/experts-view`, `/resources/events` and
-  `/resources/reports-whitepapers`, each a grid. The intermediate
-  `/resources/<library>/<project>` has no page of its own.
+  `/resources/experts-view`, `/resources/events`,
+  `/resources/success-stories` and `/resources/reports-whitepapers`, each a
+  grid. The intermediate `/resources/<library>/<project>` has no page of its
+  own.
 - **A moved WordPress URL gets an explicit redirect** in `next.config.ts`,
   listed one by one. Content prefixes are never redirected as a rule while some
   of their pages still have no target here.

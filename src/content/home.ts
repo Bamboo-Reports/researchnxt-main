@@ -1,3 +1,5 @@
+import { getExpertInterview, interviewHref } from "@/content/experts-view";
+import { latestReports } from "@/content/resources";
 import type { FeaturedResource } from "./types";
 
 /** Copy transcribed from the live homepage at researchnxt.com. */
@@ -12,7 +14,7 @@ export const hero = {
       collapses to a space in the narrow mobile column. */
   questions: [
     "Is the quality of your marketing leads\nimpacting revenue?",
-    "Is your customer engagement based on account intelligence?",
+    "Is your customer engagement based on\naccount intelligence?",
     "Is a bad prospect database impacting\nmarketing ROI?",
   ],
 } as const;
@@ -66,79 +68,53 @@ export const trustedLogos = [
 ] as const;
 
 /**
- * PHASE A: these three lists point at the live WordPress URLs because the
- * /resources routes do not exist yet. Phase B replaces them with a call into
- * the MDX content layer — the components consuming them do not change.
+ * The home page's two resource bands. Both are derived from the registries
+ * rather than hand-maintained, so a new report or interview cannot leave a
+ * stale card behind, and a wrong slug fails the build instead of rendering a
+ * dead link.
  */
 
-export const featuredReports: FeaturedResource[] = [
-  {
+/** The four most recently published reports, newest first. */
+export const featuredReports: FeaturedResource[] = latestReports(4).map(
+  (report) => ({
     kind: "Report",
-    title:
-      "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
-    summary:
-      "How industrial leaders are moving AI out of pilot projects and into production at scale.",
-    href: "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
-  },
-  {
-    kind: "Report",
-    title: "Navigating Corporate Commute for GCCs in India",
-    summary:
-      "What the commute problem costs global capability centres, and how leaders are solving it.",
-    href: "https://researchnxt.com/microsite/navigating-corporate-commute-for-gccs-in-india/",
-    external: true,
-  },
-  {
-    kind: "Guide",
-    title: "The Four Waves of AI: A Ready Guide for Business Leaders",
-    summary:
-      "A framework for understanding where AI capability is heading and what to prepare for.",
-    href: "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
-  },
-  {
-    kind: "Report",
-    title: "Unlocking the Power of Unified CX",
-    summary:
-      "Why fragmented customer experience stacks stall, and what unification actually requires.",
-    href: "https://researchnxt.com/microsite/unlocking-the-power-of-unified-cx/",
-    external: true,
-  },
+    title: report.hero.title,
+    summary: report.hero.lede,
+    href: `/resources/reports-whitepapers/${report.slug}`,
+    image: report.cardImage,
+  }),
+);
+
+/**
+ * Four interviews from across the library, chosen for range rather than
+ * recency: the two analysts most readers will recognise, and two operators
+ * from the newest programme. Named by project and person, and resolved
+ * through the registry so the title, banner and URL stay in one place.
+ */
+const featured: [project: string, person: string][] = [
+  ["ai-led-personalization", "scott-brinker"],
+  ["ai-led-personalization", "david-raab"],
+  ["implementers-guide-to-ai", "karthik-anantharaman"],
+  ["navigating-corporate-commute-for-gccs-in-india", "protick-basu"],
 ];
 
-export const featuredInterviews: FeaturedResource[] = [
-  {
-    kind: "Interview",
-    title:
-      "AI in Manufacturing: Driving Digital Transformation and Intelligent Operations",
-    summary: "Thought leader perspective on intelligent operations.",
-    href: "https://researchnxt.com/guide-to-ai/ai-in-manufacturing-driving-digital-transformation-and-intelligent-operations/",
-    external: true,
+export const featuredInterviews: FeaturedResource[] = featured.map(
+  ([project, person]) => {
+    const interview = getExpertInterview(project, person);
+    if (!interview) {
+      throw new Error(`Unknown interview: ${project}/${person}`);
+    }
+    return {
+      kind: "Interview",
+      title: interview.title,
+      summary: [interview.person.name, interview.person.company]
+        .filter(Boolean)
+        .join(", "),
+      href: interviewHref(interview),
+      image: interview.thumbnail,
+    };
   },
-  {
-    kind: "Interview",
-    title:
-      "Lloyd Mathias on the positive side of AI and the importance of data privacy",
-    summary: "On balancing personalisation against privacy obligations.",
-    href: "https://researchnxt.com/experts-view/lloyd-mathias-ai-led-personalization/",
-    external: true,
-  },
-  {
-    kind: "Interview",
-    title: "Scott Brinker's view on AI in marketing & the future of Martech",
-    summary:
-      "Marketing data as the engine feeding AI possibilities in marketing.",
-    href: "https://researchnxt.com/experts-view/ai-in-marketing-interview-scott-brinker/",
-    external: true,
-  },
-  {
-    kind: "Interview",
-    title:
-      "David Raab on how AI and CDP can unlock the possibilities for marketers",
-    summary: "Where customer data platforms fit in an AI-led stack.",
-    href: "https://researchnxt.com/experts-view/ai-and-cdp-interview-david-raab/",
-    external: true,
-  },
-];
+);
 
 export const quickReads: FeaturedResource[] = [
   {

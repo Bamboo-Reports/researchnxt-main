@@ -2,7 +2,514 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-05
+Last updated: 2026-08-06
+
+## Home page now reads from the registries, 2026-08-06
+
+Both resource bands on the home page were hand-maintained lists, and half their
+cards still pointed at WordPress. They are derived now.
+
+- **Latest reports** is `latestReports(4)`, a new helper that sorts
+  `reportLandings` by a new required `ReportLanding.published` field. All 15
+  landings carry a date. Adding a landing updates the band; nothing to maintain
+- **Experts view** names four interviews as `[project, person]` pairs resolved
+  through `getExpertInterview`, so the title, banner and URL come from the
+  registry and a wrong slug fails the build. Chosen for range rather than
+  recency: Scott Brinker and David Raab, plus one operator each from the two
+  newest programmes
+- `FeaturedResource` gained an optional `image`, and `ResourceCard` now renders
+  the real cover or interview banner, falling back to the placeholder plate.
+  Every card on the home page carries real artwork
+- **No WordPress links remain on the home page.** The four `external: true`
+  entries are gone; the flag stays on the type for the Resources links that
+  still point at WordPress elsewhere
+
+## Redirect gap closed: all 110 interviews now redirect, 2026-08-06
+
+The 58 unredirected interviews are done, and every published interview has a
+redirect from its WordPress URL.
+
+Mapping was done by fetching each candidate page and matching the person named
+on it against the registry, not by reading slugs, because many of these
+WordPress slugs are topic-based. Three cases the automatic match could not
+settle, resolved by hand:
+
+- `campaign-management/leveraging-automation-…-higher-education` is Dr Sunil
+  Barsaiyan. WordPress writes "Dr." with a stop and the registry writes "Dr",
+  so the name match missed
+- **Naresh Kumar has two WordPress URLs** carrying the same interview,
+  `campaign-management-and-automation-in-2024` and
+  `marketing-automation-is-not-just-a-tool-…`. Both redirect to the one page
+- **The six `/business-strategy/` pages are the Southeast Asia interviews**,
+  slugged by topic. "Digital-First Approach" is Johnny Widodo, "Rise of Self
+  Service Platforms" is Walter de Oude, and so on. Slug-based mapping would
+  have got every one of these wrong
+
+Also picked up on the way: `bambooreports/transforming-cx-through-gcc-ebook` is
+the eBook download page for the GCC CX programme, so it redirects to that
+report landing.
+
+The redirect map is now 168 rules, with no duplicate sources.
+
+### Still without a target
+
+- Five Arabic translations under `/customer-experience/` (`-ar` and `-qa`
+  suffixes). There are no Arabic pages here to send them to
+- `bambooreports/2024-outlook-…-copy`, a variant of the published GCC CX
+  outlook article under a different headline. Not the same text, so it was not
+  pointed at the published one
+- `guide-to-ai/unlocking-the-next-wave-of-growth…`, an August 2025 article, and
+  the other unlisted articles noted in the Insights audit below
+
+## Insights audit against researchnxt.com/insights/, 2026-08-06
+
+The `/insights/` listing shows exactly ten articles. `/insights/page/2/` and
+beyond return the same ten, so ten is the whole set, not a first page. Nine
+were already published; one was missing.
+
+- `ai-led-personalization/artificial-intelligence-what-can-business-professionals-expect-in-2020`,
+  published 28 January 2020, filed under the AI Led Personalization programme
+  because that is its WordPress category (`ai-led-2020`) and the closing
+  paragraph announces that research
+
+Another H1 error on the source page: it reads "From Smart Analytics to Smart
+Basket, MarTech at Bigbasket", copied from an unrelated interview. The page
+title and the entire body are about AI in 2020, and that is the title used.
+
+### The listing is narrower than what exists
+
+`/insights/` is an Elementor archive with a hand-picked query, not everything
+article-shaped on the site. Posts it does **not** list, and which remain
+unpublished, include:
+
+- Eight 2016 and 2017 `/blog/` posts predating the research programmes: Game of
+  Drones, Predictive Healthcare, Safer Air Travel, Smart Farming, Evolution of
+  AI, and two conference recaps
+- Six `/business-strategy/` pages from 2021 that read as fragments of the
+  published "5 Major Business Rebound Strategies" article
+- `campaign-management/redefining-marketing-excellence…`, the January 2025
+  roundtable already sitting as a hrefless quick-read card on the ACM landing
+- `guide-to-ai/unlocking-the-next-wave-of-growth…`, an August 2025 article
+- Three `/sf-ai-interview/` pieces from October 2024
+
+None of these is on the Insights listing, so none was published. Worth a
+decision on whether the migrated Insights library should mirror that listing or
+carry everything article-shaped.
+
+*(The 58-interview redirect gap recorded here was closed the same day; see
+"Redirect gap closed" above.)*
+
+## Success stories audit against researchnxt.com/success-stories/, 2026-08-06
+
+The listing carries five case studies. Three were already published with their
+programmes; the two missing ones are now in, and the library is complete.
+
+- `ai-led-personalization/netcore`, the thought leadership campaign that
+  produced the first book on AI in marketing during the pandemic. Four
+  deliverable tiles, the four research facts, and three quotes: Rohit
+  Shrivastav of Netcore plus David Raab and Scott Brinker, both of whom have
+  published interviews in this programme, so their expert thumbnails are reused
+- `prospect-database/zycus`, five-plus years of prospect data append and
+  enrichment. Three deliverable tiles and Preeti Shetty's testimonial
+
+The AI Led Personalization landing now carries a spotlight band pointing at its
+story, matching the other four programmes that have one.
+
+### Netcore appears twice, under two different engagements
+
+The 2017 B2C marketing automation campaign and the 2020 AI in marketing
+campaign are separate case studies for the same client. Both keep the slug
+`netcore`, which is fine because a story slug only resolves inside its project,
+and the registry aliases the second import as `netcoreAiLed`, the same way the
+interview registry handles people who appear in more than one programme.
+
+### Zycus belongs to no research programme
+
+It is an ongoing prospect data engagement, not a piece of research, so it is
+filed under `prospect-database`, the solution it belongs to. That slug is
+registered in `insightProjects` without a `reportSlug`, alongside
+`industry-events`. Its `facts` array is empty because the source page states no
+research focus, geography or timeframe.
+
+### Two source problems worth knowing about
+
+- **The Zycus and 2017 Netcore testimonial cards carry the same quote**,
+  "Research NXT is our partner of choice for prospect databases…", attributed
+  to Preeti Shetty on one and Kalpit Jain on the other. The wording fits the
+  Zycus engagement exactly and fits a thought leadership report poorly, so the
+  Netcore attribution looks like the copied one. Both are carried as published;
+  worth checking with the clients before either is corrected
+- **The 2020 Netcore case study links the same HubSpot document as the 2017
+  one** (`view/60024016`). One of the two is almost certainly pointing at the
+  wrong file on WordPress. Carried as found
+
+## Events audit against researchnxt.com/events/, 2026-08-06
+
+The WordPress events listing carries seven events. Four were already published
+with their programmes; the three missing ones are now in.
+
+- `industry-events/hysea-bizsummit-2020`, HYSEA's first business summit,
+  Hyderabad. Research NXT's CEO on the closing 10X marketing panel
+- `industry-events/nasscom-martech-confluence-2017`, 31 August 2017, ITC Grand
+  Mumbai. Research NXT as Ecosystem Partner
+- `industry-events/nasscom-technology-leadership-forum-2019`, 20 to 22 February
+  2019, Grand Hyatt Mumbai. Research NXT as Ecosystem Partner
+
+All seven WordPress event URLs now redirect. `/resources/events` lists seven.
+
+### These three belong to no research programme
+
+They are conference participations, not report launches, so they sit under a
+new `industry-events` project slug. It is registered in `insightProjects`
+without a `reportSlug`, so the breadcrumb names it without linking, the same
+arrangement the 2018 ABM programme used before its landing was built.
+
+### Two type changes this needed
+
+- `Event.facts` is now **optional**. The four programme events state a research
+  focus, geography and timeframe; a conference participation has none, and
+  inventing them would be fabrication. Where facts are absent the template
+  drops the aside and the body runs the full width
+- `Event.body` now accepts `{ list }` blocks alongside paragraphs, for the two
+  NASSCOM agendas. Same shape `SuccessStory.body` already uses
+
+### Source correction
+
+The page at `/events/nasscom-ntlf-thenext` has the H1 "NASSCOM MarTECH
+Confluence 2019", which is wrong: the page title, the URL and every line of the
+body are about the Technology & Leadership Forum. Published under the correct
+name.
+
+### Noted, not an event
+
+The events listing also links **"Redefining Marketing Excellence: Highlights
+from the Marketing Automation Roundtable"** (January 2025), which lives under
+`/campaign-management/`, not `/events/`. It is an article, and it already
+appears as a hrefless quick-read card on the Automation & Campaign Management
+landing. It stays unpublished; it belongs in Insights, not here.
+
+## Interview audit against the WordPress sitemap, 2026-08-06
+
+Diffed every `/experts-view/`, `/interviews/` and `/martech/` URL in
+`post-sitemap.xml` against the redirect map. 56 source URLs, and the diff found
+two real gaps.
+
+### Four interviews belonging to published programmes were missing
+
+None of them was linked from its programme's landing page, which is why the
+per-report migrations did not pick them up.
+
+- `avlesh-singh` → State of Consumer Engagement, GCC 2019. The sponsor's own
+  interview; he names the GCC study in it, so the programme is not in doubt
+- `tanmay-chandresa` → eTutoring Best Practices Whitepaper 2016. Tagged `etwp`
+  on WordPress, and eSolve is the whitepaper's sponsor
+- `rickard-lawson` (Strossle) and `allison-munro` (Piano Software) → Content
+  Marketing Done Right. Same 2019 interview series, and the sidebar on the
+  Ranjit Behera page lists Rickard alongside the five the landing does link
+
+The GCC and eTutoring landings now run a one-card experts band each, and the
+Content Marketing landing's band goes from five cards to seven. That band is
+therefore **wider than the source page's**, deliberately: the two extra
+interviews belong to the programme and are published under it, so leaving them
+off the landing would hide them.
+
+### Twenty one AI Led Personalization interviews had no redirects
+
+Published with their landing in an earlier session, but their WordPress URLs
+were never added to `next.config.ts`, so the old links still served from
+WordPress. All 21 added. This was a pre-existing gap, not from the 2026-08-06
+migrations.
+
+The redirect map is now 103 rules. After this, exactly one WordPress interview
+URL has no target.
+
+### `experts-view/rajesh-pantina-inmobi`, filed on user direction
+
+"Doing Mobile Video Right with Rajesh Pantina, InMobi", 29 May 2020. It carries
+no WordPress tags and no landing page links it, so its programme could not be
+inferred from the source. Filed under **A Publisher's Guide to Smarter
+Monetization** on the user's instruction, which the content supports: one
+exchange is entirely about how InMobi enables publishers to monetise their real
+estate, ad formats and ad quality.
+
+That landing now runs a one-card experts band, and the `publishers-guide-to-smarter-monetization`
+programme is registered in `expertProjects`. Its transcript carries the same
+WordPress splice fault as the 2018 ABM and 2017 B2C ones: an answer from the
+Meera Iyer Medlife interview, attributed to "Meera", sits under a question
+about millennial segmentation. Both the foreign answer and the stray question
+are dropped.
+
+**Every WordPress interview URL now has a target: 111 published, 111
+redirected.**
+
+## Corporate Gifting 2019 and eTutoring 2016, published 2026-08-06
+
+Two more standalone landings. Neither source page links interviews, articles,
+an event or a case study, so both are landing-only, like the publisher guide.
+
+- **Corporate Gifting Trends Report: India, 2019**
+  `/resources/reports-whitepapers/corporate-gifting-trends-india-2019`,
+  Jotform **83171595973469**. Description plus six highlights
+- **eTutoring Best Practices Whitepaper 2016**
+  `/resources/reports-whitepapers/etutoring-best-practices-whitepaper-2016`,
+  Jotform **81703041906450**. The oldest report migrated. Description only: the
+  source page runs no highlights
+- Both source pages carry a "Table of Content" band that is **empty on the live
+  site**, so there is no contents list to transcribe
+- Both cover artworks name a sponsor, GIFTEX on the gifting report and "Sponsored
+  By: eSolve" on the whitepaper, but **neither page runs a credit band**, so
+  none was invented. Add `credits` to either landing if those sponsorships
+  should be stated on the page
+
+## A Publisher's Guide to Smarter Monetization, published 2026-08-06
+
+- **Report landing** `/resources/reports-whitepapers/publishers-guide-to-smarter-monetization`,
+  Jotform **200331930902443**, one redirect
+- The smallest landing migrated. The source page is a description, two
+  highlights and the download form: no interviews, no articles, no event, no
+  case study, no facts and no sponsor. The landing carries nothing the page
+  does not, so it runs `description` and `highlights` and no other band
+- The source highlight reads "$385 Bn billion worth of ad budgets", a doubled
+  unit. Corrected to "$385 billion"
+
+## B2C Marketing Automation Report: India, 2017, full programme published 2026-08-06
+
+The largest programme migrated so far. Transcribed from
+`/research-report/b2c-marketing-automation-report-india-2017/` and the twenty
+pages it links. Programme slug is `b2c-marketing-automation-india-2017`.
+
+- **Report landing** `/resources/reports-whitepapers/b2c-marketing-automation-india-2017`,
+  Jotform **81703707306453**. The 2017 microsite runs no highlights list and no
+  chapter band, so the landing carries the description, the four facts, the
+  eighteen interviews, both spotlight bands and the Netcore credit
+- **Eighteen interviews** under `/resources/experts-view/b2c-marketing-automation-india-2017/`,
+  covering banking, insurance, mutual funds, lending, grocery, FMCG, media,
+  footwear, medical devices and cable, plus four from the Netcore team
+- **One event**, the launch webinar of 7 September 2017, and **one success
+  story**, the Netcore MQL campaign, which is the microsite's "Client
+  Testimonial"
+- **Twenty one redirects**, one per source URL
+- No articles: this programme published interviews and a webinar, not blogs
+
+### Six of the interviews are video, not transcript
+
+`kalpit-jain`, `kamini-rupani`, `veerchand-bothra`, `anil-menghani`,
+`abhishek-gupta` and `meera-iyer` are video interviews on the live site: the
+page carries a summary and a biography, and the conversation itself is in the
+recording. Those modules carry the summary and biography as `intro`, the
+listed topics as `highlights` where the source lists them, and an empty
+`exchanges` array. The interview template now skips the transcript wrapper when
+`exchanges` is empty, so those pages do not render a stray empty container.
+
+### Six name collisions, the most in any programme so far
+
+Aliased in the registry with suffixed thumbnails, following the
+`prasadPimpleKotak` precedent:
+
+- `prasadPimpleHdfcLife`, `meeraIyerBigbasket`, `karthikAnantharamanBpl` are
+  disambiguated by company, since the existing records are Kotak Life,
+  SkinQ/Medlife and Apollo Hospitals
+- `kalpitJainB2cMas`, `abhishekGuptaB2cMas` and `varunKaushikB2cMas` are
+  disambiguated by programme instead, because the company does not separate
+  them: the existing Kalpit Jain is also Netcore, the existing Varun Kaushik is
+  also PolicyBoss, and the two Abhishek Gupta records are Edelweiss Life
+  Insurance against Edelweiss Financial Services
+
+### Source corruption
+
+- The Pradeep Dwivedi page repeats one exchange, "Any specific tool that you
+  are using for bulk emailing?", twice with an identical answer. Carried once
+- This page is also the origin of the stray "Pradeep" answer spliced into the
+  2018 ABM Diptarup Chakraborti transcript, which confirms that fix was right
+
+### `spotlight` became `spotlights`
+
+The 2017 microsite points at both its launch webinar and its case study, so the
+single band added earlier is now a list. Bands alternate their image side so
+two in a row do not read as one block. The three earlier landings each carry a
+one-item list; nothing about them changed on the page.
+
+## ABM Best Practices Report: India, 2018, full programme published 2026-08-06
+
+Transcribed from `/microsite/abm-best-practices-report-india-2018/` and the
+seven pages it links. Programme slug is `abm-best-practices-report-india-2018`.
+
+- **Report landing** `/resources/reports-whitepapers/abm-best-practices-report-india-2018`,
+  Jotform **80661672684465**. Six report highlights, the four research facts, the
+  four interviews, the two blogs, the InsideView testimonial and credit
+- **Four interviews** under `/resources/experts-view/abm-best-practices-report-india-2018/`:
+  `ojas-kulkarni`, `sushant-shetty` (Epsilon, the one `vendor` perspective in
+  this set), `diptarup-chakraborti` (Zycus), `satinder-juneja` (LTI)
+- **Two blogs** published as Insights: `steps-to-define-your-key-accounts` and
+  `how-to-implement-an-effective-abm-strategy`, both carrying Jotform
+  **200772027851452**, the same form the leaf pages embed on the live site
+- **Nine redirects** added, one per source URL. The leaf pages sat under
+  `/martech/`, `/interviews/` and `/blog/`, so they are listed individually
+
+### Source corruption worth knowing about
+
+- **Three of the four interview pages carry the same H1**, "Best Practices to
+  Define and Target Your Key Accounts", which is only correct for the Diptarup
+  Chakraborti page. Titles were taken from the microsite's own link labels
+  instead, which match both the URL slugs and the actual subject of each
+  conversation
+- **The Diptarup transcript has an answer from a different interview spliced
+  into it**, attributed to "Pradeep" and sitting under a stray question about
+  drip marketing. Both the foreign answer and the stray question are dropped;
+  the surrounding Q and A are restored to their intended pairing
+- Two more name collisions, handled the established way: the new interviews are
+  aliased `diptarupChakrabortiZycus` and `ojasKulkarniAbm` in the registry, with
+  thumbnails at `diptarup-chakraborti-zycus.png` and `ojas-kulkarni-abm.png`.
+  The existing Diptarup is at MoveInSync and the existing Ojas at Cedar
+  Consulting, so both are genuinely different records for the same people at
+  different employers
+
+### The spotlight band replaced the launch band
+
+`ReportLanding.launch` was generalised to `spotlight` before it shipped
+anywhere else. It is one band that points at one other page: a launch event via
+`eventCard`, or a client success story via the new `successStoryCard`. Both
+helpers resolve from their registry and throw on a bad slug.
+
+- Content Marketing Done Right uses it for the NASSCOM launch event
+- The GCC 2019 landing now uses it for the WebEngage story, which is more
+  accurate than the quick reads rail it was in; that landing runs no rail at
+  all now, since the programme published no articles
+- The ABM landing uses it for the InsideView story, alongside its own blogs rail
+
+`successStoryCard` takes an optional image override, because a landing that
+already runs the testimonial artwork as a voice card should not repeat it in
+the spotlight card. The GCC landing passes `webengage-card.png` for that reason.
+
+- **Second success story**
+  `/resources/success-stories/abm-best-practices-report-india-2018/insideview`,
+  the "Client Testimonial" band from
+  `/microsite/abm-best-practices-report-india-2018/`, published from the linked
+  `/case-study/abm-case-study/` page. It carries the four facts from the
+  microsite, four deliverable tiles, the research aims, three quotes (Sesha Rao
+  of InsideView, Diptarup Chakraborti of Zycus, Satinder Juneja of LTI) and the
+  external HubSpot case study link
+- `SuccessStory.body` now accepts a `{ list }` block alongside paragraphs, for
+  the case study's "the research was aimed at" list. The WebEngage story is
+  unaffected
+- The microsite states its research focus as "B2C", which is wrong for an ABM
+  study aimed at B2B marketing leaders, as the case study's own copy confirms.
+  Corrected to **B2B** here rather than carried over
+- `public/logos/trusted/insideview.png` is cropped from the white logo panel in
+  the testimonial card, the same way the WebEngage mark was
+- **Still open:** the Zycus and Netcore `/case-study/` pages are not published,
+  so `/case-study/` is not redirected as a rule
+
+## Launch event band on the report landings, 2026-08-06
+
+- The Content Marketing Done Right landing carries the "Check out the Launch
+  Event" section its source page has, pointing at the NASSCOM MarTech event.
+  This started as a `launch` field and was generalised to `spotlight` the same
+  day; see the ABM notes above
+- The Southeast Asia and AI Led Personalization landings also have published
+  launch events, but their source microsites run no such section, so they were
+  left alone
+
+## State of Consumer Engagement, GCC 2019, published 2026-08-06
+
+Transcribed from `/microsite/state-of-consumer-engagement-report-gcc-2019/` and
+the WebEngage case study it links. Programme slug is
+`state-of-consumer-engagement-gcc-2019`.
+
+- **Report landing** `/resources/reports-whitepapers/state-of-consumer-engagement-gcc-2019`,
+  Jotform **92538569205465**. The microsite links no articles and no interviews,
+  so the landing runs `highlights` and the new `facts` band and no chapter or
+  expert band
+- **Success stories is now a real library**, not the Phase B placeholder. New
+  content model in `src/content/success-stories/`, index at
+  `/resources/success-stories`, leaf at
+  `/resources/success-stories/[project]/[story]`, both added to `sitemap.ts`.
+  The placeholder route `src/app/resources/[slug]/` and the `resourcePages`
+  array it read are deleted, since Success stories was the last entry
+- **First story:** `/resources/success-stories/state-of-consumer-engagement-gcc-2019/webengage`,
+  the "Client Testimonial" band from the microsite published in full. It carries
+  the four facts, three deliverable tiles, the WebEngage description, three
+  quotes (Avlesh Singh, Shahin Riaz, Devam Saxena) and an external link to the
+  full case study, which is a HubSpot document on the live site and stays
+  off-site here
+
+### Type and template changes this needed
+
+- `ReportLanding` gained an optional `facts` band, and `quickReads` and
+  `expertInsights` became optional. All three are guarded in
+  `src/app/resources/reports-whitepapers/[slug]/page.tsx`; the seven existing
+  landings are unaffected
+- The GCC programme is registered in `insightProjects` despite having no
+  articles, because the events and success-story routes resolve a programme's
+  display name through `getInsightProject`
+
+### Source oddities and asset notes
+
+- The case study's own headline reads "Event promotion through contextual noise
+  and market engagement." on WordPress, which does not parse. It is kept
+  verbatim as the story's lede rather than rewritten; worth a copy fix
+- The landing's hero cover is `webengage-header-image.jpg` (1599×980), the
+  highest resolution mockup on the source pages. `case-study-header.png` is the
+  same scene cropped wide and is used for the success story's card on the
+  landing, so the testimonial artwork does not appear twice on one page
+- `public/logos/trusted/webengage.png` is cropped from the white logo panel in
+  the testimonial card; no standalone mark exists on the source pages
+- **Still open:** two more `/case-study/` pages exist on WordPress, Zycus and
+  Netcore. They are not published, so `/case-study/` is not redirected as a
+  rule. Note the published Netcore story came from
+  `/b2c-mas-report-india-2017/`, a different page from `/case-study/netcore-case-study/`
+
+## Content Marketing Done Right (2019 programme), published 2026-08-06
+
+Transcribed from the WordPress microsite at
+`/research-report/content-marketing-done-right-trends-and-best-practices-report/`
+and the thirteen pages it links to. Programme slug is
+`content-marketing-done-right`, registered in `expertProjects`,
+`insightProjects` and `reportLandings`.
+
+- **Report landing** `/resources/reports-whitepapers/content-marketing-done-right`.
+  Runs `highlights` (the five "Report Highlights" labels) and no `expect`,
+  because the source page lists findings as short labels with no chapter band.
+  No `credits`: NASSCOM was the launch event's partner, not a research sponsor,
+  so nothing was invented. Its own Jotform is **90447985712467**, a different
+  form from the one every leaf page carries
+- **Five interviews** under `/resources/experts-view/content-marketing-done-right/`:
+  `ranjit-behera` (BankBazaar), `sooraj-divakaran`, `apurva-chamaria`
+  (RateGain), `amit-kapoor` (Cigniti), `gaurav-suri` (UTI Mutual Fund). All
+  `buyer` perspective. The interviews and articles take their download form
+  from the landing via `reportSlug`
+- **Seven articles** under `/resources/insights/content-marketing-done-right/`,
+  each carrying Jotform **200772027851452**, which is the form the live pages
+  embed. Source titles kept verbatim, including the 2017 omni-channel piece the
+  microsite lists alongside the 2019 set
+- **One event** `/resources/events/content-marketing-done-right/content-marketing-report-launch`,
+  the NASSCOM MarTech Confluence launch on 28 November 2019. The Event type has
+  no quotes field, so the two pull quotes on the source page were dropped rather
+  than bolted on; the three speakers are carried, with no interview links since
+  a speaker slug only resolves inside its own project
+- **Fourteen redirects** added to `next.config.ts`, one per source URL. The
+  articles sat under three WordPress prefixes (`/blog/`, `/martech/`,
+  `/experts-view/`), so they are listed individually
+- **Assets.** `public/covers/content-marketing-done-right-card.png` is the
+  1200×628 WordPress featured image as supplied. The hero cover is composited
+  from it: the tablet mockup lifted onto a flat grey field so the baked-in
+  headline and "Download Report" band do not appear twice on the page. The
+  live page has no standalone cover artwork
+- **Name correction:** the WordPress title reads "Ranjit Behra"; the interview
+  banner and the launch event page read "Ranjit Behera", which is what is used
+  here, including the asset name
+- **Collision:** a different Gaurav Suri (Finlabs India) already exists under
+  `implementers-guide-to-ai`. The new thumbnail is
+  `public/experts/gaurav-suri-uti.png` and the registry aliases the import as
+  `gauravSuriUti`, following the `prasadPimpleKotak` precedent
+- The article at `/martech/content-marketing-impacts-seo-strategy` carries the
+  wrong H1 on WordPress ("An Insight into RateGain's Content Marketing
+  Strategy"). The correct title, the one the microsite links it under, is used
+- Verified with `npx tsc --noEmit` and `npm run lint`, both clean. No dev
+  server or build was run
+- **Still open:** the user mentioned finding "a couple more reports" but
+  supplied only this one URL. The WordPress `/research-report/` index renders
+  no links to scrape, so the remaining landings need their URLs from the user
 
 ## Repository maintenance
 
@@ -211,6 +718,17 @@ Last updated: 2026-08-05
 - Spacing and hierarchy pass over the whole report landing (impeccable `layout`), after the user said the page carried too much negative space. Every band moved from `spacing="default"` (py-20/28) to `tight` (py-12/16) and the section headings from `mb-12` to `mb-10`/`mb-8`, so the bands now separate by surface and hairline rather than by air; the page comment records why this page runs tighter than the site rhythm. Hero: padding to `py-8 sm:py-10`, and the columns are sized and centred as a pair (`lg:grid-cols-[24rem_26rem] lg:justify-center`) instead of letting the cover float in a `1fr` column, which was the widest patch of dead space on the page. Description: held to a 68ch measure instead of the full 78rem page width (it was well past the readable measure), opening paragraph promoted to `text-xl text-ink` against `text-lg text-ink-soft` so the band has a lead, and justified with `hyphens-auto` on user direction. Chapters: `sm:grid-cols-3` to `md:grid-cols-3` because three columns at 640px left about 180px per card, illustration `size-24` to `size-20`, and the internal rhythm changed from a flat `gap-3` to generous above the name and tight above the copy. The hard-wrapped chapter copy is now `whitespace-normal lg:whitespace-pre-line`: the 39-character lines only fit from `lg`, and below that they would have overflowed the column. Expert insights: the tab row gained a hairline baseline and the labels bottom padding, so the active orange underline lands flush on it and the four words read as a tab bar. Detector (`--scope layout`) clean, lint and `tsc` clean
 - **`/resource-placeholder.svg` is likely broken in the card grid** for the same optimiser reason: it is passed to `next/image` without `unoptimized`, which returns 400 for SVG unless `dangerouslyAllowSVG` is set. It only shows on cards with no `image`, which today is the five inert quick-reads cards. Not touched, since it was outside the ask
 - Known gaps on the report landing: the five quick-reads cards are still inert (no `href`), the template's header comment lists a closing CTA that no longer renders, and `hero.lede` is set in the data but never rendered (the cover carries the title and the `h1` is `sr-only`)
+- **Homepage hero field rebuilt** after the user judged the first drifting-orange attempt "nowhere close" to their Shinkei reference video (`69ebff20daba6852824524.mp4`, untracked in the repo root). The old field (heavily blurred low-opacity bands under a dark maroon radial scrim) was replaced wholesale in `globals.css`. New structure, prototyped standalone in the session scratchpad and iterated against extracted video frames via headless Chrome screenshots before porting: `.hero-field` vivid base wash (saturated `#ff5505` range, creamy light pooled bottom-left and top-right, deep `#be2a00` pockets opposite), `.hero-field-streaks` whose two pseudo-elements draw identical 45-degree beam gradients but are each masked to alternating 88px horizontal bands with the second copy offset 44px, quantising beam edges into the reference's staircase steps (the two copies must animate on their shared parent, never independently, or the complementary masks tear into horizontal bars), `.hero-field-sweep` a broad blur(34px) light band counter-drifting for two-speed evolution, then the SVG grain at 0.6. The dark scrim is gone; white copy sits straight on the field as in the reference, with the base wash's deep pocket weighted through the copy column (display headline ≥3:1; the rotating questions moved from `text-white/85` to full white in `page.tsx`, dots to `bg-white/60`). Drift is `linear` easing deliberately, not an `--ease-out-*` token: an infinite alternate ambient loop visibly stalls and lurches with ease-out. **Drift trap, hit and fixed in-session:** the first cut translated equal x/y, which moves a repeating 45-degree stripe exactly along its own invariant axis, so the animation ran with zero visible change (the user reported "it doesn't animate"). The user then asked for constant motion (the alternate loop eased into reversals), so the streak system now flows one-directionally and seamlessly: the gradient axis periods were made commensurate (440/880/880px, the third layer phase-shifted 440px via `background-position` so the two 880 layers never coincide), and `hero-flow` translates exactly one common horizontal period, 880 x sqrt(2) = 1244.51px, per `linear infinite` cycle so the wrap lands pixel-identical (8s per cycle, sped up three times from 40s on user direction, about 156px/s); pseudo-element insets widened to `-35% -1400px` to cover the travel. The user then asked for two-directional motion, first tried as `alternate` (back-and-forth), then clarified to "both direction in the same time", so the final state is two layers counter-flowing simultaneously: the stepped streak system flows one way (`hero-flow`, -1244.51px per 8s, linear infinite, seamless), and `.hero-field-sweep` was rebuilt from non-repeating soft bands into two repeating 45-degree gradients at the same commensurate 880px axis period (phase-split 440px, blur(30px), inset `-35% -1400px`) flowing the opposite way (`hero-flow-back`, +1244.51px per 13s, linear infinite, also seamless). Both wraps are pixel-identical so the counter-flow never stutters; the 8s vs 13s pace difference keeps the layers visibly crossing.
+- **Final hero motion and palette, from the user's written brief** (warm amber/orange/golden palette, textured semi-translucent diagonal stripes drifting seamlessly along their axis top-to-bottom and right-to-left, shimmering light/grain/opacity shifts): the whole field was reworked once more. Orientation finding that drove it: CSS `repeating-linear-gradient(45deg)` draws "\\" stripes and `135deg` draws "/" (verified by rendering both headlessly), so the previous 45deg stripes were mirrored against the reference; everything is now 135deg ("/", lower-left to upper-right). Palette moved from red-orange to amber/gold: base `#e06000/#ff7a14` with golden radials (`rgba(255,232,190)`, `rgba(255,214,130)`) and deep amber pockets (`rgba(178,74,0)`); stripe layers golden cream `rgba(255,228,170)`, deep amber `rgba(164,68,0)`, golden `rgba(255,186,90)`; sweep gold/amber. Motion is now three seamless pieces: `hero-flow-axis` glides the stepped stripe system along its own 135-degree axis, translate3d(-352px, 352px) per 5s linear cycle (down-left; the gradient is direction-invariant so the visible flow is the staircase steps crawling, and 352px = exactly two 176px mask periods so the wrap is pixel-identical); `hero-cross` pans the blurred golden sweep perpendicular across the stripes, translate3d(622.25px, 622.25px) per 18s (one full 880px axis period resolved to screen axes, also exact); `hero-shimmer` breathes the streak system's opacity 1 to 0.82 over 9s ease-in-out alternate. Pseudo insets widened to `-600px -1400px` (streaks) and `-900px -1400px` (sweep) to cover the travel. Wrap seamlessness verified by pinning all animations except the flow at equal phase and diffing frames one cycle apart: residual is uniform trace-level render dither, no localized seam. Lint clean throughout.
+- **The amber/along-axis rework was then reverted in full on user direction**: after seeing it, the user said the previous version looked nicer and clarified that "bi-directional" meant waves moving one side and the other, which is exactly the counter-flow build. Final shipped state is therefore the red-orange 45-degree counter-flow version: base `#e83f00/#ff5505/#ec4200` wash with creamy corner radials and deep `rgba(190,42,0)`/`rgba(198,46,0)` pockets; stepped beams (`rgba(255,228,195)` light, `rgba(178,36,0)` deep, `rgba(255,168,80)` mid at 440/880/880px periods, insets `-35% -1400px`) flowing via `hero-flow` -1244.51px per 8s linear infinite; blurred sweep (`rgba(255,210,155,0.3)` / `rgba(198,46,0,0.28)`, blur(30px)) counter-flowing via `hero-flow-back` +1244.51px per 13s. The 135-degree/golden keyframes (`hero-flow-axis`, `hero-cross`, `hero-shimmer`) no longer exist in the file. The orientation note stands for future reference: CSS `repeating-linear-gradient(45deg)` draws "\\" stripes, `135deg` draws "/"; the shipped field uses 45deg and the user prefers its look. Lint clean after the revert.
+- Grain strengthened on user request: `.hero-field-grain` layer opacity 0.6 to 0.85 and the SVG turbulence rect opacity 0.55 to 0.7; verified visibly present in a headless render without muddying the headline. Same two values are the knobs if it needs further tuning.
+- **Hero copy recomposed centred on user direction** ("centerd", matching the reference's centred layout), with an authored entrance. The user floated GSAP; declined for now because the effects are expressible with the existing CSS machinery at zero dependency cost and package installs need explicit permission; revisit only if they insist. Changes: `page.tsx` hero column is now `mx-auto flex max-w-3xl flex-col items-center text-center` with the entrance sequenced by the existing `delay()` helper (questions `anim-rise` at 0ms, headline at 180ms, CTA `anim-rise` at 430ms); headline measure widened 19ch to 22ch with `text-balance` for the centred wrap. `HeroQuestions` gained a `centered` prop (justify-center on rows, text-center on copy, justify-center on the dot controls); only the homepage uses the component. New CSS: `hero-headline-in` keyframes + `.anim-hero-headline` (rise from 1.75rem with blur(10px) to sharp over 760ms ease-out-expo, `--delay`-aware, `both` fill, motion-gated) as the page's one authored arrival; the question rotator's swap transition gained a 6px blur dimension on the same 520ms ease-out-expo curve. All still visible-by-default without the motion flag. Lint clean. Not browser-verified this session.
+- **GSAP adopted on explicit user approval** (`gsap@^3.15.0` installed; the user chose "Install GSAP" when asked and confirmed "go with GSAP"). The hero entrance moved from the CSS `anim-rise`/`anim-hero-headline` sequencing to a GSAP timeline in the new client component `src/components/home/hero-intro.tsx`: question line rises (0.7s), headline resolves **word by word** out of a 10px blur (0.9s, 0.055s stagger; the h1 in `page.tsx` splits `hero.headline` into `data-hero-word` spans with real whitespace between so the accessible name stays one sentence), CTA lands last, all `expo.out` matching the site's ease-out-expo convention. Safety contract, also recorded in CLAUDE.md: content is visible by default and GSAP only animates FROM hidden states after checking `data-motion === "on"` in `useLayoutEffect`, with `gsap.context(...).revert()` cleanup, so no-JS, failed-bundle and reduced-motion visits get the finished layout; ambient loops (the hero field) stay CSS. The `hero-headline-in` keyframes were removed from `globals.css` as dead code (`anim-rise` stays, other pages use it); the rotator's blur-swap CSS remains. CLAUDE.md's client-component list updated (HeroQuestions, HeroIntro). Lint clean and `npx tsc --noEmit` fully clean (the two long-standing `NavItem.description` errors are gone). Entrance not yet watched in a browser; the word-stagger timing (0.055s) and blur amount are the tuning knobs.
+- **Second GSAP pass on user request ("with GSAP can we make it better?"), four upgrades.** (1) The four field layer divs moved from `page.tsx` into a new client component `src/components/home/hero-field.tsx`: the ambient wave loops stay CSS on the layers, and GSAP animates only their shared wrapper, a 1.06-to-1 scale settle over 1.8s on load, plus, on `(pointer: fine)` devices, a lagged pointer parallax (`gsap.quickTo`, max -24px x / -16px y toward the cursor, 1.1s power3.out follow). The wrapper is `pointer-events-none absolute inset-0 -z-10`; the layers' oversized insets mean neither scale nor parallax can expose an edge. (2) The question rotator's swap moved from CSS transitions to GSAP inside `HeroQuestions` (`useLayoutEffect` on `active`, so no pre-paint flash): outgoing lifts -14px into blur(6px) over 0.38s power2.in, incoming resolves from +20px/blur(8px) over 0.6s expo.out after 0.16s, with `gsap.killTweensOf` first so rapid dot clicks rebase cleanly. The `.q-rotator` CSS was reduced to base states only (hidden inactive / shown active, no transition, comment explains the division of labour or the two systems fight); the no-JS stacked-list fallback is untouched. (3) Magnetic CTA in `HeroIntro`, fine pointers only: the button leans toward the cursor while hovered (x 0.22 / y 0.35 of offset from centre) and glides back on pointerleave, via quickTo. (4) All effects still early-return unless `data-motion="on"`; listeners and tweens are torn down (`ctx.revert()` plus explicit removeEventListener arrays). CLAUDE.md client list now names three hero components. Lint and `tsc --noEmit` clean. Still not watched live; knobs: parallax magnitudes (-24/-16), magnetic pull factors (0.22/0.35), swap durations.
+- **Magnetic CTA removed on user direction** ("remove the animation from the CTA"): the pointermove/pointerleave quickTo follow and its teardown array are gone from `HeroIntro`, which is back to owning only the entrance timeline. The CTA's entrance rise in that timeline was kept, read as in scope for the load choreography rather than "the animation on the CTA"; strip it too if the user pushes back. Lint clean.
+- **Question rotator is now a typewriter, on user request.** Implementation is a character reveal, not text mutation: `QuestionChars` in `hero-questions.tsx` renders every non-whitespace character as a `data-q-char` span (spaces and `\n` stay raw text nodes, `pre-line` needs them intact), so every character's space is reserved from the start and the centred multi-line text never reflows mid-type, and screen readers read whole questions since the characters are real DOM text. GSAP reveals the incoming question's chars at 0.02s/char (`duration 0.01, ease "none"`) while the outgoing question fades over 0.24s; first mount types the opening question once at 0.55s delay (as the hero block rises); interrupts are handled by killing both items' and both char-sets' tweens. `DWELL` raised 4400 to 5200ms so the ~1s of typing still leaves a full read. The previous lift-into-blur swap was replaced entirely. Also on user request, the second question gained a manual line break in `content/home.ts`: "Is your customer engagement\nbased on account intelligence?", matching the other two questions' hand-broken lines (note: the break only renders from `sm` up, the `whitespace-pre-line` is `sm:`-prefixed). Lint and tsc clean; not watched live. Knobs: `CHAR_STAGGER` (0.02) and the outgoing fade duration.
+- Two follow-ups on user direction: the second question's break moved to after "based on" ("Is your customer engagement based on\naccount intelligence?"), and `DWELL` came down 5200 to 3800ms to tighten the rotation. Important coupling found while doing it: the dot's progress-pill fill duration is hardcoded in `globals.css` (`.q-dwell` animation) and was still 4400ms, silently mismatched since the 5200 change; it is now 3800ms with a comment pinning it to `DWELL` in `hero-questions.tsx`. Lint clean.
+- **Hero vertical-rhythm sanity check, on user request ("distance between the questions, indicators and the answer seems off").** Root cause measured, not guessed: the dot controls are 44px touch targets holding 6px dots, so ~19px of invisible padding sits above and below the visible dots; with controls `mt-2` and headline `mt-7` the true visible gaps were question-to-dots 27px and dots-to-headline 47px, making the dots-to-headline hole the largest gap in the stack, larger than the 36px before the CTA, which inverts the grouping. Confirmed by rendering current vs proposed side by side headlessly. Fixes: controls `mt-2` to `-mt-1` (visible gap ~15px; hit area untouched, comments in the JSX explain the invisible-padding arithmetic), headline `mt-7` to `mt-3` (visible ~31px), CTA `mt-9` unchanged at 36px so the reading order's gaps now step 15 < 31 < 36. Also, centred rotator items changed from `items-start` to `items-end` so question text hugs the bottom of the shared grid cell: if line counts ever differ (natural wrap below `sm`), the gap to the dots stays constant and slack accumulates above instead. Lint clean; not watched live. The sweep layer stays `alternate` (4%,-1.5% to -4%,1.5%, 12s, sped up three times from 52s in the same steps): it is not periodic so it cannot wrap, and its reversal hides inside the 34px blur. Verified by injecting negative `animation-delay` into the prototype and diffing headless-Chrome frames: phase 0 vs 10s differs strongly (mean 34.9, motion real), phase 0 vs 40s nearly identical (residual only from the mid-phase sweep, wrap seamless). Note `--virtual-time-budget` proved unreliable for advancing compositor animations; negative `animation-delay` is the dependable way to sample phases headlessly. Still gated behind `data-motion` with the reduced-motion kill switch. `page.tsx` renders four aria-hidden layer divs (field, streaks, sweep, grain). Lint clean; detector clean on both files; prototype verified at 1600x1000 and 420x820. **Not yet verified in the running app** (no dev server was started; the user had one running when they judged the previous field)
 - Known gaps: the intermediate URL `/resources/experts-view/implementers-guide-to-ai` has no page and will 404 (only the library and the leaf interviews exist); the five quick-reads cards on the report landing remain inert; `expertProjects[0].lede` and the library lede are written copy, not transcribed from the live site, so they may want a review. **Still not verified in a browser**: nothing was rendered and no build was run, so the layout, the sticky form column, the thumbnail crops, the long-transcript scroll and the mobile stack are all by-inspection only.
 
 ---

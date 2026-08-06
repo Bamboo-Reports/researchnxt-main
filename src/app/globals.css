@@ -369,19 +369,17 @@
   display: grid;
 }
 
+/* Base states only: hidden inactive, shown active. The swap between them is
+   GSAP's (see HeroQuestions), whose inline styles override these, so there
+   must be no transition here or the two systems would fight. */
 [data-motion="on"] .q-rotator > * {
   grid-area: 1 / 1;
   opacity: 0;
-  transform: translate3d(0, 0.75rem, 0);
   pointer-events: none;
-  transition:
-    opacity 520ms var(--ease-out-expo),
-    transform 520ms var(--ease-out-expo);
 }
 
 [data-motion="on"] .q-rotator > [data-active="true"] {
   opacity: 1;
-  transform: none;
   pointer-events: auto;
 }
 
@@ -398,9 +396,11 @@
   }
 }
 
+/* Duration must equal DWELL in hero-questions.tsx, or the pill's fill lies
+   about when the next question arrives. */
 [data-motion="on"] .q-dwell {
   transform-origin: left;
-  animation: dwell 4400ms linear both;
+  animation: dwell 3800ms linear both;
 }
 
 /* Dropdown panels grow from the trigger edge rather than fading in place. */
@@ -436,6 +436,204 @@
 [data-motion="on"] .anim-stagger > * {
   animation: rise-in 560ms var(--ease-out-quart) both;
   animation-delay: calc(var(--i, 0) * 55ms + var(--delay, 0ms));
+}
+
+/* ---------------------------------------------------------------------------
+   Hero field. A luminous diagonal beam field in the brand orange, after the
+   Shinkei reference the user supplied.
+
+   Four stacked layers. `.hero-field` is the vivid base wash: saturated orange
+   with creamy light pooling in the lower-left and upper-right corners and
+   deeper red-orange pockets opposite. `.hero-field-streaks` carries the beam
+   system on its two pseudo-elements: both draw the same 45-degree beams, but
+   each is visible only in alternating horizontal bands (via mask) and the
+   second copy is shifted 44px sideways, which quantises every beam edge into
+   the staircase steps that give the reference its signature. They must share
+   one animated parent: if the copies drifted independently the complementary
+   masks would tear into horizontal bands. `.hero-field-sweep` is a broad,
+   heavily blurred light band counter-flowing over the top, so the field
+   waves in both directions at once. Grain sits last.
+
+   White copy sits straight on the field, as in the reference. The base wash
+   weights its deep red-orange pocket (#be2a00 range) through the copy column,
+   so the display headline clears 3:1 there and the small question line stays
+   full-strength white rather than translucent.
+--------------------------------------------------------------------------- */
+.hero-field {
+  position: absolute;
+  inset: 0;
+  z-index: -20;
+  background:
+    radial-gradient(
+      46% 38% at 2% 100%,
+      rgba(255, 232, 202, 0.9) 0%,
+      rgba(255, 190, 115, 0.4) 38%,
+      transparent 64%
+    ),
+    radial-gradient(
+      40% 34% at 100% 16%,
+      rgba(255, 205, 140, 0.75) 0%,
+      rgba(255, 165, 80, 0.3) 42%,
+      transparent 68%
+    ),
+    radial-gradient(60% 50% at 16% 8%, rgba(190, 42, 0, 0.95) 0%, transparent 60%),
+    radial-gradient(64% 54% at 84% 94%, rgba(198, 46, 0, 0.9) 0%, transparent 58%),
+    linear-gradient(135deg, #e83f00 0%, #ff5505 45%, #ec4200 100%);
+}
+
+.hero-field-streaks {
+  position: absolute;
+  inset: 0;
+  z-index: -15;
+  will-change: transform;
+}
+
+/* The beams. Oversized 1400px past each side so the flow loop never exposes
+   an edge. The axis periods are deliberately commensurate (440 / 880 / 880px)
+   so the whole pattern repeats every 880px along the axis, which is what lets
+   the flow animation wrap seamlessly; the third gradient is phase-shifted by
+   half a period via background-position so the two 880 layers never sit on
+   top of each other. Wide transparent gaps keep the vivid base showing
+   through between beams. */
+.hero-field-streaks::before,
+.hero-field-streaks::after {
+  content: "";
+  position: absolute;
+  inset: -35% -1400px;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 228, 195, 0) 0px,
+      rgba(255, 228, 195, 0.48) 100px,
+      rgba(255, 228, 195, 0.48) 145px,
+      rgba(255, 228, 195, 0) 235px,
+      rgba(255, 228, 195, 0) 440px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(178, 36, 0, 0) 0px,
+      rgba(178, 36, 0, 0.62) 140px,
+      rgba(178, 36, 0, 0.62) 210px,
+      rgba(178, 36, 0, 0) 320px,
+      rgba(178, 36, 0, 0) 880px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 168, 80, 0) 0px,
+      rgba(255, 168, 80, 0.4) 170px,
+      rgba(255, 168, 80, 0) 330px,
+      rgba(255, 168, 80, 0) 880px
+    );
+  filter: blur(4px);
+}
+
+.hero-field-streaks::before {
+  background-position:
+    0 0,
+    0 0,
+    440px 0;
+  mask-image: repeating-linear-gradient(
+    180deg,
+    #000 0px,
+    #000 88px,
+    transparent 88px,
+    transparent 176px
+  );
+}
+
+.hero-field-streaks::after {
+  background-position:
+    44px 0,
+    44px 0,
+    484px 0;
+  mask-image: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 88px,
+    #000 88px,
+    #000 176px
+  );
+}
+
+/* Broad soft light bands counter-flowing over the stepped beams. Repeating
+   at the same commensurate 880px axis period as the streaks so its own flow
+   wraps seamlessly, but heavily blurred and low-contrast so it reads as
+   travelling light rather than a second stripe system. */
+.hero-field-sweep {
+  position: absolute;
+  inset: -35% -1400px;
+  z-index: -10;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 210, 155, 0) 0px,
+      rgba(255, 210, 155, 0.3) 210px,
+      rgba(255, 210, 155, 0) 420px,
+      rgba(255, 210, 155, 0) 880px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(198, 46, 0, 0) 0px,
+      rgba(198, 46, 0, 0.28) 300px,
+      rgba(198, 46, 0, 0) 580px,
+      rgba(198, 46, 0, 0) 880px
+    );
+  background-position:
+    0 0,
+    440px 0;
+  filter: blur(30px);
+  will-change: transform;
+}
+
+/* Still by default. The flow only runs once the motion flag is set, and the
+   reduced-motion block at the end of this file stops it regardless.
+
+   The field waves in both directions at once: the stepped beams flow one
+   way while the sweep layer flows the other, each constant and never
+   reversing. Seamlessness: the streak pattern repeats every 880px along its
+   45-degree axis, which is 880 x sqrt(2) = 1244.51px horizontally, so one
+   cycle translates exactly that far and the wrap lands pixel-identical. Two
+   traps encoded here: the translation must NOT be along the beams' own axis
+   (equal x and y), because a repeating stripe is invariant along itself and
+   the animation runs invisibly; and both masked streak copies must animate
+   on this shared parent, never independently, or the complementary masks
+   tear into horizontal bands. */
+@keyframes hero-flow {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-1244.51px, 0, 0);
+  }
+}
+
+@keyframes hero-flow-back {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(1244.51px, 0, 0);
+  }
+}
+
+[data-motion="on"] .hero-field-streaks {
+  animation: hero-flow 8s linear infinite;
+}
+
+[data-motion="on"] .hero-field-sweep {
+  animation: hero-flow-back 13s linear infinite;
+}
+
+/* Film grain, the last thing between the field and the copy. An inline SVG
+   turbulence rather than a raster, so it costs nothing to ship and never
+   tiles visibly. */
+.hero-field-grain {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+  opacity: 0.85;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: reduce) {

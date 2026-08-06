@@ -104,9 +104,16 @@ export type FeaturedResource = {
   href: string;
   kind: string;
   /**
+   * Plate for the card, a path under /public. The home page's resource bands
+   * take these from the report and interview registries, so a card shows the
+   * real cover or interview banner; the placeholder is the fallback.
+   */
+  image?: string;
+  /**
    * PHASE A: a featured item points at the live WordPress URL while its
-   * /resources route does not exist, and is marked external. The items whose
-   * pages have since been built here carry an internal href and omit the flag.
+   * /resources route does not exist, and is marked external. Every featured
+   * item is now published here, so nothing sets this today; it stays for the
+   * handful of Resources links still pointing at WordPress.
    */
   external?: true;
 };

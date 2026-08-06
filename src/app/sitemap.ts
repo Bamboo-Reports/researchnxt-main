@@ -4,6 +4,10 @@ import { expertInterviews, interviewHref } from "@/content/experts-view";
 import { eventHref, events } from "@/content/events";
 import { insightHref, insights } from "@/content/insights";
 import { reportLandings } from "@/content/resources";
+import {
+  successStories,
+  successStoryHref,
+} from "@/content/success-stories";
 import { solutions } from "@/content/solutions";
 
 /**
@@ -22,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/resources/experts-view", priority: 0.7 },
     { path: "/resources/insights", priority: 0.7 },
     { path: "/resources/events", priority: 0.6 },
+    { path: "/resources/success-stories", priority: 0.6 },
   ];
 
   const solutionRoutes = solutions.map((solution) => ({
@@ -51,6 +56,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
+  const successStoryRoutes = successStories.map((story) => ({
+    path: successStoryHref(story),
+    priority: 0.5,
+  }));
+
   const lastModified = new Date();
 
   return [
@@ -60,6 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...interviewRoutes,
     ...insightRoutes,
     ...eventRoutes,
+    ...successStoryRoutes,
   ].map((route) => ({
     url: `${site.url}${route.path}`,
     lastModified,

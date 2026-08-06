@@ -10,6 +10,11 @@
 
 import { aiLedEbookLaunch } from "./ai-led-personalization/ai-led-ebook-launch";
 import { businessStrategyReportLaunch } from "./south-east-asia-response-guide/business-strategy-report-launch";
+import { contentMarketingReportLaunch } from "./content-marketing-done-right/content-marketing-report-launch";
+import { reportLaunchWebinar } from "./b2c-marketing-automation-india-2017/report-launch-webinar";
+import { hyseaBizsummit2020 } from "./industry-events/hysea-bizsummit-2020";
+import { nasscomMartechConfluence2017 } from "./industry-events/nasscom-martech-confluence-2017";
+import { nasscomTechnologyLeadershipForum2019 } from "./industry-events/nasscom-technology-leadership-forum-2019";
 
 export type { Event } from "./types";
 
@@ -20,6 +25,17 @@ export const events = [
 
   // AI Led Personalization
   aiLedEbookLaunch,
+
+  // Content Marketing Done Right
+  contentMarketingReportLaunch,
+
+  // B2C Marketing Automation Report: India, 2017
+  reportLaunchWebinar,
+
+  // Conference participations, which belong to no research programme
+  hyseaBizsummit2020,
+  nasscomTechnologyLeadershipForum2019,
+  nasscomMartechConfluence2017,
 ].sort(
   (a, b) =>
     b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "en"),
