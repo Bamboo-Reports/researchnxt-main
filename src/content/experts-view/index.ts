@@ -18,6 +18,7 @@ import { avnishAnand } from "./implementers-guide-to-ai/avnish-anand";
 import { diptarupChakraborti } from "./implementers-guide-to-ai/diptarup-chakraborti";
 import { gauravSuri } from "./implementers-guide-to-ai/gaurav-suri";
 import { hansveenKaur } from "./implementers-guide-to-ai/hansveen-kaur";
+import { karthikAnantharaman } from "./implementers-guide-to-ai/karthik-anantharaman";
 import { madhavVemuri } from "./implementers-guide-to-ai/madhav-vemuri";
 import { manishKumar } from "./implementers-guide-to-ai/manish-kumar";
 import { meeraIyer } from "./implementers-guide-to-ai/meera-iyer";
@@ -123,64 +124,64 @@ export const expertProjects: ExpertProject[] = [
   {
     slug: "implementers-guide-to-ai",
     name: "Implementer's Guide to AI",
-    lede: "Fifteen conversations with leaders putting AI to work across finance, retail, manufacturing, insurance and healthcare, conducted for the Implementer's Guide to AI.",
+    lede: "Sixteen conversations with leaders putting AI to work across finance, retail, manufacturing, insurance and healthcare, conducted for the Implementer's Guide to AI.",
     reportSlug: "implementers-guide-to-ai",
   },
   {
     slug: "automation-campaign-management",
     name: "Automation & Campaign Management",
     lede: "Nineteen conversations on marketing automation, campaign management and personalisation, conducted in partnership with Zoho.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the "[Z IND] Report Download" form directly.
-    jotformId: "243521499246462",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the "[Z IND] Report Download" id themselves.
+    reportSlug: "automation-campaign-management",
   },
   {
     slug: "unlocking-the-power-unified-cx",
     name: "Unlocking the Power of Unified CX",
     lede: "Five conversations with technology and customer experience leaders in Qatar and the wider Middle East and Africa region.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the "[Z QA] Report Download" form directly.
-    jotformId: "250201862296454",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the "[Z QA] Report Download" id themselves.
+    reportSlug: "unlocking-the-power-unified-cx",
   },
   {
     slug: "transforming-cx-through-gccs",
     name: "Transforming CX through GCCs",
     lede: "Four conversations with leaders building global capability centres in India, conducted for the Leaders Speak whitepaper on transforming customer experience through GCCs.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the eBook download form directly.
-    jotformId: "241762483249463",
+    // The eBook landing exists now, so the interviews take their download form
+    // from it rather than carrying the id themselves.
+    reportSlug: "transforming-cx-through-gccs",
   },
   {
     slug: "navigating-corporate-commute-for-gccs-in-india",
     name: "Navigating Corporate Commute for GCCs in India",
     lede: "Five conversations with the administration, workplace and procurement leaders who run employee transport for global capability centres in India.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the "[RM] Microsite Report Download" form.
-    jotformId: "260490193043452",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the "[RM] Microsite Report Download" id.
+    reportSlug: "navigating-corporate-commute-for-gccs-in-india",
   },
   {
     slug: "cloud-computing-new-normal-beyond",
     name: "Cloud Computing in the New Normal & Beyond",
     lede: "Three conversations with CIOs and IT leaders on cloud adoption across Indian manufacturing, from the 2021 research programme.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the 2021 report download form directly.
-    jotformId: "211600107593446",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2021 report id themselves.
+    reportSlug: "cloud-computing-new-normal-beyond",
   },
   {
     slug: "south-east-asia-response-guide",
     name: "Southeast Asia Response Guide",
     lede: "Six conversations with founders and executives across Southeast Asia on rebuilding for the growth phase after the pandemic, from the 2021 research programme.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the 2021 report download form directly.
-    jotformId: "211602133570442",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2021 report id themselves.
+    reportSlug: "south-east-asia-response-guide",
   },
   {
     slug: "ai-led-personalization",
     name: "AI Led Personalization",
     lede: "Twenty one conversations with marketing leaders, analysts and platform builders on personalisation, from the 2020 AI Led Personalization strategy and trends programme.",
-    // TODO: point at `reportSlug` once the report landing is built; until then
-    // the interview pages carry the 2020 report download form directly.
-    jotformId: "200151888635458",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2020 report id themselves.
+    reportSlug: "ai-led-personalization",
   },
 ];
 
@@ -201,6 +202,7 @@ export const expertInterviews = [
   diptarupChakraborti,
   gauravSuri,
   hansveenKaur,
+  karthikAnantharaman,
   madhavVemuri,
   manishKumar,
   meeraIyer,

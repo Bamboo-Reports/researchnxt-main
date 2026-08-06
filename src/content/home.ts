@@ -78,8 +78,7 @@ export const featuredReports: FeaturedResource[] = [
       "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
     summary:
       "How industrial leaders are moving AI out of pilot projects and into production at scale.",
-    href: "https://researchnxt.com/guide-to-ai/implementers-guide-to-ai-manufacturing-automotive-energy-leaders-move-from-pilots-to-scale/",
-    external: true,
+    href: "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
   },
   {
     kind: "Report",
@@ -94,8 +93,7 @@ export const featuredReports: FeaturedResource[] = [
     title: "The Four Waves of AI: A Ready Guide for Business Leaders",
     summary:
       "A framework for understanding where AI capability is heading and what to prepare for.",
-    href: "https://researchnxt.com/guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders/",
-    external: true,
+    href: "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
   },
   {
     kind: "Report",
@@ -155,8 +153,7 @@ export const quickReads: FeaturedResource[] = [
     kind: "Article",
     title: "AI is the Future, and the Future is Now",
     summary: "",
-    href: "https://researchnxt.com/guide-to-ai/ai-is-the-future-and-the-future-is-now-a-preview-of-the-implementors-guide-to-ai/",
-    external: true,
+    href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
   },
   {
     kind: "Article",

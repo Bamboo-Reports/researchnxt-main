@@ -104,9 +104,9 @@ export type FeaturedResource = {
   href: string;
   kind: string;
   /**
-   * PHASE A: every featured item points at the live WordPress URL, since the
-   * /resources routes do not exist yet. Phase B replaces this whole array with
-   * a `getFeaturedResources()` call against the MDX content layer.
+   * PHASE A: a featured item points at the live WordPress URL while its
+   * /resources route does not exist, and is marked external. The items whose
+   * pages have since been built here carry an internal href and omit the flag.
    */
-  external: true;
+  external?: true;
 };

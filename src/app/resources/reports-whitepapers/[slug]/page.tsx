@@ -1,82 +1,79 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ExpertInsightsTabs } from "@/components/expert-insights-tabs";
+import { ReportCardGrid } from "@/components/report-card-grid";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Logo } from "@/components/layout/logo";
 import { Reveal } from "@/components/motion/reveal";
+import { QuoteCarousel } from "@/components/quote-carousel";
+import { ReportCardRail } from "@/components/report-card-rail";
+import { StatsBento } from "@/components/stats-band";
 import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getReportLanding, reportLandings } from "@/content/resources";
-import { cn } from "@/lib/cn";
 import { delay, step } from "@/lib/motion";
-import type { ReportCardItem } from "@/content/resources";
 
 /**
  * Landing page template for a single report, mirroring the structure of the
  * live WordPress microsites: hero with the cover and the download form,
  * description, chapters, quick reads, expert insights by AI maturity stage,
- * sponsor credits, closing CTA. Every report in `content/resources.ts` gets
- * its own page here; only the data differs.
+ * sponsor credits. Every report in `content/resources.ts` gets its own page
+ * here; only the data differs.
+ *
+ * The page runs on `tight` bands throughout rather than the site's `default`
+ * rhythm. It is a single-decision landing read in one scroll, so the bands are
+ * separated by surface and hairline rather than by a lot of air; the pulse
+ * comes from the interval inside each band instead.
  */
 
 type Params = { params: Promise<{ slug: string }> };
 
-/** Card grid shared by the quick-reads and expert-insights sections.
-    PHASE B: items without an `href` still render as inert plates with the
-    placeholder image, until their article pages exist. */
-function ReportCardGrid({ items }: { items: ReportCardItem[] }) {
+/**
+ * The offer band's three line icons, drawn in the house stroke so the band
+ * does not pull in an icon library for three marks: heads in conversation for
+ * consulting, a checked cloud for the assessment, a ticket for the waiver.
+ */
+function OfferIcon({ name }: { name: "consulting" | "assessment" | "waiver" }) {
+  const paths = {
+    consulting: (
+      <>
+        <circle cx="8" cy="9" r="3" />
+        <path d="M2.8 20c.6-3.2 2.7-5 5.2-5s4.6 1.8 5.2 5" />
+        <path d="M15 4.6a4 4 0 0 1 4.7 6.3" />
+        <path d="M16.6 15.2c2.4.3 4.1 2 4.6 4.8" />
+      </>
+    ),
+    assessment: (
+      <>
+        <path d="M7 18a4.5 4.5 0 0 1-.4-9 6 6 0 0 1 11.6 1.6A4 4 0 0 1 17.5 18H7Z" />
+        <path d="m9.5 13.5 2 2 3.5-4" />
+      </>
+    ),
+    waiver: (
+      <>
+        <path d="M3 9.5V7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2.5a2.5 2.5 0 0 0 0 5V17a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2.5a2.5 2.5 0 0 0 0-5Z" />
+        <path d="M14 6v2.2M14 11v2M14 15.8V18" />
+      </>
+    ),
+  } as const;
+
   return (
-    <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      {items.map((item, index) => {
-        const inner = (
-          <>
-            <Image
-              src={item.image ?? "/resource-placeholder.svg"}
-              alt=""
-              width={640}
-              height={360}
-              className="mt-1 aspect-video w-full rounded-md object-cover"
-            />
-            <h3
-              className={cn(
-                "clamp-3 text-base font-semibold",
-                item.href &&
-                  "transition-colors duration-200 group-hover:text-accent",
-              )}
-            >
-              {item.title}
-            </h3>
-          </>
-        );
-
-        if (!item.href) {
-          return (
-            <div
-              key={item.title}
-              className="flex flex-col gap-4 border-t border-line pt-4"
-              style={step(index)}
-            >
-              {inner}
-            </div>
-          );
-        }
-
-        return (
-          <Link
-            key={item.title}
-            href={item.href}
-            className="group flex flex-col gap-4 border-t border-line pt-4 transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-            style={step(index)}
-          >
-            {inner}
-          </Link>
-        );
-      })}
-    </Reveal>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className="size-9 text-accent"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {paths[name]}
+    </svg>
   );
 }
 
@@ -106,12 +103,17 @@ export default async function ReportLandingPage({ params }: Params) {
   return (
     <main id="main">
       {/* Hero. The cover carries the title, so the visible band is only the
-          artifact and the single action: the cover large on the light brand
-          wash, the form as a raised panel beside it. The h1 stays for
-          assistive tech and the document outline. */}
+          artifact and the single action: the cover on the light brand wash,
+          the form beside it. The h1 stays for assistive tech and the document
+          outline.
+
+          The two columns are sized and centred as a pair rather than letting
+          the cover float in a 1fr column, which left a lot of dead width at
+          desktop. The Jotform iframe is a fixed 539px and sets the band's
+          height, so the padding stays tight around it. */}
       <Section spacing="none" className="hero-wash border-b border-line">
-        <Container className="py-14 sm:py-20">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-16">
+        <Container className="py-8 sm:py-10">
+          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,24rem)_minmax(0,26rem)] lg:justify-center lg:gap-16">
             <div className="flex flex-col justify-center">
               <h1 className="sr-only">{report.hero.title}</h1>
               <Image
@@ -120,7 +122,7 @@ export default async function ReportLandingPage({ params }: Params) {
                 width={768}
                 height={768}
                 priority
-                className="anim-rise w-64 self-center sm:w-80 lg:w-[28rem]"
+                className="anim-rise w-52 self-center sm:w-64 lg:w-full"
               />
             </div>
 
@@ -129,44 +131,41 @@ export default async function ReportLandingPage({ params }: Params) {
               className="anim-rise scroll-mt-24"
               style={delay(160)}
             >
-              <div className="rounded-lg border border-line bg-white p-5 sm:p-7">
-                <div className="flex flex-col gap-2 pb-5">
-                  <h2 className="text-title font-display-soft">
-                    Get the full report
-                  </h2>
-                  <p className="text-sm leading-relaxed text-ink-soft">
-                    Free download, sent straight to your work email.
-                  </p>
-                </div>
-                <span aria-hidden="true" className="rule-ticks block h-px" />
-                <div className="pt-5">
-                  {report.download.jotformId ? (
-                    <JotformEmbed
-                      formId={report.download.jotformId}
-                      title="Download the report"
-                    />
-                  ) : (
-                    <DownloadForm
-                      report={report.hero.title}
-                      submitLabel={report.download.submitLabel}
-                      consent={report.download.consent}
-                    />
-                  )}
-                </div>
-              </div>
+              {/* The form sits directly on the hero wash: no panel, no
+                  heading. The embed carries its own title and framing. */}
+              {report.download.jotformId ? (
+                <JotformEmbed
+                  formId={report.download.jotformId}
+                  title="Download the report"
+                />
+              ) : (
+                <DownloadForm
+                  report={report.hero.title}
+                  submitLabel={report.download.submitLabel}
+                  consent={report.download.consent}
+                />
+              )}
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* About the report. */}
-      <Section spacing="default">
+      {/* About the report. Held to a reading measure instead of running the
+          full page width, and the opening paragraph carries the weight so the
+          band has a lead rather than two paragraphs of equal voice. */}
+      <Section spacing="tight">
         <Container>
-          <div className="flex flex-col gap-5">
-            {report.description.map((paragraph) => (
+          {/* Justified on user direction, with `hyphens-auto` so the flush
+              right edge does not open rivers of white space between words. */}
+          <div className="mx-auto flex max-w-[68ch] flex-col gap-5 text-justify hyphens-auto">
+            {report.description.map((paragraph, index) => (
               <p
                 key={paragraph}
-                className="text-lg leading-relaxed text-ink-soft"
+                className={
+                  index === 0
+                    ? "text-xl leading-relaxed text-ink"
+                    : "text-lg leading-relaxed text-ink-soft"
+                }
               >
                 <Emphasised text={paragraph} />
               </p>
@@ -175,107 +174,251 @@ export default async function ReportLandingPage({ params }: Params) {
         </Container>
       </Section>
 
-      {/* The report's chapters, in reading order. */}
-      <Section surface="subtle" bordered spacing="default">
-        <Container>
-          <SectionHeading
-            title={report.expect.title}
-            align="center"
-            className="mb-12"
-          />
-          <Reveal className="grid gap-x-10 gap-y-10 sm:grid-cols-3">
-            {report.expect.sections.map((section, index) => (
-              <div
-                key={section.name}
-                className="flex flex-col items-center gap-3 border-t border-line pt-6 text-center"
-                style={step(index)}
-              >
-                {section.image ? (
-                  <Image
-                    src={section.image}
-                    alt=""
-                    width={1024}
-                    height={1024}
-                    className="mb-1 size-24 object-contain"
-                  />
-                ) : null}
-                <h3 className="text-title font-display-soft">{section.name}</h3>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {section.description}
-                </p>
-              </div>
-            ))}
-          </Reveal>
-        </Container>
-      </Section>
+      {/* The report's chapters, in reading order. Not every report runs a
+          chapter band: the 2021 cloud microsite has none. */}
+      {report.expect ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <SectionHeading
+              title={report.expect.title}
+              align="center"
+              className="mb-10"
+            />
+            <Reveal className="grid gap-x-8 gap-y-10 md:grid-cols-3">
+              {report.expect.sections.map((section, index) => (
+                <div
+                  key={section.name}
+                  className="flex flex-col items-center border-t border-line pt-5 text-center"
+                  style={step(index)}
+                >
+                  {section.image ? (
+                    <Image
+                      src={section.image}
+                      alt=""
+                      width={1024}
+                      height={1024}
+                      className="size-20 object-contain"
+                    />
+                  ) : null}
+                  <h3 className="mt-4 text-title font-display-soft">
+                    {section.name}
+                  </h3>
+                  {/* The hard wraps in the copy only apply from `lg`, where the
+                      column is wide enough for them; below that the `\n`
+                      collapses to a space and the text wraps to the column. */}
+                  <p className="mt-2 whitespace-normal text-sm leading-relaxed text-ink-soft lg:whitespace-pre-line">
+                    {section.description}
+                  </p>
+                </div>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
 
-      <Section bordered spacing="default">
-        <Container>
-          <SectionHeading
-            title={report.quickReads.title}
-            align="center"
-            className="mb-12"
-          />
-          <ReportCardGrid items={report.quickReads.items} />
-        </Container>
-      </Section>
+      {/* Figures about the research itself, where the report carries them.
+          The site's own stat tiles, so the numbers count up as they do on
+          About and the solution pages. */}
+      {report.figures ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <SectionHeading
+              title={report.figures.title}
+              align="center"
+              className="mb-10"
+            />
+            <StatsBento stats={report.figures.items} />
+          </Container>
+        </Section>
+      ) : null}
 
-      {/* Expert insights, grouped by the AI maturity stages the report uses.
-          The stages read in order, so they stack rather than hide in tabs. */}
-      <Section surface="subtle" bordered spacing="default">
-        <Container>
-          <SectionHeading
-            title={report.expertInsights.title}
-            className="mb-12"
-          />
-          <div className="flex flex-col gap-14">
-            {report.expertInsights.groups.map((group) => (
-              <div key={group.stage} className="flex flex-col gap-6">
-                <p className="flex items-center gap-3 text-sm font-semibold text-accent">
+      {/* Headline findings, where the report lists them instead of chapters:
+          a dense tick list, since the source gives labels without prose and
+          padding them into cards would fake a depth they do not have. */}
+      {report.highlights ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <SectionHeading
+              title={report.highlights.title}
+              align="center"
+              className="mb-10"
+            />
+            <Reveal
+              as="ul"
+              className="mx-auto grid max-w-4xl gap-x-10 gap-y-0 sm:grid-cols-2"
+            >
+              {report.highlights.items.map((item, index) => (
+                <li
+                  key={item}
+                  className="flex items-baseline gap-3 border-t border-line py-3.5 text-base font-semibold text-ink"
+                  style={step(index)}
+                >
                   <span
                     aria-hidden="true"
                     className="size-1.5 shrink-0 rounded-[1px] bg-signal"
                   />
-                  {group.stage}
+                  {item}
+                </li>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* The sponsor's offer to readers, where the report carries one. The
+          source microsite ran this as a four-cell strip, sponsor first; here
+          that becomes the site's bento grammar: the sponsor on the accent
+          feature tile with the mark's white variant, and each promise on a
+          quiet tile under a drawn line icon. */}
+      {report.offer ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div
+                className="flex min-h-44 flex-col justify-between gap-6 rounded-md bg-accent p-6 text-white sm:p-7"
+                style={step(0)}
+              >
+                <p className="flex items-center gap-3 text-sm font-semibold text-white/85">
                   <span
                     aria-hidden="true"
-                    className="rule-ticks h-px min-w-8 flex-1"
+                    className="h-1 w-6 rounded-[1px] bg-white/60"
                   />
+                  {report.offer.label}
                 </p>
-                <ReportCardGrid items={group.items} />
+                {report.offer.logo ? (
+                  <Image
+                    src={report.offer.logo.src}
+                    alt={report.offer.logo.alt}
+                    width={240}
+                    height={76}
+                    unoptimized
+                    className="h-9 w-auto self-start"
+                  />
+                ) : null}
               </div>
-            ))}
-          </div>
+
+              {report.offer.items.map((item, index) => (
+                <div
+                  key={item.text}
+                  className="flex min-h-44 flex-col justify-between gap-6 rounded-md border border-line bg-surface p-6 sm:p-7"
+                  style={step(index + 1)}
+                >
+                  <OfferIcon name={item.icon} />
+                  <p className="text-base leading-snug font-semibold text-ink">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section bordered spacing="tight">
+        <Container>
+          <SectionHeading
+            title={report.quickReads.title}
+            align="center"
+            className="mb-10"
+          />
+          <ReportCardRail
+            items={report.quickReads.items}
+            label={report.quickReads.title}
+          />
         </Container>
       </Section>
+
+      {/* Expert insights, one tab per AI maturity stage rather than all four
+          stacked, so the band stays short enough to read. */}
+      <Section surface="subtle" bordered spacing="tight">
+        <Container>
+          <SectionHeading
+            title={report.expertInsights.title}
+            align="center"
+            className="mb-8"
+          />
+          {/* A single group needs no tab rail; the cards stand alone. */}
+          {report.expertInsights.groups.length === 1 ? (
+            <ReportCardGrid items={report.expertInsights.groups[0].items} />
+          ) : (
+            <ExpertInsightsTabs groups={report.expertInsights.groups} />
+          )}
+        </Container>
+      </Section>
+
+      {/* The participants' own words, straight from the microsite's quote
+          cards, sitting between the interviews and the credits. No heading:
+          the cards say who is speaking, and the band reads as a breather. */}
+      {report.voices ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <QuoteCarousel voices={report.voices} />
+          </Container>
+        </Section>
+      ) : null}
 
       {report.credits ? (
         <Section bordered spacing="tight">
           <Container>
-            <div className="flex flex-col items-center justify-center gap-10 sm:flex-row sm:gap-24">
-              <div className="flex flex-col items-center gap-3">
+            {/* Two equal columns so the labels sit on one line and the marks
+                on another, whatever their aspect ratios: each mark is centred
+                in a fixed-height box rather than sizing its own row. */}
+            <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-16">
+              <div className="flex flex-col items-center gap-4">
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.sponsor.label}
                 </p>
-                <Image
-                  src={report.credits.sponsor.logo}
-                  alt={report.credits.sponsor.name}
-                  width={240}
-                  height={120}
-                  className="h-10 w-auto"
-                />
+                <span className="flex h-14 items-center">
+                  {report.credits.sponsor.logos ? (
+                    <span className="flex items-center gap-3">
+                      {report.credits.sponsor.logos.map((sponsor, index) => (
+                        <span
+                          key={sponsor.name}
+                          className="flex items-center gap-3"
+                        >
+                          {index > 0 ? (
+                            <span
+                              aria-hidden="true"
+                              className="text-lg text-ink-muted"
+                            >
+                              +
+                            </span>
+                          ) : null}
+                          <Image
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                            width={180}
+                            height={48}
+                            unoptimized
+                            className="h-10 w-auto"
+                          />
+                        </span>
+                      ))}
+                    </span>
+                  ) : report.credits.sponsor.logo ? (
+                    <Image
+                      src={report.credits.sponsor.logo}
+                      alt={report.credits.sponsor.name}
+                      width={240}
+                      height={168}
+                      unoptimized
+                      className="h-12 w-auto"
+                    />
+                  ) : null}
+                </span>
               </div>
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-4">
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.partnerLabel}
                 </p>
-                <Logo />
+                <span className="flex h-14 items-center">
+                  <Logo />
+                </span>
               </div>
             </div>
           </Container>
         </Section>
       ) : null}
-
     </main>
   );
 }
