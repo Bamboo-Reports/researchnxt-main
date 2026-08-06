@@ -35,11 +35,18 @@ export type Event = {
    * The event's own facts, as the source page lists them: research focus,
    * format, geography, timeframe. Rendered as a definition list, so the
    * labels stay meaningful rather than becoming a bulleted blur.
+   *
+   * Optional: the conference participations carry no research facts, because
+   * they are not tied to a research programme.
    */
-  facts: { label: string; value: string }[];
+  facts?: { label: string; value: string }[];
 
-  /** Body paragraphs; `**` marks bold emphasis. */
-  body?: string[];
+  /**
+   * Body blocks. A plain string is a paragraph, and `**` inside it marks bold
+   * emphasis; an object is a list, as the NASSCOM pages use to set out what
+   * participants take away.
+   */
+  body?: (string | { list: string[] })[];
 
   /**
    * Speakers, in running order. `interview` links a speaker to their

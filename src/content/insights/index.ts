@@ -29,6 +29,16 @@ import { topFiveCloudAdoptionTrends } from "./cloud-computing-new-normal-beyond/
 import { topFiveCloudComputingTrends } from "./cloud-computing-new-normal-beyond/top-5-cloud-computing-trends";
 import { fiveMajorBusinessReboundStrategies } from "./south-east-asia-response-guide/5-major-business-rebound-strategies";
 import { keyTakeawaysBusinessStrategies } from "./south-east-asia-response-guide/key-takeaways-business-strategies";
+import { sevenMustHaveFeaturesForAContentMarketingSystem } from "./content-marketing-done-right/7-must-have-features-for-a-content-marketing-system";
+import { bestPracticesForYour2019ContentMarketingStrategy } from "./content-marketing-done-right/best-practices-for-your-2019-content-marketing-strategy";
+import { combineYourSocialMediaAndContentMarketing } from "./content-marketing-done-right/combine-your-social-media-and-content-marketing";
+import { contentMarketingAndCrmBoostEmailCampaigns } from "./content-marketing-done-right/content-marketing-and-crm-boost-email-campaigns";
+import { evolutionOfContentMarketingInIndia } from "./content-marketing-done-right/evolution-of-content-marketing-in-india";
+import { howContentMarketingImpactsYourSeoStrategy } from "./content-marketing-done-right/how-content-marketing-impacts-your-seo-strategy";
+import { howToImplementAKillerOmniChannelMarketingStrategy } from "./content-marketing-done-right/how-to-implement-a-killer-omni-channel-marketing-strategy";
+import { howToImplementAnEffectiveAbmStrategy } from "./abm-best-practices-report-india-2018/how-to-implement-an-effective-abm-strategy";
+import { stepsToDefineYourKeyAccounts } from "./abm-best-practices-report-india-2018/steps-to-define-your-key-accounts";
+import { artificialIntelligenceIn2020 } from "./ai-led-personalization/artificial-intelligence-what-can-business-professionals-expect-in-2020";
 import type { InsightProject } from "./types";
 
 export type { ArticleBlock, Insight, InsightProject } from "./types";
@@ -74,6 +84,45 @@ export const insightProjects: InsightProject[] = [
     name: "AI Led Personalization",
     reportSlug: "ai-led-personalization",
   },
+  {
+    slug: "content-marketing-done-right",
+    name: "Content Marketing Done Right",
+    reportSlug: "content-marketing-done-right",
+  },
+  /* No articles were written for this programme, but the events and success
+     stories routes resolve a programme's display name here, so it is
+     registered all the same. */
+  {
+    slug: "state-of-consumer-engagement-gcc-2019",
+    name: "State of Consumer Engagement, GCC 2019",
+    reportSlug: "state-of-consumer-engagement-gcc-2019",
+  },
+  {
+    slug: "abm-best-practices-report-india-2018",
+    name: "ABM Best Practices Report: India, 2018",
+    reportSlug: "abm-best-practices-report-india-2018",
+  },
+  /* No articles were written for this programme either; it is registered so
+     the events and success stories routes can name it. */
+  {
+    slug: "b2c-marketing-automation-india-2017",
+    name: "B2C Marketing Automation Report: India, 2017",
+    reportSlug: "b2c-marketing-automation-india-2017",
+  },
+  /* Not a research programme: the bucket the conference participations sit in,
+     so those events get a URL segment and a breadcrumb label. It carries no
+     `reportSlug`, so the breadcrumb names it without linking. */
+  {
+    slug: "industry-events",
+    name: "Industry events",
+  },
+  /* Also not a research programme: the solution a success story is filed
+     under when the engagement is an ongoing data service rather than a piece
+     of research. */
+  {
+    slug: "prospect-database",
+    name: "Prospect Database",
+  },
 ];
 
 /**
@@ -108,6 +157,22 @@ export const insights = [
   // Southeast Asia Response Guide
   fiveMajorBusinessReboundStrategies,
   keyTakeawaysBusinessStrategies,
+
+  // Content Marketing Done Right
+  evolutionOfContentMarketingInIndia,
+  combineYourSocialMediaAndContentMarketing,
+  howContentMarketingImpactsYourSeoStrategy,
+  bestPracticesForYour2019ContentMarketingStrategy,
+  contentMarketingAndCrmBoostEmailCampaigns,
+  sevenMustHaveFeaturesForAContentMarketingSystem,
+  howToImplementAKillerOmniChannelMarketingStrategy,
+
+  // ABM Best Practices Report: India, 2018
+  stepsToDefineYourKeyAccounts,
+  howToImplementAnEffectiveAbmStrategy,
+
+  // AI Led Personalization
+  artificialIntelligenceIn2020,
 ].sort(
   (a, b) =>
     b.published.localeCompare(a.published) ||

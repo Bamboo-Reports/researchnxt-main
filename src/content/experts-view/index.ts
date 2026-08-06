@@ -91,6 +91,38 @@ import { asishChathanath } from "./unlocking-the-power-unified-cx/asish-chathana
 import { harshilShah } from "./unlocking-the-power-unified-cx/harshil-shah";
 import { mohamedRabie } from "./unlocking-the-power-unified-cx/mohamed-rabie";
 import { vaishnaviSoundarrajan } from "./unlocking-the-power-unified-cx/vaishnavi-soundarrajan";
+import { amitKapoor } from "./content-marketing-done-right/amit-kapoor";
+import { apurvaChamaria } from "./content-marketing-done-right/apurva-chamaria";
+import { gauravSuri as gauravSuriUti } from "./content-marketing-done-right/gaurav-suri";
+import { ranjitBehera } from "./content-marketing-done-right/ranjit-behera";
+import { soorajDivakaran } from "./content-marketing-done-right/sooraj-divakaran";
+import { diptarupChakraborti as diptarupChakrabortiZycus } from "./abm-best-practices-report-india-2018/diptarup-chakraborti";
+import { ojasKulkarni as ojasKulkarniAbm } from "./abm-best-practices-report-india-2018/ojas-kulkarni";
+import { satinderJuneja } from "./abm-best-practices-report-india-2018/satinder-juneja";
+import { sushantShetty } from "./abm-best-practices-report-india-2018/sushant-shetty";
+import { abhishekGupta as abhishekGuptaB2cMas } from "./b2c-marketing-automation-india-2017/abhishek-gupta";
+import { amitShah } from "./b2c-marketing-automation-india-2017/amit-shah";
+import { anilMenghani } from "./b2c-marketing-automation-india-2017/anil-menghani";
+import { binuGeorge } from "./b2c-marketing-automation-india-2017/binu-george";
+import { deepakMalhotra } from "./b2c-marketing-automation-india-2017/deepak-malhotra";
+import { harkiratSingh } from "./b2c-marketing-automation-india-2017/harkirat-singh";
+import { kalpitJain as kalpitJainB2cMas } from "./b2c-marketing-automation-india-2017/kalpit-jain";
+import { kaminiRupani } from "./b2c-marketing-automation-india-2017/kamini-rupani";
+import { karthikAnantharaman as karthikAnantharamanBpl } from "./b2c-marketing-automation-india-2017/karthik-anantharaman";
+import { karunThareja } from "./b2c-marketing-automation-india-2017/karun-thareja";
+import { meeraIyer as meeraIyerBigbasket } from "./b2c-marketing-automation-india-2017/meera-iyer";
+import { mollyKapoor } from "./b2c-marketing-automation-india-2017/molly-kapoor";
+import { pradeepDwivedi } from "./b2c-marketing-automation-india-2017/pradeep-dwivedi";
+import { prasadPimple as prasadPimpleHdfcLife } from "./b2c-marketing-automation-india-2017/prasad-pimple";
+import { pratikMazumder } from "./b2c-marketing-automation-india-2017/pratik-mazumder";
+import { sachinSharma } from "./b2c-marketing-automation-india-2017/sachin-sharma";
+import { varunKaushik as varunKaushikB2cMas } from "./b2c-marketing-automation-india-2017/varun-kaushik";
+import { veerchandBothra } from "./b2c-marketing-automation-india-2017/veerchand-bothra";
+import { allisonMunro } from "./content-marketing-done-right/allison-munro";
+import { rickardLawson } from "./content-marketing-done-right/rickard-lawson";
+import { avleshSingh } from "./state-of-consumer-engagement-gcc-2019/avlesh-singh";
+import { tanmayChandresa } from "./etutoring-best-practices-whitepaper-2016/tanmay-chandresa";
+import { rajeshPantina } from "./publishers-guide-to-smarter-monetization/rajesh-pantina";
 import type { ExpertPerspective, ExpertProject } from "./types";
 
 export type {
@@ -182,6 +214,48 @@ export const expertProjects: ExpertProject[] = [
     // The landing exists now, so the interviews take their download form from
     // it rather than carrying the 2020 report id themselves.
     reportSlug: "ai-led-personalization",
+  },
+  {
+    slug: "content-marketing-done-right",
+    name: "Content Marketing Done Right",
+    lede: "Five conversations with marketing leaders in FinTech, asset management, hospitality technology and quality engineering, from the 2019 Content Marketing Done Right research programme.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2019 report id themselves.
+    reportSlug: "content-marketing-done-right",
+  },
+  {
+    slug: "abm-best-practices-report-india-2018",
+    name: "ABM Best Practices Report: India, 2018",
+    lede: "Four conversations with Indian B2B marketing leaders on account based marketing, the technology behind it, and aligning sales with marketing.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2018 report id themselves.
+    reportSlug: "abm-best-practices-report-india-2018",
+  },
+  {
+    slug: "b2c-marketing-automation-india-2017",
+    name: "B2C Marketing Automation Report: India, 2017",
+    lede: "Eighteen conversations with Indian B2C marketing leaders and the Netcore team on marketing automation, from banking and insurance to grocery, media and footwear.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2017 report id themselves.
+    reportSlug: "b2c-marketing-automation-india-2017",
+  },
+  {
+    slug: "state-of-consumer-engagement-gcc-2019",
+    name: "State of Consumer Engagement, GCC 2019",
+    lede: "The sponsor's own view on how B2C consumer engagement evolved, and what the GCC study set out to establish.",
+    reportSlug: "state-of-consumer-engagement-gcc-2019",
+  },
+  {
+    slug: "etutoring-best-practices-whitepaper-2016",
+    name: "eTutoring Best Practices Whitepaper 2016",
+    lede: "One conversation on the growth and challenges of the Indian e-tutoring industry, from the 2016 whitepaper.",
+    reportSlug: "etutoring-best-practices-whitepaper-2016",
+  },
+  {
+    slug: "publishers-guide-to-smarter-monetization",
+    name: "A Publisher's Guide to Smarter Monetization",
+    lede: "One conversation on mobile video, programmatic and how publishers monetise their real estate, from the 2020 ad revenue optimization guide.",
+    reportSlug: "publishers-guide-to-smarter-monetization",
   },
 ];
 
@@ -289,6 +363,50 @@ export const expertInterviews = [
   shwethaIyerZee5,
   swetaAggarwall,
   tvNaarayan,
+
+  // Content Marketing Done Right
+  amitKapoor,
+  apurvaChamaria,
+  gauravSuriUti,
+  ranjitBehera,
+  soorajDivakaran,
+  rickardLawson,
+  allisonMunro,
+
+  // ABM Best Practices Report: India, 2018
+  diptarupChakrabortiZycus,
+  ojasKulkarniAbm,
+  satinderJuneja,
+  sushantShetty,
+
+  // B2C Marketing Automation Report: India, 2017
+  abhishekGuptaB2cMas,
+  amitShah,
+  anilMenghani,
+  binuGeorge,
+  deepakMalhotra,
+  harkiratSingh,
+  kalpitJainB2cMas,
+  kaminiRupani,
+  karthikAnantharamanBpl,
+  karunThareja,
+  meeraIyerBigbasket,
+  mollyKapoor,
+  pradeepDwivedi,
+  prasadPimpleHdfcLife,
+  pratikMazumder,
+  sachinSharma,
+  varunKaushikB2cMas,
+  veerchandBothra,
+
+  // State of Consumer Engagement, GCC 2019
+  avleshSingh,
+
+  // eTutoring Best Practices Whitepaper 2016
+  tanmayChandresa,
+
+  // A Publisher's Guide to Smarter Monetization
+  rajeshPantina,
 ].sort((a, b) => a.title.localeCompare(b.title, "en"));
 
 export function getExpertProject(slug: string) {

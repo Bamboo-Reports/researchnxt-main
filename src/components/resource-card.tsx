@@ -5,13 +5,12 @@ import { Card, CardBody, CardTitle } from "@/components/ui/card";
 import type { FeaturedResource } from "@/content/types";
 
 /**
- * PHASE A: every resource still lives on the WordPress site, so these always
- * render as external links. Phase B swaps `external` off and the same markup
- * routes internally.
- *
  * Source titles run to very different lengths, so the title and summary are
  * clamped to a fixed number of lines. A row of cards then keeps one hierarchy
  * instead of one card being three lines taller than its neighbours.
+ *
+ * A card carries the real cover or interview banner where the resource has
+ * one, and falls back to the placeholder plate where it does not.
  */
 export function ResourceCard({
   resource,
@@ -31,10 +30,11 @@ export function ResourceCard({
     >
       {withPlate ? (
         <Image
-          src="/resource-placeholder.svg"
+          src={resource.image ?? "/resource-placeholder.svg"}
           alt=""
           width={640}
           height={360}
+          sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 100vw"
           className="mt-1 aspect-video w-full rounded-md object-cover"
         />
       ) : (

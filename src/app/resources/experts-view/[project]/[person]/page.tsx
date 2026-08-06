@@ -213,7 +213,13 @@ export default async function ExpertInterviewPage({ params }: Params) {
                 </blockquote>
               ) : null}
 
-              <div className="flex flex-col gap-10">
+              {/* Some source pages are video interviews carrying only a
+                  summary and a biography, so there is no transcript to run. */}
+              <div
+                className={
+                  interview.exchanges.length > 0 ? "flex flex-col gap-10" : ""
+                }
+              >
                 {interview.exchanges.map((exchange) => (
                   <div key={exchange.question} className="flex flex-col gap-4">
                     <h2 className="text-title font-display-soft text-ink">
