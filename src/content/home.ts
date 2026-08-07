@@ -129,7 +129,8 @@ export const quickReads: FeaturedResource[] = [
   },
   {
     kind: "Article",
-    title: "AI is the Future, and the Future is Now",
+    title:
+      "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
     summary: "",
     href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
   },

@@ -348,7 +348,8 @@ const implementorsGuideToAI: ReportLanding = {
     title: "Quick reads and toolkits for AI adoption",
     items: [
       {
-        title: "AI is the Future, and the Future is Now",
+        title:
+          "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
         href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
         image:
           "/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
@@ -375,7 +376,7 @@ const implementorsGuideToAI: ReportLanding = {
           "/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
       },
       {
-        title: "The Four Waves of AI: A Ready Guide for Business Leaders",
+        title: "The Four Waves of AI: A Practical Guide for Business Leaders",
         href: "/resources/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
         image:
           "/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",

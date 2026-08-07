@@ -4,18 +4,18 @@ export const theFourWavesOfAI: Insight = {
   slug: "the-four-waves-of-ai-a-ready-guide-for-business-leaders",
   project: "implementors-guide-to-ai",
 
-  metaTitle: "The Four Waves of AI: A Ready Guide for Business Leaders",
+  metaTitle: "The Four Waves of AI: A Practical Guide for Business Leaders",
   metaDescription:
     "Research NXT's whitepaper breaks AI's evolution into four waves, from predictive analytics to autonomous agents and general artificial intelligence, with a glossary for business leaders.",
 
-  title: "The Four Waves of AI: A Ready Guide for Business Leaders",
+  title: "The Four Waves of AI: A Practical Guide for Business Leaders",
   published: "2025-01-30",
   excerpt:
     "A whitepaper that breaks AI's evolution into four waves, from predictive analytics to autonomous agents, with a glossary of the terms leaders keep meeting.",
 
   thumbnail:
     "/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
-  thumbnailAlt: "The Four Waves of AI, a ready guide for business leaders",
+  thumbnailAlt: "The Four Waves of AI, a practical guide for business leaders",
 
   jotformId: "251140437587458",
 

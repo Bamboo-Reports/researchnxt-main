@@ -4,6 +4,52 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## Preview article retitled to two lines, 2026-08-07
+
+"AI is the Future, and the Future is Now" was 38 characters, the shortest
+title in the Insights band by a wide margin: its four siblings run 56 to 105
+and wrap to two or three lines, so this one card sat on a single line and
+broke the row's rhythm. It is now:
+
+> AI is the Future, and the Future is Now: A Preview of the Implementor's
+> Guide to AI
+
+83 characters, two lines at card width. **The subtitle is not invented copy**:
+the live WordPress URL is `…/ai-is-the-future-and-the-future-is-now-a-preview-of-the-implementors-guide-to-ai`,
+so this is the source's own framing restored. Chosen by the user from three
+options.
+
+- The **URL slug is unchanged**, since a redirect already points at it
+- **`metaTitle` deliberately keeps the short form.** 83 characters plus the
+  `| Research NXT` template would be truncated in a search result. The
+  divergence is commented in the module, and follows the precedent set by the
+  Karthik Anantharaman interview, whose title also differs from its `metaTitle`
+- `thumbnailAlt` stopped duplicating the title and now reads "Implementor's
+  Guide to AI, a preview of the handbook", matching the three sector articles,
+  which all describe the edition rather than repeat the headline
+- The two cards that carry this title, the report landing's quick reads and the
+  `quickReads` array in `content/home.ts`, were updated so no stale copy remains
+
+### "The Four Waves of AI" checked, one word changed
+
+Audited for the same problem and it did **not** have it: at 56 characters it
+already wraps to two lines at both the library card width (~394px) and the
+home card width (~288px). No consistency fix was needed, and none was
+invented. The only genuine nit was "A Ready Guide", which is unidiomatic
+outside Indian English, so on the user's pick it is now **"The Four Waves of
+AI: A Practical Guide for Business Leaders"**. The article's own body already
+calls the whitepaper "a practical toolkit for business leaders", so the word
+is the source's.
+
+Changed in the four display strings only (`title`, `metaTitle`, `thumbnailAlt`
+and the report landing's quick-read card). **The slug, the redirect
+destination and the `.png` filename all still read `…-a-ready-guide-…`** and
+must stay that way: the slug is the published URL and the image is named after
+it. Seven such path occurrences verified intact.
+
+Lint clean. Not browser-checked, so every two-line wrap here is calculated from
+the card widths, not observed.
+
 ## Renamed the programme to "Implementor's Guide to AI", 2026-08-07
 
 On user direction the programme slug and its display name change from

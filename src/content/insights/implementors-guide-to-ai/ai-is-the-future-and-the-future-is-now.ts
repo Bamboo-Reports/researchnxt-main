@@ -4,18 +4,22 @@ export const aiIsTheFutureAndTheFutureIsNow: Insight = {
   slug: "ai-is-the-future-and-the-future-is-now",
   project: "implementors-guide-to-ai",
 
+  /* Shorter than the on-page title on purpose: the full one runs to 83
+     characters, which a search result truncates once the site template
+     appends the brand. */
   metaTitle: "AI is the Future, and the Future is Now",
   metaDescription:
     "A preview of the Implementor's Guide to AI: where Indian businesses stand on AI adoption, the data, ethics and readiness gaps holding them back, and what the handbook will cover.",
 
-  title: "AI is the Future, and the Future is Now",
+  title:
+    "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
   published: "2025-01-04",
   excerpt:
     "A preview of the Implementor's Guide to AI, and of where Indian businesses stand on adoption, ethics and readiness.",
 
   thumbnail:
     "/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
-  thumbnailAlt: "AI is the Future, and the Future is Now",
+  thumbnailAlt: "Implementor's Guide to AI, a preview of the handbook",
 
   jotformId: "252512579059463",
 
