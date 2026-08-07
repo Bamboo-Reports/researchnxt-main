@@ -151,6 +151,14 @@ export type ReportLanding = {
   cardImage: string;
 
   /**
+   * Portrait cover for the reports library's book-shelf grid, the report's
+   * own vertical cover at full bleed (A4, 210:297). Until a report has one
+   * the library shows its landscape `cardImage` letterboxed on a muted
+   * plate, so supplying this file per report is the whole rollout.
+   */
+  cardPortrait?: string;
+
+  /**
    * The hero download form. The real form is a Jotform embed: set `jotformId`
    * and the template renders it instead of the interim placeholder form.
    * TODO(phase-c): set the Jotform id once the form exists.

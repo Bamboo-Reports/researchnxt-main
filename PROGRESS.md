@@ -39,12 +39,26 @@ The generator keeps both compositions behind a `--plain` flag; the full
 text treatment remains available for surfaces with no HTML caption, an Open
 Graph image being the obvious one.
 
-**If approved for rollout**: move the script into `scripts/` in the repo with
-the two TTFs (OFL) and a config entry per report, regenerate all ~15 as
-`--plain`. The other covers are mostly flat artwork rather than transparent
-mockups, so sizing needs eyeballing per report, and flat rectangles may want
-a slight rotation or shadow to sit as objects on the field the way the tablet
-does.
+**Superseded again, direction settled: a portrait book-shelf grid.** The user
+will supply each report's own vertical cover to stand as the card, chosen
+over keeping the 16:9 slot. The generated field cards and the generator stay
+parked (the text variant is still the natural Open Graph image) but are no
+longer the library's direction.
+
+What is built and waiting for the files:
+
+- `ReportLanding.cardPortrait?` field, A4 ratio (210:297), full bleed
+- The library grid is now 2 / sm:3 / lg:4 columns of `aspect-[210/297]`
+  plates. A report with `cardPortrait` shows it full bleed; one without
+  shows its landscape `cardImage` letterboxed on a `bg-surface-muted` plate,
+  so the shelf stays uniform while covers arrive one by one, and supplying
+  one file per report is the entire rollout
+- The home page's featured-reports band still uses the landscape `cardImage`
+  and is untouched
+
+Lint clean. Not browser-checked. Waiting on the first vertical cover (ACM)
+from the user; when it lands, save under `public/covers/` and set
+`cardPortrait` on the entry.
 
 ## Single quick reads now render as a spotlight band, 2026-08-07
 
