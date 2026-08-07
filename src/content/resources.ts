@@ -1990,7 +1990,7 @@ const stateOfConsumerEngagementGcc2019: ReportLanding = {
   hero: {
     title: "State of Consumer Engagement, GCC 2019",
     lede: "A three-dimensional report on B2C consumer engagement in the GCC region",
-    cover: "/covers/state-of-consumer-engagement-gcc-2019.jpg",
+    cover: "/covers/state-of-consumer-engagement-gcc-2019.png",
     coverAlt:
       "Cover of the State of Consumer Engagement, GCC 2019 report, in print and on a tablet",
   },

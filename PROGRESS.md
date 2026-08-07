@@ -81,6 +81,30 @@ Design.png`). Downscaled with sharp to 1190x1687 (779KB) at
 fourteen sit letterboxed on plates awaiting their files. The original 8.4MB
 source was not committed. Lint clean, not browser-checked.
 
+## Hero mockups updated across all report landings, 2026-08-07
+
+The user supplied a uniform tablet-mockup set at
+`~/Documents/researchnxt.com/covers/report-mockup-for-hero/`, fourteen files
+at 1600x1893 with transparency, one per report except
+`automation-campaign-management`, which already had its tablet mock as the
+hero. Each was matched to its slug by filename; the two ambiguous names were
+verified by reading the artwork ("b2c-consumer-engagment" is the B2C
+Consumer Engagement in the GCC Region cover, so
+`state-of-consumer-engagement-gcc-2019`; "b2c-marketing-auto" is the 2017
+India report).
+
+- Downscaled with sharp to 768 wide (the template's render ceiling is 24rem)
+  and written **over the existing `hero.cover` paths**, so no content entries
+  changed except one: the consumer-engagement hero was a `.jpg`, and the new
+  transparent mock requires PNG, so its `cover` now points at `.png` and the
+  stale jpg is deleted
+- The hero template's intrinsic-size hint was 768x768 from the old square
+  implementors mock; every cover in the set is the same frame now, so it
+  reads 768x909. ACM's mock is 1200x1441 (ratio 0.833 vs the set's 0.845),
+  a sub-percent placeholder mismatch that height:auto absorbs
+- All fifteen `hero.cover` paths verified on disk; lint clean; not
+  browser-checked
+
 ## Home Featured reports band follows the shelf, 2026-08-07
 
 On user direction the home page's four featured-report cards now carry the

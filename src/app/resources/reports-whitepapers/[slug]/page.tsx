@@ -119,11 +119,13 @@ export default async function ReportLandingPage({ params }: Params) {
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,24rem)_minmax(0,26rem)] lg:justify-center lg:gap-16">
             <div className="flex flex-col justify-center">
               <h1 className="sr-only">{report.hero.title}</h1>
+              {/* The tablet mockup set: every hero cover is the same 768x909
+                  frame, so the intrinsic ratio here matches the files. */}
               <Image
                 src={report.hero.cover}
                 alt={report.hero.coverAlt}
                 width={768}
-                height={768}
+                height={909}
                 priority
                 className="anim-rise w-52 self-center sm:w-64 lg:w-full"
               />
