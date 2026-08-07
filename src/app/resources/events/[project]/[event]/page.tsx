@@ -94,9 +94,11 @@ export default async function EventPage({ params }: Params) {
             <h1 className="max-w-[24ch] text-display-sm font-display text-ink">
               {event.title}
             </h1>
-            <p className="max-w-[60ch] text-lg leading-relaxed text-ink-soft">
-              {event.lede}
-            </p>
+            {event.lede ? (
+              <p className="max-w-[60ch] text-lg leading-relaxed text-ink-soft">
+                {event.lede}
+              </p>
+            ) : null}
           </div>
         </Container>
       </Section>

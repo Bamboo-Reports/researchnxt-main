@@ -92,6 +92,13 @@ unrelated to this event, and is still untracked.
 
 ### Dropped on user direction
 
+The hero standfirst "Hosted by Zoho and Research NXT at Hilton Mumbai" is
+gone, so the hero is breadcrumb and title only. `Event.lede` became optional
+and the template omits the paragraph when it is absent; the other seven events
+keep theirs. The line was redundant anyway, since the opening paragraph names
+both the hosts and the venue a moment later.
+
+
 The `speakers` band ("Who spoke") is not on this event: the six speakers are
 named in the body already. The array was built and then removed, including the
 four cross-links to their published interviews in this same programme. The

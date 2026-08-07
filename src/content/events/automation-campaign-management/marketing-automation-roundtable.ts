@@ -25,7 +25,8 @@ export const marketingAutomationRoundtable: Event = {
 
   title:
     "Redefining Marketing Excellence: Highlights from the Marketing Automation Roundtable",
-  lede: "Hosted by Zoho and Research NXT at Hilton Mumbai",
+  /* No lede: the opening paragraph names the hosts and the venue a moment
+     later, so a standfirst here only said it twice. */
   excerpt:
     "The roundtable that launched the Automation and Campaign Management Handbook for Functional Experts, with panellists from PolicyBoss, Cedar Consulting and The Indian Express.",
 

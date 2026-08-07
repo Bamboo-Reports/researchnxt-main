@@ -20,8 +20,11 @@ export type Event = {
   metaDescription: string;
 
   title: string;
-  /** Standfirst under the title. */
-  lede: string;
+  /**
+   * Standfirst under the title. Optional: a title that already carries the
+   * host and the venue does not want them repeated a line below it.
+   */
+  lede?: string;
   /**
    * Date the event ran, ISO `YYYY-MM-DD`.
    *
