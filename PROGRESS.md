@@ -105,6 +105,18 @@ India report).
 - All fifteen `hero.cover` paths verified on disk; lint clean; not
   browser-checked
 
+### Stale-cache follow-up: hero covers renamed to `<slug>-hero.png`
+
+The user saw the old implementors-guide and ai-led mocks even after
+Ctrl+Shift+R. Every file on disk was pixel-verified against its source (all
+fourteen matched, avg diff about 1 unit at 64x64), so the stale bytes were
+coming from Next's dev image-optimizer cache (`.next/cache/images`), which
+in-place overwrites do not reliably bust and browser refreshes cannot reach.
+Fix: all fifteen hero covers renamed via `git mv` to `<slug>-hero.png` with
+the registry paths updated, so every URL is new to every cache layer.
+Lesson recorded for next time: **never ship a changed image at an unchanged
+URL**; rename first.
+
 ## Home Featured reports band follows the shelf, 2026-08-07
 
 On user direction the home page's four featured-report cards now carry the
