@@ -676,6 +676,9 @@ const automationCampaignManagement: ReportLanding = {
      the cover mock): the WordPress-era promo tile with its baked-in
      "Download Now" button is retired. */
   cardImage: "/covers/automation-campaign-management-card.png",
+  /* The report's own vertical cover, supplied by the user (5880x8334 source,
+     served at 1190 wide). */
+  cardPortrait: "/covers/automation-campaign-management-portrait.png",
 
   download: {
     jotformId: "243521499246462",

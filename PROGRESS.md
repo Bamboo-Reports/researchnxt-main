@@ -56,9 +56,14 @@ What is built and waiting for the files:
 - The home page's featured-reports band still uses the landscape `cardImage`
   and is untouched
 
-Lint clean. Not browser-checked. Waiting on the first vertical cover (ACM)
-from the user; when it lands, save under `public/covers/` and set
-`cardPortrait` on the entry.
+**The first vertical cover is in.** The user supplied the ACM report's flat
+A4 cover (`report-cover.png`, 5880x8334, found at
+`~/Documents/researchnxt.com/` and identical to `~/Downloads/Report Cover
+Design.png`). Downscaled with sharp to 1190x1687 (779KB) at
+`public/covers/automation-campaign-management-portrait.png` and set as
+`cardPortrait`; the ACM card now renders the cover full bleed while the other
+fourteen sit letterboxed on plates awaiting their files. The original 8.4MB
+source was not committed. Lint clean, not browser-checked.
 
 ## Single quick reads now render as a spotlight band, 2026-08-07
 
