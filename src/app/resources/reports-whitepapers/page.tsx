@@ -50,9 +50,6 @@ export default function ReportsWhitepapersPage() {
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
                   {report.hero.title}
                 </h2>
-                <p className="clamp-3 text-sm leading-relaxed text-ink-soft">
-                  {report.hero.lede}
-                </p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
                   View the report
                   <TrailingArrow />

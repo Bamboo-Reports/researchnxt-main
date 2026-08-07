@@ -79,7 +79,9 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
   (report) => ({
     kind: "Report",
     title: report.hero.title,
-    summary: report.hero.lede,
+    /* No lede under the card, matching the interview cards: cover artwork,
+       clamped title, "Read more". */
+    summary: "",
     href: `/resources/reports-whitepapers/${report.slug}`,
     image: report.cardImage,
   }),
@@ -107,9 +109,9 @@ export const featuredInterviews: FeaturedResource[] = featured.map(
     return {
       kind: "Interview",
       title: interview.title,
-      summary: [interview.person.name, interview.person.company]
-        .filter(Boolean)
-        .join(", "),
+      /* No byline under the card: the banner artwork already names the
+         person, so repeating it below the title read as duplication. */
+      summary: "",
       href: interviewHref(interview),
       image: interview.thumbnail,
     };

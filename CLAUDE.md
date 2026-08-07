@@ -36,7 +36,8 @@ library.
   before adding a report, an interview or an article.
 - **Design tokens live in one place** — `src/app/globals.css` under `@theme`.
   Components reference tokens (`bg-accent`, `text-ink-soft`, `border-line`),
-  never raw hex. The accent is the brand blue `#0079bf` from the logo.
+  never raw hex. The accent is the logo's brand blue darkened one step to
+  `#0073b6` so accent text clears WCAG AA on the tinted bands.
 - **`text-accent` is for light surfaces only.** Inside a `Section surface="deep"`
   band the accent blue drops to 2.6:1. Use `text-accent-on-deep` there, and
   `text-on-deep` for body copy.

@@ -2,7 +2,65 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-06
+Last updated: 2026-08-07
+
+## Interview cards drop the name-and-company byline, 2026-08-07
+
+On the home page's Experts view band, `featuredInterviews` no longer sets the
+"Scott Brinker, HubSpot" style summary; `summary` is now the empty string, so
+`ResourceCard` skips the body line entirely (same as the quick-read cards).
+The banner artwork already names each person. Cards keep one hierarchy: image,
+clamped title, "Read more". Lint clean.
+
+Same treatment for the Featured reports band on user request: `featuredReports`
+no longer carries the report lede as the card summary, so both home resource
+bands share one card anatomy of artwork, clamped title, "Read more".
+
+Also applied to the `/resources/reports-whitepapers` library on user request:
+its cards drop the `report.hero.lede` paragraph and now run cover, clamped
+title, "View the report", matching the home cards and the experts-view
+library's card anatomy. The ledes still open each report's own landing page.
+
+## Why-band title widened to two lines, 2026-08-07
+
+The "We have been evolving consistently…" heading was capped at `max-w-4xl`,
+which wrapped it onto three lines at desktop. The cap is removed so the title
+uses the full container and settles onto two lines there; the base `text-wrap:
+balance` on headings keeps the two lines even. Narrower viewports still wrap
+to three, which is expected. Lint clean; not eyeballed in a browser (no dev
+server run).
+
+## Home page consistency audit and fixes, 2026-08-07
+
+A code-level audit of the home page (fonts, spacing, colour, contrast) via the
+impeccable skill. Fonts and spacing were already consistent: every band opens
+with `SectionHeading` on a `mb-12` gap, both resource grids share `gap-8` and
+the card system, and all display type goes through the `.font-display*`
+utilities. Four issues found and fixed:
+
+- **Focus rings were invisible on the orange hero.** The hero section carried
+  `on-deep`, whose ring colour `accent-on-deep` is 1.42:1 on the orange field.
+  New `.on-signal` scope in `globals.css` sets a white ring (3.2:1, clears the
+  3:1 non-text minimum); the hero section now uses it. Verified the class swap
+  affects nothing else: `on-deep` only controls the focus ring colour
+- **Skip link failed AA**: `focus:text-ink` on `focus:bg-accent` was 4.13:1,
+  and inconsistent with the system (accent fills carry white everywhere else).
+  Now `focus:text-white`
+- **Accent token darkened `#0079bf` → `#0073b6`** (user-approved). Small accent
+  text (eyebrows, "All reports", "Read more") sat at 4.28:1 on the
+  surface-subtle band, below AA. The new value is visually indistinguishable
+  and clears 4.5:1 on white, surface and subtle. CLAUDE.md and the token
+  comment updated to record the derivation from the logo blue
+- **The two view-all links now carry `TrailingArrow`**, matching every other
+  accent link affordance on the site; they already had the `group` hover class
+  but rendered no arrow
+
+Verified with the impeccable detector (one advisory: the `rule-ticks` dotted
+hairline, a false positive, it is the committed brand device, not a grid
+background) and `npm run lint`, which is clean. Not verified in a browser: no
+dev server was run (needs permission). Known remaining deviations, deliberate:
+the interviews band uses raw `bg-white` (commented as intentional), and the
+hero question line sets `font-semibold` by hand rather than a display utility.
 
 ## Home page now reads from the registries, 2026-08-06
 

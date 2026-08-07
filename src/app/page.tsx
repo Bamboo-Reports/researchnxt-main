@@ -6,7 +6,7 @@ import { TrustedLogos } from "@/components/home/trusted-logos";
 import { NavLink } from "@/components/layout/nav-link";
 import { Reveal } from "@/components/motion/reveal";
 import { ResourceCard } from "@/components/resource-card";
-import { Button } from "@/components/ui/button";
+import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -42,7 +42,7 @@ export default function HomePage() {
           reduced-motion block stops it outright. */}
       <Section
         spacing="none"
-        className="on-deep relative isolate overflow-hidden bg-signal"
+        className="on-signal relative isolate overflow-hidden bg-signal"
       >
         <HeroField />
 
@@ -99,6 +99,7 @@ export default function HomePage() {
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
               All reports
+              <TrailingArrow />
             </NavLink>
           </div>
 
@@ -130,6 +131,7 @@ export default function HomePage() {
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
               All interviews
+              <TrailingArrow />
             </NavLink>
           </div>
 
@@ -151,10 +153,12 @@ export default function HomePage() {
           tile, the rest stay quiet white so the highlight reads once. */}
       <Section bordered spacing="default">
         <Container>
+          {/* No max-width on this one: the long title needs the full container
+              to settle onto two balanced lines at desktop widths. */}
           <SectionHeading
             eyebrow={differentiators.eyebrow}
             title={differentiators.title}
-            className="mb-12 max-w-4xl"
+            className="mb-12"
           />
           <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-fr">
             {differentiators.items.map((item, index) => {
