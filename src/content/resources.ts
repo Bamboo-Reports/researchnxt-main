@@ -1668,7 +1668,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
   voices: {
     items: [
       {
-        portrait: "/voices/south-east-asia-response-guide/anil-gautam.png",
+        portrait: "/voices/south-east-asia-response-guide/anil-gautam.jpg",
         quote:
           "We are innovating by creating newer digital models to enhance interactions and experiences. And we're looking a lot more on the front-end agility and ensuring the back end can support any customization required at the front-end.",
         name: "Anil Gautam",
@@ -1676,7 +1676,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Malaysia",
       },
       {
-        portrait: "/voices/south-east-asia-response-guide/ravi-shankar.png",
+        portrait: "/voices/south-east-asia-response-guide/ravi-shankar.jpg",
         quote:
           "The proudest innovation that we did is that we built a system that identifies a non-performing route voluntarily and automatically launches aligned marketing campaigns without any human intervention and manual analysis.",
         name: "Ravi Shankar",
@@ -1684,7 +1684,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "AirAsia",
       },
       {
-        portrait: "/voices/south-east-asia-response-guide/johnny-widodo.png",
+        portrait: "/voices/south-east-asia-response-guide/johnny-widodo.jpg",
         quote:
           "When businesses start to plan, the focus should be on incremental innovation, incremental benefit, and incremental improvement on the current existing product, or is basically switching towards a very new product.",
         name: "Johnny Widodo",
@@ -1692,7 +1692,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Indonesia",
       },
       {
-        portrait: "/voices/south-east-asia-response-guide/aaron-foo.png",
+        portrait: "/voices/south-east-asia-response-guide/aaron-foo.jpg",
         quote:
           "It is about removing things that you do not need; it could be just the middleman or the technology to simplify the business operations. It should have happened before COVID, but nobody focused on it until things happened.",
         name: "Aaron Foo",
@@ -1700,7 +1700,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "iCar Asia",
       },
       {
-        portrait: "/voices/south-east-asia-response-guide/karunjit-kumar-dhir.png",
+        portrait: "/voices/south-east-asia-response-guide/karunjit-kumar-dhir.jpg",
         quote:
           "After the wave of remote or work from anywhere trend, the extension of that trend will be many employers also allowing for BYOD, Bring Your Own Device. And because of this, the whole IT security landscape will evolve.",
         name: "Karunjit Kumar Dhir",
@@ -1708,7 +1708,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "SCIKEY",
       },
       {
-        portrait: "/voices/south-east-asia-response-guide/walter-de-oude.png",
+        portrait: "/voices/south-east-asia-response-guide/walter-de-oude.jpg",
         quote:
           "Everything about our service is digital and mobile-first. We found that people had more time to pause and sort out their finances. We also found that people were more responsive to interacting with financial services in a digital way.",
         name: "Walter de Oude",
