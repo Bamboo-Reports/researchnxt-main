@@ -145,7 +145,34 @@ It was the baked-artwork rendition of the microsite's Client Testimonial,
 which the landing now expresses through the success-story spotlight with the
 facts beside it, so the page no longer said it twice.
 
-**Client success story band finalised on user direction.** The left column
+**The launch event was on the page twice.** The landing already pointed at
+the event through a hand-built one-item `quickReads` band titled "Check out
+the launch event" (rendering as the card spotlight, so: that heading plus
+the event's own title). The spotlight added earlier in this session was a
+second pointer at the same event. On user direction the quick-reads band is
+deleted and the spotlight keeps the slot, since it carries the microsite's
+own two sentences rather than repeating the event title. The programme
+published no articles, so the landing now legitimately runs no quick reads.
+
+Because the microsite runs the launch event **above** the interviews,
+spotlights gained an optional `beforeInterviews` flag, and the template
+splits them into a leading and a trailing group around the experts band.
+Only this one spotlight sets it; every other landing's spotlights still
+close the page. The band JSX was extracted into a `SpotlightBand` component
+so both slots render from one definition rather than a copy.
+
+**Client success story band, final state.** The written description is gone
+on user direction (`ReportLanding` spotlights' `description` is now optional
+and the template omits the paragraph when absent; every other spotlight
+across five landings keeps theirs). The band's columns were also coming out
+reversed: spotlights zigzag by `bandIndex`, and the story is the second one,
+so its content column was being pushed right and the facts left. The
+alternation is now suppressed for facts-variant bands, which are
+directional, so artwork and action stay left and facts stay right as the
+microsite sets them. The band therefore reads: heading, testimonial artwork,
+"Read the story", with the four facts opposite.
+
+**Client success story band, earlier state, superseded above.** The left column
 now runs heading, description, then the microsite's own testimonial card
 artwork (the user-supplied 1024x576 with Rohit Shrivastav's quote and a play
 badge baked in, saved as

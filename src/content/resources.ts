@@ -250,7 +250,11 @@ export type ReportLanding = {
    */
   spotlights?: {
     title: string;
-    description: string;
+    /**
+     * Optional: where the artwork already carries the story, a written
+     * sentence about it only says the same thing twice.
+     */
+    description?: string;
     linkLabel: string;
     card: ReportCardItem;
     /**
@@ -259,6 +263,12 @@ export type ReportLanding = {
      * right of the client testimonial. The card still supplies the link.
      */
     facts?: { label: string; value: string }[];
+    /**
+     * Render the band above the interviews rather than after them, where
+     * the source microsite puts it. Default is after, which is where the
+     * closing pointers belong.
+     */
+    beforeInterviews?: boolean;
   }[];
 
   /**
@@ -1802,16 +1812,9 @@ const aiLedPersonalization: ReportLanding = {
     ],
   },
 
-  quickReads: {
-    title: "Check out the launch event",
-    items: [
-      {
-        title: "AI Led Personalization 2020, eBook launch",
-        href: "/resources/events/ai-led-personalization/ai-led-ebook-launch",
-        image: "/events/ai-led-ebook-launch.png",
-      },
-    ],
-  },
+  /* No quick reads: this programme published no articles. The launch event
+     it used to point at here is now the spotlight below, which carries the
+     microsite's own copy rather than repeating the event's title. */
 
   /* Grouped by industry segment, which is how the microsite tabs them. */
   expertInsights: {
@@ -1869,11 +1872,13 @@ const aiLedPersonalization: ReportLanding = {
         "Netcore and Research NXT culminated their 6 month journey to build the market knowledge in AI in Marketing, and speaking to 10+ marketing leaders in the industry with a virtual event. Watch this amazing interaction for in-depth insight in the field of Personalization in Marketing.",
       linkLabel: "See the event",
       card: eventCard("ai-led-personalization", "ai-led-ebook-launch"),
+      /* Above the interviews, where the microsite runs it. */
+      beforeInterviews: true,
     },
     {
       title: "Client success story",
-      description:
-        "Netcore commissioned this research to understand how India's consumer brands were using AI powered tools through the pandemic. The full case study covers what the research delivered.",
+      /* No description: the testimonial artwork below carries the quote and
+         the attribution, so a written sentence said it twice. */
       linkLabel: "Read the story",
       /* The microsite's own testimonial card artwork (Rohit Shrivastav's
          quote, supplied by the user) rather than the story record's cover,

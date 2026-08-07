@@ -22,6 +22,7 @@ import {
   getReportLanding,
   reportLandings,
   type ReportCardItem,
+  type ReportLanding,
 } from "@/content/resources";
 import { delay, step } from "@/lib/motion";
 
@@ -318,6 +319,110 @@ function HighlightsBand({ items }: { items: string[] }) {
 }
 
 /**
+ * What the source landing points at in a band of its own: a launch event, a
+ * client success story. A single card apiece rather than a rail, since each
+ * band reads as a pointer rather than as another library.
+ */
+function SpotlightBand({
+  spotlight,
+  bandIndex,
+}: {
+  spotlight: NonNullable<ReportLanding["spotlights"]>[number];
+  bandIndex: number;
+}) {
+  if (!spotlight.card.href) return null;
+
+  return (
+    <Section bordered spacing="tight">
+      <Container>
+        {/* Image-and-text bands zigzag so consecutive spotlights do not read
+            as one column. A facts band does not alternate: its copy, artwork
+            and action stay left, the facts right, as the source sets them. */}
+        <div
+          className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${
+            bandIndex % 2 === 1 && !spotlight.facts?.length
+              ? "lg:[&>*:first-child]:order-last"
+              : ""
+          }`}
+        >
+          <div className="anim-rise flex flex-col gap-5">
+            <SectionHeading title={spotlight.title} />
+            {spotlight.description ? (
+              <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
+                <Emphasised text={spotlight.description} />
+              </p>
+            ) : null}
+            {/* With the facts holding the right column, the card's artwork
+                moves up here, above its own action. */}
+            {spotlight.facts?.length && spotlight.card.image ? (
+              <Link
+                href={spotlight.card.href}
+                className="group block max-w-[32rem] overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+              >
+                <Image
+                  src={spotlight.card.image}
+                  alt={spotlight.card.title}
+                  width={1024}
+                  height={576}
+                  sizes="(min-width: 1024px) 32rem, 100vw"
+                  className="aspect-video w-full object-cover"
+                />
+              </Link>
+            ) : null}
+            <div className="pt-1">
+              <Button href={spotlight.card.href} variant="secondary">
+                {spotlight.linkLabel}
+              </Button>
+            </div>
+          </div>
+
+          {spotlight.facts?.length ? (
+            /* The programme facts beside the copy instead of the card's
+               image, as the AI-led microsite sets them beside its client
+               testimonial. The button carries the link. */
+            <dl
+              className="anim-rise grid gap-x-8 gap-y-5 sm:grid-cols-2"
+              style={delay(120)}
+            >
+              {spotlight.facts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex flex-col gap-1 border-t border-line pt-4"
+                >
+                  <dt className="text-sm font-semibold text-ink-muted">
+                    {fact.label}
+                  </dt>
+                  <dd className="text-base leading-relaxed text-ink">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <Link
+              href={spotlight.card.href}
+              className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+              style={delay(120)}
+            >
+              {spotlight.card.image ? (
+                <Image
+                  src={spotlight.card.image}
+                  alt={spotlight.card.title}
+                  width={1280}
+                  height={720}
+                  sizes="(min-width: 1024px) 32rem, 100vw"
+                  className="aspect-video w-full object-cover"
+                />
+              ) : null}
+            </Link>
+          )}
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
+/**
  * One card presented as a spotlight: the band heading beside the artwork, in
  * the grammar the launch-event and success-story bands use. A lone card in a
  * grid or rail reads as a starved carousel, so both the quick-reads and the
@@ -477,6 +582,13 @@ export default async function ReportLandingPage({ params }: Params) {
   const { slug } = await params;
   const report = getReportLanding(slug);
   if (!report) notFound();
+
+  /* Most spotlights close the page; one that mirrors a source microsite's
+     order can ask to sit above the interviews instead. */
+  const leadingSpotlights =
+    report.spotlights?.filter((s) => s.beforeInterviews) ?? [];
+  const trailingSpotlights =
+    report.spotlights?.filter((s) => !s.beforeInterviews) ?? [];
 
   return (
     <main id="main">
@@ -739,6 +851,14 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
+      {leadingSpotlights.map((spotlight, bandIndex) => (
+        <SpotlightBand
+          key={spotlight.title}
+          spotlight={spotlight}
+          bandIndex={bandIndex}
+        />
+      ))}
+
       {/* Expert insights, one tab per AI maturity stage rather than all four
           stacked, so the band stays short enough to read. Not every programme
           ran interviews, so the band is skipped rather than left empty.
@@ -780,93 +900,13 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {/* What the source landing points at in bands of its own: a launch
-          event, a client success story. A single card apiece rather than a
-          rail, since each band reads as a pointer rather than as another
-          library. */}
-      {report.spotlights?.map((spotlight, bandIndex) =>
-        spotlight.card.href ? (
-          <Section key={spotlight.title} bordered spacing="tight">
-            <Container>
-              <div
-                className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${
-                  bandIndex % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
-                }`}
-              >
-                <div className="anim-rise flex flex-col gap-5">
-                  <SectionHeading title={spotlight.title} />
-                  <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
-                    <Emphasised text={spotlight.description} />
-                  </p>
-                  {/* With the facts holding the right column, the card's
-                      artwork moves up here, above its own action. */}
-                  {spotlight.facts?.length && spotlight.card.image ? (
-                    <Link
-                      href={spotlight.card.href}
-                      className="group block max-w-[32rem] overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                    >
-                      <Image
-                        src={spotlight.card.image}
-                        alt={spotlight.card.title}
-                        width={1024}
-                        height={576}
-                        sizes="(min-width: 1024px) 32rem, 100vw"
-                        className="aspect-video w-full object-cover"
-                      />
-                    </Link>
-                  ) : null}
-                  <div className="pt-1">
-                    <Button href={spotlight.card.href} variant="secondary">
-                      {spotlight.linkLabel}
-                    </Button>
-                  </div>
-                </div>
-
-                {spotlight.facts?.length ? (
-                  /* The programme facts beside the copy instead of the
-                     card's image, as the AI-led microsite sets them beside
-                     its client testimonial. The button carries the link. */
-                  <dl
-                    className="anim-rise grid gap-x-8 gap-y-5 sm:grid-cols-2"
-                    style={delay(120)}
-                  >
-                    {spotlight.facts.map((fact) => (
-                      <div
-                        key={fact.label}
-                        className="flex flex-col gap-1 border-t border-line pt-4"
-                      >
-                        <dt className="text-sm font-semibold text-ink-muted">
-                          {fact.label}
-                        </dt>
-                        <dd className="text-base leading-relaxed text-ink">
-                          {fact.value}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                ) : (
-                  <Link
-                    href={spotlight.card.href}
-                    className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                    style={delay(120)}
-                  >
-                    {spotlight.card.image ? (
-                      <Image
-                        src={spotlight.card.image}
-                        alt={spotlight.card.title}
-                        width={1280}
-                        height={720}
-                        sizes="(min-width: 1024px) 32rem, 100vw"
-                        className="aspect-video w-full object-cover"
-                      />
-                    ) : null}
-                  </Link>
-                )}
-              </div>
-            </Container>
-          </Section>
-        ) : null,
-      )}
+      {trailingSpotlights.map((spotlight, bandIndex) => (
+        <SpotlightBand
+          key={spotlight.title}
+          spotlight={spotlight}
+          bandIndex={bandIndex}
+        />
+      ))}
 
       {/* The participants' own words, straight from the microsite's quote
           cards, sitting between the interviews and the credits. No heading:
