@@ -134,6 +134,30 @@ artwork, which is presumably how the migration missed them.
 Lint clean. Not browser-checked; the new text-card mode is the thing to look
 at, especially that the four cards hold one height in the rail.
 
+### Testimonial card redesigned with the speakers' portraits
+
+The first text-card design (a plain bordered panel) was rejected by the
+user, who also pointed out the source page does carry the speakers'
+photographs, which the first extraction pass missed because they sit in the
+slider markup above each quote. Redesign, via the frontend-design pass:
+
+- **The panel box is gone.** The card now uses the site's own quote grammar,
+  the `border-l-2 border-signal` spine the interview pull quotes carry, so
+  the testimonial reads as the same device readers meet on the interview
+  pages. Structure from the spine, not a border, per the design system
+- **The four cut-out portraits** (removebg PNGs from the source slider,
+  downscaled to 320w under `public/voices/transforming-cx-through-gccs/`)
+  sit on an `accent-soft` disc beside the quote, `object-cover object-top`
+  since the crops vary. New optional `portrait` field on voices items, read
+  only when `image` (baked artwork) is absent
+- Attribution is now name on its own semibold line, role and company below,
+  rather than a comma run-on
+- Cards centre within the rail height so short quotes sit level with long
+
+Also on user direction: this landing's credits label "Brought to you by"
+becomes **"GCC insights by"** (the Southeast Asia landing's identical label
+is untouched). Lint clean, portraits verified on disk, not browser-checked.
+
 ## Multi-row card stacks become single-row rails site-wide, 2026-08-07
 
 Follow-up on the user flagging `south-east-asia-response-guide`: its six

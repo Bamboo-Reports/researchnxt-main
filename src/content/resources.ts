@@ -269,6 +269,11 @@ export type ReportLanding = {
        * the carousel then sets the quote as text instead.
        */
       image?: string;
+      /**
+       * Cut-out speaker portrait accompanying a text testimonial, shown on
+       * the plate disc beside the quote. Only read when `image` is absent.
+       */
+      portrait?: string;
       quote: string;
       name: string;
       role: string;
@@ -1401,6 +1406,7 @@ const transformingCxThroughGccs: ReportLanding = {
       {
         quote:
           "We should ensure that the change is adopted well both in the customer experience ecosystem and within the organization to consider any digital transformation initiative effective",
+        portrait: "/voices/transforming-cx-through-gccs/vineet-dwivedi.png",
         name: "Vineet Dwivedi",
         role: "Global Head",
         company: "Alcon Global Services",
@@ -1408,12 +1414,14 @@ const transformingCxThroughGccs: ReportLanding = {
       {
         quote:
           "The hybrid model of in-house capabilities and specialized third-party expertise enables us to navigate the complexities of digital transformation effectively",
+        portrait: "/voices/transforming-cx-through-gccs/sharda-nenwani-gupta.png",
         name: "Sharda Nenwani Gupta",
         role: "MD & Global Business Services Head, India",
       },
       {
         quote:
           "From the perspective of improving awareness and customer experience (CX) levels, insurers will focus on expanding their reach through API plug-ins and integrate more self-service options across their digital platforms",
+        portrait: "/voices/transforming-cx-through-gccs/geetanjali-chugh-kothari.png",
         name: "Geetanjali Chugh Kothari",
         role: "CMO",
         company: "Future Generali India Life Insurance",
@@ -1421,6 +1429,7 @@ const transformingCxThroughGccs: ReportLanding = {
       {
         quote:
           "We should evaluate the actual need for something to be automated and not just for the sake of it; otherwise, we will end up automating a bad process",
+        portrait: "/voices/transforming-cx-through-gccs/vivek-veeraraghavan.png",
         name: "Vivek Veeraraghavan",
         role: "SVP of Digital Transformation APAC",
         company: "Northern Trust",
@@ -1430,7 +1439,7 @@ const transformingCxThroughGccs: ReportLanding = {
 
   credits: {
     sponsor: {
-      label: "Brought to you by",
+      label: "GCC insights by",
       name: "Bamboo Reports",
       logo: "/logos/trusted/bamboo-reports.svg",
     },
