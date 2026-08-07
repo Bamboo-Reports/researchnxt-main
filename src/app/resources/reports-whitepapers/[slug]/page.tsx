@@ -72,25 +72,33 @@ function HighlightsBand({ items }: { items: string[] }) {
   });
   const figures = parsed.filter((p) => "head" in p && p.head).length;
 
-  /* No figures anywhere: the index. The themes are the content, so they are
-     set at title size and allowed to wrap as a centred field. */
+  /* No figures anywhere: the index, set like the contents plate of a field
+     report. Left-aligned labels at title size off one shared edge, each
+     trailing the site's dotted tick-rule out to the column's right edge,
+     the same device that opens every section heading. */
   if (figures === 0) {
     return (
       <Reveal
         as="ul"
-        className="mx-auto flex max-w-5xl flex-wrap items-baseline justify-center gap-x-12 gap-y-6"
+        className="mx-auto grid max-w-5xl gap-x-16 gap-y-2 sm:grid-cols-2"
       >
         {items.map((item, index) => (
           <li
             key={item}
-            className="flex items-baseline gap-3 text-title font-display-soft text-ink"
+            className="flex items-baseline gap-4 py-2.5"
             style={step(index)}
           >
             <span
               aria-hidden="true"
-              className="size-2 shrink-0 rounded-[1px] bg-signal"
+              className="size-2 shrink-0 self-center rounded-[1px] bg-signal"
             />
-            {item}
+            <span className="text-title font-display-soft text-ink">
+              {item}
+            </span>
+            <span
+              aria-hidden="true"
+              className="rule-ticks h-px min-w-10 flex-1 self-center"
+            />
           </li>
         ))}
       </Reveal>

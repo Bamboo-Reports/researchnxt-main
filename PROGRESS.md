@@ -136,7 +136,15 @@ data changes):
   figure column instead
 - **Theme index**, when no item carries a figure: the labels set at
   `text-title font-display-soft` with the signal tick, wrapping as a centred
-  field, since the themes are the content and boxing them would fake depth
+  field, since the themes are the content and boxing them would fake depth.
+  **Rejected on sight by the user** ("what is this shitty way"): centred
+  flex-wrap gave the rows no shared edges and the band read as scattered.
+  Rebuilt as a **contents plate**: two-column grid, labels left-aligned off
+  one shared edge, each row trailing the `rule-ticks` dotted line out to its
+  column's right edge, the same device every `SectionHeading` opens with, so
+  the ten themes read as the report's table of contents. Lesson: centred
+  flex-wrap of variable-width labels has no structure; this system builds
+  structure from shared edges and rules
 
 The parser (`FIGURE_LEAD`) was dry-run against every real highlight in the
 registry: ledger for content-marketing (4/5), consumer-engagement (5/5),
