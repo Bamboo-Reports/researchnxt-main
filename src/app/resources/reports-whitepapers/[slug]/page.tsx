@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExpertInsightsTabs } from "@/components/expert-insights-tabs";
+import { ReportCard } from "@/components/report-card";
 import { ReportCardGrid } from "@/components/report-card-grid";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
@@ -411,10 +412,23 @@ export default async function ReportLandingPage({ params }: Params) {
               align="center"
               className="mb-10"
             />
-            <ReportCardRail
-              items={report.quickReads.items}
-              label={report.quickReads.title}
-            />
+            {/* The rail earns its arrows only once it can overflow. Two cards
+                sit as a centred pair at half width, three as the standard
+                three-up grid; four or more scroll. */}
+            {report.quickReads.items.length === 2 ? (
+              <Reveal className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
+                {report.quickReads.items.map((item, index) => (
+                  <ReportCard key={item.title} item={item} style={step(index)} />
+                ))}
+              </Reveal>
+            ) : report.quickReads.items.length === 3 ? (
+              <ReportCardGrid items={report.quickReads.items} />
+            ) : (
+              <ReportCardRail
+                items={report.quickReads.items}
+                label={report.quickReads.title}
+              />
+            )}
           </Container>
         </Section>
       ) : null}

@@ -26,6 +26,20 @@ shape found by counting every landing's items:
 **Not browser-checked**; the long Rethinking the Daily Commute title wraps to
 about four lines at the 26ch cap, worth an eyeball.
 
+### Two and three items also leave the rail
+
+Follow-up on the user flagging `automation-campaign-management`, which has
+two. The rail earns its arrows only once it can overflow, and at three or
+fewer cards it is just a worse grid, so the band now branches on count: **one**
+is the spotlight above, **two** sit as a centred pair at half width
+(`max-w-4xl`, `sm:grid-cols-2`, plain `ReportCard`s), **three** use the
+existing `ReportCardGrid` three-up, **four or more** keep the scrolling rail.
+Affected: `automation-campaign-management` and
+`abm-best-practices-report-india-2018` (two each);
+`cloud-computing-new-normal-beyond` and `south-east-asia-response-guide`
+(three each); the 5- and 7-item landings keep the rail. Lint clean, not
+browser-checked.
+
 ## Marketing automation roundtable published under Events, 2026-08-07
 
 The last outstanding item from the campaign-management article batch. It was
