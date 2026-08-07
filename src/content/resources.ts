@@ -253,6 +253,12 @@ export type ReportLanding = {
     description: string;
     linkLabel: string;
     card: ReportCardItem;
+    /**
+     * Programme facts sitting beside the spotlight copy instead of the
+     * card's image, the way the AI-led microsite sets its facts to the
+     * right of the client testimonial. The card still supplies the link.
+     */
+    facts?: { label: string; value: string }[];
   }[];
 
   /**
@@ -1868,29 +1874,12 @@ const aiLedPersonalization: ReportLanding = {
     ],
   },
 
-  /* The microsite's closing facts, as it states them, with the en dash in
-     the timeframe converted per house punctuation. */
-  facts: [
-    {
-      label: "Research focus",
-      value: "AI powered business strategies of B2C brands",
-    },
-    {
-      label: "Engagement",
-      value: "Interviews, virtual event, social media promotion",
-    },
-    { label: "Geography", value: "India" },
-    {
-      label: "Timeframe of research",
-      value: "April 2020 to September 2020",
-    },
-  ],
-
   spotlights: [
     {
-      title: "Check out the launch event",
+      /* Heading and both sentences verbatim from the microsite. */
+      title: "Check out the Launch Event",
       description:
-        "The programme closed with a virtual launch of the report, in association with Netcore: a David Raab keynote and three sessions with the marketing leaders interviewed, in front of 300+ attendees.",
+        "Netcore and Research NXT culminated their 6 month journey to build the market knowledge in AI in Marketing, and speaking to 10+ marketing leaders in the industry with a virtual event. Watch this amazing interaction for in-depth insight in the field of Personalization in Marketing.",
       linkLabel: "See the event",
       card: eventCard("ai-led-personalization", "ai-led-ebook-launch"),
     },
@@ -1900,6 +1889,24 @@ const aiLedPersonalization: ReportLanding = {
         "Netcore commissioned this research to understand how India's consumer brands were using AI powered tools through the pandemic. The full case study covers what the research delivered.",
       linkLabel: "Read the story",
       card: successStoryCard("ai-led-personalization", "netcore"),
+      /* The microsite sets its facts to the right of the client
+         testimonial, verbatim on user direction: labels, values, pipes,
+         capitals and the en dash as the source writes them. */
+      facts: [
+        {
+          label: "Research Focus",
+          value: "AI Powered Business Strategies of B2C Brands",
+        },
+        {
+          label: "Engagement",
+          value: "Interviews | Virtual Event | Social Media Promotion",
+        },
+        { label: "Geography", value: "India" },
+        {
+          label: "Timeframe of Research",
+          value: "April 2020 – Sept 2020",
+        },
+      ],
     },
   ],
 

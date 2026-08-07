@@ -805,22 +805,46 @@ export default async function ReportLandingPage({ params }: Params) {
                   </div>
                 </div>
 
-                <Link
-                  href={spotlight.card.href}
-                  className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                  style={delay(120)}
-                >
-                  {spotlight.card.image ? (
-                    <Image
-                      src={spotlight.card.image}
-                      alt={spotlight.card.title}
-                      width={1280}
-                      height={720}
-                      sizes="(min-width: 1024px) 32rem, 100vw"
-                      className="aspect-video w-full object-cover"
-                    />
-                  ) : null}
-                </Link>
+                {spotlight.facts?.length ? (
+                  /* The programme facts beside the copy instead of the
+                     card's image, as the AI-led microsite sets them beside
+                     its client testimonial. The button carries the link. */
+                  <dl
+                    className="anim-rise grid gap-x-8 gap-y-5 sm:grid-cols-2"
+                    style={delay(120)}
+                  >
+                    {spotlight.facts.map((fact) => (
+                      <div
+                        key={fact.label}
+                        className="flex flex-col gap-1 border-t border-line pt-4"
+                      >
+                        <dt className="text-sm font-semibold text-ink-muted">
+                          {fact.label}
+                        </dt>
+                        <dd className="text-base leading-relaxed text-ink">
+                          {fact.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : (
+                  <Link
+                    href={spotlight.card.href}
+                    className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+                    style={delay(120)}
+                  >
+                    {spotlight.card.image ? (
+                      <Image
+                        src={spotlight.card.image}
+                        alt={spotlight.card.title}
+                        width={1280}
+                        height={720}
+                        sizes="(min-width: 1024px) 32rem, 100vw"
+                        className="aspect-video w-full object-cover"
+                      />
+                    ) : null}
+                  </Link>
+                )}
               </div>
             </Container>
           </Section>

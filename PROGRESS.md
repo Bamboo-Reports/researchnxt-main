@@ -120,14 +120,34 @@ Two source bands were missing and are now in:
   the same event-then-story pair the B2C 2017 landing runs. Description
   written from the event record's own facts (David Raab keynote, three
   sessions, 300+ attendees), not invented
-- **The closing facts**: Research focus "AI powered business strategies of
-  B2C brands", Engagement "Interviews, virtual event, social media
-  promotion", Geography "India", Timeframe "April 2020 to September 2020"
-  (source's en dash converted per house punctuation). The `facts` band
-  existed on the type and template all along, this entry never carried it.
-  One extraction trap: the page's Engagement fact had to be read after the
-  Research Focus offset, because "Customer Engagement is the significant
-  driver of growth" matches "Engagement" first
+- **The closing facts**: the `facts` band existed on the type and template
+  all along, this entry never carried it. One extraction trap: the page's
+  Engagement fact had to be read after the Research Focus offset, because
+  "Customer Engagement is the significant driver of growth" matches
+  "Engagement" first
+
+**Revised to verbatim on user direction** ("use the content as is from the
+ref website do not change that"). The first pass normalised the copy to
+house style; it now carries the source exactly: labels "Research Focus" and
+"Timeframe of Research" in source caps, "AI Powered Business Strategies of
+B2C Brands", "Interviews | Virtual Event | Social Media Promotion" with the
+literal pipes, "April 2020 – Sept 2020" with the en dash, spotlight title
+"Check out the Launch Event", and the spotlight description as the
+microsite's own two sentences ("Netcore and Research NXT culminated their 6
+month journey…") instead of copy written from the event record. Note this
+verbatim ruling sits alongside the older carried-as-published precedent and
+overrides house normalisation for microsite content on this landing.
+
+**Structure revised too, on user direction.** The facts do not stand as
+their own band above the credits (the user asked for that section's
+removal); on the microsite they sit to the right of the client testimonial.
+Spotlight entries gained an optional `facts` list which renders as a 2x2
+ruled definition list in place of the card's image, with the button still
+carrying the link, and the ai-led facts moved into the "Client success
+story" spotlight. The standalone facts band remains in the template and
+still serves `state-of-consumer-engagement-gcc-2019`, verified per entry.
+Lint clean, not browser-checked; worth an eyeball that the story spotlight
+reads well with a text column on each side.
 
 Lint clean, event reference verified against the registry, not
 browser-checked.
