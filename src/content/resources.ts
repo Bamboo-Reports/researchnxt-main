@@ -1868,7 +1868,32 @@ const aiLedPersonalization: ReportLanding = {
     ],
   },
 
+  /* The microsite's closing facts, as it states them, with the en dash in
+     the timeframe converted per house punctuation. */
+  facts: [
+    {
+      label: "Research focus",
+      value: "AI powered business strategies of B2C brands",
+    },
+    {
+      label: "Engagement",
+      value: "Interviews, virtual event, social media promotion",
+    },
+    { label: "Geography", value: "India" },
+    {
+      label: "Timeframe of research",
+      value: "April 2020 to September 2020",
+    },
+  ],
+
   spotlights: [
+    {
+      title: "Check out the launch event",
+      description:
+        "The programme closed with a virtual launch of the report, in association with Netcore: a David Raab keynote and three sessions with the marketing leaders interviewed, in front of 300+ attendees.",
+      linkLabel: "See the event",
+      card: eventCard("ai-led-personalization", "ai-led-ebook-launch"),
+    },
     {
       title: "Client success story",
       description:
