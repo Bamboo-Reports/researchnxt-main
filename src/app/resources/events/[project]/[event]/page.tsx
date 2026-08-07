@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { eventHref, events, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { getInsightProject } from "@/content/insights";
+import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { formatDate } from "@/lib/date";
 import { step } from "@/lib/motion";
 
@@ -110,14 +111,26 @@ export default async function EventPage({ params }: Params) {
             }
           >
             <div className="flex flex-col gap-8">
-              <Image
-                src={event.image}
-                alt={event.imageAlt}
-                width={1280}
-                height={583}
-                priority
-                className="anim-rise aspect-video w-full rounded-lg border border-line object-cover"
-              />
+              {/* Where a recap has a highlights reel it opens with it, in
+                  place of the banner, which is the order the source uses.
+                  Not lazy here: above the fold, it is the first thing. */}
+              {event.video ? (
+                <iframe
+                  src={`https://www.linkedin.com/embed/feed/update/${event.video.linkedInPost}?compact=1`}
+                  title={event.video.caption}
+                  allowFullScreen
+                  className="anim-rise aspect-[71/45] w-full max-w-[45rem] rounded-lg border border-line"
+                />
+              ) : (
+                <Image
+                  src={event.image}
+                  alt={event.imageAlt}
+                  width={1280}
+                  height={583}
+                  priority
+                  className="anim-rise aspect-video w-full rounded-lg border border-line object-cover"
+                />
+              )}
               {event.body?.length ? (
                 <div className="flex max-w-[68ch] flex-col gap-5">
                   {event.body.map((block) =>
@@ -135,6 +148,17 @@ export default async function EventPage({ params }: Params) {
                       >
                         {block.heading}
                       </h2>
+                    ) : "image" in block ? (
+                      <Image
+                        key={block.image}
+                        src={block.image}
+                        alt={block.alt}
+                        width={2048}
+                        height={1152}
+                        loading="lazy"
+                        sizes="(min-width: 768px) 42rem, 100vw"
+                        className="my-2 aspect-video w-full rounded-md border border-line object-cover"
+                      />
                     ) : (
                       <ul
                         key={block.list.join("")}
@@ -189,52 +213,22 @@ export default async function EventPage({ params }: Params) {
         </Container>
       </Section>
 
-      {/* Photographs from the day. A plain grid, because there are only ever a
-          handful and a carousel would hide most of them behind an arrow. */}
-      {event.gallery?.length ? (
+      {/* The download form the source page closes with, in the same place. */}
+      {event.jotformId ? (
         <Section surface="subtle" bordered spacing="tight">
           <Container>
-            <SectionHeading title="From the day" className="mb-10" />
-            <Reveal
-              as="ul"
-              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {event.gallery.map((photo, index) => (
-                <li
-                  key={photo.src}
-                  style={step(index)}
-                  className={index === 0 ? "lg:col-span-2 lg:row-span-2" : ""}
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    width={2048}
-                    height={1152}
-                    loading="lazy"
-                    sizes="(min-width: 1024px) 40rem, (min-width: 640px) 45vw, 100vw"
-                    className="aspect-video h-full w-full rounded-md border border-line object-cover"
-                  />
-                </li>
-              ))}
-            </Reveal>
-          </Container>
-        </Section>
-      ) : null}
-
-      {/* The highlights reel, embedded from the LinkedIn post it was published
-          in. Lazy, so a third party is not contacted until it scrolls up. */}
-      {event.video ? (
-        <Section bordered spacing="tight">
-          <Container>
-            <SectionHeading title="Highlights" className="mb-10" />
             <div className="max-w-[45rem]">
-              <iframe
-                src={`https://www.linkedin.com/embed/feed/update/${event.video.linkedInPost}?compact=1`}
-                title={event.video.caption}
-                loading="lazy"
-                allowFullScreen
-                className="aspect-[71/45] w-full rounded-md border border-line"
+              <SectionHeading
+                title="Get the handbook"
+                lede="The report launched at this event, free to download."
+                className="mb-8"
               />
+              <div id="download" className="scroll-mt-24">
+                <JotformEmbed
+                  formId={event.jotformId}
+                  title="Download the handbook"
+                />
+              </div>
             </div>
           </Container>
         </Section>

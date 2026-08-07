@@ -54,24 +54,32 @@ export type Event = {
    * emphasis; a `list` is a bulleted set, as the NASSCOM pages use to set out
    * what participants take away; a `heading` opens a section, which the
    * longer recaps need so the piece is navigable rather than a wall of
-   * paragraphs. Same three shapes an insights article uses.
+   * paragraphs; an `image` is a photograph sitting where the source page puts
+   * it, which is how a recap paces itself between sections.
    */
-  body?: (string | { list: string[] } | { heading: string })[];
-
-  /**
-   * Photographs from the day, where the source page publishes them. Rendered
-   * as a plain grid under the write-up, not a carousel: there are only ever a
-   * handful and they are worth seeing at once.
-   */
-  gallery?: { src: string; alt: string }[];
+  body?: (
+    | string
+    | { list: string[] }
+    | { heading: string }
+    | { image: string; alt: string }
+  )[];
 
   /**
    * A highlights video hosted on LinkedIn, given as the `urn:li:ugcPost:…`
    * id from the post URL. It stays an embed rather than a self-hosted file
    * because the post is where the video actually lives, and re-uploading it
    * would fork the view count and the comments away from the original.
+   *
+   * Where it is set it opens the page in place of the banner, which is the
+   * order the source page uses.
    */
   video?: { linkedInPost: string; caption: string };
+
+  /**
+   * Jotform id for the download form the source page closes with, where it
+   * has one. A conference recap that gives nothing away carries none.
+   */
+  jotformId?: string;
 
   /**
    * Speakers, in running order. `interview` links a speaker to their

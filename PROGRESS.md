@@ -39,21 +39,39 @@ so it still sorts newest-first, which is correct here.
 published as the date. Worth one confirmation, after which `date:
 "2024-12-07"` is a one-line change.
 
-### Photos and the highlights video
+### Page order follows the source post exactly
 
-- **Four photographs** from the source page, in a new optional `gallery` field
-  rendered as a plain grid under the write-up with the speaker group shot on a
-  double-width tile. Alt text was written from looking at each image, not
-  guessed from filenames
-- **The hero was upgraded** from the 1024x576 Open Graph crop to the full
-  1920x1080 event banner, the same collage at twice the resolution
-- **The highlights reel is the LinkedIn post** `urn:li:ugcPost:7272561579966021632`,
-  embedded lazily with `?compact=1` and the 710x450 ratio the source uses.
-  Kept as an embed rather than self-hosted so the views and comments stay on
-  the original post
-- **`Event.body` gained a `heading` block**, mirroring what an insights
-  article already supports. This recap runs five source sections and would
-  otherwise have been a wall of paragraphs or bold pseudo-headings
+On user direction the page is laid out in the source's own order, verified by
+sorting the landmarks in the fetched HTML by character offset rather than by
+eye:
+
+| Source | Ours |
+|---|---|
+| LinkedIn video, before any text | `video`, rendered in place of the banner |
+| two intro paragraphs | same |
+| photo: the room | inline `image` block |
+| Setting the Stage, Diving Into the Research | same |
+| photo: handbook presentation | inline `image` block |
+| Solutions in Action, Interactive Insightful Inspiring | same |
+| photo: panellist | inline `image` block |
+| A Step Forward | same |
+| photo: speaker group | inline `image` block |
+| download form | `jotformId` |
+
+- **`Event.body` gained two block types**: `heading`, mirroring what an
+  insights article already supports, and `image`, which is what lets the
+  photographs sit between sections instead of being swept into a gallery at
+  the end. The short-lived `gallery` field was removed again, superseded
+- **The video opens the page in place of the banner**, per the source.
+  `?compact=1` and the 710x450 ratio the source uses; not lazy, since it is
+  now above the fold. Other events keep the banner, since the branch is on
+  `event.video`. The banner is still the library card and Open Graph image,
+  upgraded from the 1024x576 crop to the full 1920x1080 collage
+- **The form is Jotform 243521499246462**, read off the source page and
+  matching the archive, mounted through the existing `JotformEmbed` client
+  component at the foot of the page where the source puts it
+- Alt text for all four photographs was written from looking at each image,
+  not guessed from filenames
 
 ### The mp4 in the repo root is not this video
 
@@ -67,13 +85,17 @@ unrelated to this event, and is still untracked.
 The `speakers` band ("Who spoke") is not on this event: the six speakers are
 named in the body already. The array was built and then removed, including the
 four cross-links to their published interviews in this same programme. The
-field stays on the type, and the other events still use it. **No form was
-removed because the events templates have never had one**; the only `form`
-matches on both routes are `formatDate`.
+field stays on the type, and the other events still use it. The "also the
+form" instruction was initially read as another removal, which was wrong: the
+events templates had never had a form, and what was wanted was the source's
+download form added. It is in.
 
-Verified: all five image paths resolve, no duplicate redirect sources, eight
-modules against eight registry entries, and lint clean. **Not browser-checked**,
-so the gallery grid and the LinkedIn embed are unrendered.
+Verified: all five image paths resolve, the body block order was diffed
+against the source HTML landmark by landmark, no duplicate redirect sources,
+eight modules against eight registry entries, and lint clean.
+**Not browser-checked**, so the inline photographs, the LinkedIn embed and the
+Jotform are all unrendered. The two third-party embeds are the parts most
+worth looking at live.
 
 ## Preview article retitled to two lines, 2026-08-07
 
