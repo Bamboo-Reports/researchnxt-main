@@ -103,11 +103,12 @@ function CardSpotlight({
 
 /**
  * Cards sized to their count, shared by the quick-reads band and the
- * single-group experts band. The 3-up grid keeps only full rows; a count
- * that would leave an orphan row scrolls as a rail instead (which centres
- * and drops its arrows whenever everything fits), and a pair sits centred
- * at half width. The single-card case is CardSpotlight, handled by the
- * caller because it restructures the whole band.
+ * single-group experts band. A pair sits centred at half width, exactly
+ * three fill the one grid row, and anything more scrolls as a single-row
+ * rail rather than stacking into a taller and taller band; the rail
+ * centres and drops its arrows whenever everything fits. The single-card
+ * case is CardSpotlight, handled by the caller because it restructures
+ * the whole band.
  */
 function CardCountLayout({
   items,
@@ -125,7 +126,7 @@ function CardCountLayout({
       </Reveal>
     );
   }
-  if (items.length % 3 === 0) {
+  if (items.length === 3) {
     return <ReportCardGrid items={items} />;
   }
   return <ReportCardRail items={items} label={label} />;

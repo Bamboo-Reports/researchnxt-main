@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Reveal } from "@/components/motion/reveal";
-import { TrailingArrow } from "@/components/ui/button";
+import { ReportCardRail } from "@/components/report-card-rail";
 import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
@@ -272,31 +272,17 @@ export default async function ExpertInterviewPage({ params }: Params) {
               title="More interviews"
               className="mb-12"
             />
-            <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {others.map((item, index) => (
-                <Link
-                  key={item.slug}
-                  href={interviewHref(item)}
-                  className="group flex flex-col gap-4 border-t border-line pt-4 transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                  style={step(index)}
-                >
-                  <Image
-                    src={item.thumbnail}
-                    alt=""
-                    width={640}
-                    height={360}
-                    className="mt-1 aspect-video w-full rounded-md object-cover"
-                  />
-                  <h3 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
-                    {item.title}
-                  </h3>
-                  <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-                    Read the interview
-                    <TrailingArrow />
-                  </span>
-                </Link>
-              ))}
-            </Reveal>
+            {/* A single scrolling row rather than a stack of rows: the ACM
+                programme has 18 sibling interviews, which stacked six rows
+                deep under every one of its interview pages. */}
+            <ReportCardRail
+              items={others.map((item) => ({
+                title: item.title,
+                href: interviewHref(item),
+                image: item.thumbnail,
+              }))}
+              label="More interviews"
+            />
           </Container>
         </Section>
       ) : null}

@@ -104,6 +104,35 @@ one-interview landings (consumer-engagement, publishers-guide, etutoring);
 grids and tabs everywhere else unchanged. Verified per landing by counting
 the registry; lint clean; not browser-checked.
 
+## Multi-row card stacks become single-row rails site-wide, 2026-08-07
+
+Follow-up on the user flagging `south-east-asia-response-guide`: its six
+interviews sat as a 3+3 double grid. The preference is now clear, one
+scrolling row over stacked rows, so the rule tightened and the same
+structure was hunted down everywhere.
+
+- **`CardCountLayout` keeps the grid only for exactly three.** Anything above
+  three rails, including full-row multiples: south-east (6) and the B2C 2017
+  landing's 18-interview grid are now single-row rails. B2C at 18 is the one
+  to eyeball, that is a long scroll, though the band itself stays short
+- **The "More insights" and "More interviews" sibling bands** on the article
+  and interview pages now use `ReportCardRail` instead of their 3-up grids.
+  These were the worst offenders: uncapped, so an ACM interview page stacked
+  its 18 siblings six rows deep. Their inline card markup was `ReportCard`'s
+  anatomy plus a "Read the…" action line, which the rail's cards drop, one
+  small anatomy change
+- **Left alone, deliberately**: the multi-group tab panels (a native-radio
+  `peer-checked` structure where the rail's overflow measurement would run
+  against `display:none` panels and misreport; tabs already exist to keep
+  that band short), the event pages' "Who spoke" name lists (text cards, not
+  plates), and every library index page (a library is a browsing surface;
+  orphan rows there are the honest shape of a growing collection)
+
+Mishap recorded: a blank-line cleanup `sed` stripped every blank line from
+the insights article page; caught in the diff, restored from HEAD, and the
+change reapplied with proper edits. Lint clean, three-file diff verified
+tight. Not browser-checked.
+
 ## Hero mockups updated across all report landings, 2026-08-07
 
 The user supplied a uniform tablet-mockup set at
