@@ -78,20 +78,59 @@ export function QuoteCarousel({
         className="flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {voices.items.map((voice) => (
-          <li key={voice.image} className="w-full shrink-0 snap-center">
-            <Image
-              src={voice.image}
-              alt={[`"${voice.quote}"`, voice.name, voice.role, voice.company]
-                .filter(Boolean)
-                .join(", ")}
-              width={1748}
-              height={692}
-              // The band is capped at max-w-3xl, so tell the optimiser the
-              // real rendered width instead of letting it assume full-viewport
-              // and ship the 1748px original.
-              sizes="(min-width: 48rem) 48rem, 100vw"
-              className="w-full rounded-lg"
-            />
+          <li key={voice.name} className="w-full shrink-0 snap-center">
+            {voice.image ? (
+              <Image
+                src={voice.image}
+                alt={[`"${voice.quote}"`, voice.name, voice.role, voice.company]
+                  .filter(Boolean)
+                  .join(", ")}
+                width={1748}
+                height={692}
+                // The band is capped at max-w-3xl, so tell the optimiser the
+                // real rendered width instead of letting it assume
+                // full-viewport and ship the 1748px original.
+                sizes="(min-width: 48rem) 48rem, 100vw"
+                className="w-full rounded-lg"
+              />
+            ) : (
+              /* No baked artwork from the source: the quote is set as text
+                 in the site's own quote grammar, the signal spine the
+                 interview pull quotes carry, with the speaker's cut-out
+                 portrait grounded on a plate disc beside it. No panel box:
+                 structure comes from the spine, as everywhere else.
+                 `h-full` with centring keeps a short quote sitting level
+                 with the longest one's card, so the dots never jump. */
+              <figure className="flex h-full flex-col items-center justify-center gap-7 px-1 py-2 sm:flex-row sm:items-center sm:gap-10">
+                {voice.portrait ? (
+                  <div className="relative size-32 shrink-0 overflow-hidden rounded-full bg-accent-soft sm:size-40">
+                    <Image
+                      src={voice.portrait}
+                      alt=""
+                      width={320}
+                      height={320}
+                      sizes="10rem"
+                      // Cut-out headshots vary in crop; covering from the top
+                      // keeps every face centred on its disc.
+                      className="absolute inset-0 h-full w-full object-cover object-top"
+                    />
+                  </div>
+                ) : null}
+
+                <div className="flex flex-col gap-4 border-l-2 border-signal pl-6">
+                  <blockquote className="text-title font-display-soft text-ink">
+                    &ldquo;{voice.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="text-sm leading-relaxed text-ink-soft">
+                    <span className="block font-semibold text-ink">
+                      {voice.name}
+                    </span>
+                    {voice.role}
+                    {voice.company ? `, ${voice.company}` : null}
+                  </figcaption>
+                </div>
+              </figure>
+            )}
           </li>
         ))}
       </ul>
@@ -110,7 +149,7 @@ export function QuoteCarousel({
         <div className="flex flex-wrap items-center justify-center gap-0.5">
           {voices.items.map((voice, dot) => (
             <button
-              key={voice.image}
+              key={voice.name}
               type="button"
               aria-label={voice.name}
               aria-current={dot === index ? "true" : undefined}

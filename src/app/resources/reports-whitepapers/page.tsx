@@ -31,7 +31,11 @@ export default function ReportsWhitepapersPage() {
 
       <Section spacing="default">
         <Container>
-          <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {/* A book shelf: each card is the report's own vertical cover at
+              full bleed. A report that does not have its portrait cover yet
+              shows its landscape card letterboxed on a muted plate, so the
+              shelf stays uniform while the covers arrive one by one. */}
+          <Reveal className="grid gap-x-8 gap-y-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
             {reportLandings.map((report, index) => (
               <Link
                 key={report.slug}
@@ -39,20 +43,30 @@ export default function ReportsWhitepapersPage() {
                 className="group flex flex-col gap-4 border-t border-line pt-4 transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
                 style={step(index)}
               >
-                <Image
-                  src={report.cardImage}
-                  alt=""
-                  width={1024}
-                  height={553}
-                  sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 100vw"
-                  className="mt-1 aspect-video w-full rounded-md object-cover"
-                />
+                {report.cardPortrait ? (
+                  <Image
+                    src={report.cardPortrait}
+                    alt=""
+                    width={840}
+                    height={1188}
+                    sizes="(min-width: 1024px) 18rem, (min-width: 640px) 30vw, 45vw"
+                    className="mt-1 aspect-[210/297] w-full rounded-md object-cover"
+                  />
+                ) : (
+                  <span className="mt-1 flex aspect-[210/297] w-full items-center rounded-md bg-surface-muted p-3">
+                    <Image
+                      src={report.cardImage}
+                      alt=""
+                      width={1024}
+                      height={553}
+                      sizes="(min-width: 1024px) 18rem, (min-width: 640px) 30vw, 45vw"
+                      className="w-full rounded-sm object-contain"
+                    />
+                  </span>
+                )}
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
                   {report.hero.title}
                 </h2>
-                <p className="clamp-3 text-sm leading-relaxed text-ink-soft">
-                  {report.hero.lede}
-                </p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
                   View the report
                   <TrailingArrow />

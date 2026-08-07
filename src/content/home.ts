@@ -79,9 +79,14 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
   (report) => ({
     kind: "Report",
     title: report.hero.title,
-    summary: report.hero.lede,
+    /* No lede under the card, matching the interview cards: cover artwork,
+       clamped title, "Read more". */
+    summary: "",
     href: `/resources/reports-whitepapers/${report.slug}`,
-    image: report.cardImage,
+    /* The report's own vertical cover, as on the library shelf. Landscape
+       cardImage remains the fallback for a report that launches before its
+       cover art. */
+    image: report.cardPortrait ?? report.cardImage,
   }),
 );
 
@@ -94,7 +99,7 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
 const featured: [project: string, person: string][] = [
   ["ai-led-personalization", "scott-brinker"],
   ["ai-led-personalization", "david-raab"],
-  ["implementers-guide-to-ai", "karthik-anantharaman"],
+  ["implementors-guide-to-ai", "karthik-anantharaman"],
   ["navigating-corporate-commute-for-gccs-in-india", "protick-basu"],
 ];
 
@@ -107,9 +112,9 @@ export const featuredInterviews: FeaturedResource[] = featured.map(
     return {
       kind: "Interview",
       title: interview.title,
-      summary: [interview.person.name, interview.person.company]
-        .filter(Boolean)
-        .join(", "),
+      /* No byline under the card: the banner artwork already names the
+         person, so repeating it below the title read as duplication. */
+      summary: "",
       href: interviewHref(interview),
       image: interview.thumbnail,
     };
@@ -127,9 +132,10 @@ export const quickReads: FeaturedResource[] = [
   },
   {
     kind: "Article",
-    title: "AI is the Future, and the Future is Now",
+    title:
+      "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
     summary: "",
-    href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+    href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
   },
   {
     kind: "Article",

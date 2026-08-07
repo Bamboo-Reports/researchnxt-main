@@ -113,9 +113,12 @@ function LogoMark({ className }: { className?: string }) {
 export function Logo({
   inverted = false,
   className,
+  markClassName,
 }: {
   inverted?: boolean;
   className?: string;
+  /** Sizes the mark itself. Defaults to the navbar's `h-5`. */
+  markClassName?: string;
 }) {
   return (
     <Link
@@ -127,7 +130,7 @@ export function Logo({
         className,
       )}
     >
-      <LogoMark />
+      <LogoMark className={markClassName} />
     </Link>
   );
 }

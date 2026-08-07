@@ -19,7 +19,7 @@ export const netcore: SuccessStory = {
   imageAlt:
     "Rohit Shrivastav, Head of Growth at Netcore Solutions, on working with Research NXT",
 
-  logo: "/logos/trusted/netcore.png",
+  logo: "/logos/trusted/netcore-lockup.png",
 
   facts: [
     {

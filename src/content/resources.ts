@@ -151,6 +151,14 @@ export type ReportLanding = {
   cardImage: string;
 
   /**
+   * Portrait cover for the reports library's book-shelf grid, the report's
+   * own vertical cover at full bleed (A4, 210:297). Until a report has one
+   * the library shows its landscape `cardImage` letterboxed on a muted
+   * plate, so supplying this file per report is the whole rollout.
+   */
+  cardPortrait?: string;
+
+  /**
    * The hero download form. The real form is a Jotform embed: set `jotformId`
    * and the template renders it instead of the interim placeholder form.
    * TODO(phase-c): set the Jotform id once the form exists.
@@ -242,9 +250,25 @@ export type ReportLanding = {
    */
   spotlights?: {
     title: string;
-    description: string;
+    /**
+     * Optional: where the artwork already carries the story, a written
+     * sentence about it only says the same thing twice.
+     */
+    description?: string;
     linkLabel: string;
     card: ReportCardItem;
+    /**
+     * Programme facts sitting beside the spotlight copy instead of the
+     * card's image, the way the AI-led microsite sets its facts to the
+     * right of the client testimonial. The card still supplies the link.
+     */
+    facts?: { label: string; value: string }[];
+    /**
+     * Render the band above the interviews rather than after them, where
+     * the source microsite puts it. Default is after, which is where the
+     * closing pointers belong.
+     */
+    beforeInterviews?: boolean;
   }[];
 
   /**
@@ -255,8 +279,17 @@ export type ReportLanding = {
    */
   voices?: {
     items: {
-      /** Path under /public. */
-      image: string;
+      /**
+       * Path under /public, where the source bakes the quote into card
+       * artwork. Omitted where the source runs plain text testimonials, and
+       * the carousel then sets the quote as text instead.
+       */
+      image?: string;
+      /**
+       * Cut-out speaker portrait accompanying a text testimonial, shown on
+       * the plate disc beside the quote. Only read when `image` is absent.
+       */
+      portrait?: string;
       quote: string;
       name: string;
       role: string;
@@ -278,21 +311,22 @@ export type ReportLanding = {
 };
 
 /** Copy transcribed from researchnxt.com/microsite/implementer-guide-to-ai/ */
-const implementersGuideToAI: ReportLanding = {
-  slug: "implementers-guide-to-ai",
+const implementorsGuideToAI: ReportLanding = {
+  slug: "implementors-guide-to-ai",
   published: "2025-02-20",
-  metaTitle: "Implementer's Guide to AI",
+  metaTitle: "Implementor's Guide to AI",
   metaDescription:
     "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
 
   hero: {
-    title: "Implementer's Guide to AI",
+    title: "Implementor's Guide to AI",
     lede: "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
-    cover: "/covers/implementers-guide-to-ai.png",
-    coverAlt: "Cover of the Implementer's Guide to AI report",
+    cover: "/covers/implementors-guide-to-ai-hero.png",
+    coverAlt: "Cover of the Implementor's Guide to AI report",
   },
 
-  cardImage: "/covers/implementers-guide-to-ai-card.png",
+  cardImage: "/covers/implementors-guide-to-ai-card.png",
+  cardPortrait: "/covers/implementors-guide-to-ai-portrait.png",
 
   download: {
     jotformId: "252512579059463",
@@ -313,7 +347,7 @@ const implementersGuideToAI: ReportLanding = {
   },
 
   description: [
-    "The **Implementer's Guide to AI** is a practical handbook crafted to empower businesses on their journey to adopting and scaling AI.",
+    "The **Implementor's Guide to AI** is a practical handbook crafted to empower businesses on their journey to adopting and scaling AI.",
     "This guide is presented in partnership with Salesforce. Tailored for Indian businesses, it draws on insights from over **1,500+ survey responses** and **15+ expert interviews** across industries such as finance, retail, and healthcare. Backed by secondary research, it offers actionable strategies and real-world examples to guide effective AI adoption.",
   ],
 
@@ -327,19 +361,19 @@ const implementersGuideToAI: ReportLanding = {
         name: "Landscape",
         description:
           "Explore the maturity levels and current\nadoption patterns of AI across Indian\nbusiness functions and departments",
-        image: "/report-sections/implementers-guide-landscape.png",
+        image: "/report-sections/implementors-guide-landscape.png",
       },
       {
         name: "Strategy",
         description:
           "Understand how strategic AI\nimplementations align with key business\nobjectives to drive measurable growth",
-        image: "/report-sections/implementers-guide-strategy.png",
+        image: "/report-sections/implementors-guide-strategy.png",
       },
       {
         name: "Governance",
         description:
           "Master responsible AI frameworks\nand assessment methods to ensure\ncompliant and successful deployment",
-        image: "/report-sections/implementers-guide-governance.png",
+        image: "/report-sections/implementors-guide-governance.png",
       },
     ],
   },
@@ -348,37 +382,38 @@ const implementersGuideToAI: ReportLanding = {
     title: "Quick reads and toolkits for AI adoption",
     items: [
       {
-        title: "AI is the Future, and the Future is Now",
-        href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+        title:
+          "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
+        href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
         image:
-          "/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
+          "/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Finance Leaders Transition from Caution to Customer-Centric Scale",
-        href: "/resources/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
+          "Implementor's Guide to AI: Finance Leaders Transition from Caution to Customer-Centric Scale",
+        href: "/resources/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
         image:
-          "/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale.png",
+          "/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
-        href: "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
+          "Implementor's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
+        href: "/resources/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
         image:
-          "/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
+          "/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
-        href: "/resources/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
+          "Implementor's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
+        href: "/resources/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
         image:
-          "/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
+          "/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
       },
       {
-        title: "The Four Waves of AI: A Ready Guide for Business Leaders",
-        href: "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
+        title: "The Four Waves of AI: A Practical Guide for Business Leaders",
+        href: "/resources/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
         image:
-          "/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
+          "/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
       },
     ],
   },
@@ -392,12 +427,12 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "Transforming SaaS, Reviving Storytelling, and Redefining the Future of Creativity",
-            href: "/resources/experts-view/implementers-guide-to-ai/diptarup-chakraborti",
+            href: "/resources/experts-view/implementors-guide-to-ai/diptarup-chakraborti",
             image: "/experts/diptarup-chakraborti.png",
           },
           {
             title: "How Spacewood Leverages AI to Redefine Customer Experience",
-            href: "/resources/experts-view/implementers-guide-to-ai/nimish-thaker",
+            href: "/resources/experts-view/implementors-guide-to-ai/nimish-thaker",
             image: "/experts/nimish-thaker.png",
           },
         ],
@@ -408,12 +443,12 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "How Carat Lane is Redefining Customer Experience in the Jewellery Industry",
-            href: "/resources/experts-view/implementers-guide-to-ai/avnish-anand",
+            href: "/resources/experts-view/implementors-guide-to-ai/avnish-anand",
             image: "/experts/avnish-anand.png",
           },
           {
             title: "SkinQ's AI-Powered Vision and Strategic Marketing Insights",
-            href: "/resources/experts-view/implementers-guide-to-ai/meera-iyer",
+            href: "/resources/experts-view/implementors-guide-to-ai/meera-iyer",
             image: "/experts/meera-iyer.png",
           },
         ],
@@ -424,37 +459,37 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "AI-Driven Branding & Digital Marketing: Insights from Hansveen Kaur",
-            href: "/resources/experts-view/implementers-guide-to-ai/hansveen-kaur",
+            href: "/resources/experts-view/implementors-guide-to-ai/hansveen-kaur",
             image: "/experts/hansveen-kaur.png",
           },
           {
             title:
               "AI's Role in Engineering & Infrastructure: Insights from Manish",
-            href: "/resources/experts-view/implementers-guide-to-ai/manish-kumar",
+            href: "/resources/experts-view/implementors-guide-to-ai/manish-kumar",
             image: "/experts/manish-kumar.png",
           },
           {
             title:
               "Transforming Retail with AI: Insights from Pressto's Marketing Evolution",
-            href: "/resources/experts-view/implementers-guide-to-ai/akshay-matkar",
+            href: "/resources/experts-view/implementors-guide-to-ai/akshay-matkar",
             image: "/experts/akshay-matkar.png",
           },
           {
             title:
               "AI in Manufacturing: Driving Digital Transformation and Intelligent Operations",
-            href: "/resources/experts-view/implementers-guide-to-ai/madhav-vemuri",
+            href: "/resources/experts-view/implementors-guide-to-ai/madhav-vemuri",
             image: "/experts/madhav-vemuri.png",
           },
           {
             title:
               "Insights on Data Unification, Customer Experience, and Ethical Innovation",
-            href: "/resources/experts-view/implementers-guide-to-ai/prasad-pimple",
+            href: "/resources/experts-view/implementors-guide-to-ai/prasad-pimple",
             image: "/experts/prasad-pimple.png",
           },
           {
             title:
               "How Edelweiss Life Insurance is Redefining Industry Standards Through Innovation and AI",
-            href: "/resources/experts-view/implementers-guide-to-ai/abhishek-gupta",
+            href: "/resources/experts-view/implementors-guide-to-ai/abhishek-gupta",
             image: "/experts/abhishek-gupta.png",
           },
         ],
@@ -464,36 +499,36 @@ const implementersGuideToAI: ReportLanding = {
         items: [
           {
             title: "AI-Led Transformation in Automotive Manufacturing",
-            href: "/resources/experts-view/implementers-guide-to-ai/sanjiv-kumar-jain",
+            href: "/resources/experts-view/implementors-guide-to-ai/sanjiv-kumar-jain",
             image: "/experts/sanjiv-kumar-jain.png",
           },
           {
             title: "How AI Powers Kissht's Customer-Centric Approach",
-            href: "/resources/experts-view/implementers-guide-to-ai/shwetha-iyer",
+            href: "/resources/experts-view/implementors-guide-to-ai/shwetha-iyer",
             image: "/experts/shwetha-iyer.png",
           },
           {
             title:
               "Transforming Customer Engagement, Decision-Making, and Operational Efficiency",
-            href: "/resources/experts-view/implementers-guide-to-ai/gaurav-suri",
+            href: "/resources/experts-view/implementors-guide-to-ai/gaurav-suri",
             image: "/experts/gaurav-suri.png",
           },
           {
             title:
               "How PolicyBoss is Leveraging AI to Redefine Distribution, Personalisation, and Customer Experience",
-            href: "/resources/experts-view/implementers-guide-to-ai/varun-kaushik",
+            href: "/resources/experts-view/implementors-guide-to-ai/varun-kaushik",
             image: "/experts/varun-kaushik.png",
           },
           {
             title:
               "Transforming Insurance Sales and Distribution at Allianz Partners",
-            href: "/resources/experts-view/implementers-guide-to-ai/suman-tewary",
+            href: "/resources/experts-view/implementors-guide-to-ai/suman-tewary",
             image: "/experts/suman-tewary.png",
           },
           {
             title:
               "How Apollo Hospitals Leverages AI to Revolutionise Patient Care and International Outreach",
-            href: "/resources/experts-view/implementers-guide-to-ai/karthik-anantharaman",
+            href: "/resources/experts-view/implementors-guide-to-ai/karthik-anantharaman",
             image: "/experts/karthik-anantharaman.png",
           },
         ],
@@ -507,7 +542,7 @@ const implementersGuideToAI: ReportLanding = {
   voices: {
     items: [
       {
-        image: "/voices/implementers-guide-to-ai/ramesh-mani.png",
+        image: "/voices/implementors-guide-to-ai/ramesh-mani.png",
         quote:
           "The next big AI breakthrough could come from a company that doesn't even exist today. Staying adaptable and continuously learning will be key to thriving in this AI-driven future.",
         name: "Ramesh Mani",
@@ -515,7 +550,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Salesforce",
       },
       {
-        image: "/voices/implementers-guide-to-ai/akshay-matkar.png",
+        image: "/voices/implementors-guide-to-ai/akshay-matkar.png",
         quote:
           "The report can empower businesses to navigate the complexities of AI adoption effectively, ensuring their efforts are purposeful and result-oriented.",
         name: "Akshay Matkar",
@@ -523,7 +558,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Pressto",
       },
       {
-        image: "/voices/implementers-guide-to-ai/gaurav-suri.png",
+        image: "/voices/implementors-guide-to-ai/gaurav-suri.png",
         quote:
           "By combining continuous learning, strategic alignment, and collaboration, organisations can build a resilient, forward-looking culture that effectively integrates AI to revolutionise business.",
         name: "Gaurav Suri",
@@ -531,7 +566,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Finlabs India Pvt Ltd",
       },
       {
-        image: "/voices/implementers-guide-to-ai/prasad-pimple.png",
+        image: "/voices/implementors-guide-to-ai/prasad-pimple.png",
         quote:
           "It's primarily about understanding what others have done, including their successes and, more importantly, their failures.",
         name: "Prasad Pimple",
@@ -539,7 +574,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Kotak Life",
       },
       {
-        image: "/voices/implementers-guide-to-ai/abhishek-gupta.png",
+        image: "/voices/implementors-guide-to-ai/abhishek-gupta.png",
         quote:
           "Success with AI often comes through trial and error. Be prepared to fail frequently, as this iterative process is critical to discovering solutions that yield meaningful results.",
         name: "Abhishek Gupta",
@@ -547,7 +582,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Edelweiss Life Insurance",
       },
       {
-        image: "/voices/implementers-guide-to-ai/varun-kaushik.png",
+        image: "/voices/implementors-guide-to-ai/varun-kaushik.png",
         quote:
           "By adopting a pragmatic, goal-oriented approach, you can harness AI as a powerful enabler without disrupting the core of how you operate.",
         name: "Varun Kaushik",
@@ -555,7 +590,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "PolicyBoss",
       },
       {
-        image: "/voices/implementers-guide-to-ai/suman-tewary.png",
+        image: "/voices/implementors-guide-to-ai/suman-tewary.png",
         quote:
           "The fact that AI adoption in the insurance sector will completely change the whole spectrum is a boon in itself for both insurers and customers.",
         name: "Suman Tewary",
@@ -563,7 +598,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Allianz Partners",
       },
       {
-        image: "/voices/implementers-guide-to-ai/karthik-anantharaman.png",
+        image: "/voices/implementors-guide-to-ai/karthik-anantharaman.png",
         quote:
           "The report should foster a sense of collaboration, encouraging organisations to seriously consider and implement real-time AI solutions.",
         name: "Dr Karthik Anantharaman",
@@ -571,7 +606,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Apollo Hospitals",
       },
       {
-        image: "/voices/implementers-guide-to-ai/nimish-thaker.png",
+        image: "/voices/implementors-guide-to-ai/nimish-thaker.png",
         quote:
           "Having tailored solutions or tools specifically designed for the furniture industry would be incredibly valuable.",
         name: "Nimish Thaker",
@@ -579,7 +614,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Spacewood",
       },
       {
-        image: "/voices/implementers-guide-to-ai/diptarup-chakraborti.png",
+        image: "/voices/implementors-guide-to-ai/diptarup-chakraborti.png",
         quote:
           "I believe it's essential to include the social impact of AI on the marketing function and highlight how AI will influence the existing roles.",
         name: "Diptarup Chakraborti",
@@ -587,7 +622,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "MoveInSync",
       },
       {
-        image: "/voices/implementers-guide-to-ai/meera-iyer.png",
+        image: "/voices/implementors-guide-to-ai/meera-iyer.png",
         quote:
           "Successful AI adoption requires clarity about its relevance, scrutiny of the data powering it, and a strong alignment with your specific business objectives.",
         name: "Meera Iyer",
@@ -595,7 +630,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "SkinQ",
       },
       {
-        image: "/voices/implementers-guide-to-ai/avnish-anand.png",
+        image: "/voices/implementors-guide-to-ai/avnish-anand.png",
         quote:
           "As more companies adopt AI, the technology will continue to evolve, driving the emergence of new use cases and greater sophistication.",
         name: "Avnish Anand",
@@ -603,14 +638,14 @@ const implementersGuideToAI: ReportLanding = {
         company: "CaratLane",
       },
       {
-        image: "/voices/implementers-guide-to-ai/madhav-vemuri.png",
+        image: "/voices/implementors-guide-to-ai/madhav-vemuri.png",
         quote:
           "I expect this report to emphasise the urgency of AI adoption. Businesses must recognise that AI is not a luxury but a necessity for competitiveness.",
         name: "Madhav Vemuri",
         role: "Leader of Industrial Automation",
       },
       {
-        image: "/voices/implementers-guide-to-ai/sanjiv-kumar-jain.png",
+        image: "/voices/implementors-guide-to-ai/sanjiv-kumar-jain.png",
         quote:
           "Choose with a focus on existing and mature AI technologies, not speculative promises or external pressures.",
         name: "Sanjiv Jain",
@@ -618,7 +653,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Krishna Maruti Group",
       },
       {
-        image: "/voices/implementers-guide-to-ai/manish-kumar.png",
+        image: "/voices/implementors-guide-to-ai/manish-kumar.png",
         quote:
           "It is recommended to check the effectiveness of available AI tools which are being selected for engineering and project management.",
         name: "Manish Kumar",
@@ -626,7 +661,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Engineers India Limited",
       },
       {
-        image: "/voices/implementers-guide-to-ai/hansveen-kaur.png",
+        image: "/voices/implementors-guide-to-ai/hansveen-kaur.png",
         quote:
           "Ultimately, a customer-centric philosophy, prioritising enhanced experiences and human-AI synergy, is essential for maximising the transformative potential of AI.",
         name: "Hansween Kaur",
@@ -658,12 +693,18 @@ const automationCampaignManagement: ReportLanding = {
   hero: {
     title: "Automation & Campaign Management Handbook for Functional Experts",
     lede: "Explore current campaign management nuances and opportunities tailored to Indian market dynamics",
-    cover: "/covers/automation-campaign-management.png",
+    cover: "/covers/automation-campaign-management-hero.png",
     coverAlt:
       "Cover of the Automation and Campaign Management Handbook for Functional Experts",
   },
 
-  cardImage: "/covers/automation-campaign-management-zoho-card.png",
+  /* Generated in the site's own system (deep band, tick device, DM Sans,
+     the cover mock): the WordPress-era promo tile with its baked-in
+     "Download Now" button is retired. */
+  cardImage: "/covers/automation-campaign-management-card.png",
+  /* The report's own vertical cover, supplied by the user (5880x8334 source,
+     served at 1190 wide). */
+  cardPortrait: "/covers/automation-campaign-management-portrait.png",
 
   download: {
     jotformId: "243521499246462",
@@ -731,6 +772,7 @@ const automationCampaignManagement: ReportLanding = {
       {
         title:
           "Redefining Marketing Excellence: Highlights from the Marketing Automation Roundtable",
+        href: "/resources/events/automation-campaign-management/marketing-automation-roundtable",
         image:
           "/quick-reads/automation-campaign-management/marketing-automation-roundtable.png",
       },
@@ -979,11 +1021,12 @@ const unlockingThePowerUnifiedCX: ReportLanding = {
   hero: {
     title: "Unlocking the Power of Unified CX",
     lede: "Explore the latest insights, strategies and innovations driving customer centric transformations in Qatar",
-    cover: "/covers/unlocking-the-power-unified-cx.png",
+    cover: "/covers/unlocking-the-power-unified-cx-hero.png",
     coverAlt: "Cover of the Unlocking the Power of Unified CX report",
   },
 
   cardImage: "/covers/unlocking-the-power-unified-cx-card.png",
+  cardPortrait: "/covers/unlocking-the-power-unified-cx-portrait.png",
 
   download: {
     jotformId: "250201862296454",
@@ -1135,12 +1178,13 @@ const navigatingCorporateCommute: ReportLanding = {
   hero: {
     title: "Navigating Corporate Commute for GCCs in India",
     lede: "Benchmark commute maturity across India's global capability centres and reimagine employee transport as a driver of productivity and growth",
-    cover: "/covers/navigating-corporate-commute-for-gccs-in-india.png",
+    cover: "/covers/navigating-corporate-commute-for-gccs-in-india-hero.png",
     coverAlt:
       "Cover of the Navigating Corporate Commute for GCCs in India report",
   },
 
   cardImage: "/covers/navigating-corporate-commute-for-gccs-in-india-card.png",
+  cardPortrait: "/covers/navigating-corporate-commute-for-gccs-in-india-portrait.png",
 
   download: {
     jotformId: "260490193043452",
@@ -1289,11 +1333,12 @@ const transformingCxThroughGccs: ReportLanding = {
   hero: {
     title: "Transforming CX through GCCs",
     lede: "How top global brands tech-enable their digital customer experience through the Indian GCC model",
-    cover: "/covers/transforming-cx-through-gccs.png",
+    cover: "/covers/transforming-cx-through-gccs-hero.png",
     coverAlt: "Cover of the Transforming CX through GCCs eBook",
   },
 
   cardImage: "/covers/transforming-cx-through-gccs-card.png",
+  cardPortrait: "/covers/transforming-cx-through-gccs-portrait.png",
 
   download: {
     jotformId: "241762483249463",
@@ -1366,11 +1411,51 @@ const transformingCxThroughGccs: ReportLanding = {
     ],
   },
 
-  /* This page runs no quote cards, so the landing carries no voices band. */
+  /* The source page runs these as plain text testimonials under "View
+     Insights shared by GCC Leaders", not baked quote cards, so there is no
+     artwork to carry and the copy is quoted as written, American spellings
+     included. Attributions are as the page states them: Sharda's testimonial
+     names no company (her interview record says GBS Bayer India) and styles
+     her role differently from that record; both carried as published. */
+  voices: {
+    items: [
+      {
+        quote:
+          "We should ensure that the change is adopted well both in the customer experience ecosystem and within the organization to consider any digital transformation initiative effective",
+        portrait: "/voices/transforming-cx-through-gccs/vineet-dwivedi.png",
+        name: "Vineet Dwivedi",
+        role: "Global Head",
+        company: "Alcon Global Services",
+      },
+      {
+        quote:
+          "The hybrid model of in-house capabilities and specialized third-party expertise enables us to navigate the complexities of digital transformation effectively",
+        portrait: "/voices/transforming-cx-through-gccs/sharda-nenwani-gupta.png",
+        name: "Sharda Nenwani Gupta",
+        role: "MD & Global Business Services Head, India",
+      },
+      {
+        quote:
+          "From the perspective of improving awareness and customer experience (CX) levels, insurers will focus on expanding their reach through API plug-ins and integrate more self-service options across their digital platforms",
+        portrait: "/voices/transforming-cx-through-gccs/geetanjali-chugh-kothari.png",
+        name: "Geetanjali Chugh Kothari",
+        role: "CMO",
+        company: "Future Generali India Life Insurance",
+      },
+      {
+        quote:
+          "We should evaluate the actual need for something to be automated and not just for the sake of it; otherwise, we will end up automating a bad process",
+        portrait: "/voices/transforming-cx-through-gccs/vivek-veeraraghavan.png",
+        name: "Vivek Veeraraghavan",
+        role: "SVP of Digital Transformation APAC",
+        company: "Northern Trust",
+      },
+    ],
+  },
 
   credits: {
     sponsor: {
-      label: "Brought to you by",
+      label: "GCC insights by",
       name: "Bamboo Reports",
       logo: "/logos/trusted/bamboo-reports.svg",
     },
@@ -1392,11 +1477,12 @@ const cloudComputingNewNormal: ReportLanding = {
   hero: {
     title: "Cloud Computing in the New Normal & Beyond",
     lede: "India Inc's need for cloud computing in 2021 and beyond, a ready reckoner for cloud transformation custodians",
-    cover: "/covers/cloud-computing-new-normal-beyond.png",
+    cover: "/covers/cloud-computing-new-normal-beyond-hero.png",
     coverAlt: "Cover of the Cloud Computing in the New Normal & Beyond report",
   },
 
   cardImage: "/covers/cloud-computing-new-normal-beyond-card.png",
+  cardPortrait: "/covers/cloud-computing-new-normal-beyond-portrait.png",
 
   download: {
     jotformId: "211600107593446",
@@ -1508,11 +1594,12 @@ const southEastAsiaResponseGuide: ReportLanding = {
   hero: {
     title: "Southeast Asia Response Guide 2021",
     lede: "The Best of Business Strategies In The New Normal",
-    cover: "/covers/south-east-asia-response-guide.png",
+    cover: "/covers/south-east-asia-response-guide-hero.png",
     coverAlt: "The Southeast Asia Response Guide 2021 open on a tablet",
   },
 
   cardImage: "/covers/south-east-asia-response-guide-card.png",
+  cardPortrait: "/covers/south-east-asia-response-guide-portrait.png",
 
   download: {
     jotformId: "211602133570442",
@@ -1590,13 +1677,14 @@ const southEastAsiaResponseGuide: ReportLanding = {
     ],
   },
 
-  /* The microsite runs these as text quotes beside speaker photographs
-     rather than as baked quote cards, so there is no artwork to carry and
-     the copy is quoted as written. */
+  /* The microsite runs these as text quotes beside cut-out speaker
+     portraits, so each carries `portrait` (the microsite's own cut-outs,
+     not the 16:9 interview thumbnails an earlier pass wrongly used here)
+     and the copy is quoted as written. */
   voices: {
     items: [
       {
-        image: "/experts/anil-gautam.jpg",
+        portrait: "/voices/south-east-asia-response-guide/anil-gautam.jpg",
         quote:
           "We are innovating by creating newer digital models to enhance interactions and experiences. And we're looking a lot more on the front-end agility and ensuring the back end can support any customization required at the front-end.",
         name: "Anil Gautam",
@@ -1604,7 +1692,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Malaysia",
       },
       {
-        image: "/experts/ravi-shankar.jpg",
+        portrait: "/voices/south-east-asia-response-guide/ravi-shankar.jpg",
         quote:
           "The proudest innovation that we did is that we built a system that identifies a non-performing route voluntarily and automatically launches aligned marketing campaigns without any human intervention and manual analysis.",
         name: "Ravi Shankar",
@@ -1612,7 +1700,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "AirAsia",
       },
       {
-        image: "/experts/johnny-widodo.jpg",
+        portrait: "/voices/south-east-asia-response-guide/johnny-widodo.jpg",
         quote:
           "When businesses start to plan, the focus should be on incremental innovation, incremental benefit, and incremental improvement on the current existing product, or is basically switching towards a very new product.",
         name: "Johnny Widodo",
@@ -1620,7 +1708,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Indonesia",
       },
       {
-        image: "/experts/aaron-foo.jpg",
+        portrait: "/voices/south-east-asia-response-guide/aaron-foo.jpg",
         quote:
           "It is about removing things that you do not need; it could be just the middleman or the technology to simplify the business operations. It should have happened before COVID, but nobody focused on it until things happened.",
         name: "Aaron Foo",
@@ -1628,7 +1716,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "iCar Asia",
       },
       {
-        image: "/experts/karunjit-kumar-dhir.jpg",
+        portrait: "/voices/south-east-asia-response-guide/karunjit-kumar-dhir.jpg",
         quote:
           "After the wave of remote or work from anywhere trend, the extension of that trend will be many employers also allowing for BYOD, Bring Your Own Device. And because of this, the whole IT security landscape will evolve.",
         name: "Karunjit Kumar Dhir",
@@ -1636,7 +1724,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "SCIKEY",
       },
       {
-        image: "/experts/walter-de-oude.jpg",
+        portrait: "/voices/south-east-asia-response-guide/walter-de-oude.jpg",
         quote:
           "Everything about our service is digital and mobile-first. We found that people had more time to pause and sort out their finances. We also found that people were more responsive to interacting with financial services in a digital way.",
         name: "Walter de Oude",
@@ -1676,12 +1764,13 @@ const aiLedPersonalization: ReportLanding = {
   hero: {
     title: "AI Led Personalization: Strategy and Trends, India 2020",
     lede: "A journey through the pandemic, and into the new normal",
-    cover: "/covers/ai-led-personalization.png",
+    cover: "/covers/ai-led-personalization-hero.png",
     coverAlt:
       "The AI Led Personalization Strategy and Trends Report, India 2020 on a tablet",
   },
 
   cardImage: "/covers/ai-led-personalization-card.png",
+  cardPortrait: "/covers/ai-led-personalization-portrait.png",
 
   download: {
     jotformId: "200151888635458",
@@ -1723,16 +1812,9 @@ const aiLedPersonalization: ReportLanding = {
     ],
   },
 
-  quickReads: {
-    title: "Check out the launch event",
-    items: [
-      {
-        title: "AI Led Personalization 2020, eBook launch",
-        href: "/resources/events/ai-led-personalization/ai-led-ebook-launch",
-        image: "/events/ai-led-ebook-launch.png",
-      },
-    ],
-  },
+  /* No quick reads: this programme published no articles. The launch event
+     it used to point at here is now the spotlight below, which carries the
+     microsite's own copy rather than repeating the event's title. */
 
   /* Grouped by industry segment, which is how the microsite tabs them. */
   expertInsights: {
@@ -1782,26 +1864,48 @@ const aiLedPersonalization: ReportLanding = {
 
   /* The microsite's "Client Testimonial", carried as the one voice card it
      is: the quote is baked into the artwork, so it is quoted here too. */
-  voices: {
-    items: [
-      {
-        image: "/voices/ai-led-personalization/rohit-srivastav.png",
-        quote:
-          "Research NXT has the knowledge and experience of providing Marketing Solutions that we were seeking in a vendor.",
-        name: "Rohit Shrivastav",
-        role: "Head of Growth",
-        company: "Netcore Solutions",
-      },
-    ],
-  },
-
   spotlights: [
     {
-      title: "Client success story",
+      /* Heading and both sentences verbatim from the microsite. */
+      title: "Check out the Launch Event",
       description:
-        "Netcore commissioned this research to understand how India's consumer brands were using AI powered tools through the pandemic. The full case study covers what the research delivered.",
+        "Netcore and Research NXT culminated their 6 month journey to build the market knowledge in AI in Marketing, and speaking to 10+ marketing leaders in the industry with a virtual event. Watch this amazing interaction for in-depth insight in the field of Personalization in Marketing.",
+      linkLabel: "See the event",
+      card: eventCard("ai-led-personalization", "ai-led-ebook-launch"),
+      /* Above the interviews, where the microsite runs it. */
+      beforeInterviews: true,
+    },
+    {
+      title: "Client success story",
+      /* No description: the testimonial artwork below carries the quote and
+         the attribution, so a written sentence said it twice. */
       linkLabel: "Read the story",
-      card: successStoryCard("ai-led-personalization", "netcore"),
+      /* The microsite's own testimonial card artwork (Rohit Shrivastav's
+         quote, supplied by the user) rather than the story record's cover,
+         shown in the left column with the CTA beneath it. */
+      card: successStoryCard(
+        "ai-led-personalization",
+        "netcore",
+        "/success-stories/ai-led-personalization/netcore-card.png",
+      ),
+      /* The microsite sets its facts to the right of the client
+         testimonial, verbatim on user direction: labels, values, pipes,
+         capitals and the en dash as the source writes them. */
+      facts: [
+        {
+          label: "Research Focus",
+          value: "AI Powered Business Strategies of B2C Brands",
+        },
+        {
+          label: "Engagement",
+          value: "Interviews | Virtual Event | Social Media Promotion",
+        },
+        { label: "Geography", value: "India" },
+        {
+          label: "Timeframe of Research",
+          value: "April 2020 – Sept 2020",
+        },
+      ],
     },
   ],
 
@@ -1809,7 +1913,8 @@ const aiLedPersonalization: ReportLanding = {
     sponsor: {
       label: "In association with",
       name: "Netcore",
-      logo: "/logos/trusted/netcore.png",
+      /* The official mark from netcore.ai, supplied by the user. */
+      logo: "/logos/trusted/netcore-lockup.png",
     },
     partnerLabel: "Research partner",
   },
@@ -1831,11 +1936,12 @@ const contentMarketingDoneRight: ReportLanding = {
   hero: {
     title: "Content Marketing Done Right",
     lede: "Trends and best practices in Indian content marketing, 2020",
-    cover: "/covers/content-marketing-done-right.png",
+    cover: "/covers/content-marketing-done-right-hero.png",
     coverAlt: "Cover of the Content Marketing Done Right report",
   },
 
   cardImage: "/covers/content-marketing-done-right-card.png",
+  cardPortrait: "/covers/content-marketing-done-right-portrait.png",
 
   download: {
     jotformId: "90447985712467",
@@ -1966,12 +2072,13 @@ const stateOfConsumerEngagementGcc2019: ReportLanding = {
   hero: {
     title: "State of Consumer Engagement, GCC 2019",
     lede: "A three-dimensional report on B2C consumer engagement in the GCC region",
-    cover: "/covers/state-of-consumer-engagement-gcc-2019.jpg",
+    cover: "/covers/state-of-consumer-engagement-gcc-2019-hero.png",
     coverAlt:
       "Cover of the State of Consumer Engagement, GCC 2019 report, in print and on a tablet",
   },
 
   cardImage: "/covers/state-of-consumer-engagement-gcc-2019-card.png",
+  cardPortrait: "/covers/state-of-consumer-engagement-gcc-2019-portrait.png",
 
   download: {
     jotformId: "92538569205465",
@@ -2078,12 +2185,13 @@ const abmBestPracticesIndia2018: ReportLanding = {
   hero: {
     title: "ABM Best Practices Report: India, 2018",
     lede: "A definitive guide for every B2B marketer",
-    cover: "/covers/abm-best-practices-report-india-2018.png",
+    cover: "/covers/abm-best-practices-report-india-2018-hero.png",
     coverAlt:
       "Cover of the ABM Best Practices Report: India, 2018, in print and on a tablet",
   },
 
   cardImage: "/covers/abm-best-practices-report-india-2018-card.png",
+  cardPortrait: "/covers/abm-best-practices-report-india-2018-portrait.png",
 
   download: {
     jotformId: "80661672684465",
@@ -2215,12 +2323,13 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
   hero: {
     title: "B2C Marketing Automation Report: India, 2017",
     lede: "All you need to know about marketing automation solutions",
-    cover: "/covers/b2c-marketing-automation-india-2017.png",
+    cover: "/covers/b2c-marketing-automation-india-2017-hero.png",
     coverAlt:
       "Cover of the B2C Marketing Automation Report: India, 2017, in print and on a tablet",
   },
 
   cardImage: "/covers/b2c-marketing-automation-india-2017-card.png",
+  cardPortrait: "/covers/b2c-marketing-automation-india-2017-portrait.png",
 
   download: {
     jotformId: "81703707306453",
@@ -2320,7 +2429,7 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
     sponsor: {
       label: "Report sponsor",
       name: "Netcore",
-      logo: "/logos/trusted/netcore.png",
+      logo: "/logos/trusted/netcore-lockup.png",
     },
     partnerLabel: "Research partner",
   },
@@ -2341,12 +2450,13 @@ const publishersGuideToSmarterMonetization: ReportLanding = {
   hero: {
     title: "A Publisher's Guide to Smarter Monetization",
     lede: "Ad revenue optimization techniques 2020",
-    cover: "/covers/publishers-guide-to-smarter-monetization.png",
+    cover: "/covers/publishers-guide-to-smarter-monetization-hero.png",
     coverAlt:
       "Cover of A Publisher's Guide to Smarter Monetization on a tablet",
   },
 
   cardImage: "/covers/publishers-guide-to-smarter-monetization-card.png",
+  cardPortrait: "/covers/publishers-guide-to-smarter-monetization-portrait.png",
 
   download: {
     jotformId: "200331930902443",
@@ -2402,12 +2512,13 @@ const corporateGiftingTrendsIndia2019: ReportLanding = {
   hero: {
     title: "Corporate Gifting Trends Report: India, 2019",
     lede: "Trends in the Indian corporate gifting industry",
-    cover: "/covers/corporate-gifting-trends-india-2019.png",
+    cover: "/covers/corporate-gifting-trends-india-2019-hero.png",
     coverAlt:
       "Cover of the Corporate Gifting Trends Report: India, 2019 on a tablet",
   },
 
   cardImage: "/covers/corporate-gifting-trends-india-2019-card.png",
+  cardPortrait: "/covers/corporate-gifting-trends-india-2019-portrait.png",
 
   download: {
     jotformId: "83171595973469",
@@ -2455,12 +2566,13 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
   hero: {
     title: "eTutoring Best Practices Whitepaper 2016",
     lede: "Best practices, challenges and growth in the e-tutoring industry",
-    cover: "/covers/etutoring-best-practices-whitepaper-2016.png",
+    cover: "/covers/etutoring-best-practices-whitepaper-2016-hero.png",
     coverAlt:
       "Cover of the E-Tutoring Best Practices Whitepaper on a tablet",
   },
 
   cardImage: "/covers/etutoring-best-practices-whitepaper-2016-card.png",
+  cardPortrait: "/covers/etutoring-best-practices-whitepaper-2016-portrait.png",
 
   download: {
     jotformId: "81703041906450",
@@ -2494,7 +2606,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
 };
 
 export const reportLandings: ReportLanding[] = [
-  implementersGuideToAI,
+  implementorsGuideToAI,
   automationCampaignManagement,
   unlockingThePowerUnifiedCX,
   navigatingCorporateCommute,

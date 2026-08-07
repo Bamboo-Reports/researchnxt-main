@@ -15,11 +15,11 @@
  * One module per article, and this file is the registry and the lookups.
  */
 
-import { aiIsTheFutureAndTheFutureIsNow } from "./implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now";
-import { financeLeaders } from "./implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale";
-import { manufacturingLeaders } from "./implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale";
-import { retailLeaders } from "./implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale";
-import { theFourWavesOfAI } from "./implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders";
+import { aiIsTheFutureAndTheFutureIsNow } from "./implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now";
+import { financeLeaders } from "./implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale";
+import { manufacturingLeaders } from "./implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale";
+import { retailLeaders } from "./implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale";
+import { theFourWavesOfAI } from "./implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders";
 import { automateTargetWinIn2024 } from "./automation-campaign-management/automate-target-win-in-2024";
 import { unifiedCustomerExperienceQatar } from "./unlocking-the-power-unified-cx/unified-customer-experience-the-next-frontier-for-businesses-in-qatar";
 import { rethinkingTheDailyCommute } from "./navigating-corporate-commute-for-gccs-in-india/rethinking-the-daily-commute";
@@ -45,9 +45,9 @@ export type { ArticleBlock, Insight, InsightProject } from "./types";
 
 export const insightProjects: InsightProject[] = [
   {
-    slug: "implementers-guide-to-ai",
-    name: "Implementer's Guide to AI",
-    reportSlug: "implementers-guide-to-ai",
+    slug: "implementors-guide-to-ai",
+    name: "Implementor's Guide to AI",
+    reportSlug: "implementors-guide-to-ai",
   },
   {
     slug: "automation-campaign-management",
@@ -130,7 +130,7 @@ export const insightProjects: InsightProject[] = [
  * date, so the title breaks the tie and the order stays stable between builds.
  */
 export const insights = [
-  // Implementer's Guide to AI
+  // Implementor's Guide to AI
   aiIsTheFutureAndTheFutureIsNow,
   financeLeaders,
   manufacturingLeaders,

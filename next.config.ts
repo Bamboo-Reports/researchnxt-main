@@ -42,31 +42,31 @@ const redirectMap: { source: string; destination: string }[] = [
     source:
       "/guide-to-ai/ai-is-the-future-and-the-future-is-now-a-preview-of-the-implementors-guide-to-ai",
     destination:
-      "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+      "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
   },
   {
     source:
       "/guide-to-ai/implementers-guide-to-ai-finance-leaders-transition-from-caution-to-customer-centric-scale",
     destination:
-      "/resources/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
+      "/resources/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
   },
   {
     source:
       "/guide-to-ai/implementers-guide-to-ai-manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
     destination:
-      "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
+      "/resources/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
   },
   {
     source:
       "/guide-to-ai/implementers-guide-to-ai-retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
     destination:
-      "/resources/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
+      "/resources/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
   },
   {
     source:
       "/guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
     destination:
-      "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
+      "/resources/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
   },
 
   // The one /campaign-management/ article published under Insights so far.
@@ -132,6 +132,21 @@ const redirectMap: { source: string; destination: string }[] = [
     destination:
       "/resources/insights/south-east-asia-response-guide/key-takeaways-business-strategies",
   },
+  // The marketing automation roundtable recap is served from two prefixes on
+  // WordPress, /events/ and /campaign-management/, so both point here.
+  {
+    source:
+      "/events/redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable",
+    destination:
+      "/resources/events/automation-campaign-management/marketing-automation-roundtable",
+  },
+  {
+    source:
+      "/campaign-management/redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable",
+    destination:
+      "/resources/events/automation-campaign-management/marketing-automation-roundtable",
+  },
+
   {
     source: "/events/business-strategy-report-launch-event",
     destination:
@@ -831,93 +846,93 @@ const redirectMap: { source: string; destination: string }[] = [
     source:
       "/guide-to-ai/ai-driven-branding-digital-marketing-insights-from-hansveen-kaur",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/hansveen-kaur",
+      "/resources/experts-view/implementors-guide-to-ai/hansveen-kaur",
   },
   {
     source:
       "/guide-to-ai/ai-in-manufacturing-driving-digital-transformation-and-intelligent-operations",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/madhav-vemuri",
+      "/resources/experts-view/implementors-guide-to-ai/madhav-vemuri",
   },
   {
     source: "/guide-to-ai/ai-led-transformation-in-automotive-manufacturing",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/sanjiv-kumar-jain",
+      "/resources/experts-view/implementors-guide-to-ai/sanjiv-kumar-jain",
   },
   {
     source:
       "/guide-to-ai/ais-role-in-engineering-infrastructure-insights-from-manish",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/manish-kumar",
+      "/resources/experts-view/implementors-guide-to-ai/manish-kumar",
   },
   {
     source: "/guide-to-ai/how-ai-powers-kisshts-customer-centric-approach",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/shwetha-iyer",
+      "/resources/experts-view/implementors-guide-to-ai/shwetha-iyer",
   },
   {
     source:
       "/guide-to-ai/how-apollo-hospitals-leverages-ai-to-revolutionise-patient-care-and-international-outreach",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/karthik-anantharaman",
+      "/resources/experts-view/implementors-guide-to-ai/karthik-anantharaman",
   },
   {
     source:
       "/guide-to-ai/how-carat-lane-is-redefining-customer-experience-in-the-jewellery-industry",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/avnish-anand",
+      "/resources/experts-view/implementors-guide-to-ai/avnish-anand",
   },
   {
     source:
       "/guide-to-ai/how-edelweiss-life-insurance-is-redefining-industry-standards-through-innovation-and-ai",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/abhishek-gupta",
+      "/resources/experts-view/implementors-guide-to-ai/abhishek-gupta",
   },
   {
     source:
       "/guide-to-ai/how-policyboss-is-leveraging-ai-to-redefine-distribution-personalisation-and-customer-experience",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/varun-kaushik",
+      "/resources/experts-view/implementors-guide-to-ai/varun-kaushik",
   },
   {
     source:
       "/guide-to-ai/how-spacewood-leverages-ai-to-redefine-customer-experience",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/nimish-thaker",
+      "/resources/experts-view/implementors-guide-to-ai/nimish-thaker",
   },
   {
     source:
       "/guide-to-ai/insights-on-data-unification-customer-experience-and-ethical-innovation",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/prasad-pimple",
+      "/resources/experts-view/implementors-guide-to-ai/prasad-pimple",
   },
   {
     source:
       "/guide-to-ai/skinqs-ai-powered-vision-and-strategic-marketing-insights",
-    destination: "/resources/experts-view/implementers-guide-to-ai/meera-iyer",
+    destination: "/resources/experts-view/implementors-guide-to-ai/meera-iyer",
   },
   {
     source:
       "/guide-to-ai/transforming-customer-engagement-decision-making-and-operational-efficiency",
-    destination: "/resources/experts-view/implementers-guide-to-ai/gaurav-suri",
+    destination: "/resources/experts-view/implementors-guide-to-ai/gaurav-suri",
   },
   {
     source:
       "/guide-to-ai/transforming-insurance-sales-and-distribution-at-allianz-partners",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/suman-tewary",
+      "/resources/experts-view/implementors-guide-to-ai/suman-tewary",
   },
   {
     source:
       "/guide-to-ai/transforming-retail-with-ai-insights-from-presstos-marketing-evolution",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/akshay-matkar",
+      "/resources/experts-view/implementors-guide-to-ai/akshay-matkar",
   },
   {
     source:
       "/guide-to-ai/transforming-saas-reviving-storytelling-and-redefining-the-future-of-creativity",
     destination:
-      "/resources/experts-view/implementers-guide-to-ai/diptarup-chakraborti",
+      "/resources/experts-view/implementors-guide-to-ai/diptarup-chakraborti",
   },
 
   {

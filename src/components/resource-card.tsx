@@ -15,10 +15,13 @@ import type { FeaturedResource } from "@/content/types";
 export function ResourceCard({
   resource,
   withPlate = false,
+  portrait = false,
   style,
 }: {
   resource: FeaturedResource;
   withPlate?: boolean;
+  /** A4 plate for report covers, matching the library's book-shelf grid. */
+  portrait?: boolean;
   style?: React.CSSProperties;
 }) {
   return (
@@ -32,10 +35,12 @@ export function ResourceCard({
         <Image
           src={resource.image ?? "/resource-placeholder.svg"}
           alt=""
-          width={640}
-          height={360}
+          width={portrait ? 840 : 640}
+          height={portrait ? 1188 : 360}
           sizes="(min-width: 1024px) 20rem, (min-width: 640px) 45vw, 100vw"
-          className="mt-1 aspect-video w-full rounded-md object-cover"
+          className={`mt-1 w-full rounded-md object-cover ${
+            portrait ? "aspect-[210/297]" : "aspect-video"
+          }`}
         />
       ) : (
         <Badge className="self-start">{resource.kind}</Badge>

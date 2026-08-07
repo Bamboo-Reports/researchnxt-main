@@ -19,7 +19,7 @@ export const netcore: SuccessStory = {
   imageAlt:
     "Kalpit Jain, CEO of Netcore Solutions, on working with Research NXT",
 
-  logo: "/logos/trusted/netcore.png",
+  logo: "/logos/trusted/netcore-lockup.png",
 
   facts: [
     { label: "Research focus", value: "B2C marketing automation" },

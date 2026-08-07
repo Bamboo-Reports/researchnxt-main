@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExpertInsightsTabs } from "@/components/expert-insights-tabs";
+import { ReportCard } from "@/components/report-card";
 import { ReportCardGrid } from "@/components/report-card-grid";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Logo } from "@/components/layout/logo";
+import { FigureValue } from "@/components/motion/figure-value";
 import { Reveal } from "@/components/motion/reveal";
 import { QuoteCarousel } from "@/components/quote-carousel";
 import { ReportCardRail } from "@/components/report-card-rail";
@@ -16,7 +18,12 @@ import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getReportLanding, reportLandings } from "@/content/resources";
+import {
+  getReportLanding,
+  reportLandings,
+  type ReportCardItem,
+  type ReportLanding,
+} from "@/content/resources";
 import { delay, step } from "@/lib/motion";
 
 /**
@@ -33,6 +40,512 @@ import { delay, step } from "@/lib/motion";
  */
 
 type Params = { params: Promise<{ slug: string }> };
+
+/**
+ * Stroke glyphs for the theme index, drawn in the house line language: 1.6
+ * stroke, round caps, no fills, same hand as the capability and offer
+ * icons. One glyph per theme so a scanning reader can tell the cells apart
+ * before reading the labels, which is what the source microsites used their
+ * stock icons for.
+ */
+const THEME_GLYPHS = {
+  route: (
+    <>
+      <circle cx="6" cy="19" r="2.5" />
+      <path d="M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h4.5" />
+      <path d="M18 2.5c1.9 1.9 3 3.4 3 5a3 3 0 0 1-6 0c0-1.6 1.1-3.1 3-5Z" />
+    </>
+  ),
+  coins: (
+    <>
+      <ellipse cx="9" cy="7" rx="6" ry="2.6" />
+      <path d="M3 7v6c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6V7" />
+      <path d="M3 13v4c0 1.4 2.7 2.6 6 2.6 1.1 0 2.2-.1 3.1-.4" />
+      <path d="M18.5 13.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" />
+    </>
+  ),
+  tap: (
+    <>
+      <rect x="7" y="3" width="10" height="18" rx="2.2" />
+      <path d="M12 17.5h.01" />
+      <path d="M10.5 8.5 12 10l3-3" />
+    </>
+  ),
+  waveform: (
+    <>
+      <path d="M3 10v4M6.5 7.5v9M10 5v14M13.5 8.5v7M17 6.5v11M20.5 10v4" />
+    </>
+  ),
+  sliders: (
+    <>
+      <path d="M4 8h9M17 8h3M4 16h3M11 16h9" />
+      <circle cx="15" cy="8" r="2" />
+      <circle cx="9" cy="16" r="2" />
+    </>
+  ),
+  nodes: (
+    <>
+      <rect x="9.5" y="3" width="5" height="4.5" rx="1" />
+      <rect x="3" y="16.5" width="5" height="4.5" rx="1" />
+      <rect x="16" y="16.5" width="5" height="4.5" rx="1" />
+      <path d="M12 7.5v4M12 11.5 5.5 16.5M12 11.5l6.5 5" />
+    </>
+  ),
+  laptop: (
+    <>
+      <rect x="5" y="5" width="14" height="9.5" rx="1.4" />
+      <path d="M2.8 18.5h18.4" />
+      <path d="M9.5 9.2 11 10.7l3.5-3.2" />
+    </>
+  ),
+  chip: (
+    <>
+      <rect x="6.5" y="6.5" width="11" height="11" rx="1.6" />
+      <rect x="10" y="10" width="4" height="4" />
+      <path d="M9 3.5v3M15 3.5v3M9 17.5v3M15 17.5v3M3.5 9h3M3.5 15h3M17.5 9h3M17.5 15h3" />
+    </>
+  ),
+  bulb: (
+    <>
+      <path d="M12 3.5a6 6 0 0 1 3.5 10.9c-.8.6-1 1.2-1 2.1h-5c0-.9-.2-1.5-1-2.1A6 6 0 0 1 12 3.5Z" />
+      <path d="M10 19.5h4M10.8 21.5h2.4" />
+    </>
+  ),
+  chart: (
+    <>
+      <path d="M4 4v15.5h16" />
+      <path d="M8 15.5v-4M12 15.5V8M16 15.5v-5.5" />
+      <path d="M7.5 6.5 11 5l3 1.5 3.5-2" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="3.75" />
+      <path d="M12 12h.01" />
+    </>
+  ),
+  heart: (
+    <>
+      <path d="M12 20.5S4 15.6 4 9.9A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8 2.9c0 5.7-8 10.6-8 10.6Z" />
+    </>
+  ),
+  chat: (
+    <>
+      <path d="M4 5.5h11a1.8 1.8 0 0 1 1.8 1.8v5.4a1.8 1.8 0 0 1-1.8 1.8H9l-3.6 3v-3H4a1.8 1.8 0 0 1-1.8-1.8V7.3A1.8 1.8 0 0 1 4 5.5Z" />
+      <path d="M19.5 9.5h.7A1.8 1.8 0 0 1 22 11.3v5.4a1.8 1.8 0 0 1-1.8 1.8h-.7v2.6l-3.1-2.6H13" />
+    </>
+  ),
+  flag: (
+    <>
+      <path d="M6 21.5v-18" />
+      <path d="M6 4.5c4-2 8 2 12 0v9c-4 2-8-2-12 0" />
+    </>
+  ),
+  gear: (
+    <>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" />
+    </>
+  ),
+  compass: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m15.2 8.8-1.8 4.6-4.6 1.8 1.8-4.6 4.6-1.8Z" />
+    </>
+  ),
+} as const;
+
+type ThemeGlyphName = keyof typeof THEME_GLYPHS;
+
+/**
+ * Keyword to glyph, first match wins; ordered so the specific beats the
+ * general ("Service Delivery Innovations" is a bulb before "delivery" can
+ * make it a route, "Data is the currency" is coins before "data" makes it
+ * a chart). Checked against every label the two index reports carry.
+ */
+const THEME_KEYWORDS: [RegExp, ThemeGlyphName][] = [
+  [/personali[sz]ation/i, "target"],
+  [/empathy/i, "heart"],
+  [/engagement/i, "chat"],
+  [/success/i, "flag"],
+  [/tech-powered/i, "gear"],
+  [/innovation/i, "bulb"],
+  /* Added for the figure-led sets, where the claim is a sentence rather
+     than a label: checked against every highlight the reports carry. */
+  [/technology stack|tech stack/i, "nodes"],
+  [/\bvideo\b/i, "waveform"],
+  [/social media|channel/i, "tap"],
+  [/plan to|intend to|next year/i, "flag"],
+  [/budget|ad spend|invested|gifting/i, "coins"],
+  [/effective|effectiveness/i, "chart"],
+  [/optimis|programme/i, "sliders"],
+  [/align sales|collaborate|pipeline/i, "nodes"],
+  [/\bABM\b|target accounts/i, "target"],
+  [/\bemail\b/i, "chat"],
+  [/\bmobile\b/i, "tap"],
+  [/last-mile|delivery/i, "route"],
+  [/currency|revenue/i, "coins"],
+  [/audio/i, "waveform"],
+  [/self-service/i, "sliders"],
+  [/supply/i, "nodes"],
+  [/remote|virtual/i, "laptop"],
+  [/data/i, "chart"],
+  [/\bai\b/i, "chip"],
+  [/digital/i, "tap"],
+];
+
+function themeGlyph(label: string): ThemeGlyphName {
+  for (const [pattern, glyph] of THEME_KEYWORDS) {
+    if (pattern.test(label)) return glyph;
+  }
+  return "compass";
+}
+
+function ThemeIcon({ name }: { name: ThemeGlyphName }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-5"
+    >
+      {THEME_GLYPHS[name]}
+    </svg>
+  );
+}
+
+/**
+ * Splits a finding that leads with a figure into its parts, so the number
+ * can be pulled out into the tabular figure face: currency prefix, numeric
+ * head, percent mark, spelled-out unit, then the claim. "83% of consumers
+ * choose email" and "$385 billion worth of ad budgets" both match; a label
+ * like "Digital-First Approach" does not, and stays a label.
+ */
+const FIGURE_LEAD =
+  /^([$€£]?)(\d[\d,.]*)(%?)((?:\s(?:billion|million|trillion|lakh|crore|bn|mn|x))?)\s+(.+)$/i;
+
+/**
+ * The highlights band's two treatments, chosen by the copy itself: a card
+ * plate for figure-led findings, a ruled index for plain labels. Mixed sets
+ * use the plate, where an unfigured finding leads it at full width, since a
+ * claim with no number is the headline of the set rather than one more row
+ * of it.
+ */
+function HighlightsBand({ items }: { items: string[] }) {
+  const parsed = items.map((item) => {
+    const match = FIGURE_LEAD.exec(item);
+    return match
+      ? {
+          item,
+          prefix: match[1],
+          head: match[2],
+          percent: match[3],
+          unit: match[4],
+          claim: match[5],
+        }
+      : { item };
+  });
+  const figures = parsed.filter((p) => "head" in p && p.head).length;
+
+  /* No figures anywhere: the index, set as a ruled specimen plate. One
+     hairline mesh (a 1px line ground showing through the cell gaps), each
+     cell a theme with its glyph in the solutions pages' icon chip, so the
+     band reads as one instrument plate rather than the source's floating
+     white cards. Columns divide the count exactly so the plate is always
+     a full rectangle. */
+  if (figures === 0) {
+    const columns =
+      items.length % 5 === 0
+        ? "lg:grid-cols-5"
+        : items.length % 4 === 0
+          ? "lg:grid-cols-4"
+          : "lg:grid-cols-3";
+    return (
+      <Reveal
+        as="ul"
+        className={`mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-md border border-line bg-line ${columns}`}
+      >
+        {items.map((item, index) => (
+          <li
+            key={item}
+            className="flex flex-col items-start gap-4 bg-surface-subtle p-5 sm:p-6"
+            style={step(index)}
+          >
+            <span className="grid size-11 place-items-center rounded-md bg-accent-soft text-accent">
+              <ThemeIcon name={themeGlyph(item)} />
+            </span>
+            <span className="text-base font-semibold leading-snug text-ink">
+              {item}
+            </span>
+          </li>
+        ))}
+      </Reveal>
+    );
+  }
+
+  /* Figures: a card plate. A set of statistics reads as a set of separate
+     findings, so each gets its own card with its theme glyph, the figure at
+     display size on the tabular face, and the claim as a sentence beneath.
+     A finding with no figure is the headline of the set rather than one more
+     row of it, so it leads the plate at full width. */
+  const labels = parsed.filter((entry) => !("claim" in entry));
+  const stats = parsed.filter((entry) => "claim" in entry);
+
+  /* Never more than three across: these claims are sentences, and a fourth
+     column squeezes them to two words a line. */
+  const columns =
+    stats.length === 2
+      ? "sm:grid-cols-2"
+      : stats.length === 4
+        ? "sm:grid-cols-2"
+        : "sm:grid-cols-2 lg:grid-cols-3";
+
+  return (
+    <Reveal
+      as="ul"
+      className={`mx-auto grid max-w-6xl gap-4 sm:gap-5 ${columns}`}
+    >
+      {labels.map((entry, index) => (
+        <li
+          key={entry.item}
+          style={step(index)}
+          className="flex items-start gap-5 rounded-lg border border-accent-soft bg-accent-soft p-6 sm:col-span-full sm:items-center"
+        >
+          <span className="grid size-11 shrink-0 place-items-center rounded-md bg-surface text-accent">
+            <ThemeIcon name={themeGlyph(entry.item)} />
+          </span>
+          <span className="text-title font-display-soft text-ink">
+            {entry.item}
+          </span>
+        </li>
+      ))}
+
+      {stats.map((entry, index) => (
+        <li
+          key={entry.item}
+          style={step(labels.length + index)}
+          className="flex flex-col gap-4 rounded-lg border border-line bg-surface p-6"
+        >
+          <span className="grid size-11 place-items-center rounded-md bg-accent-soft text-accent">
+            <ThemeIcon name={themeGlyph(entry.claim ?? entry.item)} />
+          </span>
+          <span className="text-display-sm font-figure font-display text-ink">
+            {entry.prefix}
+            <FigureValue value={`${entry.head}${entry.percent}`} />
+            {entry.unit ? (
+              <span className="text-headline">{entry.unit}</span>
+            ) : null}
+          </span>
+          <span className="text-base leading-relaxed text-ink-soft">
+            {entry.claim}
+          </span>
+        </li>
+      ))}
+    </Reveal>
+  );
+}
+
+/**
+ * What the source landing points at in a band of its own: a launch event, a
+ * client success story. A single card apiece rather than a rail, since each
+ * band reads as a pointer rather than as another library.
+ */
+function SpotlightBand({
+  spotlight,
+  bandIndex,
+}: {
+  spotlight: NonNullable<ReportLanding["spotlights"]>[number];
+  bandIndex: number;
+}) {
+  if (!spotlight.card.href) return null;
+
+  return (
+    <Section bordered spacing="tight">
+      <Container>
+        {/* Image-and-text bands zigzag so consecutive spotlights do not read
+            as one column. A facts band does not alternate: its copy, artwork
+            and action stay left, the facts right, as the source sets them. */}
+        <div
+          className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${
+            bandIndex % 2 === 1 && !spotlight.facts?.length
+              ? "lg:[&>*:first-child]:order-last"
+              : ""
+          }`}
+        >
+          <div className="anim-rise flex flex-col gap-5">
+            <SectionHeading title={spotlight.title} />
+            {spotlight.description ? (
+              <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
+                <Emphasised text={spotlight.description} />
+              </p>
+            ) : null}
+            {/* With the facts holding the right column, the card's artwork
+                moves up here, above its own action. */}
+            {spotlight.facts?.length && spotlight.card.image ? (
+              <Link
+                href={spotlight.card.href}
+                className="group block max-w-[32rem] overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+              >
+                <Image
+                  src={spotlight.card.image}
+                  alt={spotlight.card.title}
+                  width={1024}
+                  height={576}
+                  sizes="(min-width: 1024px) 32rem, 100vw"
+                  className="aspect-video w-full object-cover"
+                />
+              </Link>
+            ) : null}
+            <div className="pt-1">
+              <Button href={spotlight.card.href} variant="secondary">
+                {spotlight.linkLabel}
+              </Button>
+            </div>
+          </div>
+
+          {spotlight.facts?.length ? (
+            /* The programme facts beside the copy instead of the card's
+               image, as the AI-led microsite sets them beside its client
+               testimonial. The button carries the link. */
+            <dl
+              className="anim-rise grid gap-x-8 gap-y-5 sm:grid-cols-2"
+              style={delay(120)}
+            >
+              {spotlight.facts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex flex-col gap-1 border-t border-line pt-4"
+                >
+                  <dt className="text-sm font-semibold text-ink-muted">
+                    {fact.label}
+                  </dt>
+                  <dd className="text-base leading-relaxed text-ink">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          ) : (
+            <Link
+              href={spotlight.card.href}
+              className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+              style={delay(120)}
+            >
+              {spotlight.card.image ? (
+                <Image
+                  src={spotlight.card.image}
+                  alt={spotlight.card.title}
+                  width={1280}
+                  height={720}
+                  sizes="(min-width: 1024px) 32rem, 100vw"
+                  className="aspect-video w-full object-cover"
+                />
+              ) : null}
+            </Link>
+          )}
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
+/**
+ * One card presented as a spotlight: the band heading beside the artwork, in
+ * the grammar the launch-event and success-story bands use. A lone card in a
+ * grid or rail reads as a starved carousel, so both the quick-reads and the
+ * experts bands fall back to this when they hold a single item.
+ */
+function CardSpotlight({
+  heading,
+  item,
+  linkLabel,
+}: {
+  heading: string;
+  item: ReportCardItem;
+  linkLabel: string;
+}) {
+  const image = (
+    <Image
+      src={item.image ?? "/resource-placeholder.svg"}
+      alt=""
+      width={1280}
+      height={720}
+      sizes="(min-width: 1024px) 32rem, 100vw"
+      className="aspect-video w-full object-cover"
+    />
+  );
+
+  return (
+    <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+      <div className="anim-rise flex flex-col gap-5">
+        <SectionHeading title={heading} />
+        <p className="max-w-[26ch] text-title font-display-soft text-ink">
+          {item.title}
+        </p>
+        {item.href ? (
+          <div className="pt-1">
+            <Button href={item.href} variant="secondary">
+              {linkLabel}
+            </Button>
+          </div>
+        ) : null}
+      </div>
+
+      {item.href ? (
+        <Link
+          href={item.href}
+          className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+          style={delay(120)}
+        >
+          {image}
+        </Link>
+      ) : (
+        <div
+          className="anim-rise overflow-hidden rounded-lg border border-line"
+          style={delay(120)}
+        >
+          {image}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Cards sized to their count, shared by the quick-reads band and the
+ * single-group experts band. A pair sits centred at half width, exactly
+ * three fill the one grid row, and anything more scrolls as a single-row
+ * rail rather than stacking into a taller and taller band; the rail
+ * centres and drops its arrows whenever everything fits. The single-card
+ * case is CardSpotlight, handled by the caller because it restructures
+ * the whole band.
+ */
+function CardCountLayout({
+  items,
+  label,
+}: {
+  items: ReportCardItem[];
+  label: string;
+}) {
+  if (items.length === 2) {
+    return (
+      <Reveal className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <ReportCard key={item.title} item={item} style={step(index)} />
+        ))}
+      </Reveal>
+    );
+  }
+  if (items.length === 3) {
+    return <ReportCardGrid items={items} />;
+  }
+  return <ReportCardRail items={items} label={label} />;
+}
 
 /**
  * The offer band's three line icons, drawn in the house stroke so the band
@@ -102,6 +615,13 @@ export default async function ReportLandingPage({ params }: Params) {
   const report = getReportLanding(slug);
   if (!report) notFound();
 
+  /* Most spotlights close the page; one that mirrors a source microsite's
+     order can ask to sit above the interviews instead. */
+  const leadingSpotlights =
+    report.spotlights?.filter((s) => s.beforeInterviews) ?? [];
+  const trailingSpotlights =
+    report.spotlights?.filter((s) => !s.beforeInterviews) ?? [];
+
   return (
     <main id="main">
       {/* Hero. The cover carries the title, so the visible band is only the
@@ -118,11 +638,13 @@ export default async function ReportLandingPage({ params }: Params) {
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,24rem)_minmax(0,26rem)] lg:justify-center lg:gap-16">
             <div className="flex flex-col justify-center">
               <h1 className="sr-only">{report.hero.title}</h1>
+              {/* The tablet mockup set: every hero cover is the same 768x909
+                  frame, so the intrinsic ratio here matches the files. */}
               <Image
                 src={report.hero.cover}
                 alt={report.hero.coverAlt}
                 width={768}
-                height={768}
+                height={909}
                 priority
                 className="anim-rise w-52 self-center sm:w-64 lg:w-full"
               />
@@ -234,9 +756,14 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {/* Headline findings, where the report lists them instead of chapters:
-          a dense tick list, since the source gives labels without prose and
-          padding them into cards would fake a depth they do not have. */}
+      {/* Headline findings, where the report lists them instead of chapters.
+          Two treatments, chosen by what the copy actually is. Findings that
+          lead with a figure become a card plate: one card each, the theme
+          glyph, the figure at display size on the tabular face and the claim
+          beneath, counting up on first view. Labels without figures
+          become an index instead: the report's themes set as a ruled
+          specimen plate, since a card with no number in it would fake a
+          depth the label does not have. */}
       {report.highlights ? (
         <Section surface="subtle" bordered spacing="tight">
           <Container>
@@ -245,24 +772,7 @@ export default async function ReportLandingPage({ params }: Params) {
               align="center"
               className="mb-10"
             />
-            <Reveal
-              as="ul"
-              className="mx-auto grid max-w-4xl gap-x-10 gap-y-0 sm:grid-cols-2"
-            >
-              {report.highlights.items.map((item, index) => (
-                <li
-                  key={item}
-                  className="flex items-baseline gap-3 border-t border-line py-3.5 text-base font-semibold text-ink"
-                  style={step(index)}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="size-1.5 shrink-0 rounded-[1px] bg-signal"
-                  />
-                  {item}
-                </li>
-              ))}
-            </Reveal>
+            <HighlightsBand items={report.highlights.items} />
           </Container>
         </Section>
       ) : null}
@@ -344,89 +854,91 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
+      {/* Quick reads, sized to how many there are: one is a spotlight, a
+          pair sits centred, full rows keep the grid, and a count that would
+          leave an orphan row scrolls as a rail. */}
       {report.quickReads ? (
         <Section bordered spacing="tight">
           <Container>
-            <SectionHeading
-              title={report.quickReads.title}
-              align="center"
-              className="mb-10"
-            />
-            <ReportCardRail
-              items={report.quickReads.items}
-              label={report.quickReads.title}
-            />
-          </Container>
-        </Section>
-      ) : null}
-
-      {/* Expert insights, one tab per AI maturity stage rather than all four
-          stacked, so the band stays short enough to read. Not every programme
-          ran interviews, so the band is skipped rather than left empty. */}
-      {report.expertInsights ? (
-        <Section surface="subtle" bordered spacing="tight">
-          <Container>
-            <SectionHeading
-              title={report.expertInsights.title}
-              align="center"
-              className="mb-8"
-            />
-            {/* A single group needs no tab rail; the cards stand alone. */}
-            {report.expertInsights.groups.length === 1 ? (
-              <ReportCardGrid items={report.expertInsights.groups[0].items} />
+            {report.quickReads.items.length === 1 ? (
+              <CardSpotlight
+                heading={report.quickReads.title}
+                item={report.quickReads.items[0]}
+                linkLabel="Read the article"
+              />
             ) : (
-              <ExpertInsightsTabs groups={report.expertInsights.groups} />
+              <>
+                <SectionHeading
+                  title={report.quickReads.title}
+                  align="center"
+                  className="mb-10"
+                />
+                <CardCountLayout
+                  items={report.quickReads.items}
+                  label={report.quickReads.title}
+                />
+              </>
             )}
           </Container>
         </Section>
       ) : null}
 
-      {/* What the source landing points at in bands of its own: a launch
-          event, a client success story. A single card apiece rather than a
-          rail, since each band reads as a pointer rather than as another
-          library. */}
-      {report.spotlights?.map((spotlight, bandIndex) =>
-        spotlight.card.href ? (
-          <Section key={spotlight.title} bordered spacing="tight">
-            <Container>
-              <div
-                className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${
-                  bandIndex % 2 === 1 ? "lg:[&>*:first-child]:order-last" : ""
-                }`}
-              >
-                <div className="anim-rise flex flex-col gap-5">
-                  <SectionHeading title={spotlight.title} />
-                  <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
-                    <Emphasised text={spotlight.description} />
-                  </p>
-                  <div className="pt-1">
-                    <Button href={spotlight.card.href} variant="secondary">
-                      {spotlight.linkLabel}
-                    </Button>
-                  </div>
-                </div>
+      {leadingSpotlights.map((spotlight, bandIndex) => (
+        <SpotlightBand
+          key={spotlight.title}
+          spotlight={spotlight}
+          bandIndex={bandIndex}
+        />
+      ))}
 
-                <Link
-                  href={spotlight.card.href}
-                  className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                  style={delay(120)}
-                >
-                  {spotlight.card.image ? (
-                    <Image
-                      src={spotlight.card.image}
-                      alt={spotlight.card.title}
-                      width={1280}
-                      height={720}
-                      sizes="(min-width: 1024px) 32rem, 100vw"
-                      className="aspect-video w-full object-cover"
-                    />
-                  ) : null}
-                </Link>
-              </div>
-            </Container>
-          </Section>
-        ) : null,
-      )}
+      {/* Expert insights, one tab per AI maturity stage rather than all four
+          stacked, so the band stays short enough to read. Not every programme
+          ran interviews, so the band is skipped rather than left empty.
+          A single group needs no tab rail, and sizes itself to its count the
+          same way the quick reads do: the orphan rows the 3-up grid left on
+          the 4- and 5-interview landings were the tell. */}
+      {report.expertInsights ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            {report.expertInsights.groups.length > 1 ? (
+              <>
+                <SectionHeading
+                  title={report.expertInsights.title}
+                  align="center"
+                  className="mb-8"
+                />
+                <ExpertInsightsTabs groups={report.expertInsights.groups} />
+              </>
+            ) : report.expertInsights.groups[0].items.length === 1 ? (
+              <CardSpotlight
+                heading={report.expertInsights.title}
+                item={report.expertInsights.groups[0].items[0]}
+                linkLabel="Read the interview"
+              />
+            ) : (
+              <>
+                <SectionHeading
+                  title={report.expertInsights.title}
+                  align="center"
+                  className="mb-8"
+                />
+                <CardCountLayout
+                  items={report.expertInsights.groups[0].items}
+                  label={report.expertInsights.title}
+                />
+              </>
+            )}
+          </Container>
+        </Section>
+      ) : null}
+
+      {trailingSpotlights.map((spotlight, bandIndex) => (
+        <SpotlightBand
+          key={spotlight.title}
+          spotlight={spotlight}
+          bandIndex={bandIndex}
+        />
+      ))}
 
       {/* The participants' own words, straight from the microsite's quote
           cards, sitting between the interviews and the credits. No heading:
@@ -443,14 +955,18 @@ export default async function ReportLandingPage({ params }: Params) {
         <Section bordered spacing="tight">
           <Container>
             {/* Two equal columns so the labels sit on one line and the marks
-                on another, whatever their aspect ratios: each mark is centred
-                in a fixed-height box rather than sizing its own row. */}
+                on another. Marks are bounded on BOTH axes rather than scaled
+                by height alone: the sponsor set runs from a 1.4:1 square to a
+                5:1 wordmark, and matching only their heights made the wide
+                ones twice the optical size of the tall ones. Capping height
+                and width lands every mark inside the same box, so the
+                sponsor and the research partner read as equals. */}
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-16">
               <div className="flex flex-col items-center gap-4">
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.sponsor.label}
                 </p>
-                <span className="flex h-14 items-center">
+                <span className="flex h-16 items-center">
                   {report.credits.sponsor.logos ? (
                     <span className="flex items-center gap-3">
                       {report.credits.sponsor.logos.map((sponsor, index) => (
@@ -472,7 +988,9 @@ export default async function ReportLandingPage({ params }: Params) {
                             width={180}
                             height={48}
                             unoptimized
-                            className="h-10 w-auto"
+                            /* Two marks share the row, so each gets half
+                               the single-mark budget. */
+                            className="max-h-10 w-auto max-w-[8.5rem] object-contain"
                           />
                         </span>
                       ))}
@@ -484,7 +1002,7 @@ export default async function ReportLandingPage({ params }: Params) {
                       width={240}
                       height={168}
                       unoptimized
-                      className="h-12 w-auto"
+                      className="max-h-12 w-auto max-w-44 object-contain"
                     />
                   ) : null}
                 </span>
@@ -493,8 +1011,11 @@ export default async function ReportLandingPage({ params }: Params) {
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.partnerLabel}
                 </p>
-                <span className="flex h-14 items-center">
-                  <Logo />
+                <span className="flex h-16 items-center">
+                  {/* The wordmark's default h-5 is the navbar's size; here it
+                      sits beside a 48px sponsor mark and has to hold its
+                      own. */}
+                  <Logo markClassName="h-7 w-auto" />
                 </span>
               </div>
             </div>

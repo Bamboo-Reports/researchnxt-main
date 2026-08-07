@@ -40,10 +40,11 @@
   --color-line: #dde3ea;
   --color-line-strong: #bfc8d4;
 
-  /* Accent — brand blue from the logo wordmark. Links, CTAs, active state.
-     #0079bf on the body surface is 4.6:1, so it clears WCAG AA for normal text.
-     The hover tone is darker, never lighter, to keep that true. */
-  --color-accent: #0079bf;
+  /* Accent — the logo wordmark's blue (#0079bf), darkened a step to #0073b6
+     so text clears WCAG AA on every light surface: 5.1:1 on white and 4.7:1
+     on the subtle band, where the wordmark hex sat at 4.28:1. The hover tone
+     is darker, never lighter, to keep that true. */
+  --color-accent: #0073b6;
   --color-accent-hover: #005f96;
   --color-accent-soft: #e4f1fa;
 
@@ -146,6 +147,13 @@
 
   .on-deep :focus-visible {
     outline-color: var(--color-accent-on-deep);
+  }
+
+  /* The orange hero field is the one band where neither accent works as a
+     ring: the brand blue is 1.5:1 there and the lit accent 1.4:1. White is
+     the only ring that clears the 3:1 non-text threshold on the field. */
+  .on-signal :focus-visible {
+    outline-color: #fff;
   }
 
   ::selection {

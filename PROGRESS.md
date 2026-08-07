@@ -2,7 +2,943 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-06
+Last updated: 2026-08-07
+
+## Report highlights become a card plate, 2026-08-07
+
+The figure-led treatment of `HighlightsBand` was a ledger: a fixed 8.5rem
+figure column with the claim set beside it. On
+`/resources/reports-whitepapers/content-marketing-done-right` that left a
+gulf between a short number and its sentence, and the one unfigured finding
+sat in the middle of the run carrying a lone signal dash where a number
+should be. Replaced with a card plate, on user direction, asking for icons
+and cards.
+
+Each finding is now its own bordered card on the subtle ground: theme glyph
+in the accent chip, the figure at `text-display-sm` on the tabular face
+still counting up through `FigureValue`, the claim beneath. Never more than
+three across, because these claims are sentences and a fourth column
+squeezes them to two words a line: 2 or 4 findings go two up, everything
+else two up then three.
+
+The unfigured finding is not a row of the plate but its headline, so it
+leads at full width in an accent-soft card. On the content-marketing page
+that is exactly right: "First of its kind Content Marketing Technology Stack
+for the Indian market" is the claim the report is selling.
+
+The index treatment for all-label sets is untouched.
+
+### Glyph keywords extended
+
+`THEME_KEYWORDS` was tuned against the two all-label reports, so figure-led
+claims mostly fell through to the compass default. Added eleven rules
+covering the figure sets: technology stack, video, social media or channel,
+plan/intend/next year, budget or gifting, effectiveness, optimisation,
+sales alignment, ABM, email, mobile. Checked against every highlight the
+seven reports carry. The ABM plate no longer shows the same target three
+times.
+
+Verified in Chrome on the content-marketing page (5 findings, lead card plus
+2x2) and the ABM page (6 findings, 3x2).
+
+---
+
+## Content marketing launch page diffed against its live post, 2026-08-07
+
+`/resources/events/content-marketing-done-right/content-marketing-report-launch`
+against `researchnxt.com/events/content-marketing-report-event-launch/`.
+Four things the source publishes were missing.
+
+- **The launch recording.** YouTube `xXwLZXt3uRw`, poster from the source's
+  own overlay, saved as
+  `public/events/content-marketing-report-launch/session-report-launch.png`.
+  Uses the `sessions` field added for the ai-led launch.
+- **The two interview quotes.** Amit Kapoor (Cigniti) and Ranjit Behera
+  (BankBazaar), each card linking to the published interview. New `quotes`
+  field on the `Event` type. Names and roles come from the interviews
+  themselves: the source page writes them as "Amit Kumar" and "Ranjit
+  Behra", both wrong.
+- **Speaker portraits.** Three, normalised the same way as the ai-led set.
+- **The report panel.** Cover, name and "Read the full report", using the
+  `reportBand` field. `facts` on `reportBand` is now optional, because this
+  event already lists the same four beside its write-up and the ai-led one
+  does not.
+
+### Then reshaped on user direction
+
+The write-up band went the same way as the ai-led one, in stages:
+
+- **Banner image removed.** An event that leads with recordings does not
+  need a still above them, so the banner is dropped whenever `sessions` is
+  set. `hasPiece` in the template is what decides this.
+- **The two write-up paragraphs moved below the deck link**, inside the
+  sessions band. Same rule: where the recordings lead, the write-up follows
+  them.
+- **The four facts moved into the report band**, verbatim from the source
+  panel this time ("Research Focus: B2B", "Jun 2019 – Nov 2019", pipes and
+  capitals as written), and off the event's own `facts`. With no piece and
+  no facts left, the write-up band drops entirely.
+
+The template gained a third layout on the way: where an event has facts but
+no piece, they spread four across the width instead of sitting in a 23rem
+column beside nothing. Nothing currently uses it, since this event's facts
+then moved to the report band, but it is what keeps the aside honest.
+
+### Quote card portraits
+
+The interviews' own thumbnails are composed banners: the photograph on the
+left, the name, role and client logo set beside it. Cropping one to a circle
+gives you a disc of set copy. So the quote cards carry a square cut of the
+same photograph, taken from the left 49% of the banner, which stops short of
+the divider. Saved as
+`public/events/content-marketing-report-launch/quote-<slug>.jpg` and set on
+the quote rather than read off the interview record.
+
+### LinkedIn on the speakers
+
+All three profiles are on the source page and are now on the cards, the same
+treatment as the ai-led launch. Santosh Abraham's matches the URL the user
+supplied for the ai-led page.
+
+**The slide deck is a link, not an embed.** The source runs the "Full
+Presentation of Event Launch" as a 300px-square SlideShare iframe with an
+empty anchor under it. New `deck` field renders it as a named link to
+`slideshare.net/AkshaykumarRokade/nasscom-martech-researchnxt` instead.
+
+---
+
+## AI-led ebook launch page filled in from the live post, 2026-08-07
+
+Diffed `/resources/events/ai-led-personalization/ai-led-ebook-launch` against
+`researchnxt.com/events/ai-led-ebook-launch/`. The local page carried the
+title, lede, facts and the speaker list, and nothing else the source publishes.
+Four things were missing; all four are now in.
+
+### The four session recordings
+
+The source page is built around them, and they were not on ours at all. They
+are now a "Watch the sessions" band, in the source's running order, with the
+YouTube ids and the poster stills taken from the source's own player overlays:
+
+| Session | YouTube id |
+| --- | --- |
+| Keynote, David Raab, Founder, CDP Institute | `K73A41ed_Fw` |
+| Panel discussion, Customer engagement as a driver of growth | `X0SgCIUiu5M` |
+| Fireside chat, Building the right foundation: marketing with data | `l4S6q9UjN8Q` |
+| Panel discussion, Personalization a competitive advantage | `YNjogt0zGso` |
+
+Posters saved under `public/events/ai-led-ebook-launch/session-*.png`,
+unmodified from the source. The keynote leads the band at two-thirds width
+with its label set beside it; the other three run three up beneath.
+
+New `sessions` field on the `Event` type, so any other event with published
+recordings gets the same band for free.
+
+### `VideoEmbed`, a new client component
+
+`src/components/media/video-embed.tsx`. Four YouTube iframes to show four
+still frames would load the player and its cookies on every visit, so the
+poster is the default and the iframe (on `youtube-nocookie.com`, autoplay on)
+replaces it only on the click that means to watch. This is the sixth entry on
+the client-component list in `CLAUDE.md`, which has been updated.
+
+### Speaker portraits
+
+All fifteen headshots pulled from the source, centre-cropped square with a
+slight upward bias so no head is clipped, resized to 560px and saved as
+progressive JPEG at `public/events/ai-led-ebook-launch/speaker-<slug>.jpg`.
+The 6.5MB Rahul Mishra original is now 41KB. Contact-sheet checked: all
+fifteen crops frame the face. `alt=""` on each, because the name is the next
+line down.
+
+### Speaker cards: LinkedIn, no interview link
+
+The source links every speaker card to a LinkedIn profile, which we did not
+carry over at all. All fifteen names now link out, and the "Read the
+interview" line is gone on user direction, so the card is portrait, name to
+LinkedIn, role.
+
+Two exceptions worth knowing:
+
+- **Ravi Santhanam has no link.** The source page's card for him points at
+  TV Naarayan's profile (`naarayan-t-v-4b59621`), so there is no correct URL
+  to carry over. Field left unset; the name renders as plain text.
+- **Santosh Valecha and Santosh Abraham** were supplied by the user
+  (`santushv`, `santoshabraham`). The source has none for Abraham and a
+  different one for Valecha (`santosh-v-valecha`).
+
+`interview` stays on the `Event` type and the template still renders it: the
+south-east Asia and B2C automation report launches both set it, and both
+still show their interview links.
+
+### The report band and the client story band
+
+Two bands below the speakers, on user direction, both from the source page:
+
+- **The report band.** Report name over its subtitle, the four engagement
+  facts as a tick list, "Read the full report" to
+  `/resources/reports-whitepapers/ai-led-personalization`, the tablet cover
+  mockup at right. New `reportBand` field; the href resolves from the
+  programme's `reportSlug` rather than living in content.
+- **The client success story band.** Netcore's testimonial artwork and "Read
+  the story" at left, the engagement facts at right, on the report landing's
+  own measurements so the two pages carry one band. New `clientStory` field
+  pointing at the success-story slug inside the event's project.
+
+Facts on both are verbatim from the source, pipes, capitals and en dash
+included, which is how the report landing already carries them.
+
+### The write-up band removed on user direction
+
+A report panel and a client-story link were added to the aside first, then
+removed along with everything else above the sessions: on user direction the
+whole two-column band is gone from this event, banner image, body paragraph,
+facts list, report panel and story link. The page now runs title, sessions,
+speakers.
+
+Done in content, not by deleting template code: `body`, `facts` and the
+short-lived `reportCta` are off `aiLedEbookLaunch`, `reportCta` is off the
+`Event` type again, and the band itself is gated on
+
+```
+event.video || event.body?.length || event.facts?.length || event.jotformId
+```
+
+so it drops banner and all when there is nothing to put in it. Every other
+event has body or facts, so all seven render exactly as before, verified on
+`content-marketing-report-launch` (banner, body and the four facts all still
+there).
+
+`image` and `imageAlt` stay on the event, because the events library card
+still uses them.
+
+### Verified
+
+`npm run lint` clean, `tsc --noEmit` clean. Checked in Chrome at 1489px: all
+four posters render, the keynote player loads and reports 1:07:21 on click,
+the fifteen portraits render with their LinkedIn marks, the report band and
+the client story band both render, the page goes straight from the title to
+the sessions with no banner, and `scrollWidth === clientWidth` so nothing
+overflows.
+Not checked at 375 / 768.
+
+## New report-library card for ACM, candidate for a full rollout, 2026-08-07
+
+The user flagged the `/resources/reports-whitepapers` cards as dated. They are
+WordPress-era promo tiles: off-brand purple, a "Download Now" button baked
+into the pixels. A generator now composes cards in the site's own system, and
+the first one is live on the ACM entry pending the user's verdict on a
+rollout.
+
+**Composition** (1600x900): the drenched deep band (`#04243a` with a raised
+lift and a plate-blue glow), the SectionHeading tick-and-rule device as a
+"Research report" eyebrow in `accent-on-deep`, the title in real DM Sans
+ExtraBold at display size, the wordmark bottom-left with "Research" recolored
+white for the deep surface (the blue letters are 2.6:1 there), and the
+report's existing tablet mockup bleeding off the right edge.
+
+**Generator**: `scratchpad/cardgen/generate.mjs` (session scratchpad, not yet
+committed), driven by a per-slug config. Runs from the repo root, resolves
+`sharp` from the repo's own node_modules, renders text via Pango with
+downloaded DM Sans statics (fontsource; note the family name inside the TTFs
+is **"DM Sans 9pt"**, and the first render silently fell back to a default
+sans until the descriptor said so). Text layers are composited over an SVG
+background, and the mock is pre-clipped because sharp refuses composites that
+overflow the canvas.
+
+`cardImage` now points at `/covers/automation-campaign-management-card.png`;
+the old `-zoho-card.png` is deleted (git history keeps it). Lint clean.
+
+**Revised on user direction to the no-text variant.** The library card sets
+the title in HTML below the image, so the title inside the artwork said
+everything twice. The shipped card is now just the deep field, the plate-blue
+glow (recentred behind the mock) and the tablet mockup centred at height 860.
+The generator keeps both compositions behind a `--plain` flag; the full
+text treatment remains available for surfaces with no HTML caption, an Open
+Graph image being the obvious one.
+
+**Superseded again, direction settled: a portrait book-shelf grid.** The user
+will supply each report's own vertical cover to stand as the card, chosen
+over keeping the 16:9 slot. The generated field cards and the generator stay
+parked (the text variant is still the natural Open Graph image) but are no
+longer the library's direction.
+
+What is built and waiting for the files:
+
+- `ReportLanding.cardPortrait?` field, A4 ratio (210:297), full bleed
+- The library grid is now 2 / sm:3 / lg:4 columns of `aspect-[210/297]`
+  plates. A report with `cardPortrait` shows it full bleed; one without
+  shows its landscape `cardImage` letterboxed on a `bg-surface-muted` plate,
+  so the shelf stays uniform while covers arrive one by one, and supplying
+  one file per report is the entire rollout
+- The home page's featured-reports band still uses the landscape `cardImage`
+  and is untouched
+
+**All fifteen vertical covers are in and the shelf is complete.** The user
+supplied the remaining fourteen at `~/Documents/researchnxt.com/covers/`,
+each matched to its slug by filename (all fourteen matched confidently; the
+"India GCC CX Report" file is `transforming-cx-through-gccs`, distinct from
+the explicitly named State of Consumer Engagement GCC 2019). All aspect
+ratios sit within 2 to 4 percent of A4, so the full-bleed crop is negligible.
+Each was downscaled with sharp to 1190 wide as
+`public/covers/<slug>-portrait.png` and wired via `cardPortrait`, verified
+per entry inside its own const block (a naive lookahead first mis-skipped
+`publishers-guide-to-smarter-monetization`, caught by the per-block check and
+fixed by hand). **One quality note: `ai-led.png` is only 603x822**, below the
+1190 target, kept at native size rather than upscaled; a higher-resolution
+original would be worth swapping in later. The letterbox fallback in the
+library is now dead code in practice but stays for any future report that
+launches before its cover art.
+
+**The first vertical cover is in.** The user supplied the ACM report's flat
+A4 cover (`report-cover.png`, 5880x8334, found at
+`~/Documents/researchnxt.com/` and identical to `~/Downloads/Report Cover
+Design.png`). Downscaled with sharp to 1190x1687 (779KB) at
+`public/covers/automation-campaign-management-portrait.png` and set as
+`cardPortrait`; the ACM card now renders the cover full bleed while the other
+fourteen sit letterboxed on plates awaiting their files. The original 8.4MB
+source was not committed. Lint clean, not browser-checked.
+
+## Experts bands sized to their count, orphan rows gone, 2026-08-07
+
+The user flagged `unlocking-the-power-unified-cx`, where the five-interview
+"Insights shared by industry professionals" band rendered 3 + 2 in the 3-up
+grid. Same defect family as the quick reads: orphan rows and starved singles.
+
+One rule now covers both bands, in a shared `CardCountLayout`: **full rows
+keep the 3-up grid** (any multiple of 3, so the 18-interview B2C grid is
+untouched), **a pair sits centred at half width**, and **any count that
+would leave an orphan row scrolls as a rail** (which centres and drops its
+arrows when everything fits, so exactly 4 reads as a clean full row, not a
+carousel). **A single item becomes a `CardSpotlight`**, the extracted
+component both bands now share, with "Read the interview" as the label on
+the experts side. The quick-reads band was refactored onto the same two
+components with identical behaviour (one change: a future multiple-of-3
+count keeps the grid rather than railing).
+
+Resulting experts layouts: rail for unified-cx (5), navigating-commute (5),
+transforming-cx (4), abm (4), content-marketing (7); spotlight for the three
+one-interview landings (consumer-engagement, publishers-guide, etutoring);
+grids and tabs everywhere else unchanged. Verified per landing by counting
+the registry; lint clean; not browser-checked.
+
+## AI-led landing diffed against its microsite, two gaps closed, 2026-08-07
+
+Checked `/resources/reports-whitepapers/ai-led-personalization` band by band
+against `researchnxt.com/microsite/ai-led-personalization-2020/`. Matching
+already: the Journey figures (180 days, 4, 18, 300+), the description, the
+six Core Insights (now the specimen plate), the interviews (ours runs 20 to
+the microsite's 16, the deliberate publish-everything-in-the-programme
+precedent), the Netcore client testimonial spotlight, and the credits.
+
+Two source bands were missing and are now in:
+
+- **"Check out the Launch Event"**: a spotlight pointing at the published
+  `ai-led-ebook-launch` event via `eventCard`, first in the spotlights array,
+  the same event-then-story pair the B2C 2017 landing runs. Description
+  written from the event record's own facts (David Raab keynote, three
+  sessions, 300+ attendees), not invented
+- **The closing facts**: the `facts` band existed on the type and template
+  all along, this entry never carried it. One extraction trap: the page's
+  Engagement fact had to be read after the Research Focus offset, because
+  "Customer Engagement is the significant driver of growth" matches
+  "Engagement" first
+
+**Revised to verbatim on user direction** ("use the content as is from the
+ref website do not change that"). The first pass normalised the copy to
+house style; it now carries the source exactly: labels "Research Focus" and
+"Timeframe of Research" in source caps, "AI Powered Business Strategies of
+B2C Brands", "Interviews | Virtual Event | Social Media Promotion" with the
+literal pipes, "April 2020 – Sept 2020" with the en dash, spotlight title
+"Check out the Launch Event", and the spotlight description as the
+microsite's own two sentences ("Netcore and Research NXT culminated their 6
+month journey…") instead of copy written from the event record. Note this
+verbatim ruling sits alongside the older carried-as-published precedent and
+overrides house normalisation for microsite content on this landing.
+
+**The Rohit Shrivastav quote card is removed on user direction.** It was the
+landing's only voice, so the whole voices band goes with it, along with the
+now-unreferenced `public/voices/ai-led-personalization/rohit-srivastav.png`.
+It was the baked-artwork rendition of the microsite's Client Testimonial,
+which the landing now expresses through the success-story spotlight with the
+facts beside it, so the page no longer said it twice.
+
+**Netcore mark replaced and the credits band re-proportioned.** The user
+supplied the full Netcore lockup (the wordmark plus "Experience the
+Infinite", 1997x671 with alpha). It replaces both previous files: the
+netcore.ai SVG added earlier this session, and `netcore.png`, which turned
+out to be a poor screenshot crop with a dark bar baked into the top edge.
+Trimmed, downscaled to 720w as `netcore-lockup.png`, and pointed at from all
+four references (both landings' credits and both Netcore success stories);
+the two old files are deleted.
+
+The sizing complaint was real and structural. Marks were scaled by **height
+alone** (`h-12`), but the sponsor set runs from Salesforce at 1.43:1 to a
+5.38:1 wordmark, so matching heights made the wide marks more than twice the
+optical size of the tall ones, and the Research NXT wordmark, stuck at the
+navbar's `h-5`, rendered 118x20 beside a 258x48 sponsor. Now every mark is
+bounded on **both** axes (`max-h-12 max-w-44 object-contain`, in an `h-16`
+row), and `Logo` gained a `markClassName` prop so the partner wordmark can
+size to `h-7`. Computed result across all eleven marks: everything lands
+inside 176x48, and the partner reads 165x28. The paired-sponsor variant
+(Linkedpreneur + beyond99) gets half the budget each. Navbar and footer
+`<Logo />` calls are unaffected, since the prop defaults to `h-5`.
+
+**The launch event was on the page twice.** The landing already pointed at
+the event through a hand-built one-item `quickReads` band titled "Check out
+the launch event" (rendering as the card spotlight, so: that heading plus
+the event's own title). The spotlight added earlier in this session was a
+second pointer at the same event. On user direction the quick-reads band is
+deleted and the spotlight keeps the slot, since it carries the microsite's
+own two sentences rather than repeating the event title. The programme
+published no articles, so the landing now legitimately runs no quick reads.
+
+Because the microsite runs the launch event **above** the interviews,
+spotlights gained an optional `beforeInterviews` flag, and the template
+splits them into a leading and a trailing group around the experts band.
+Only this one spotlight sets it; every other landing's spotlights still
+close the page. The band JSX was extracted into a `SpotlightBand` component
+so both slots render from one definition rather than a copy.
+
+**Client success story band, final state.** The written description is gone
+on user direction (`ReportLanding` spotlights' `description` is now optional
+and the template omits the paragraph when absent; every other spotlight
+across five landings keeps theirs). The band's columns were also coming out
+reversed: spotlights zigzag by `bandIndex`, and the story is the second one,
+so its content column was being pushed right and the facts left. The
+alternation is now suppressed for facts-variant bands, which are
+directional, so artwork and action stay left and facts stay right as the
+microsite sets them. The band therefore reads: heading, testimonial artwork,
+"Read the story", with the four facts opposite.
+
+**Client success story band, earlier state, superseded above.** The left column
+now runs heading, description, then the microsite's own testimonial card
+artwork (the user-supplied 1024x576 with Rohit Shrivastav's quote and a play
+badge baked in, saved as
+`public/success-stories/ai-led-personalization/netcore-card.png` and passed
+through `successStoryCard`'s existing image override), with "Read the story"
+directly below the image; the facts hold the right column. The template's
+facts-variant spotlight gained the in-column image, linked like the
+right-hand cards are. Note the artwork's play badge implies a video; the
+link goes to the success story page, which is what the CTA says, so it was
+left as supplied. The credits' Netcore mark is now the official SVG from
+netcore.ai (`/logos/trusted/netcore.svg`), scoped to this landing's "In
+association with"; the B2C landing keeps the old PNG.
+
+**Structure revised too, on user direction.** The facts do not stand as
+their own band above the credits (the user asked for that section's
+removal); on the microsite they sit to the right of the client testimonial.
+Spotlight entries gained an optional `facts` list which renders as a 2x2
+ruled definition list in place of the card's image, with the button still
+carrying the link, and the ai-led facts moved into the "Client success
+story" spotlight. The standalone facts band remains in the template and
+still serves `state-of-consumer-engagement-gcc-2019`, verified per entry.
+Lint clean, not browser-checked; worth an eyeball that the story spotlight
+reads well with a text column on each side.
+
+Lint clean, event reference verified against the registry, not
+browser-checked.
+
+## Testimonial photos updated and the theme index becomes a specimen plate, 2026-08-07
+
+**South-east testimonial portraits, round two.** The user supplied six
+current profile photos to replace the 2021 microsite cut-outs. The six URLs
+arrived in exactly the data's order, verified by building a face-match
+contact sheet against the old portraits before wiring anything. Saved as
+`.jpg` under the same slugs (new filenames, so no cache serves the old
+artwork, per the project rule) and the six `portrait` paths updated; the old
+`.png` cut-outs are deleted.
+
+**The contents-plate index lasted one look.** The user showed the old
+WordPress band, ten white cards with stock line icons, and asked for a
+better showcase. The icons' instinct is right (visual anchors for a scan),
+the floating cards are the template the craft rules refuse. Rebuilt as a
+**ruled specimen plate**:
+
+- One hairline mesh (`gap-px` over a `bg-line` ground inside a rounded
+  border), cells on the band surface, so the grid reads as one ruled
+  instrument plate rather than ten cards
+- Each cell: the theme's glyph in the exact icon chip the solutions pages
+  use (`size-11 bg-accent-soft text-accent`, 1.6 stroke, round caps), then
+  the label semibold
+- **Sixteen new house-stroke glyphs** drawn into a `THEME_GLYPHS` table in
+  the template, chosen per label by an ordered keyword list where the
+  specific beats the general ("Service Delivery Innovations" is a bulb
+  before "delivery" makes it a route; "Data is the currency" is coins
+  before "data" makes it a chart). Dry-run over both index reports: every
+  label unique and sensible, `compass` as the unmatched fallback
+- Columns divide the count exactly (10 gets five, 6 gets three), so the
+  plate is always a full rectangle, no orphan cells
+
+The figure ledger for stat-led reports is untouched. Lint clean, not
+browser-checked; the sixteen glyphs are hand-drawn SVG and want one visual
+pass.
+
+## South-east testimonials fixed and the highlights band redesigned, 2026-08-07
+
+### The south-east voices band had the wrong artwork
+
+The user caught it against the source
+(`/microsite/business-strategy-2021/`): the migrated voices band carried the
+16:9 interview thumbnails (`/experts/*.jpg`) as full-width slides, quotes
+only in alt text. The microsite actually runs text quotes beside cut-out
+portraits, and those portrait files exist on WordPress (`Anil.png`,
+`ravi.png`, `jhonney.png`, `aron.png`, `karunjit.png`, `walter.png`; the
+similarly named `*-300x169.jpg` files are the interview video thumbnails,
+which is presumably how the mix-up happened). All six cut-outs are now at
+`public/voices/south-east-asia-response-guide/<slug>.png` (320w) and the six
+voices swapped `image` for `portrait`, so they render in the redesigned
+text-testimonial card. Block comment corrected.
+
+### "Report highlights" redesigned, frontend-design pass
+
+The user called the tick-list band generic. The redesign reads the copy and
+picks one of two treatments in a new `HighlightsBand` (template-only, no
+data changes):
+
+- **Findings ledger**, when items lead with figures: each row pulls its
+  number out into the tabular `font-figure` face at `text-headline` on a
+  fixed shared column (fixed, not auto, so rows measure identically and the
+  digits align, which is the token's stated purpose), counting up via the
+  existing `FigureValue`, with the claim reading as a sentence beside it.
+  A mixed-in unfigured row (corporate-gifting's "Pharma is the top buyer…",
+  content-marketing's "First of its kind…") carries the signal dash in the
+  figure column instead
+- **Theme index**, when no item carries a figure: the labels set at
+  `text-title font-display-soft` with the signal tick, wrapping as a centred
+  field, since the themes are the content and boxing them would fake depth.
+  **Rejected on sight by the user** ("what is this shitty way"): centred
+  flex-wrap gave the rows no shared edges and the band read as scattered.
+  Rebuilt as a **contents plate**: two-column grid, labels left-aligned off
+  one shared edge, each row trailing the `rule-ticks` dotted line out to its
+  column's right edge, the same device every `SectionHeading` opens with, so
+  the ten themes read as the report's table of contents. Lesson: centred
+  flex-wrap of variable-width labels has no structure; this system builds
+  structure from shared edges and rules
+
+The parser (`FIGURE_LEAD`) was dry-run against every real highlight in the
+registry: ledger for content-marketing (4/5), consumer-engagement (5/5),
+abm (6/6), publishers-guide (2/2 including "$385 billion"), corporate-gifting
+(5/6); index for south-east (0/10) and ai-led (0/6). Lint clean, not
+browser-checked; the ledger's figure column width (6.5rem, 8.5rem at sm) is
+the thing to eyeball against "$385 billion".
+
+## GCC CX testimonials added to the transforming-cx landing, 2026-08-07
+
+The user caught four testimonials on the live source
+(`/bambooreports/transforming-cx-through-gcc-ebook/`) that the migrated
+landing never carried; the entry even had a comment asserting "this page runs
+no quote cards", which was wrong about the page even if right about the
+cards: the source runs them as **plain text testimonials**, not baked
+artwork, which is presumably how the migration missed them.
+
+- `ReportLanding.voices` items' `image` is now optional, and `QuoteCarousel`
+  gained a text mode: no artwork renders a panel-grammar `figure` with the
+  quote at `text-title` and a name, role, company `figcaption`, `h-full` so
+  short quotes match the tallest card. Both keys switched from `voice.image`
+  to `voice.name`. Image-carrying voices bands (b2c, south-east, unified-cx
+  and the implementors guide) render exactly as before
+- The four quotes were extracted from the raw source HTML, not a summary,
+  and are **quoted as written**, American spellings included, matching the
+  south-east precedent. The speakers are exactly the landing's four
+  interviewees. Attributions as the page states them: Vineet Dwivedi (Global
+  Head, Alcon Global Services), Sharda Nenwani Gupta (MD & Global Business
+  Services Head, India, no company on the page though her interview says GBS
+  Bayer India), Geetanjali Chugh Kothari (CMO, Future Generali India Life
+  Insurance), Vivek Veeraraghavan (SVP of Digital Transformation APAC,
+  Northern Trust)
+- The band sits where voices always sits, between the interviews and the
+  credits, with no heading of its own
+
+Lint clean. Not browser-checked; the new text-card mode is the thing to look
+at, especially that the four cards hold one height in the rail.
+
+### Testimonial card redesigned with the speakers' portraits
+
+The first text-card design (a plain bordered panel) was rejected by the
+user, who also pointed out the source page does carry the speakers'
+photographs, which the first extraction pass missed because they sit in the
+slider markup above each quote. Redesign, via the frontend-design pass:
+
+- **The panel box is gone.** The card now uses the site's own quote grammar,
+  the `border-l-2 border-signal` spine the interview pull quotes carry, so
+  the testimonial reads as the same device readers meet on the interview
+  pages. Structure from the spine, not a border, per the design system
+- **The four cut-out portraits** (removebg PNGs from the source slider,
+  downscaled to 320w under `public/voices/transforming-cx-through-gccs/`)
+  sit on an `accent-soft` disc beside the quote, `object-cover object-top`
+  since the crops vary. New optional `portrait` field on voices items, read
+  only when `image` (baked artwork) is absent
+- Attribution is now name on its own semibold line, role and company below,
+  rather than a comma run-on
+- Cards centre within the rail height so short quotes sit level with long
+
+Also on user direction: this landing's credits label "Brought to you by"
+becomes **"GCC insights by"** (the Southeast Asia landing's identical label
+is untouched). Lint clean, portraits verified on disk, not browser-checked.
+
+## Multi-row card stacks become single-row rails site-wide, 2026-08-07
+
+Follow-up on the user flagging `south-east-asia-response-guide`: its six
+interviews sat as a 3+3 double grid. The preference is now clear, one
+scrolling row over stacked rows, so the rule tightened and the same
+structure was hunted down everywhere.
+
+- **`CardCountLayout` keeps the grid only for exactly three.** Anything above
+  three rails, including full-row multiples: south-east (6) and the B2C 2017
+  landing's 18-interview grid are now single-row rails. B2C at 18 is the one
+  to eyeball, that is a long scroll, though the band itself stays short
+- **The "More insights" and "More interviews" sibling bands** on the article
+  and interview pages now use `ReportCardRail` instead of their 3-up grids.
+  These were the worst offenders: uncapped, so an ACM interview page stacked
+  its 18 siblings six rows deep. Their inline card markup was `ReportCard`'s
+  anatomy plus a "Read the…" action line, which the rail's cards drop, one
+  small anatomy change
+- **Left alone, deliberately**: the multi-group tab panels (a native-radio
+  `peer-checked` structure where the rail's overflow measurement would run
+  against `display:none` panels and misreport; tabs already exist to keep
+  that band short), the event pages' "Who spoke" name lists (text cards, not
+  plates), and every library index page (a library is a browsing surface;
+  orphan rows there are the honest shape of a growing collection)
+
+Mishap recorded: a blank-line cleanup `sed` stripped every blank line from
+the insights article page; caught in the diff, restored from HEAD, and the
+change reapplied with proper edits. Lint clean, three-file diff verified
+tight. Not browser-checked.
+
+## Hero mockups updated across all report landings, 2026-08-07
+
+The user supplied a uniform tablet-mockup set at
+`~/Documents/researchnxt.com/covers/report-mockup-for-hero/`, fourteen files
+at 1600x1893 with transparency, one per report except
+`automation-campaign-management`, which already had its tablet mock as the
+hero. Each was matched to its slug by filename; the two ambiguous names were
+verified by reading the artwork ("b2c-consumer-engagment" is the B2C
+Consumer Engagement in the GCC Region cover, so
+`state-of-consumer-engagement-gcc-2019`; "b2c-marketing-auto" is the 2017
+India report).
+
+- Downscaled with sharp to 768 wide (the template's render ceiling is 24rem)
+  and written **over the existing `hero.cover` paths**, so no content entries
+  changed except one: the consumer-engagement hero was a `.jpg`, and the new
+  transparent mock requires PNG, so its `cover` now points at `.png` and the
+  stale jpg is deleted
+- The hero template's intrinsic-size hint was 768x768 from the old square
+  implementors mock; every cover in the set is the same frame now, so it
+  reads 768x909. ACM's mock is 1200x1441 (ratio 0.833 vs the set's 0.845),
+  a sub-percent placeholder mismatch that height:auto absorbs
+- All fifteen `hero.cover` paths verified on disk; lint clean; not
+  browser-checked
+
+### Stale-cache follow-up: hero covers renamed to `<slug>-hero.png`
+
+The user saw the old implementors-guide and ai-led mocks even after
+Ctrl+Shift+R. Every file on disk was pixel-verified against its source (all
+fourteen matched, avg diff about 1 unit at 64x64), so the stale bytes were
+coming from Next's dev image-optimizer cache (`.next/cache/images`), which
+in-place overwrites do not reliably bust and browser refreshes cannot reach.
+Fix: all fifteen hero covers renamed via `git mv` to `<slug>-hero.png` with
+the registry paths updated, so every URL is new to every cache layer.
+Lesson recorded for next time: **never ship a changed image at an unchanged
+URL**; rename first.
+
+## Home Featured reports band follows the shelf, 2026-08-07
+
+On user direction the home page's four featured-report cards now carry the
+same vertical covers as the library: `featuredReports` maps
+`cardPortrait ?? cardImage`, and `ResourceCard` gained a `portrait` flag
+that switches its plate from `aspect-video` to the A4 `aspect-[210/297]`
+frame. Only the reports band passes it; the Experts view band keeps its
+16:9 interview banners, and those are the only two callers. Lint clean, not
+browser-checked.
+
+## Single quick reads now render as a spotlight band, 2026-08-07
+
+The user flagged that three report landings looked wrong where the quick
+reads band has only one article: the rail rendered it as a lone quarter-width
+card centred under the band heading, reading as a starved carousel.
+
+The fix is in the template, not the data, and is generic: when
+`quickReads.items.length === 1` the band switches to the **spotlight
+grammar** the launch-event and success-story bands already use, image beside
+text on a two-column grid, with the band heading, the article title at
+`text-title`, and a secondary "Read the article" button. The rail is
+untouched for two or more items. An `href`-less item (the PHASE B inert
+state) renders the image without a link and drops the button.
+
+Affects four landings, the three the user named plus one more with the same
+shape found by counting every landing's items:
+`navigating-corporate-commute-for-gccs-in-india`,
+`unlocking-the-power-unified-cx`, `transforming-cx-through-gccs`, and
+`ai-led-personalization`. Lint and the impeccable detector are clean.
+**Not browser-checked**; the long Rethinking the Daily Commute title wraps to
+about four lines at the 26ch cap, worth an eyeball.
+
+### Two and three items also leave the rail
+
+Follow-up on the user flagging `automation-campaign-management`, which has
+two. The rail earns its arrows only once it can overflow, and at three or
+fewer cards it is just a worse grid, so the band now branches on count: **one**
+is the spotlight above, **two** sit as a centred pair at half width
+(`max-w-4xl`, `sm:grid-cols-2`, plain `ReportCard`s), **three** use the
+existing `ReportCardGrid` three-up, **four or more** keep the scrolling rail.
+Affected: `automation-campaign-management` and
+`abm-best-practices-report-india-2018` (two each);
+`cloud-computing-new-normal-beyond` and `south-east-asia-response-guide`
+(three each); the 5- and 7-item landings keep the rail. Lint clean, not
+browser-checked.
+
+## Marketing automation roundtable published under Events, 2026-08-07
+
+The last outstanding item from the campaign-management article batch. It was
+archived but unpublished because the user wanted it under Events, which was a
+placeholder at the time. Events is now a real route, so it is live at
+`/resources/events/automation-campaign-management/marketing-automation-roundtable`,
+taking the library to **eight events**.
+
+- **Slug shortened** from the source's
+  `redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable`
+  to `marketing-automation-roundtable`, the same trim the sector articles got,
+  since the project segment already carries the programme
+- **Two redirects, not one.** WordPress serves this write-up from both
+  `/events/…` and `/campaign-management/…`; both now point here. Redirect map
+  is 171 rules with no duplicate sources
+- **The inert card is finally wired**: the "Redefining Marketing Excellence"
+  quick read on the Automation & Campaign Management report landing had
+  carried a banner and no link since it was first built. It now has its `href`
+
+### No date, on user direction
+
+Neither the recap, the events listing, nor the page metadata states when the
+roundtable ran, so `Event.date` became **optional** rather than showing the
+write-up's publication date (2025-01-13), which is a different fact. Both
+templates omit the `<time>` when it is absent, and on the detail page the
+breadcrumb separator goes with it so the trail ends at the programme instead
+of a dangling slash. The registry sort stands an undated event in as `"9999"`
+so it still sorts newest-first, which is correct here.
+
+**Lead on the real date, not acted on:** the event photograph is named
+`WhatsApp-Image-2024-12-07-at-14.20.35`, which puts the roundtable at
+**7 December 2024**. That is a filename, not a stated fact, so it was not
+published as the date. Worth one confirmation, after which `date:
+"2024-12-07"` is a one-line change.
+
+### Page order follows the source post exactly
+
+On user direction the page is laid out in the source's own order, verified by
+sorting the landmarks in the fetched HTML by character offset rather than by
+eye:
+
+| Source | Ours |
+|---|---|
+| LinkedIn video, before any text | `video`, rendered in place of the banner |
+| two intro paragraphs | same |
+| photo: the room | inline `image` block |
+| Setting the Stage, Diving Into the Research | same |
+| photo: handbook presentation | inline `image` block |
+| Solutions in Action, Interactive Insightful Inspiring | same |
+| photo: panellist | inline `image` block |
+| A Step Forward | same |
+| photo: speaker group | inline `image` block |
+| download form | `jotformId`, but moved to the sticky aside, see below |
+
+- **`Event.body` gained two block types**: `heading`, mirroring what an
+  insights article already supports, and `image`, which is what lets the
+  photographs sit between sections instead of being swept into a gallery at
+  the end. The short-lived `gallery` field was removed again, superseded
+- **The video opens the page in place of the banner**, per the source.
+  `?compact=1` and the 710x450 ratio the source uses; not lazy, since it is
+  now above the fold. Other events keep the banner, since the branch is on
+  `event.video`. The banner is still the library card and Open Graph image,
+  upgraded from the 1024x576 crop to the full 1920x1080 collage
+- **The form is Jotform 243521499246462**, read off the source page and
+  matching the archive, mounted through the existing `JotformEmbed` client
+  component. It sits in a **sticky right-hand column, as on the interview
+  pages**, rather than as a band at the foot: on user direction, and it is the
+  better place, since a recap this long would otherwise bury the one action
+  below five sections of prose. The events template now shares the interview
+  template's exact measurements, `lg:grid-cols-[minmax(0,1fr)_minmax(0,23rem)]`
+  with `gap-12 lg:gap-16`, and the aside carries no panel and no heading of
+  its own because the embed brings its own framing
+- **That aside is now shared.** It previously held only the `facts` list, so
+  it is now `facts || jotformId`, stacking both where an event has both. No
+  event does yet: this one has a form and no facts, the four programme
+  launches have facts and no form
+- Alt text for all four photographs was written from looking at each image,
+  not guessed from filenames
+
+### The mp4 in the repo root is not this video
+
+`69ebff20daba6852824524.mp4` was checked before being used and is **not** the
+roundtable footage: it is 4.5 seconds, 3200x2400, 120fps, silent, and a frame
+grab shows the Shinkei landing page. It is the animated-hero design reference,
+unrelated to this event, and is still untracked.
+
+### Dropped on user direction
+
+The hero standfirst "Hosted by Zoho and Research NXT at Hilton Mumbai" is
+gone, so the hero is breadcrumb and title only. `Event.lede` became optional
+and the template omits the paragraph when it is absent; the other seven events
+keep theirs. The line was redundant anyway, since the opening paragraph names
+both the hosts and the venue a moment later.
+
+
+The `speakers` band ("Who spoke") is not on this event: the six speakers are
+named in the body already. The array was built and then removed, including the
+four cross-links to their published interviews in this same programme. The
+field stays on the type, and the other events still use it. The "also the
+form" instruction was initially read as another removal, which was wrong: the
+events templates had never had a form, and what was wanted was the source's
+download form added. It is in.
+
+Verified: all five image paths resolve, the body block order was diffed
+against the source HTML landmark by landmark, no duplicate redirect sources,
+eight modules against eight registry entries, and lint clean.
+**Not browser-checked**, so the inline photographs, the LinkedIn embed and the
+Jotform are all unrendered. The two third-party embeds are the parts most
+worth looking at live.
+
+## Preview article retitled to two lines, 2026-08-07
+
+"AI is the Future, and the Future is Now" was 38 characters, the shortest
+title in the Insights band by a wide margin: its four siblings run 56 to 105
+and wrap to two or three lines, so this one card sat on a single line and
+broke the row's rhythm. It is now:
+
+> AI is the Future, and the Future is Now: A Preview of the Implementor's
+> Guide to AI
+
+83 characters, two lines at card width. **The subtitle is not invented copy**:
+the live WordPress URL is `…/ai-is-the-future-and-the-future-is-now-a-preview-of-the-implementors-guide-to-ai`,
+so this is the source's own framing restored. Chosen by the user from three
+options.
+
+- The **URL slug is unchanged**, since a redirect already points at it
+- **`metaTitle` deliberately keeps the short form.** 83 characters plus the
+  `| Research NXT` template would be truncated in a search result. The
+  divergence is commented in the module, and follows the precedent set by the
+  Karthik Anantharaman interview, whose title also differs from its `metaTitle`
+- `thumbnailAlt` stopped duplicating the title and now reads "Implementor's
+  Guide to AI, a preview of the handbook", matching the three sector articles,
+  which all describe the edition rather than repeat the headline
+- The two cards that carry this title, the report landing's quick reads and the
+  `quickReads` array in `content/home.ts`, were updated so no stale copy remains
+
+### "The Four Waves of AI" checked, one word changed
+
+Audited for the same problem and it did **not** have it: at 56 characters it
+already wraps to two lines at both the library card width (~394px) and the
+home card width (~288px). No consistency fix was needed, and none was
+invented. The only genuine nit was "A Ready Guide", which is unidiomatic
+outside Indian English, so on the user's pick it is now **"The Four Waves of
+AI: A Practical Guide for Business Leaders"**. The article's own body already
+calls the whitepaper "a practical toolkit for business leaders", so the word
+is the source's.
+
+Changed in the four display strings only (`title`, `metaTitle`, `thumbnailAlt`
+and the report landing's quick-read card). **The slug, the redirect
+destination and the `.png` filename all still read `…-a-ready-guide-…`** and
+must stay that way: the slug is the published URL and the image is named after
+it. Seven such path occurrences verified intact.
+
+Lint clean. Not browser-checked, so every two-line wrap here is calculated from
+the card widths, not observed.
+
+## Renamed the programme to "Implementor's Guide to AI", 2026-08-07
+
+On user direction the programme slug and its display name change from
+"implementer" to "implementor" throughout the site. The live WordPress site
+spells it both ways (the microsite headline says "Implementer's", one article
+URL says "implementors"), and an earlier entry in this file recorded
+"implementors" as the source's typo. That reading is superseded: the user
+confirmed "implementor" is the report's name and to ignore the WordPress
+spelling.
+
+Renamed, 145 references in all:
+
+- **Slug** `implementers-guide-to-ai` to `implementors-guide-to-ai`, which
+  moves three public URL families: the report landing, the 16 interviews under
+  `/resources/experts-view/`, and the 5 articles under `/resources/insights/`
+- **Directories** `src/content/experts-view/`, `src/content/insights/`,
+  `public/insights/` and `public/voices/`, all via `git mv` so history follows
+- **Assets** `public/covers/implementors-guide-to-ai{,-card}.png` and the three
+  `public/report-sections/implementors-guide-{landscape,strategy,governance}.png`
+- **Display copy** every "Implementer's Guide to AI" to "Implementor's Guide to
+  AI": the report hero and meta titles, the cover alt, the description line,
+  the four sector-article headlines, and both registries' project names
+- The `implementersGuideToAI` binding in `resources.ts` follows the slug
+
+**Deliberately not renamed.** Three redirect *sources* in `next.config.ts`
+still read `/guide-to-ai/implementers-guide-to-ai-…`, because those are real
+URLs on the live WordPress site today; changing them would stop inbound links
+resolving. Only the destinations moved. For the same reason `transcripts/` is
+untouched: it is a verbatim archive of WordPress source, and the folder
+`…-a-preview-of-the-implementors-guide-to-ai` already records the source's own
+inconsistency. Entries above this one in this file keep the old spelling
+because they are a historical log.
+
+Verified: all 21 relative module imports resolve on disk, all 26 referenced
+image assets exist, all 21 content modules carry the new `project` value, both
+registries and the landing `slug` agree, and `npm run lint` is clean. **Not
+typechecked or browser-checked** (needs permission to run `tsc` or a server).
+
+## Interview cards drop the name-and-company byline, 2026-08-07
+
+On the home page's Experts view band, `featuredInterviews` no longer sets the
+"Scott Brinker, HubSpot" style summary; `summary` is now the empty string, so
+`ResourceCard` skips the body line entirely (same as the quick-read cards).
+The banner artwork already names each person. Cards keep one hierarchy: image,
+clamped title, "Read more". Lint clean.
+
+Same treatment for the Featured reports band on user request: `featuredReports`
+no longer carries the report lede as the card summary, so both home resource
+bands share one card anatomy of artwork, clamped title, "Read more".
+
+Also applied to the `/resources/reports-whitepapers` library on user request:
+its cards drop the `report.hero.lede` paragraph and now run cover, clamped
+title, "View the report", matching the home cards and the experts-view
+library's card anatomy. The ledes still open each report's own landing page.
+
+## Why-band title widened to two lines, 2026-08-07
+
+The "We have been evolving consistently…" heading was capped at `max-w-4xl`,
+which wrapped it onto three lines at desktop. The cap is removed so the title
+uses the full container and settles onto two lines there; the base `text-wrap:
+balance` on headings keeps the two lines even. Narrower viewports still wrap
+to three, which is expected. Lint clean; not eyeballed in a browser (no dev
+server run).
+
+## Home page consistency audit and fixes, 2026-08-07
+
+A code-level audit of the home page (fonts, spacing, colour, contrast) via the
+impeccable skill. Fonts and spacing were already consistent: every band opens
+with `SectionHeading` on a `mb-12` gap, both resource grids share `gap-8` and
+the card system, and all display type goes through the `.font-display*`
+utilities. Four issues found and fixed:
+
+- **Focus rings were invisible on the orange hero.** The hero section carried
+  `on-deep`, whose ring colour `accent-on-deep` is 1.42:1 on the orange field.
+  New `.on-signal` scope in `globals.css` sets a white ring (3.2:1, clears the
+  3:1 non-text minimum); the hero section now uses it. Verified the class swap
+  affects nothing else: `on-deep` only controls the focus ring colour
+- **Skip link failed AA**: `focus:text-ink` on `focus:bg-accent` was 4.13:1,
+  and inconsistent with the system (accent fills carry white everywhere else).
+  Now `focus:text-white`
+- **Accent token darkened `#0079bf` → `#0073b6`** (user-approved). Small accent
+  text (eyebrows, "All reports", "Read more") sat at 4.28:1 on the
+  surface-subtle band, below AA. The new value is visually indistinguishable
+  and clears 4.5:1 on white, surface and subtle. CLAUDE.md and the token
+  comment updated to record the derivation from the logo blue
+- **The two view-all links now carry `TrailingArrow`**, matching every other
+  accent link affordance on the site; they already had the `group` hover class
+  but rendered no arrow
+
+Verified with the impeccable detector (one advisory: the `rule-ticks` dotted
+hairline, a false positive, it is the committed brand device, not a grid
+background) and `npm run lint`, which is clean. Not verified in a browser: no
+dev server was run (needs permission). Known remaining deviations, deliberate:
+the interviews band uses raw `bg-white` (commented as intentional), and the
+hero question line sets `font-semibold` by hand rather than a display utility.
 
 ## Home page now reads from the registries, 2026-08-06
 

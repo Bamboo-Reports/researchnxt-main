@@ -12,22 +12,22 @@
  * registry and the lookup helpers.
  */
 
-import { abhishekGupta } from "./implementers-guide-to-ai/abhishek-gupta";
-import { akshayMatkar } from "./implementers-guide-to-ai/akshay-matkar";
-import { avnishAnand } from "./implementers-guide-to-ai/avnish-anand";
-import { diptarupChakraborti } from "./implementers-guide-to-ai/diptarup-chakraborti";
-import { gauravSuri } from "./implementers-guide-to-ai/gaurav-suri";
-import { hansveenKaur } from "./implementers-guide-to-ai/hansveen-kaur";
-import { karthikAnantharaman } from "./implementers-guide-to-ai/karthik-anantharaman";
-import { madhavVemuri } from "./implementers-guide-to-ai/madhav-vemuri";
-import { manishKumar } from "./implementers-guide-to-ai/manish-kumar";
-import { meeraIyer } from "./implementers-guide-to-ai/meera-iyer";
-import { nimishThaker } from "./implementers-guide-to-ai/nimish-thaker";
-import { prasadPimple } from "./implementers-guide-to-ai/prasad-pimple";
-import { sanjivKumarJain } from "./implementers-guide-to-ai/sanjiv-kumar-jain";
-import { shwethaIyer } from "./implementers-guide-to-ai/shwetha-iyer";
-import { sumanTewary } from "./implementers-guide-to-ai/suman-tewary";
-import { varunKaushik } from "./implementers-guide-to-ai/varun-kaushik";
+import { abhishekGupta } from "./implementors-guide-to-ai/abhishek-gupta";
+import { akshayMatkar } from "./implementors-guide-to-ai/akshay-matkar";
+import { avnishAnand } from "./implementors-guide-to-ai/avnish-anand";
+import { diptarupChakraborti } from "./implementors-guide-to-ai/diptarup-chakraborti";
+import { gauravSuri } from "./implementors-guide-to-ai/gaurav-suri";
+import { hansveenKaur } from "./implementors-guide-to-ai/hansveen-kaur";
+import { karthikAnantharaman } from "./implementors-guide-to-ai/karthik-anantharaman";
+import { madhavVemuri } from "./implementors-guide-to-ai/madhav-vemuri";
+import { manishKumar } from "./implementors-guide-to-ai/manish-kumar";
+import { meeraIyer } from "./implementors-guide-to-ai/meera-iyer";
+import { nimishThaker } from "./implementors-guide-to-ai/nimish-thaker";
+import { prasadPimple } from "./implementors-guide-to-ai/prasad-pimple";
+import { sanjivKumarJain } from "./implementors-guide-to-ai/sanjiv-kumar-jain";
+import { shwethaIyer } from "./implementors-guide-to-ai/shwetha-iyer";
+import { sumanTewary } from "./implementors-guide-to-ai/suman-tewary";
+import { varunKaushik } from "./implementors-guide-to-ai/varun-kaushik";
 import { abhishekFodikar } from "./automation-campaign-management/abhishek-fodikar";
 import { amiteshBaranwal } from "./automation-campaign-management/amitesh-baranwal";
 import { anandMohan } from "./automation-campaign-management/anand-mohan";
@@ -154,10 +154,10 @@ export const expertPerspectives: {
 
 export const expertProjects: ExpertProject[] = [
   {
-    slug: "implementers-guide-to-ai",
-    name: "Implementer's Guide to AI",
-    lede: "Sixteen conversations with leaders putting AI to work across finance, retail, manufacturing, insurance and healthcare, conducted for the Implementer's Guide to AI.",
-    reportSlug: "implementers-guide-to-ai",
+    slug: "implementors-guide-to-ai",
+    name: "Implementor's Guide to AI",
+    lede: "Sixteen conversations with leaders putting AI to work across finance, retail, manufacturing, insurance and healthcare, conducted for the Implementor's Guide to AI.",
+    reportSlug: "implementors-guide-to-ai",
   },
   {
     slug: "automation-campaign-management",
@@ -269,7 +269,7 @@ export const expertProjects: ExpertProject[] = [
  * slug is only ever resolved inside its project.
  */
 export const expertInterviews = [
-  // Implementer's Guide to AI
+  // Implementor's Guide to AI
   abhishekGupta,
   akshayMatkar,
   avnishAnand,

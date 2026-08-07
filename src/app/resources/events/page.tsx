@@ -48,12 +48,14 @@ export default function EventsPage() {
                   sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 100vw"
                   className="mt-1 aspect-video w-full rounded-md object-cover"
                 />
-                <time
-                  dateTime={event.date}
-                  className="text-sm font-semibold text-ink-muted"
-                >
-                  {formatDate(event.date)}
-                </time>
+                {event.date ? (
+                  <time
+                    dateTime={event.date}
+                    className="text-sm font-semibold text-ink-muted"
+                  >
+                    {formatDate(event.date)}
+                  </time>
+                ) : null}
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
                   {event.title}
                 </h2>
