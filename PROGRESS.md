@@ -4,6 +4,38 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## New report-library card for ACM, candidate for a full rollout, 2026-08-07
+
+The user flagged the `/resources/reports-whitepapers` cards as dated. They are
+WordPress-era promo tiles: off-brand purple, a "Download Now" button baked
+into the pixels. A generator now composes cards in the site's own system, and
+the first one is live on the ACM entry pending the user's verdict on a
+rollout.
+
+**Composition** (1600x900): the drenched deep band (`#04243a` with a raised
+lift and a plate-blue glow), the SectionHeading tick-and-rule device as a
+"Research report" eyebrow in `accent-on-deep`, the title in real DM Sans
+ExtraBold at display size, the wordmark bottom-left with "Research" recolored
+white for the deep surface (the blue letters are 2.6:1 there), and the
+report's existing tablet mockup bleeding off the right edge.
+
+**Generator**: `scratchpad/cardgen/generate.mjs` (session scratchpad, not yet
+committed), driven by a per-slug config. Runs from the repo root, resolves
+`sharp` from the repo's own node_modules, renders text via Pango with
+downloaded DM Sans statics (fontsource; note the family name inside the TTFs
+is **"DM Sans 9pt"**, and the first render silently fell back to a default
+sans until the descriptor said so). Text layers are composited over an SVG
+background, and the mock is pre-clipped because sharp refuses composites that
+overflow the canvas.
+
+`cardImage` now points at `/covers/automation-campaign-management-card.png`;
+the old `-zoho-card.png` is deleted (git history keeps it). Lint clean.
+
+**If approved**: move the script into `scripts/` in the repo with the two
+TTFs (OFL) and a config entry per report, regenerate all ~15. The other
+covers are mostly flat artwork rather than transparent mockups, so
+`coverHeight`/`coverRight`/`coverTop` need eyeballing per report.
+
 ## Single quick reads now render as a spotlight band, 2026-08-07
 
 The user flagged that three report landings looked wrong where the quick

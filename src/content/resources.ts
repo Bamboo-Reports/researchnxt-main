@@ -664,7 +664,10 @@ const automationCampaignManagement: ReportLanding = {
       "Cover of the Automation and Campaign Management Handbook for Functional Experts",
   },
 
-  cardImage: "/covers/automation-campaign-management-zoho-card.png",
+  /* Generated in the site's own system (deep band, tick device, DM Sans,
+     the cover mock): the WordPress-era promo tile with its baked-in
+     "Download Now" button is retired. */
+  cardImage: "/covers/automation-campaign-management-card.png",
 
   download: {
     jotformId: "243521499246462",
