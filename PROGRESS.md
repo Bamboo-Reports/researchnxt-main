@@ -145,6 +145,27 @@ It was the baked-artwork rendition of the microsite's Client Testimonial,
 which the landing now expresses through the success-story spotlight with the
 facts beside it, so the page no longer said it twice.
 
+**Netcore mark replaced and the credits band re-proportioned.** The user
+supplied the full Netcore lockup (the wordmark plus "Experience the
+Infinite", 1997x671 with alpha). It replaces both previous files: the
+netcore.ai SVG added earlier this session, and `netcore.png`, which turned
+out to be a poor screenshot crop with a dark bar baked into the top edge.
+Trimmed, downscaled to 720w as `netcore-lockup.png`, and pointed at from all
+four references (both landings' credits and both Netcore success stories);
+the two old files are deleted.
+
+The sizing complaint was real and structural. Marks were scaled by **height
+alone** (`h-12`), but the sponsor set runs from Salesforce at 1.43:1 to a
+5.38:1 wordmark, so matching heights made the wide marks more than twice the
+optical size of the tall ones, and the Research NXT wordmark, stuck at the
+navbar's `h-5`, rendered 118x20 beside a 258x48 sponsor. Now every mark is
+bounded on **both** axes (`max-h-12 max-w-44 object-contain`, in an `h-16`
+row), and `Logo` gained a `markClassName` prop so the partner wordmark can
+size to `h-7`. Computed result across all eleven marks: everything lands
+inside 176x48, and the partner reads 165x28. The paired-sponsor variant
+(Linkedpreneur + beyond99) gets half the budget each. Navbar and footer
+`<Logo />` calls are unaffected, since the prop defaults to `h-5`.
+
 **The launch event was on the page twice.** The landing already pointed at
 the event through a hand-built one-item `quickReads` band titled "Check out
 the launch event" (rendering as the card spotlight, so: that heading plus

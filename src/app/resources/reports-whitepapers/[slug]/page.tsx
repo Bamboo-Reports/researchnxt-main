@@ -923,14 +923,18 @@ export default async function ReportLandingPage({ params }: Params) {
         <Section bordered spacing="tight">
           <Container>
             {/* Two equal columns so the labels sit on one line and the marks
-                on another, whatever their aspect ratios: each mark is centred
-                in a fixed-height box rather than sizing its own row. */}
+                on another. Marks are bounded on BOTH axes rather than scaled
+                by height alone: the sponsor set runs from a 1.4:1 square to a
+                5:1 wordmark, and matching only their heights made the wide
+                ones twice the optical size of the tall ones. Capping height
+                and width lands every mark inside the same box, so the
+                sponsor and the research partner read as equals. */}
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-16">
               <div className="flex flex-col items-center gap-4">
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.sponsor.label}
                 </p>
-                <span className="flex h-14 items-center">
+                <span className="flex h-16 items-center">
                   {report.credits.sponsor.logos ? (
                     <span className="flex items-center gap-3">
                       {report.credits.sponsor.logos.map((sponsor, index) => (
@@ -952,7 +956,9 @@ export default async function ReportLandingPage({ params }: Params) {
                             width={180}
                             height={48}
                             unoptimized
-                            className="h-10 w-auto"
+                            /* Two marks share the row, so each gets half
+                               the single-mark budget. */
+                            className="max-h-10 w-auto max-w-[8.5rem] object-contain"
                           />
                         </span>
                       ))}
@@ -964,7 +970,7 @@ export default async function ReportLandingPage({ params }: Params) {
                       width={240}
                       height={168}
                       unoptimized
-                      className="h-12 w-auto"
+                      className="max-h-12 w-auto max-w-44 object-contain"
                     />
                   ) : null}
                 </span>
@@ -973,8 +979,11 @@ export default async function ReportLandingPage({ params }: Params) {
                 <p className="text-sm font-semibold text-ink-muted">
                   {report.credits.partnerLabel}
                 </p>
-                <span className="flex h-14 items-center">
-                  <Logo />
+                <span className="flex h-16 items-center">
+                  {/* The wordmark's default h-5 is the navbar's size; here it
+                      sits beside a 48px sponsor mark and has to hold its
+                      own. */}
+                  <Logo markClassName="h-7 w-auto" />
                 </span>
               </div>
             </div>

@@ -1914,7 +1914,7 @@ const aiLedPersonalization: ReportLanding = {
       label: "In association with",
       name: "Netcore",
       /* The official mark from netcore.ai, supplied by the user. */
-      logo: "/logos/trusted/netcore.svg",
+      logo: "/logos/trusted/netcore-lockup.png",
     },
     partnerLabel: "Research partner",
   },
@@ -2429,7 +2429,7 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
     sponsor: {
       label: "Report sponsor",
       name: "Netcore",
-      logo: "/logos/trusted/netcore.png",
+      logo: "/logos/trusted/netcore-lockup.png",
     },
     partnerLabel: "Research partner",
   },
