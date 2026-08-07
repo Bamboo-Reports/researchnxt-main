@@ -96,7 +96,7 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
 const featured: [project: string, person: string][] = [
   ["ai-led-personalization", "scott-brinker"],
   ["ai-led-personalization", "david-raab"],
-  ["implementers-guide-to-ai", "karthik-anantharaman"],
+  ["implementors-guide-to-ai", "karthik-anantharaman"],
   ["navigating-corporate-commute-for-gccs-in-india", "protick-basu"],
 ];
 
@@ -131,7 +131,7 @@ export const quickReads: FeaturedResource[] = [
     kind: "Article",
     title: "AI is the Future, and the Future is Now",
     summary: "",
-    href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+    href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
   },
   {
     kind: "Article",

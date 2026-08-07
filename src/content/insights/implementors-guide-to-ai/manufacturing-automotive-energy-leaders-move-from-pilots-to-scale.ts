@@ -2,28 +2,28 @@ import type { Insight } from "../types";
 
 export const manufacturingLeaders: Insight = {
   slug: "manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
-  project: "implementers-guide-to-ai",
+  project: "implementors-guide-to-ai",
 
   metaTitle:
-    "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
+    "Implementor's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
   metaDescription:
-    "The manufacturing, automotive and energy edition of the Implementer's Guide to AI: 400+ survey responses and 5 expert interviews on predictive maintenance, digital twins and the pilots that stall.",
+    "The manufacturing, automotive and energy edition of the Implementor's Guide to AI: 400+ survey responses and 5 expert interviews on predictive maintenance, digital twins and the pilots that stall.",
 
   title:
-    "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
+    "Implementor's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
   published: "2025-11-04",
   excerpt:
     "The manufacturing, automotive and energy edition: six in ten organisations use AI, one in ten have scaled it, and data silos are the reason for the gap.",
 
   thumbnail:
-    "/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
+    "/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
   thumbnailAlt:
-    "Implementer's Guide to AI, the manufacturing, automotive and energy edition",
+    "Implementor's Guide to AI, the manufacturing, automotive and energy edition",
 
   jotformId: "253070747406456",
 
   body: [
-    "**Research NXT**, in partnership with **Salesforce**, has released the latest edition of the **Implementer's Guide to AI**, focused on **manufacturing, automotive, and energy enterprises**. Based on insights from **400+ survey responses and 5 expert interviews**, the report explores how AI adoption is shifting from experimentation to scaled execution, and what is still holding transformation back.",
+    "**Research NXT**, in partnership with **Salesforce**, has released the latest edition of the **Implementor's Guide to AI**, focused on **manufacturing, automotive, and energy enterprises**. Based on insights from **400+ survey responses and 5 expert interviews**, the report explores how AI adoption is shifting from experimentation to scaled execution, and what is still holding transformation back.",
 
     { heading: "AI has moved from optional to essential" },
     "Across these industries, **six in ten organisations** already use AI for efficiency, automation, and smarter decision-making, yet only **one in ten** have achieved enterprise-wide scale. While **predictive maintenance, AI-enabled quality control, and digital twins** are delivering measurable results, many companies remain **stuck in pilots** due to **data silos, governance gaps, and workforce challenges**.",

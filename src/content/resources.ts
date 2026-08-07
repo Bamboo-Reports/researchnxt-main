@@ -278,21 +278,21 @@ export type ReportLanding = {
 };
 
 /** Copy transcribed from researchnxt.com/microsite/implementer-guide-to-ai/ */
-const implementersGuideToAI: ReportLanding = {
-  slug: "implementers-guide-to-ai",
+const implementorsGuideToAI: ReportLanding = {
+  slug: "implementors-guide-to-ai",
   published: "2025-02-20",
-  metaTitle: "Implementer's Guide to AI",
+  metaTitle: "Implementor's Guide to AI",
   metaDescription:
     "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
 
   hero: {
-    title: "Implementer's Guide to AI",
+    title: "Implementor's Guide to AI",
     lede: "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
-    cover: "/covers/implementers-guide-to-ai.png",
-    coverAlt: "Cover of the Implementer's Guide to AI report",
+    cover: "/covers/implementors-guide-to-ai.png",
+    coverAlt: "Cover of the Implementor's Guide to AI report",
   },
 
-  cardImage: "/covers/implementers-guide-to-ai-card.png",
+  cardImage: "/covers/implementors-guide-to-ai-card.png",
 
   download: {
     jotformId: "252512579059463",
@@ -313,7 +313,7 @@ const implementersGuideToAI: ReportLanding = {
   },
 
   description: [
-    "The **Implementer's Guide to AI** is a practical handbook crafted to empower businesses on their journey to adopting and scaling AI.",
+    "The **Implementor's Guide to AI** is a practical handbook crafted to empower businesses on their journey to adopting and scaling AI.",
     "This guide is presented in partnership with Salesforce. Tailored for Indian businesses, it draws on insights from over **1,500+ survey responses** and **15+ expert interviews** across industries such as finance, retail, and healthcare. Backed by secondary research, it offers actionable strategies and real-world examples to guide effective AI adoption.",
   ],
 
@@ -327,19 +327,19 @@ const implementersGuideToAI: ReportLanding = {
         name: "Landscape",
         description:
           "Explore the maturity levels and current\nadoption patterns of AI across Indian\nbusiness functions and departments",
-        image: "/report-sections/implementers-guide-landscape.png",
+        image: "/report-sections/implementors-guide-landscape.png",
       },
       {
         name: "Strategy",
         description:
           "Understand how strategic AI\nimplementations align with key business\nobjectives to drive measurable growth",
-        image: "/report-sections/implementers-guide-strategy.png",
+        image: "/report-sections/implementors-guide-strategy.png",
       },
       {
         name: "Governance",
         description:
           "Master responsible AI frameworks\nand assessment methods to ensure\ncompliant and successful deployment",
-        image: "/report-sections/implementers-guide-governance.png",
+        image: "/report-sections/implementors-guide-governance.png",
       },
     ],
   },
@@ -349,36 +349,36 @@ const implementersGuideToAI: ReportLanding = {
     items: [
       {
         title: "AI is the Future, and the Future is Now",
-        href: "/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+        href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
         image:
-          "/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
+          "/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Finance Leaders Transition from Caution to Customer-Centric Scale",
-        href: "/resources/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
+          "Implementor's Guide to AI: Finance Leaders Transition from Caution to Customer-Centric Scale",
+        href: "/resources/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
         image:
-          "/insights/implementers-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale.png",
+          "/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
-        href: "/resources/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
+          "Implementor's Guide to AI: Manufacturing, Automotive & Energy Leaders Move from Pilots to Scale",
+        href: "/resources/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
         image:
-          "/insights/implementers-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
+          "/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale.png",
       },
       {
         title:
-          "Implementer's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
-        href: "/resources/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
+          "Implementor's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
+        href: "/resources/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
         image:
-          "/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
+          "/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
       },
       {
         title: "The Four Waves of AI: A Ready Guide for Business Leaders",
-        href: "/resources/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
+        href: "/resources/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders",
         image:
-          "/insights/implementers-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
+          "/insights/implementors-guide-to-ai/the-four-waves-of-ai-a-ready-guide-for-business-leaders.png",
       },
     ],
   },
@@ -392,12 +392,12 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "Transforming SaaS, Reviving Storytelling, and Redefining the Future of Creativity",
-            href: "/resources/experts-view/implementers-guide-to-ai/diptarup-chakraborti",
+            href: "/resources/experts-view/implementors-guide-to-ai/diptarup-chakraborti",
             image: "/experts/diptarup-chakraborti.png",
           },
           {
             title: "How Spacewood Leverages AI to Redefine Customer Experience",
-            href: "/resources/experts-view/implementers-guide-to-ai/nimish-thaker",
+            href: "/resources/experts-view/implementors-guide-to-ai/nimish-thaker",
             image: "/experts/nimish-thaker.png",
           },
         ],
@@ -408,12 +408,12 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "How Carat Lane is Redefining Customer Experience in the Jewellery Industry",
-            href: "/resources/experts-view/implementers-guide-to-ai/avnish-anand",
+            href: "/resources/experts-view/implementors-guide-to-ai/avnish-anand",
             image: "/experts/avnish-anand.png",
           },
           {
             title: "SkinQ's AI-Powered Vision and Strategic Marketing Insights",
-            href: "/resources/experts-view/implementers-guide-to-ai/meera-iyer",
+            href: "/resources/experts-view/implementors-guide-to-ai/meera-iyer",
             image: "/experts/meera-iyer.png",
           },
         ],
@@ -424,37 +424,37 @@ const implementersGuideToAI: ReportLanding = {
           {
             title:
               "AI-Driven Branding & Digital Marketing: Insights from Hansveen Kaur",
-            href: "/resources/experts-view/implementers-guide-to-ai/hansveen-kaur",
+            href: "/resources/experts-view/implementors-guide-to-ai/hansveen-kaur",
             image: "/experts/hansveen-kaur.png",
           },
           {
             title:
               "AI's Role in Engineering & Infrastructure: Insights from Manish",
-            href: "/resources/experts-view/implementers-guide-to-ai/manish-kumar",
+            href: "/resources/experts-view/implementors-guide-to-ai/manish-kumar",
             image: "/experts/manish-kumar.png",
           },
           {
             title:
               "Transforming Retail with AI: Insights from Pressto's Marketing Evolution",
-            href: "/resources/experts-view/implementers-guide-to-ai/akshay-matkar",
+            href: "/resources/experts-view/implementors-guide-to-ai/akshay-matkar",
             image: "/experts/akshay-matkar.png",
           },
           {
             title:
               "AI in Manufacturing: Driving Digital Transformation and Intelligent Operations",
-            href: "/resources/experts-view/implementers-guide-to-ai/madhav-vemuri",
+            href: "/resources/experts-view/implementors-guide-to-ai/madhav-vemuri",
             image: "/experts/madhav-vemuri.png",
           },
           {
             title:
               "Insights on Data Unification, Customer Experience, and Ethical Innovation",
-            href: "/resources/experts-view/implementers-guide-to-ai/prasad-pimple",
+            href: "/resources/experts-view/implementors-guide-to-ai/prasad-pimple",
             image: "/experts/prasad-pimple.png",
           },
           {
             title:
               "How Edelweiss Life Insurance is Redefining Industry Standards Through Innovation and AI",
-            href: "/resources/experts-view/implementers-guide-to-ai/abhishek-gupta",
+            href: "/resources/experts-view/implementors-guide-to-ai/abhishek-gupta",
             image: "/experts/abhishek-gupta.png",
           },
         ],
@@ -464,36 +464,36 @@ const implementersGuideToAI: ReportLanding = {
         items: [
           {
             title: "AI-Led Transformation in Automotive Manufacturing",
-            href: "/resources/experts-view/implementers-guide-to-ai/sanjiv-kumar-jain",
+            href: "/resources/experts-view/implementors-guide-to-ai/sanjiv-kumar-jain",
             image: "/experts/sanjiv-kumar-jain.png",
           },
           {
             title: "How AI Powers Kissht's Customer-Centric Approach",
-            href: "/resources/experts-view/implementers-guide-to-ai/shwetha-iyer",
+            href: "/resources/experts-view/implementors-guide-to-ai/shwetha-iyer",
             image: "/experts/shwetha-iyer.png",
           },
           {
             title:
               "Transforming Customer Engagement, Decision-Making, and Operational Efficiency",
-            href: "/resources/experts-view/implementers-guide-to-ai/gaurav-suri",
+            href: "/resources/experts-view/implementors-guide-to-ai/gaurav-suri",
             image: "/experts/gaurav-suri.png",
           },
           {
             title:
               "How PolicyBoss is Leveraging AI to Redefine Distribution, Personalisation, and Customer Experience",
-            href: "/resources/experts-view/implementers-guide-to-ai/varun-kaushik",
+            href: "/resources/experts-view/implementors-guide-to-ai/varun-kaushik",
             image: "/experts/varun-kaushik.png",
           },
           {
             title:
               "Transforming Insurance Sales and Distribution at Allianz Partners",
-            href: "/resources/experts-view/implementers-guide-to-ai/suman-tewary",
+            href: "/resources/experts-view/implementors-guide-to-ai/suman-tewary",
             image: "/experts/suman-tewary.png",
           },
           {
             title:
               "How Apollo Hospitals Leverages AI to Revolutionise Patient Care and International Outreach",
-            href: "/resources/experts-view/implementers-guide-to-ai/karthik-anantharaman",
+            href: "/resources/experts-view/implementors-guide-to-ai/karthik-anantharaman",
             image: "/experts/karthik-anantharaman.png",
           },
         ],
@@ -507,7 +507,7 @@ const implementersGuideToAI: ReportLanding = {
   voices: {
     items: [
       {
-        image: "/voices/implementers-guide-to-ai/ramesh-mani.png",
+        image: "/voices/implementors-guide-to-ai/ramesh-mani.png",
         quote:
           "The next big AI breakthrough could come from a company that doesn't even exist today. Staying adaptable and continuously learning will be key to thriving in this AI-driven future.",
         name: "Ramesh Mani",
@@ -515,7 +515,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Salesforce",
       },
       {
-        image: "/voices/implementers-guide-to-ai/akshay-matkar.png",
+        image: "/voices/implementors-guide-to-ai/akshay-matkar.png",
         quote:
           "The report can empower businesses to navigate the complexities of AI adoption effectively, ensuring their efforts are purposeful and result-oriented.",
         name: "Akshay Matkar",
@@ -523,7 +523,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Pressto",
       },
       {
-        image: "/voices/implementers-guide-to-ai/gaurav-suri.png",
+        image: "/voices/implementors-guide-to-ai/gaurav-suri.png",
         quote:
           "By combining continuous learning, strategic alignment, and collaboration, organisations can build a resilient, forward-looking culture that effectively integrates AI to revolutionise business.",
         name: "Gaurav Suri",
@@ -531,7 +531,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Finlabs India Pvt Ltd",
       },
       {
-        image: "/voices/implementers-guide-to-ai/prasad-pimple.png",
+        image: "/voices/implementors-guide-to-ai/prasad-pimple.png",
         quote:
           "It's primarily about understanding what others have done, including their successes and, more importantly, their failures.",
         name: "Prasad Pimple",
@@ -539,7 +539,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Kotak Life",
       },
       {
-        image: "/voices/implementers-guide-to-ai/abhishek-gupta.png",
+        image: "/voices/implementors-guide-to-ai/abhishek-gupta.png",
         quote:
           "Success with AI often comes through trial and error. Be prepared to fail frequently, as this iterative process is critical to discovering solutions that yield meaningful results.",
         name: "Abhishek Gupta",
@@ -547,7 +547,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Edelweiss Life Insurance",
       },
       {
-        image: "/voices/implementers-guide-to-ai/varun-kaushik.png",
+        image: "/voices/implementors-guide-to-ai/varun-kaushik.png",
         quote:
           "By adopting a pragmatic, goal-oriented approach, you can harness AI as a powerful enabler without disrupting the core of how you operate.",
         name: "Varun Kaushik",
@@ -555,7 +555,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "PolicyBoss",
       },
       {
-        image: "/voices/implementers-guide-to-ai/suman-tewary.png",
+        image: "/voices/implementors-guide-to-ai/suman-tewary.png",
         quote:
           "The fact that AI adoption in the insurance sector will completely change the whole spectrum is a boon in itself for both insurers and customers.",
         name: "Suman Tewary",
@@ -563,7 +563,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Allianz Partners",
       },
       {
-        image: "/voices/implementers-guide-to-ai/karthik-anantharaman.png",
+        image: "/voices/implementors-guide-to-ai/karthik-anantharaman.png",
         quote:
           "The report should foster a sense of collaboration, encouraging organisations to seriously consider and implement real-time AI solutions.",
         name: "Dr Karthik Anantharaman",
@@ -571,7 +571,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Apollo Hospitals",
       },
       {
-        image: "/voices/implementers-guide-to-ai/nimish-thaker.png",
+        image: "/voices/implementors-guide-to-ai/nimish-thaker.png",
         quote:
           "Having tailored solutions or tools specifically designed for the furniture industry would be incredibly valuable.",
         name: "Nimish Thaker",
@@ -579,7 +579,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Spacewood",
       },
       {
-        image: "/voices/implementers-guide-to-ai/diptarup-chakraborti.png",
+        image: "/voices/implementors-guide-to-ai/diptarup-chakraborti.png",
         quote:
           "I believe it's essential to include the social impact of AI on the marketing function and highlight how AI will influence the existing roles.",
         name: "Diptarup Chakraborti",
@@ -587,7 +587,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "MoveInSync",
       },
       {
-        image: "/voices/implementers-guide-to-ai/meera-iyer.png",
+        image: "/voices/implementors-guide-to-ai/meera-iyer.png",
         quote:
           "Successful AI adoption requires clarity about its relevance, scrutiny of the data powering it, and a strong alignment with your specific business objectives.",
         name: "Meera Iyer",
@@ -595,7 +595,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "SkinQ",
       },
       {
-        image: "/voices/implementers-guide-to-ai/avnish-anand.png",
+        image: "/voices/implementors-guide-to-ai/avnish-anand.png",
         quote:
           "As more companies adopt AI, the technology will continue to evolve, driving the emergence of new use cases and greater sophistication.",
         name: "Avnish Anand",
@@ -603,14 +603,14 @@ const implementersGuideToAI: ReportLanding = {
         company: "CaratLane",
       },
       {
-        image: "/voices/implementers-guide-to-ai/madhav-vemuri.png",
+        image: "/voices/implementors-guide-to-ai/madhav-vemuri.png",
         quote:
           "I expect this report to emphasise the urgency of AI adoption. Businesses must recognise that AI is not a luxury but a necessity for competitiveness.",
         name: "Madhav Vemuri",
         role: "Leader of Industrial Automation",
       },
       {
-        image: "/voices/implementers-guide-to-ai/sanjiv-kumar-jain.png",
+        image: "/voices/implementors-guide-to-ai/sanjiv-kumar-jain.png",
         quote:
           "Choose with a focus on existing and mature AI technologies, not speculative promises or external pressures.",
         name: "Sanjiv Jain",
@@ -618,7 +618,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Krishna Maruti Group",
       },
       {
-        image: "/voices/implementers-guide-to-ai/manish-kumar.png",
+        image: "/voices/implementors-guide-to-ai/manish-kumar.png",
         quote:
           "It is recommended to check the effectiveness of available AI tools which are being selected for engineering and project management.",
         name: "Manish Kumar",
@@ -626,7 +626,7 @@ const implementersGuideToAI: ReportLanding = {
         company: "Engineers India Limited",
       },
       {
-        image: "/voices/implementers-guide-to-ai/hansveen-kaur.png",
+        image: "/voices/implementors-guide-to-ai/hansveen-kaur.png",
         quote:
           "Ultimately, a customer-centric philosophy, prioritising enhanced experiences and human-AI synergy, is essential for maximising the transformative potential of AI.",
         name: "Hansween Kaur",
@@ -2494,7 +2494,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
 };
 
 export const reportLandings: ReportLanding[] = [
-  implementersGuideToAI,
+  implementorsGuideToAI,
   automationCampaignManagement,
   unlockingThePowerUnifiedCX,
   navigatingCorporateCommute,

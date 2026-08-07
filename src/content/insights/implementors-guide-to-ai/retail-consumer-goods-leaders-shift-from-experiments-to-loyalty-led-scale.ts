@@ -2,28 +2,28 @@ import type { Insight } from "../types";
 
 export const retailLeaders: Insight = {
   slug: "retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
-  project: "implementers-guide-to-ai",
+  project: "implementors-guide-to-ai",
 
   metaTitle:
-    "Implementer's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
+    "Implementor's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
   metaDescription:
-    "The retail and consumer goods edition of the Implementer's Guide to AI: 260+ survey responses and 3 expert interviews on why adoption is growing in intention but still shallow in maturity.",
+    "The retail and consumer goods edition of the Implementor's Guide to AI: 260+ survey responses and 3 expert interviews on why adoption is growing in intention but still shallow in maturity.",
 
   title:
-    "Implementer's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
+    "Implementor's Guide to AI: Retail & Consumer Goods Leaders Shift from Experiments to Loyalty-Led Scale",
   published: "2025-12-01",
   excerpt:
     "The retail and consumer goods edition: one in two companies has adopted AI, and loyalty has overtaken efficiency as the objective.",
 
   thumbnail:
-    "/insights/implementers-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
+    "/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale.png",
   thumbnailAlt:
-    "Implementer's Guide to AI, the retail and consumer goods edition",
+    "Implementor's Guide to AI, the retail and consumer goods edition",
 
   jotformId: "253342944388466",
 
   body: [
-    "Research NXT, in partnership with Salesforce, has released the latest edition of the **Implementer's Guide to AI**, focused this time on the **retail and consumer goods (RCG)** sector. Based on **260+ survey responses and insights from 3 industry experts**, the report uncovers how AI adoption is growing in intention, but is still shallow in maturity. The question now is no longer whether to adopt AI, but how to scale it responsibly and turn it into loyalty and growth.",
+    "Research NXT, in partnership with Salesforce, has released the latest edition of the **Implementor's Guide to AI**, focused this time on the **retail and consumer goods (RCG)** sector. Based on **260+ survey responses and insights from 3 industry experts**, the report uncovers how AI adoption is growing in intention, but is still shallow in maturity. The question now is no longer whether to adopt AI, but how to scale it responsibly and turn it into loyalty and growth.",
 
     { heading: "AI is no longer a choice, but scaling remains elusive" },
     "Half of RCG companies have already adopted AI in some form, signalling that AI is firmly part of the digital strategy. However, **most remain stuck at the pilot or experimentation stage, without achieving** enterprise-level transformation. **Leaders have clarity on AI's objectives, customer loyalty, growth, and operational efficiency, yet execution lags behind ambition.**",

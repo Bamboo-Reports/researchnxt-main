@@ -4,6 +4,44 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## Renamed the programme to "Implementor's Guide to AI", 2026-08-07
+
+On user direction the programme slug and its display name change from
+"implementer" to "implementor" throughout the site. The live WordPress site
+spells it both ways (the microsite headline says "Implementer's", one article
+URL says "implementors"), and an earlier entry in this file recorded
+"implementors" as the source's typo. That reading is superseded: the user
+confirmed "implementor" is the report's name and to ignore the WordPress
+spelling.
+
+Renamed, 145 references in all:
+
+- **Slug** `implementers-guide-to-ai` to `implementors-guide-to-ai`, which
+  moves three public URL families: the report landing, the 16 interviews under
+  `/resources/experts-view/`, and the 5 articles under `/resources/insights/`
+- **Directories** `src/content/experts-view/`, `src/content/insights/`,
+  `public/insights/` and `public/voices/`, all via `git mv` so history follows
+- **Assets** `public/covers/implementors-guide-to-ai{,-card}.png` and the three
+  `public/report-sections/implementors-guide-{landscape,strategy,governance}.png`
+- **Display copy** every "Implementer's Guide to AI" to "Implementor's Guide to
+  AI": the report hero and meta titles, the cover alt, the description line,
+  the four sector-article headlines, and both registries' project names
+- The `implementersGuideToAI` binding in `resources.ts` follows the slug
+
+**Deliberately not renamed.** Three redirect *sources* in `next.config.ts`
+still read `/guide-to-ai/implementers-guide-to-ai-…`, because those are real
+URLs on the live WordPress site today; changing them would stop inbound links
+resolving. Only the destinations moved. For the same reason `transcripts/` is
+untouched: it is a verbatim archive of WordPress source, and the folder
+`…-a-preview-of-the-implementors-guide-to-ai` already records the source's own
+inconsistency. Entries above this one in this file keep the old spelling
+because they are a historical log.
+
+Verified: all 21 relative module imports resolve on disk, all 26 referenced
+image assets exist, all 21 content modules carry the new `project` value, both
+registries and the landing `slug` agree, and `npm run lint` is clean. **Not
+typechecked or browser-checked** (needs permission to run `tsc` or a server).
+
 ## Interview cards drop the name-and-company byline, 2026-08-07
 
 On the home page's Experts view band, `featuredInterviews` no longer sets the

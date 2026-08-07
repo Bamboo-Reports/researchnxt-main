@@ -2,7 +2,7 @@ import type { ExpertInterview } from "../types";
 
 export const karthikAnantharaman: ExpertInterview = {
   slug: "karthik-anantharaman",
-  project: "implementers-guide-to-ai",
+  project: "implementors-guide-to-ai",
   perspective: "buyer",
 
   metaTitle:

@@ -40,9 +40,9 @@ programme, so the programme slug is always the middle segment:
 Concretely:
 
 ```
-/resources/reports-whitepapers/implementers-guide-to-ai
-/resources/experts-view/implementers-guide-to-ai/karthik-anantharaman
-/resources/insights/implementers-guide-to-ai/ai-is-the-future-and-the-future-is-now
+/resources/reports-whitepapers/implementors-guide-to-ai
+/resources/experts-view/implementors-guide-to-ai/karthik-anantharaman
+/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now
 ```
 
 The rules that follow from this:
@@ -58,9 +58,9 @@ The rules that follow from this:
   appears in two projects the registry aliases the import rather than renaming
   the route.
 - **Do not repeat the project in the leaf slug.** The source article
-  "Implementer's Guide to AI: Finance Leaders …" is
-  `/resources/insights/implementers-guide-to-ai/finance-leaders-…`, not
-  `…/implementers-guide-to-ai-finance-leaders-…`.
+  "Implementor's Guide to AI: Finance Leaders …" is
+  `/resources/insights/implementors-guide-to-ai/finance-leaders-…`, not
+  `…/implementors-guide-to-ai-finance-leaders-…`.
 - **Images follow the URL**: `public/insights/<project>/<article>.png`.
   (`public/experts/` predates this and is flat, with a company suffix where two
   projects carry the same person.)
