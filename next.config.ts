@@ -132,6 +132,21 @@ const redirectMap: { source: string; destination: string }[] = [
     destination:
       "/resources/insights/south-east-asia-response-guide/key-takeaways-business-strategies",
   },
+  // The marketing automation roundtable recap is served from two prefixes on
+  // WordPress, /events/ and /campaign-management/, so both point here.
+  {
+    source:
+      "/events/redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable",
+    destination:
+      "/resources/events/automation-campaign-management/marketing-automation-roundtable",
+  },
+  {
+    source:
+      "/campaign-management/redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable",
+    destination:
+      "/resources/events/automation-campaign-management/marketing-automation-roundtable",
+  },
+
   {
     source: "/events/business-strategy-report-launch-event",
     destination:

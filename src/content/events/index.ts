@@ -9,6 +9,7 @@
  */
 
 import { aiLedEbookLaunch } from "./ai-led-personalization/ai-led-ebook-launch";
+import { marketingAutomationRoundtable } from "./automation-campaign-management/marketing-automation-roundtable";
 import { businessStrategyReportLaunch } from "./south-east-asia-response-guide/business-strategy-report-launch";
 import { contentMarketingReportLaunch } from "./content-marketing-done-right/content-marketing-report-launch";
 import { reportLaunchWebinar } from "./b2c-marketing-automation-india-2017/report-launch-webinar";
@@ -20,6 +21,9 @@ export type { Event } from "./types";
 
 /** Every published event, newest first. */
 export const events = [
+  // Automation & Campaign Management
+  marketingAutomationRoundtable,
+
   // Southeast Asia Response Guide
   businessStrategyReportLaunch,
 
@@ -37,8 +41,13 @@ export const events = [
   nasscomTechnologyLeadershipForum2019,
   nasscomMartechConfluence2017,
 ].sort(
+  // An undated event sorts first: it stands in as "9999", which compares
+  // greater than any real ISO date, and the list runs newest first. The only
+  // one is the marketing automation roundtable, whose write-up is the most
+  // recent thing in the library, so newest-first still holds.
   (a, b) =>
-    b.date.localeCompare(a.date) || a.title.localeCompare(b.title, "en"),
+    (b.date ?? "9999").localeCompare(a.date ?? "9999") ||
+    a.title.localeCompare(b.title, "en"),
 );
 
 /**

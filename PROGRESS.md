@@ -4,6 +4,77 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## Marketing automation roundtable published under Events, 2026-08-07
+
+The last outstanding item from the campaign-management article batch. It was
+archived but unpublished because the user wanted it under Events, which was a
+placeholder at the time. Events is now a real route, so it is live at
+`/resources/events/automation-campaign-management/marketing-automation-roundtable`,
+taking the library to **eight events**.
+
+- **Slug shortened** from the source's
+  `redefining-marketing-excellence-highlights-from-the-marketing-automation-roundtable`
+  to `marketing-automation-roundtable`, the same trim the sector articles got,
+  since the project segment already carries the programme
+- **Two redirects, not one.** WordPress serves this write-up from both
+  `/events/…` and `/campaign-management/…`; both now point here. Redirect map
+  is 171 rules with no duplicate sources
+- **The inert card is finally wired**: the "Redefining Marketing Excellence"
+  quick read on the Automation & Campaign Management report landing had
+  carried a banner and no link since it was first built. It now has its `href`
+
+### No date, on user direction
+
+Neither the recap, the events listing, nor the page metadata states when the
+roundtable ran, so `Event.date` became **optional** rather than showing the
+write-up's publication date (2025-01-13), which is a different fact. Both
+templates omit the `<time>` when it is absent, and on the detail page the
+breadcrumb separator goes with it so the trail ends at the programme instead
+of a dangling slash. The registry sort stands an undated event in as `"9999"`
+so it still sorts newest-first, which is correct here.
+
+**Lead on the real date, not acted on:** the event photograph is named
+`WhatsApp-Image-2024-12-07-at-14.20.35`, which puts the roundtable at
+**7 December 2024**. That is a filename, not a stated fact, so it was not
+published as the date. Worth one confirmation, after which `date:
+"2024-12-07"` is a one-line change.
+
+### Photos and the highlights video
+
+- **Four photographs** from the source page, in a new optional `gallery` field
+  rendered as a plain grid under the write-up with the speaker group shot on a
+  double-width tile. Alt text was written from looking at each image, not
+  guessed from filenames
+- **The hero was upgraded** from the 1024x576 Open Graph crop to the full
+  1920x1080 event banner, the same collage at twice the resolution
+- **The highlights reel is the LinkedIn post** `urn:li:ugcPost:7272561579966021632`,
+  embedded lazily with `?compact=1` and the 710x450 ratio the source uses.
+  Kept as an embed rather than self-hosted so the views and comments stay on
+  the original post
+- **`Event.body` gained a `heading` block**, mirroring what an insights
+  article already supports. This recap runs five source sections and would
+  otherwise have been a wall of paragraphs or bold pseudo-headings
+
+### The mp4 in the repo root is not this video
+
+`69ebff20daba6852824524.mp4` was checked before being used and is **not** the
+roundtable footage: it is 4.5 seconds, 3200x2400, 120fps, silent, and a frame
+grab shows the Shinkei landing page. It is the animated-hero design reference,
+unrelated to this event, and is still untracked.
+
+### Dropped on user direction
+
+The `speakers` band ("Who spoke") is not on this event: the six speakers are
+named in the body already. The array was built and then removed, including the
+four cross-links to their published interviews in this same programme. The
+field stays on the type, and the other events still use it. **No form was
+removed because the events templates have never had one**; the only `form`
+matches on both routes are `formatDate`.
+
+Verified: all five image paths resolve, no duplicate redirect sources, eight
+modules against eight registry entries, and lint clean. **Not browser-checked**,
+so the gallery grid and the LinkedIn embed are unrendered.
+
 ## Preview article retitled to two lines, 2026-08-07
 
 "AI is the Future, and the Future is Now" was 38 characters, the shortest

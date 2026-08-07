@@ -732,6 +732,7 @@ const automationCampaignManagement: ReportLanding = {
       {
         title:
           "Redefining Marketing Excellence: Highlights from the Marketing Automation Roundtable",
+        href: "/resources/events/automation-campaign-management/marketing-automation-roundtable",
         image:
           "/quick-reads/automation-campaign-management/marketing-automation-roundtable.png",
       },

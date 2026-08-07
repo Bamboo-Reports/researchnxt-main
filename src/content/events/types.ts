@@ -22,8 +22,16 @@ export type Event = {
   title: string;
   /** Standfirst under the title. */
   lede: string;
-  /** Date the event ran, ISO `YYYY-MM-DD`. */
-  date: string;
+  /**
+   * Date the event ran, ISO `YYYY-MM-DD`.
+   *
+   * Optional, because a source page does not always state one: the marketing
+   * automation roundtable is written up as a recap with no date anywhere on
+   * the article, the events listing or its metadata. Where it is absent the
+   * templates omit the `<time>` rather than showing the write-up's own
+   * publication date, which would be a different fact.
+   */
+  date?: string;
   /** One or two sentences for the library card. */
   excerpt: string;
 
@@ -43,10 +51,27 @@ export type Event = {
 
   /**
    * Body blocks. A plain string is a paragraph, and `**` inside it marks bold
-   * emphasis; an object is a list, as the NASSCOM pages use to set out what
-   * participants take away.
+   * emphasis; a `list` is a bulleted set, as the NASSCOM pages use to set out
+   * what participants take away; a `heading` opens a section, which the
+   * longer recaps need so the piece is navigable rather than a wall of
+   * paragraphs. Same three shapes an insights article uses.
    */
-  body?: (string | { list: string[] })[];
+  body?: (string | { list: string[] } | { heading: string })[];
+
+  /**
+   * Photographs from the day, where the source page publishes them. Rendered
+   * as a plain grid under the write-up, not a carousel: there are only ever a
+   * handful and they are worth seeing at once.
+   */
+  gallery?: { src: string; alt: string }[];
+
+  /**
+   * A highlights video hosted on LinkedIn, given as the `urn:li:ugcPost:…`
+   * id from the post URL. It stays an embed rather than a self-hosted file
+   * because the post is where the video actually lives, and re-uploading it
+   * would fork the view count and the comments away from the original.
+   */
+  video?: { linkedInPost: string; caption: string };
 
   /**
    * Speakers, in running order. `interview` links a speaker to their

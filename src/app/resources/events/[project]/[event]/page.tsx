@@ -79,8 +79,15 @@ export default async function EventPage({ params }: Params) {
               ) : programme ? (
                 <span>{programme.name}</span>
               ) : null}
-              <span aria-hidden="true">/</span>
-              <time dateTime={event.date}>{formatDate(event.date)}</time>
+              {/* The separator belongs to the date, so a recap with no stated
+                  event date ends the trail at the programme rather than on a
+                  dangling slash. */}
+              {event.date ? (
+                <>
+                  <span aria-hidden="true">/</span>
+                  <time dateTime={event.date}>{formatDate(event.date)}</time>
+                </>
+              ) : null}
             </nav>
 
             <h1 className="max-w-[24ch] text-display-sm font-display text-ink">
@@ -121,6 +128,13 @@ export default async function EventPage({ params }: Params) {
                       >
                         <Emphasised text={block} />
                       </p>
+                    ) : "heading" in block ? (
+                      <h2
+                        key={block.heading}
+                        className="mt-4 text-title font-display-soft text-ink"
+                      >
+                        {block.heading}
+                      </h2>
                     ) : (
                       <ul
                         key={block.list.join("")}
@@ -174,6 +188,57 @@ export default async function EventPage({ params }: Params) {
           </div>
         </Container>
       </Section>
+
+      {/* Photographs from the day. A plain grid, because there are only ever a
+          handful and a carousel would hide most of them behind an arrow. */}
+      {event.gallery?.length ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <SectionHeading title="From the day" className="mb-10" />
+            <Reveal
+              as="ul"
+              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {event.gallery.map((photo, index) => (
+                <li
+                  key={photo.src}
+                  style={step(index)}
+                  className={index === 0 ? "lg:col-span-2 lg:row-span-2" : ""}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={2048}
+                    height={1152}
+                    loading="lazy"
+                    sizes="(min-width: 1024px) 40rem, (min-width: 640px) 45vw, 100vw"
+                    className="aspect-video h-full w-full rounded-md border border-line object-cover"
+                  />
+                </li>
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* The highlights reel, embedded from the LinkedIn post it was published
+          in. Lazy, so a third party is not contacted until it scrolls up. */}
+      {event.video ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <SectionHeading title="Highlights" className="mb-10" />
+            <div className="max-w-[45rem]">
+              <iframe
+                src={`https://www.linkedin.com/embed/feed/update/${event.video.linkedInPost}?compact=1`}
+                title={event.video.caption}
+                loading="lazy"
+                allowFullScreen
+                className="aspect-[71/45] w-full rounded-md border border-line"
+              />
+            </div>
+          </Container>
+        </Section>
+      ) : null}
 
       {event.speakers?.length ? (
         <Section surface="subtle" bordered spacing="tight">
