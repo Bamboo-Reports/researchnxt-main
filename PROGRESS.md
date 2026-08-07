@@ -4,6 +4,28 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## Single quick reads now render as a spotlight band, 2026-08-07
+
+The user flagged that three report landings looked wrong where the quick
+reads band has only one article: the rail rendered it as a lone quarter-width
+card centred under the band heading, reading as a starved carousel.
+
+The fix is in the template, not the data, and is generic: when
+`quickReads.items.length === 1` the band switches to the **spotlight
+grammar** the launch-event and success-story bands already use, image beside
+text on a two-column grid, with the band heading, the article title at
+`text-title`, and a secondary "Read the article" button. The rail is
+untouched for two or more items. An `href`-less item (the PHASE B inert
+state) renders the image without a link and drops the button.
+
+Affects four landings, the three the user named plus one more with the same
+shape found by counting every landing's items:
+`navigating-corporate-commute-for-gccs-in-india`,
+`unlocking-the-power-unified-cx`, `transforming-cx-through-gccs`, and
+`ai-led-personalization`. Lint and the impeccable detector are clean.
+**Not browser-checked**; the long Rethinking the Daily Commute title wraps to
+about four lines at the 26ch cap, worth an eyeball.
+
 ## Marketing automation roundtable published under Events, 2026-08-07
 
 The last outstanding item from the campaign-management article batch. It was

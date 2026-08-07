@@ -344,7 +344,66 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {report.quickReads ? (
+      {/* A single quick read gets the spotlight grammar the launch-event and
+          success-story bands already use: one pointer, image beside text.
+          A lone card in the rail read as a starved carousel. */}
+      {report.quickReads && report.quickReads.items.length === 1 ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+              <div className="anim-rise flex flex-col gap-5">
+                <SectionHeading title={report.quickReads.title} />
+                <p className="max-w-[26ch] text-title font-display-soft text-ink">
+                  {report.quickReads.items[0].title}
+                </p>
+                {report.quickReads.items[0].href ? (
+                  <div className="pt-1">
+                    <Button
+                      href={report.quickReads.items[0].href}
+                      variant="secondary"
+                    >
+                      Read the article
+                    </Button>
+                  </div>
+                ) : null}
+              </div>
+
+              {report.quickReads.items[0].href ? (
+                <Link
+                  href={report.quickReads.items[0].href}
+                  className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+                  style={delay(120)}
+                >
+                  <Image
+                    src={
+                      report.quickReads.items[0].image ??
+                      "/resource-placeholder.svg"
+                    }
+                    alt=""
+                    width={1280}
+                    height={720}
+                    sizes="(min-width: 1024px) 32rem, 100vw"
+                    className="aspect-video w-full object-cover"
+                  />
+                </Link>
+              ) : (
+                <Image
+                  src={
+                    report.quickReads.items[0].image ??
+                    "/resource-placeholder.svg"
+                  }
+                  alt=""
+                  width={1280}
+                  height={720}
+                  sizes="(min-width: 1024px) 32rem, 100vw"
+                  className="anim-rise aspect-video w-full rounded-lg border border-line object-cover"
+                  style={delay(120)}
+                />
+              )}
+            </div>
+          </Container>
+        </Section>
+      ) : report.quickReads ? (
         <Section bordered spacing="tight">
           <Container>
             <SectionHeading
