@@ -17,7 +17,11 @@ import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { getReportLanding, reportLandings } from "@/content/resources";
+import {
+  getReportLanding,
+  reportLandings,
+  type ReportCardItem,
+} from "@/content/resources";
 import { delay, step } from "@/lib/motion";
 
 /**
@@ -34,6 +38,98 @@ import { delay, step } from "@/lib/motion";
  */
 
 type Params = { params: Promise<{ slug: string }> };
+
+/**
+ * One card presented as a spotlight: the band heading beside the artwork, in
+ * the grammar the launch-event and success-story bands use. A lone card in a
+ * grid or rail reads as a starved carousel, so both the quick-reads and the
+ * experts bands fall back to this when they hold a single item.
+ */
+function CardSpotlight({
+  heading,
+  item,
+  linkLabel,
+}: {
+  heading: string;
+  item: ReportCardItem;
+  linkLabel: string;
+}) {
+  const image = (
+    <Image
+      src={item.image ?? "/resource-placeholder.svg"}
+      alt=""
+      width={1280}
+      height={720}
+      sizes="(min-width: 1024px) 32rem, 100vw"
+      className="aspect-video w-full object-cover"
+    />
+  );
+
+  return (
+    <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
+      <div className="anim-rise flex flex-col gap-5">
+        <SectionHeading title={heading} />
+        <p className="max-w-[26ch] text-title font-display-soft text-ink">
+          {item.title}
+        </p>
+        {item.href ? (
+          <div className="pt-1">
+            <Button href={item.href} variant="secondary">
+              {linkLabel}
+            </Button>
+          </div>
+        ) : null}
+      </div>
+
+      {item.href ? (
+        <Link
+          href={item.href}
+          className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+          style={delay(120)}
+        >
+          {image}
+        </Link>
+      ) : (
+        <div
+          className="anim-rise overflow-hidden rounded-lg border border-line"
+          style={delay(120)}
+        >
+          {image}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Cards sized to their count, shared by the quick-reads band and the
+ * single-group experts band. The 3-up grid keeps only full rows; a count
+ * that would leave an orphan row scrolls as a rail instead (which centres
+ * and drops its arrows whenever everything fits), and a pair sits centred
+ * at half width. The single-card case is CardSpotlight, handled by the
+ * caller because it restructures the whole band.
+ */
+function CardCountLayout({
+  items,
+  label,
+}: {
+  items: ReportCardItem[];
+  label: string;
+}) {
+  if (items.length === 2) {
+    return (
+      <Reveal className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
+        {items.map((item, index) => (
+          <ReportCard key={item.title} item={item} style={step(index)} />
+        ))}
+      </Reveal>
+    );
+  }
+  if (items.length % 3 === 0) {
+    return <ReportCardGrid items={items} />;
+  }
+  return <ReportCardRail items={items} label={label} />;
+}
 
 /**
  * The offer band's three line icons, drawn in the house stroke so the band
@@ -347,89 +443,30 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {/* A single quick read gets the spotlight grammar the launch-event and
-          success-story bands already use: one pointer, image beside text.
-          A lone card in the rail read as a starved carousel. */}
-      {report.quickReads && report.quickReads.items.length === 1 ? (
+      {/* Quick reads, sized to how many there are: one is a spotlight, a
+          pair sits centred, full rows keep the grid, and a count that would
+          leave an orphan row scrolls as a rail. */}
+      {report.quickReads ? (
         <Section bordered spacing="tight">
           <Container>
-            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
-              <div className="anim-rise flex flex-col gap-5">
-                <SectionHeading title={report.quickReads.title} />
-                <p className="max-w-[26ch] text-title font-display-soft text-ink">
-                  {report.quickReads.items[0].title}
-                </p>
-                {report.quickReads.items[0].href ? (
-                  <div className="pt-1">
-                    <Button
-                      href={report.quickReads.items[0].href}
-                      variant="secondary"
-                    >
-                      Read the article
-                    </Button>
-                  </div>
-                ) : null}
-              </div>
-
-              {report.quickReads.items[0].href ? (
-                <Link
-                  href={report.quickReads.items[0].href}
-                  className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
-                  style={delay(120)}
-                >
-                  <Image
-                    src={
-                      report.quickReads.items[0].image ??
-                      "/resource-placeholder.svg"
-                    }
-                    alt=""
-                    width={1280}
-                    height={720}
-                    sizes="(min-width: 1024px) 32rem, 100vw"
-                    className="aspect-video w-full object-cover"
-                  />
-                </Link>
-              ) : (
-                <Image
-                  src={
-                    report.quickReads.items[0].image ??
-                    "/resource-placeholder.svg"
-                  }
-                  alt=""
-                  width={1280}
-                  height={720}
-                  sizes="(min-width: 1024px) 32rem, 100vw"
-                  className="anim-rise aspect-video w-full rounded-lg border border-line object-cover"
-                  style={delay(120)}
-                />
-              )}
-            </div>
-          </Container>
-        </Section>
-      ) : report.quickReads ? (
-        <Section bordered spacing="tight">
-          <Container>
-            <SectionHeading
-              title={report.quickReads.title}
-              align="center"
-              className="mb-10"
-            />
-            {/* The rail earns its arrows only once it can overflow. Two cards
-                sit as a centred pair at half width, three as the standard
-                three-up grid; four or more scroll. */}
-            {report.quickReads.items.length === 2 ? (
-              <Reveal className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-2">
-                {report.quickReads.items.map((item, index) => (
-                  <ReportCard key={item.title} item={item} style={step(index)} />
-                ))}
-              </Reveal>
-            ) : report.quickReads.items.length === 3 ? (
-              <ReportCardGrid items={report.quickReads.items} />
-            ) : (
-              <ReportCardRail
-                items={report.quickReads.items}
-                label={report.quickReads.title}
+            {report.quickReads.items.length === 1 ? (
+              <CardSpotlight
+                heading={report.quickReads.title}
+                item={report.quickReads.items[0]}
+                linkLabel="Read the article"
               />
+            ) : (
+              <>
+                <SectionHeading
+                  title={report.quickReads.title}
+                  align="center"
+                  className="mb-10"
+                />
+                <CardCountLayout
+                  items={report.quickReads.items}
+                  label={report.quickReads.title}
+                />
+              </>
             )}
           </Container>
         </Section>
@@ -437,20 +474,40 @@ export default async function ReportLandingPage({ params }: Params) {
 
       {/* Expert insights, one tab per AI maturity stage rather than all four
           stacked, so the band stays short enough to read. Not every programme
-          ran interviews, so the band is skipped rather than left empty. */}
+          ran interviews, so the band is skipped rather than left empty.
+          A single group needs no tab rail, and sizes itself to its count the
+          same way the quick reads do: the orphan rows the 3-up grid left on
+          the 4- and 5-interview landings were the tell. */}
       {report.expertInsights ? (
         <Section surface="subtle" bordered spacing="tight">
           <Container>
-            <SectionHeading
-              title={report.expertInsights.title}
-              align="center"
-              className="mb-8"
-            />
-            {/* A single group needs no tab rail; the cards stand alone. */}
-            {report.expertInsights.groups.length === 1 ? (
-              <ReportCardGrid items={report.expertInsights.groups[0].items} />
+            {report.expertInsights.groups.length > 1 ? (
+              <>
+                <SectionHeading
+                  title={report.expertInsights.title}
+                  align="center"
+                  className="mb-8"
+                />
+                <ExpertInsightsTabs groups={report.expertInsights.groups} />
+              </>
+            ) : report.expertInsights.groups[0].items.length === 1 ? (
+              <CardSpotlight
+                heading={report.expertInsights.title}
+                item={report.expertInsights.groups[0].items[0]}
+                linkLabel="Read the interview"
+              />
             ) : (
-              <ExpertInsightsTabs groups={report.expertInsights.groups} />
+              <>
+                <SectionHeading
+                  title={report.expertInsights.title}
+                  align="center"
+                  className="mb-8"
+                />
+                <CardCountLayout
+                  items={report.expertInsights.groups[0].items}
+                  label={report.expertInsights.title}
+                />
+              </>
             )}
           </Container>
         </Section>

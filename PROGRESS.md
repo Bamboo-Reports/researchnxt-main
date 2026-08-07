@@ -81,6 +81,29 @@ Design.png`). Downscaled with sharp to 1190x1687 (779KB) at
 fourteen sit letterboxed on plates awaiting their files. The original 8.4MB
 source was not committed. Lint clean, not browser-checked.
 
+## Experts bands sized to their count, orphan rows gone, 2026-08-07
+
+The user flagged `unlocking-the-power-unified-cx`, where the five-interview
+"Insights shared by industry professionals" band rendered 3 + 2 in the 3-up
+grid. Same defect family as the quick reads: orphan rows and starved singles.
+
+One rule now covers both bands, in a shared `CardCountLayout`: **full rows
+keep the 3-up grid** (any multiple of 3, so the 18-interview B2C grid is
+untouched), **a pair sits centred at half width**, and **any count that
+would leave an orphan row scrolls as a rail** (which centres and drops its
+arrows when everything fits, so exactly 4 reads as a clean full row, not a
+carousel). **A single item becomes a `CardSpotlight`**, the extracted
+component both bands now share, with "Read the interview" as the label on
+the experts side. The quick-reads band was refactored onto the same two
+components with identical behaviour (one change: a future multiple-of-3
+count keeps the grid rather than railing).
+
+Resulting experts layouts: rail for unified-cx (5), navigating-commute (5),
+transforming-cx (4), abm (4), content-marketing (7); spotlight for the three
+one-interview landings (consumer-engagement, publishers-guide, etutoring);
+grids and tabs everywhere else unchanged. Verified per landing by counting
+the registry; lint clean; not browser-checked.
+
 ## Hero mockups updated across all report landings, 2026-08-07
 
 The user supplied a uniform tablet-mockup set at
