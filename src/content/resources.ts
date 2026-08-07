@@ -296,7 +296,7 @@ const implementorsGuideToAI: ReportLanding = {
   hero: {
     title: "Implementor's Guide to AI",
     lede: "Explore the comprehensive framework for AI readiness, strategies, governance, and cross departmental integration in Indian businesses across industries",
-    cover: "/covers/implementors-guide-to-ai.png",
+    cover: "/covers/implementors-guide-to-ai-hero.png",
     coverAlt: "Cover of the Implementor's Guide to AI report",
   },
 
@@ -668,7 +668,7 @@ const automationCampaignManagement: ReportLanding = {
   hero: {
     title: "Automation & Campaign Management Handbook for Functional Experts",
     lede: "Explore current campaign management nuances and opportunities tailored to Indian market dynamics",
-    cover: "/covers/automation-campaign-management.png",
+    cover: "/covers/automation-campaign-management-hero.png",
     coverAlt:
       "Cover of the Automation and Campaign Management Handbook for Functional Experts",
   },
@@ -996,7 +996,7 @@ const unlockingThePowerUnifiedCX: ReportLanding = {
   hero: {
     title: "Unlocking the Power of Unified CX",
     lede: "Explore the latest insights, strategies and innovations driving customer centric transformations in Qatar",
-    cover: "/covers/unlocking-the-power-unified-cx.png",
+    cover: "/covers/unlocking-the-power-unified-cx-hero.png",
     coverAlt: "Cover of the Unlocking the Power of Unified CX report",
   },
 
@@ -1153,7 +1153,7 @@ const navigatingCorporateCommute: ReportLanding = {
   hero: {
     title: "Navigating Corporate Commute for GCCs in India",
     lede: "Benchmark commute maturity across India's global capability centres and reimagine employee transport as a driver of productivity and growth",
-    cover: "/covers/navigating-corporate-commute-for-gccs-in-india.png",
+    cover: "/covers/navigating-corporate-commute-for-gccs-in-india-hero.png",
     coverAlt:
       "Cover of the Navigating Corporate Commute for GCCs in India report",
   },
@@ -1308,7 +1308,7 @@ const transformingCxThroughGccs: ReportLanding = {
   hero: {
     title: "Transforming CX through GCCs",
     lede: "How top global brands tech-enable their digital customer experience through the Indian GCC model",
-    cover: "/covers/transforming-cx-through-gccs.png",
+    cover: "/covers/transforming-cx-through-gccs-hero.png",
     coverAlt: "Cover of the Transforming CX through GCCs eBook",
   },
 
@@ -1412,7 +1412,7 @@ const cloudComputingNewNormal: ReportLanding = {
   hero: {
     title: "Cloud Computing in the New Normal & Beyond",
     lede: "India Inc's need for cloud computing in 2021 and beyond, a ready reckoner for cloud transformation custodians",
-    cover: "/covers/cloud-computing-new-normal-beyond.png",
+    cover: "/covers/cloud-computing-new-normal-beyond-hero.png",
     coverAlt: "Cover of the Cloud Computing in the New Normal & Beyond report",
   },
 
@@ -1529,7 +1529,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
   hero: {
     title: "Southeast Asia Response Guide 2021",
     lede: "The Best of Business Strategies In The New Normal",
-    cover: "/covers/south-east-asia-response-guide.png",
+    cover: "/covers/south-east-asia-response-guide-hero.png",
     coverAlt: "The Southeast Asia Response Guide 2021 open on a tablet",
   },
 
@@ -1698,7 +1698,7 @@ const aiLedPersonalization: ReportLanding = {
   hero: {
     title: "AI Led Personalization: Strategy and Trends, India 2020",
     lede: "A journey through the pandemic, and into the new normal",
-    cover: "/covers/ai-led-personalization.png",
+    cover: "/covers/ai-led-personalization-hero.png",
     coverAlt:
       "The AI Led Personalization Strategy and Trends Report, India 2020 on a tablet",
   },
@@ -1854,7 +1854,7 @@ const contentMarketingDoneRight: ReportLanding = {
   hero: {
     title: "Content Marketing Done Right",
     lede: "Trends and best practices in Indian content marketing, 2020",
-    cover: "/covers/content-marketing-done-right.png",
+    cover: "/covers/content-marketing-done-right-hero.png",
     coverAlt: "Cover of the Content Marketing Done Right report",
   },
 
@@ -1990,7 +1990,7 @@ const stateOfConsumerEngagementGcc2019: ReportLanding = {
   hero: {
     title: "State of Consumer Engagement, GCC 2019",
     lede: "A three-dimensional report on B2C consumer engagement in the GCC region",
-    cover: "/covers/state-of-consumer-engagement-gcc-2019.png",
+    cover: "/covers/state-of-consumer-engagement-gcc-2019-hero.png",
     coverAlt:
       "Cover of the State of Consumer Engagement, GCC 2019 report, in print and on a tablet",
   },
@@ -2103,7 +2103,7 @@ const abmBestPracticesIndia2018: ReportLanding = {
   hero: {
     title: "ABM Best Practices Report: India, 2018",
     lede: "A definitive guide for every B2B marketer",
-    cover: "/covers/abm-best-practices-report-india-2018.png",
+    cover: "/covers/abm-best-practices-report-india-2018-hero.png",
     coverAlt:
       "Cover of the ABM Best Practices Report: India, 2018, in print and on a tablet",
   },
@@ -2241,7 +2241,7 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
   hero: {
     title: "B2C Marketing Automation Report: India, 2017",
     lede: "All you need to know about marketing automation solutions",
-    cover: "/covers/b2c-marketing-automation-india-2017.png",
+    cover: "/covers/b2c-marketing-automation-india-2017-hero.png",
     coverAlt:
       "Cover of the B2C Marketing Automation Report: India, 2017, in print and on a tablet",
   },
@@ -2368,7 +2368,7 @@ const publishersGuideToSmarterMonetization: ReportLanding = {
   hero: {
     title: "A Publisher's Guide to Smarter Monetization",
     lede: "Ad revenue optimization techniques 2020",
-    cover: "/covers/publishers-guide-to-smarter-monetization.png",
+    cover: "/covers/publishers-guide-to-smarter-monetization-hero.png",
     coverAlt:
       "Cover of A Publisher's Guide to Smarter Monetization on a tablet",
   },
@@ -2430,7 +2430,7 @@ const corporateGiftingTrendsIndia2019: ReportLanding = {
   hero: {
     title: "Corporate Gifting Trends Report: India, 2019",
     lede: "Trends in the Indian corporate gifting industry",
-    cover: "/covers/corporate-gifting-trends-india-2019.png",
+    cover: "/covers/corporate-gifting-trends-india-2019-hero.png",
     coverAlt:
       "Cover of the Corporate Gifting Trends Report: India, 2019 on a tablet",
   },
@@ -2484,7 +2484,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
   hero: {
     title: "eTutoring Best Practices Whitepaper 2016",
     lede: "Best practices, challenges and growth in the e-tutoring industry",
-    cover: "/covers/etutoring-best-practices-whitepaper-2016.png",
+    cover: "/covers/etutoring-best-practices-whitepaper-2016-hero.png",
     coverAlt:
       "Cover of the E-Tutoring Best Practices Whitepaper on a tablet",
   },
