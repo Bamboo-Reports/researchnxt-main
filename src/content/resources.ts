@@ -1875,7 +1875,14 @@ const aiLedPersonalization: ReportLanding = {
       description:
         "Netcore commissioned this research to understand how India's consumer brands were using AI powered tools through the pandemic. The full case study covers what the research delivered.",
       linkLabel: "Read the story",
-      card: successStoryCard("ai-led-personalization", "netcore"),
+      /* The microsite's own testimonial card artwork (Rohit Shrivastav's
+         quote, supplied by the user) rather than the story record's cover,
+         shown in the left column with the CTA beneath it. */
+      card: successStoryCard(
+        "ai-led-personalization",
+        "netcore",
+        "/success-stories/ai-led-personalization/netcore-card.png",
+      ),
       /* The microsite sets its facts to the right of the client
          testimonial, verbatim on user direction: labels, values, pipes,
          capitals and the en dash as the source writes them. */
@@ -1901,7 +1908,8 @@ const aiLedPersonalization: ReportLanding = {
     sponsor: {
       label: "In association with",
       name: "Netcore",
-      logo: "/logos/trusted/netcore.png",
+      /* The official mark from netcore.ai, supplied by the user. */
+      logo: "/logos/trusted/netcore.svg",
     },
     partnerLabel: "Research partner",
   },

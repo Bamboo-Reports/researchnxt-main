@@ -798,6 +798,23 @@ export default async function ReportLandingPage({ params }: Params) {
                   <p className="max-w-[52ch] text-base leading-relaxed text-ink-soft">
                     <Emphasised text={spotlight.description} />
                   </p>
+                  {/* With the facts holding the right column, the card's
+                      artwork moves up here, above its own action. */}
+                  {spotlight.facts?.length && spotlight.card.image ? (
+                    <Link
+                      href={spotlight.card.href}
+                      className="group block max-w-[32rem] overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
+                    >
+                      <Image
+                        src={spotlight.card.image}
+                        alt={spotlight.card.title}
+                        width={1024}
+                        height={576}
+                        sizes="(min-width: 1024px) 32rem, 100vw"
+                        className="aspect-video w-full object-cover"
+                      />
+                    </Link>
+                  ) : null}
                   <div className="pt-1">
                     <Button href={spotlight.card.href} variant="secondary">
                       {spotlight.linkLabel}

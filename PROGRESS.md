@@ -145,6 +145,20 @@ It was the baked-artwork rendition of the microsite's Client Testimonial,
 which the landing now expresses through the success-story spotlight with the
 facts beside it, so the page no longer said it twice.
 
+**Client success story band finalised on user direction.** The left column
+now runs heading, description, then the microsite's own testimonial card
+artwork (the user-supplied 1024x576 with Rohit Shrivastav's quote and a play
+badge baked in, saved as
+`public/success-stories/ai-led-personalization/netcore-card.png` and passed
+through `successStoryCard`'s existing image override), with "Read the story"
+directly below the image; the facts hold the right column. The template's
+facts-variant spotlight gained the in-column image, linked like the
+right-hand cards are. Note the artwork's play badge implies a video; the
+link goes to the success story page, which is what the CTA says, so it was
+left as supplied. The credits' Netcore mark is now the official SVG from
+netcore.ai (`/logos/trusted/netcore.svg`), scoped to this landing's "In
+association with"; the B2C landing keeps the old PNG.
+
 **Structure revised too, on user direction.** The facts do not stand as
 their own band above the credits (the user asked for that section's
 removal); on the microsite they sit to the right of the client testimonial.
