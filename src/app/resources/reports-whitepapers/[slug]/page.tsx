@@ -171,6 +171,19 @@ const THEME_KEYWORDS: [RegExp, ThemeGlyphName][] = [
   [/success/i, "flag"],
   [/tech-powered/i, "gear"],
   [/innovation/i, "bulb"],
+  /* Added for the figure-led sets, where the claim is a sentence rather
+     than a label: checked against every highlight the reports carry. */
+  [/technology stack|tech stack/i, "nodes"],
+  [/\bvideo\b/i, "waveform"],
+  [/social media|channel/i, "tap"],
+  [/plan to|intend to|next year/i, "flag"],
+  [/budget|ad spend|invested|gifting/i, "coins"],
+  [/effective|effectiveness/i, "chart"],
+  [/optimis|programme/i, "sliders"],
+  [/align sales|collaborate|pipeline/i, "nodes"],
+  [/\bABM\b|target accounts/i, "target"],
+  [/\bemail\b/i, "chat"],
+  [/\bmobile\b/i, "tap"],
   [/last-mile|delivery/i, "route"],
   [/currency|revenue/i, "coins"],
   [/audio/i, "waveform"],
@@ -217,10 +230,11 @@ const FIGURE_LEAD =
   /^([$€£]?)(\d[\d,.]*)(%?)((?:\s(?:billion|million|trillion|lakh|crore|bn|mn|x))?)\s+(.+)$/i;
 
 /**
- * The highlights band's two treatments, chosen by the copy itself: a ledger
- * for figure-led findings, an index for plain labels. Mixed sets use the
- * ledger, where an unfigured row carries the signal dash in the figure
- * column instead.
+ * The highlights band's two treatments, chosen by the copy itself: a card
+ * plate for figure-led findings, a ruled index for plain labels. Mixed sets
+ * use the plate, where an unfigured finding leads it at full width, since a
+ * claim with no number is the headline of the set rather than one more row
+ * of it.
  */
 function HighlightsBand({ items }: { items: string[] }) {
   const parsed = items.map((item) => {
@@ -274,44 +288,62 @@ function HighlightsBand({ items }: { items: string[] }) {
     );
   }
 
-  /* The ledger. `font-figure` runs tabular so the numbers align down the
-     shared column, which is the token's stated purpose. */
+  /* Figures: a card plate. A set of statistics reads as a set of separate
+     findings, so each gets its own card with its theme glyph, the figure at
+     display size on the tabular face, and the claim as a sentence beneath.
+     A finding with no figure is the headline of the set rather than one more
+     row of it, so it leads the plate at full width. */
+  const labels = parsed.filter((entry) => !("claim" in entry));
+  const stats = parsed.filter((entry) => "claim" in entry);
+
+  /* Never more than three across: these claims are sentences, and a fourth
+     column squeezes them to two words a line. */
+  const columns =
+    stats.length === 2
+      ? "sm:grid-cols-2"
+      : stats.length === 4
+        ? "sm:grid-cols-2"
+        : "sm:grid-cols-2 lg:grid-cols-3";
+
   return (
-    <Reveal as="ul" className="mx-auto flex max-w-4xl flex-col">
-      {parsed.map((entry, index) => (
+    <Reveal
+      as="ul"
+      className={`mx-auto grid max-w-6xl gap-4 sm:gap-5 ${columns}`}
+    >
+      {labels.map((entry, index) => (
         <li
           key={entry.item}
-          // Fixed figure column, not auto: every row measures the same, so
-          // the numbers align down the band the way the tabular face wants.
-          className="grid grid-cols-[6.5rem_1fr] items-baseline gap-x-6 border-t border-line py-4 sm:grid-cols-[8.5rem_1fr] sm:gap-x-10"
           style={step(index)}
+          className="flex items-start gap-5 rounded-lg border border-accent-soft bg-accent-soft p-6 sm:col-span-full sm:items-center"
         >
-          {"claim" in entry ? (
-            <>
-              <span className="text-headline font-figure font-display-soft text-ink">
-                {entry.prefix}
-                <FigureValue value={`${entry.head}${entry.percent}`} />
-                {entry.unit ? (
-                  <span className="text-title">{entry.unit}</span>
-                ) : null}
-              </span>
-              <span className="text-base leading-relaxed text-ink-soft">
-                {entry.claim}
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="flex self-center">
-                <span
-                  aria-hidden="true"
-                  className="h-1 w-6 rounded-[1px] bg-signal"
-                />
-              </span>
-              <span className="text-base font-semibold leading-relaxed text-ink">
-                {entry.item}
-              </span>
-            </>
-          )}
+          <span className="grid size-11 shrink-0 place-items-center rounded-md bg-surface text-accent">
+            <ThemeIcon name={themeGlyph(entry.item)} />
+          </span>
+          <span className="text-title font-display-soft text-ink">
+            {entry.item}
+          </span>
+        </li>
+      ))}
+
+      {stats.map((entry, index) => (
+        <li
+          key={entry.item}
+          style={step(labels.length + index)}
+          className="flex flex-col gap-4 rounded-lg border border-line bg-surface p-6"
+        >
+          <span className="grid size-11 place-items-center rounded-md bg-accent-soft text-accent">
+            <ThemeIcon name={themeGlyph(entry.claim ?? entry.item)} />
+          </span>
+          <span className="text-display-sm font-figure font-display text-ink">
+            {entry.prefix}
+            <FigureValue value={`${entry.head}${entry.percent}`} />
+            {entry.unit ? (
+              <span className="text-headline">{entry.unit}</span>
+            ) : null}
+          </span>
+          <span className="text-base leading-relaxed text-ink-soft">
+            {entry.claim}
+          </span>
         </li>
       ))}
     </Reveal>
@@ -726,12 +758,12 @@ export default async function ReportLandingPage({ params }: Params) {
 
       {/* Headline findings, where the report lists them instead of chapters.
           Two treatments, chosen by what the copy actually is. Findings that
-          lead with a figure become a ledger: the number pulled out into the
-          tabular figure face on a shared column, counting up on first view,
-          with the claim reading as a sentence beside it. Labels without
-          figures become an index: the report's themes set at title size in
-          a centred wrap, since padding them into cards would fake a depth
-          they do not have. */}
+          lead with a figure become a card plate: one card each, the theme
+          glyph, the figure at display size on the tabular face and the claim
+          beneath, counting up on first view. Labels without figures
+          become an index instead: the report's themes set as a ruled
+          specimen plate, since a card with no number in it would fake a
+          depth the label does not have. */}
       {report.highlights ? (
         <Section surface="subtle" bordered spacing="tight">
           <Container>
