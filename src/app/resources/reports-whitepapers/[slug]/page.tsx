@@ -8,6 +8,7 @@ import { ReportCardGrid } from "@/components/report-card-grid";
 import { DownloadForm } from "@/components/forms/download-form";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Logo } from "@/components/layout/logo";
+import { FigureValue } from "@/components/motion/figure-value";
 import { Reveal } from "@/components/motion/reveal";
 import { QuoteCarousel } from "@/components/quote-carousel";
 import { ReportCardRail } from "@/components/report-card-rail";
@@ -38,6 +39,107 @@ import { delay, step } from "@/lib/motion";
  */
 
 type Params = { params: Promise<{ slug: string }> };
+
+/**
+ * Splits a finding that leads with a figure into its parts, so the number
+ * can be pulled out into the tabular figure face: currency prefix, numeric
+ * head, percent mark, spelled-out unit, then the claim. "83% of consumers
+ * choose email" and "$385 billion worth of ad budgets" both match; a label
+ * like "Digital-First Approach" does not, and stays a label.
+ */
+const FIGURE_LEAD =
+  /^([$€£]?)(\d[\d,.]*)(%?)((?:\s(?:billion|million|trillion|lakh|crore|bn|mn|x))?)\s+(.+)$/i;
+
+/**
+ * The highlights band's two treatments, chosen by the copy itself: a ledger
+ * for figure-led findings, an index for plain labels. Mixed sets use the
+ * ledger, where an unfigured row carries the signal dash in the figure
+ * column instead.
+ */
+function HighlightsBand({ items }: { items: string[] }) {
+  const parsed = items.map((item) => {
+    const match = FIGURE_LEAD.exec(item);
+    return match
+      ? {
+          item,
+          prefix: match[1],
+          head: match[2],
+          percent: match[3],
+          unit: match[4],
+          claim: match[5],
+        }
+      : { item };
+  });
+  const figures = parsed.filter((p) => "head" in p && p.head).length;
+
+  /* No figures anywhere: the index. The themes are the content, so they are
+     set at title size and allowed to wrap as a centred field. */
+  if (figures === 0) {
+    return (
+      <Reveal
+        as="ul"
+        className="mx-auto flex max-w-5xl flex-wrap items-baseline justify-center gap-x-12 gap-y-6"
+      >
+        {items.map((item, index) => (
+          <li
+            key={item}
+            className="flex items-baseline gap-3 text-title font-display-soft text-ink"
+            style={step(index)}
+          >
+            <span
+              aria-hidden="true"
+              className="size-2 shrink-0 rounded-[1px] bg-signal"
+            />
+            {item}
+          </li>
+        ))}
+      </Reveal>
+    );
+  }
+
+  /* The ledger. `font-figure` runs tabular so the numbers align down the
+     shared column, which is the token's stated purpose. */
+  return (
+    <Reveal as="ul" className="mx-auto flex max-w-4xl flex-col">
+      {parsed.map((entry, index) => (
+        <li
+          key={entry.item}
+          // Fixed figure column, not auto: every row measures the same, so
+          // the numbers align down the band the way the tabular face wants.
+          className="grid grid-cols-[6.5rem_1fr] items-baseline gap-x-6 border-t border-line py-4 sm:grid-cols-[8.5rem_1fr] sm:gap-x-10"
+          style={step(index)}
+        >
+          {"claim" in entry ? (
+            <>
+              <span className="text-headline font-figure font-display-soft text-ink">
+                {entry.prefix}
+                <FigureValue value={`${entry.head}${entry.percent}`} />
+                {entry.unit ? (
+                  <span className="text-title">{entry.unit}</span>
+                ) : null}
+              </span>
+              <span className="text-base leading-relaxed text-ink-soft">
+                {entry.claim}
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="flex self-center">
+                <span
+                  aria-hidden="true"
+                  className="h-1 w-6 rounded-[1px] bg-signal"
+                />
+              </span>
+              <span className="text-base font-semibold leading-relaxed text-ink">
+                {entry.item}
+              </span>
+            </>
+          )}
+        </li>
+      ))}
+    </Reveal>
+  );
+}
 
 /**
  * One card presented as a spotlight: the band heading beside the artwork, in
@@ -334,9 +436,14 @@ export default async function ReportLandingPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {/* Headline findings, where the report lists them instead of chapters:
-          a dense tick list, since the source gives labels without prose and
-          padding them into cards would fake a depth they do not have. */}
+      {/* Headline findings, where the report lists them instead of chapters.
+          Two treatments, chosen by what the copy actually is. Findings that
+          lead with a figure become a ledger: the number pulled out into the
+          tabular figure face on a shared column, counting up on first view,
+          with the claim reading as a sentence beside it. Labels without
+          figures become an index: the report's themes set at title size in
+          a centred wrap, since padding them into cards would fake a depth
+          they do not have. */}
       {report.highlights ? (
         <Section surface="subtle" bordered spacing="tight">
           <Container>
@@ -345,24 +452,7 @@ export default async function ReportLandingPage({ params }: Params) {
               align="center"
               className="mb-10"
             />
-            <Reveal
-              as="ul"
-              className="mx-auto grid max-w-4xl gap-x-10 gap-y-0 sm:grid-cols-2"
-            >
-              {report.highlights.items.map((item, index) => (
-                <li
-                  key={item}
-                  className="flex items-baseline gap-3 border-t border-line py-3.5 text-base font-semibold text-ink"
-                  style={step(index)}
-                >
-                  <span
-                    aria-hidden="true"
-                    className="size-1.5 shrink-0 rounded-[1px] bg-signal"
-                  />
-                  {item}
-                </li>
-              ))}
-            </Reveal>
+            <HighlightsBand items={report.highlights.items} />
           </Container>
         </Section>
       ) : null}

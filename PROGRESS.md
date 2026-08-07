@@ -104,6 +104,47 @@ one-interview landings (consumer-engagement, publishers-guide, etutoring);
 grids and tabs everywhere else unchanged. Verified per landing by counting
 the registry; lint clean; not browser-checked.
 
+## South-east testimonials fixed and the highlights band redesigned, 2026-08-07
+
+### The south-east voices band had the wrong artwork
+
+The user caught it against the source
+(`/microsite/business-strategy-2021/`): the migrated voices band carried the
+16:9 interview thumbnails (`/experts/*.jpg`) as full-width slides, quotes
+only in alt text. The microsite actually runs text quotes beside cut-out
+portraits, and those portrait files exist on WordPress (`Anil.png`,
+`ravi.png`, `jhonney.png`, `aron.png`, `karunjit.png`, `walter.png`; the
+similarly named `*-300x169.jpg` files are the interview video thumbnails,
+which is presumably how the mix-up happened). All six cut-outs are now at
+`public/voices/south-east-asia-response-guide/<slug>.png` (320w) and the six
+voices swapped `image` for `portrait`, so they render in the redesigned
+text-testimonial card. Block comment corrected.
+
+### "Report highlights" redesigned, frontend-design pass
+
+The user called the tick-list band generic. The redesign reads the copy and
+picks one of two treatments in a new `HighlightsBand` (template-only, no
+data changes):
+
+- **Findings ledger**, when items lead with figures: each row pulls its
+  number out into the tabular `font-figure` face at `text-headline` on a
+  fixed shared column (fixed, not auto, so rows measure identically and the
+  digits align, which is the token's stated purpose), counting up via the
+  existing `FigureValue`, with the claim reading as a sentence beside it.
+  A mixed-in unfigured row (corporate-gifting's "Pharma is the top buyer…",
+  content-marketing's "First of its kind…") carries the signal dash in the
+  figure column instead
+- **Theme index**, when no item carries a figure: the labels set at
+  `text-title font-display-soft` with the signal tick, wrapping as a centred
+  field, since the themes are the content and boxing them would fake depth
+
+The parser (`FIGURE_LEAD`) was dry-run against every real highlight in the
+registry: ledger for content-marketing (4/5), consumer-engagement (5/5),
+abm (6/6), publishers-guide (2/2 including "$385 billion"), corporate-gifting
+(5/6); index for south-east (0/10) and ai-led (0/6). Lint clean, not
+browser-checked; the ledger's figure column width (6.5rem, 8.5rem at sm) is
+the thing to eyeball against "$385 billion".
+
 ## GCC CX testimonials added to the transforming-cx landing, 2026-08-07
 
 The user caught four testimonials on the live source

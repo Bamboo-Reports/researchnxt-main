@@ -1661,13 +1661,14 @@ const southEastAsiaResponseGuide: ReportLanding = {
     ],
   },
 
-  /* The microsite runs these as text quotes beside speaker photographs
-     rather than as baked quote cards, so there is no artwork to carry and
-     the copy is quoted as written. */
+  /* The microsite runs these as text quotes beside cut-out speaker
+     portraits, so each carries `portrait` (the microsite's own cut-outs,
+     not the 16:9 interview thumbnails an earlier pass wrongly used here)
+     and the copy is quoted as written. */
   voices: {
     items: [
       {
-        image: "/experts/anil-gautam.jpg",
+        portrait: "/voices/south-east-asia-response-guide/anil-gautam.png",
         quote:
           "We are innovating by creating newer digital models to enhance interactions and experiences. And we're looking a lot more on the front-end agility and ensuring the back end can support any customization required at the front-end.",
         name: "Anil Gautam",
@@ -1675,7 +1676,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Malaysia",
       },
       {
-        image: "/experts/ravi-shankar.jpg",
+        portrait: "/voices/south-east-asia-response-guide/ravi-shankar.png",
         quote:
           "The proudest innovation that we did is that we built a system that identifies a non-performing route voluntarily and automatically launches aligned marketing campaigns without any human intervention and manual analysis.",
         name: "Ravi Shankar",
@@ -1683,7 +1684,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "AirAsia",
       },
       {
-        image: "/experts/johnny-widodo.jpg",
+        portrait: "/voices/south-east-asia-response-guide/johnny-widodo.png",
         quote:
           "When businesses start to plan, the focus should be on incremental innovation, incremental benefit, and incremental improvement on the current existing product, or is basically switching towards a very new product.",
         name: "Johnny Widodo",
@@ -1691,7 +1692,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "Indonesia",
       },
       {
-        image: "/experts/aaron-foo.jpg",
+        portrait: "/voices/south-east-asia-response-guide/aaron-foo.png",
         quote:
           "It is about removing things that you do not need; it could be just the middleman or the technology to simplify the business operations. It should have happened before COVID, but nobody focused on it until things happened.",
         name: "Aaron Foo",
@@ -1699,7 +1700,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "iCar Asia",
       },
       {
-        image: "/experts/karunjit-kumar-dhir.jpg",
+        portrait: "/voices/south-east-asia-response-guide/karunjit-kumar-dhir.png",
         quote:
           "After the wave of remote or work from anywhere trend, the extension of that trend will be many employers also allowing for BYOD, Bring Your Own Device. And because of this, the whole IT security landscape will evolve.",
         name: "Karunjit Kumar Dhir",
@@ -1707,7 +1708,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
         company: "SCIKEY",
       },
       {
-        image: "/experts/walter-de-oude.jpg",
+        portrait: "/voices/south-east-asia-response-guide/walter-de-oude.png",
         quote:
           "Everything about our service is digital and mobile-first. We found that people had more time to pause and sort out their finances. We also found that people were more responsive to interacting with financial services in a digital way.",
         name: "Walter de Oude",
