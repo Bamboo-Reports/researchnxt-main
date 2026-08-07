@@ -41,6 +41,171 @@ import { delay, step } from "@/lib/motion";
 type Params = { params: Promise<{ slug: string }> };
 
 /**
+ * Stroke glyphs for the theme index, drawn in the house line language: 1.6
+ * stroke, round caps, no fills, same hand as the capability and offer
+ * icons. One glyph per theme so a scanning reader can tell the cells apart
+ * before reading the labels, which is what the source microsites used their
+ * stock icons for.
+ */
+const THEME_GLYPHS = {
+  route: (
+    <>
+      <circle cx="6" cy="19" r="2.5" />
+      <path d="M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h4.5" />
+      <path d="M18 2.5c1.9 1.9 3 3.4 3 5a3 3 0 0 1-6 0c0-1.6 1.1-3.1 3-5Z" />
+    </>
+  ),
+  coins: (
+    <>
+      <ellipse cx="9" cy="7" rx="6" ry="2.6" />
+      <path d="M3 7v6c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6V7" />
+      <path d="M3 13v4c0 1.4 2.7 2.6 6 2.6 1.1 0 2.2-.1 3.1-.4" />
+      <path d="M18.5 13.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" />
+    </>
+  ),
+  tap: (
+    <>
+      <rect x="7" y="3" width="10" height="18" rx="2.2" />
+      <path d="M12 17.5h.01" />
+      <path d="M10.5 8.5 12 10l3-3" />
+    </>
+  ),
+  waveform: (
+    <>
+      <path d="M3 10v4M6.5 7.5v9M10 5v14M13.5 8.5v7M17 6.5v11M20.5 10v4" />
+    </>
+  ),
+  sliders: (
+    <>
+      <path d="M4 8h9M17 8h3M4 16h3M11 16h9" />
+      <circle cx="15" cy="8" r="2" />
+      <circle cx="9" cy="16" r="2" />
+    </>
+  ),
+  nodes: (
+    <>
+      <rect x="9.5" y="3" width="5" height="4.5" rx="1" />
+      <rect x="3" y="16.5" width="5" height="4.5" rx="1" />
+      <rect x="16" y="16.5" width="5" height="4.5" rx="1" />
+      <path d="M12 7.5v4M12 11.5 5.5 16.5M12 11.5l6.5 5" />
+    </>
+  ),
+  laptop: (
+    <>
+      <rect x="5" y="5" width="14" height="9.5" rx="1.4" />
+      <path d="M2.8 18.5h18.4" />
+      <path d="M9.5 9.2 11 10.7l3.5-3.2" />
+    </>
+  ),
+  chip: (
+    <>
+      <rect x="6.5" y="6.5" width="11" height="11" rx="1.6" />
+      <rect x="10" y="10" width="4" height="4" />
+      <path d="M9 3.5v3M15 3.5v3M9 17.5v3M15 17.5v3M3.5 9h3M3.5 15h3M17.5 9h3M17.5 15h3" />
+    </>
+  ),
+  bulb: (
+    <>
+      <path d="M12 3.5a6 6 0 0 1 3.5 10.9c-.8.6-1 1.2-1 2.1h-5c0-.9-.2-1.5-1-2.1A6 6 0 0 1 12 3.5Z" />
+      <path d="M10 19.5h4M10.8 21.5h2.4" />
+    </>
+  ),
+  chart: (
+    <>
+      <path d="M4 4v15.5h16" />
+      <path d="M8 15.5v-4M12 15.5V8M16 15.5v-5.5" />
+      <path d="M7.5 6.5 11 5l3 1.5 3.5-2" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <circle cx="12" cy="12" r="3.75" />
+      <path d="M12 12h.01" />
+    </>
+  ),
+  heart: (
+    <>
+      <path d="M12 20.5S4 15.6 4 9.9A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8 2.9c0 5.7-8 10.6-8 10.6Z" />
+    </>
+  ),
+  chat: (
+    <>
+      <path d="M4 5.5h11a1.8 1.8 0 0 1 1.8 1.8v5.4a1.8 1.8 0 0 1-1.8 1.8H9l-3.6 3v-3H4a1.8 1.8 0 0 1-1.8-1.8V7.3A1.8 1.8 0 0 1 4 5.5Z" />
+      <path d="M19.5 9.5h.7A1.8 1.8 0 0 1 22 11.3v5.4a1.8 1.8 0 0 1-1.8 1.8h-.7v2.6l-3.1-2.6H13" />
+    </>
+  ),
+  flag: (
+    <>
+      <path d="M6 21.5v-18" />
+      <path d="M6 4.5c4-2 8 2 12 0v9c-4 2-8-2-12 0" />
+    </>
+  ),
+  gear: (
+    <>
+      <circle cx="12" cy="12" r="3.2" />
+      <path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" />
+    </>
+  ),
+  compass: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m15.2 8.8-1.8 4.6-4.6 1.8 1.8-4.6 4.6-1.8Z" />
+    </>
+  ),
+} as const;
+
+type ThemeGlyphName = keyof typeof THEME_GLYPHS;
+
+/**
+ * Keyword to glyph, first match wins; ordered so the specific beats the
+ * general ("Service Delivery Innovations" is a bulb before "delivery" can
+ * make it a route, "Data is the currency" is coins before "data" makes it
+ * a chart). Checked against every label the two index reports carry.
+ */
+const THEME_KEYWORDS: [RegExp, ThemeGlyphName][] = [
+  [/personali[sz]ation/i, "target"],
+  [/empathy/i, "heart"],
+  [/engagement/i, "chat"],
+  [/success/i, "flag"],
+  [/tech-powered/i, "gear"],
+  [/innovation/i, "bulb"],
+  [/last-mile|delivery/i, "route"],
+  [/currency|revenue/i, "coins"],
+  [/audio/i, "waveform"],
+  [/self-service/i, "sliders"],
+  [/supply/i, "nodes"],
+  [/remote|virtual/i, "laptop"],
+  [/data/i, "chart"],
+  [/\bai\b/i, "chip"],
+  [/digital/i, "tap"],
+];
+
+function themeGlyph(label: string): ThemeGlyphName {
+  for (const [pattern, glyph] of THEME_KEYWORDS) {
+    if (pattern.test(label)) return glyph;
+  }
+  return "compass";
+}
+
+function ThemeIcon({ name }: { name: ThemeGlyphName }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="size-5"
+    >
+      {THEME_GLYPHS[name]}
+    </svg>
+  );
+}
+
+/**
  * Splits a finding that leads with a figure into its parts, so the number
  * can be pulled out into the tabular figure face: currency prefix, numeric
  * head, percent mark, spelled-out unit, then the claim. "83% of consumers
@@ -72,33 +237,36 @@ function HighlightsBand({ items }: { items: string[] }) {
   });
   const figures = parsed.filter((p) => "head" in p && p.head).length;
 
-  /* No figures anywhere: the index, set like the contents plate of a field
-     report. Left-aligned labels at title size off one shared edge, each
-     trailing the site's dotted tick-rule out to the column's right edge,
-     the same device that opens every section heading. */
+  /* No figures anywhere: the index, set as a ruled specimen plate. One
+     hairline mesh (a 1px line ground showing through the cell gaps), each
+     cell a theme with its glyph in the solutions pages' icon chip, so the
+     band reads as one instrument plate rather than the source's floating
+     white cards. Columns divide the count exactly so the plate is always
+     a full rectangle. */
   if (figures === 0) {
+    const columns =
+      items.length % 5 === 0
+        ? "lg:grid-cols-5"
+        : items.length % 4 === 0
+          ? "lg:grid-cols-4"
+          : "lg:grid-cols-3";
     return (
       <Reveal
         as="ul"
-        className="mx-auto grid max-w-5xl gap-x-16 gap-y-2 sm:grid-cols-2"
+        className={`mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden rounded-md border border-line bg-line ${columns}`}
       >
         {items.map((item, index) => (
           <li
             key={item}
-            className="flex items-baseline gap-4 py-2.5"
+            className="flex flex-col items-start gap-4 bg-surface-subtle p-5 sm:p-6"
             style={step(index)}
           >
-            <span
-              aria-hidden="true"
-              className="size-2 shrink-0 self-center rounded-[1px] bg-signal"
-            />
-            <span className="text-title font-display-soft text-ink">
+            <span className="grid size-11 place-items-center rounded-md bg-accent-soft text-accent">
+              <ThemeIcon name={themeGlyph(item)} />
+            </span>
+            <span className="text-base font-semibold leading-snug text-ink">
               {item}
             </span>
-            <span
-              aria-hidden="true"
-              className="rule-ticks h-px min-w-10 flex-1 self-center"
-            />
           </li>
         ))}
       </Reveal>

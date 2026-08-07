@@ -104,6 +104,41 @@ one-interview landings (consumer-engagement, publishers-guide, etutoring);
 grids and tabs everywhere else unchanged. Verified per landing by counting
 the registry; lint clean; not browser-checked.
 
+## Testimonial photos updated and the theme index becomes a specimen plate, 2026-08-07
+
+**South-east testimonial portraits, round two.** The user supplied six
+current profile photos to replace the 2021 microsite cut-outs. The six URLs
+arrived in exactly the data's order, verified by building a face-match
+contact sheet against the old portraits before wiring anything. Saved as
+`.jpg` under the same slugs (new filenames, so no cache serves the old
+artwork, per the project rule) and the six `portrait` paths updated; the old
+`.png` cut-outs are deleted.
+
+**The contents-plate index lasted one look.** The user showed the old
+WordPress band, ten white cards with stock line icons, and asked for a
+better showcase. The icons' instinct is right (visual anchors for a scan),
+the floating cards are the template the craft rules refuse. Rebuilt as a
+**ruled specimen plate**:
+
+- One hairline mesh (`gap-px` over a `bg-line` ground inside a rounded
+  border), cells on the band surface, so the grid reads as one ruled
+  instrument plate rather than ten cards
+- Each cell: the theme's glyph in the exact icon chip the solutions pages
+  use (`size-11 bg-accent-soft text-accent`, 1.6 stroke, round caps), then
+  the label semibold
+- **Sixteen new house-stroke glyphs** drawn into a `THEME_GLYPHS` table in
+  the template, chosen per label by an ordered keyword list where the
+  specific beats the general ("Service Delivery Innovations" is a bulb
+  before "delivery" makes it a route; "Data is the currency" is coins
+  before "data" makes it a chart). Dry-run over both index reports: every
+  label unique and sensible, `compass` as the unmatched fallback
+- Columns divide the count exactly (10 gets five, 6 gets three), so the
+  plate is always a full rectangle, no orphan cells
+
+The figure ledger for stat-led reports is untouched. Lint clean, not
+browser-checked; the sixteen glyphs are hand-drawn SVG and want one visual
+pass.
+
 ## South-east testimonials fixed and the highlights band redesigned, 2026-08-07
 
 ### The south-east voices band had the wrong artwork
