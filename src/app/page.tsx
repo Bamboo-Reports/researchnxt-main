@@ -109,6 +109,7 @@ export default function HomePage() {
                 key={report.href}
                 resource={report}
                 withPlate
+                portrait
                 style={step(index)}
               />
             ))}

@@ -81,6 +81,16 @@ Design.png`). Downscaled with sharp to 1190x1687 (779KB) at
 fourteen sit letterboxed on plates awaiting their files. The original 8.4MB
 source was not committed. Lint clean, not browser-checked.
 
+## Home Featured reports band follows the shelf, 2026-08-07
+
+On user direction the home page's four featured-report cards now carry the
+same vertical covers as the library: `featuredReports` maps
+`cardPortrait ?? cardImage`, and `ResourceCard` gained a `portrait` flag
+that switches its plate from `aspect-video` to the A4 `aspect-[210/297]`
+frame. Only the reports band passes it; the Experts view band keeps its
+16:9 interview banners, and those are the only two callers. Lint clean, not
+browser-checked.
+
 ## Single quick reads now render as a spotlight band, 2026-08-07
 
 The user flagged that three report landings looked wrong where the quick

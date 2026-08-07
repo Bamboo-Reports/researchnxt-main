@@ -83,7 +83,10 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
        clamped title, "Read more". */
     summary: "",
     href: `/resources/reports-whitepapers/${report.slug}`,
-    image: report.cardImage,
+    /* The report's own vertical cover, as on the library shelf. Landscape
+       cardImage remains the fallback for a report that launches before its
+       cover art. */
+    image: report.cardPortrait ?? report.cardImage,
   }),
 );
 
