@@ -301,6 +301,7 @@ const implementorsGuideToAI: ReportLanding = {
   },
 
   cardImage: "/covers/implementors-guide-to-ai-card.png",
+  cardPortrait: "/covers/implementors-guide-to-ai-portrait.png",
 
   download: {
     jotformId: "252512579059463",
@@ -1000,6 +1001,7 @@ const unlockingThePowerUnifiedCX: ReportLanding = {
   },
 
   cardImage: "/covers/unlocking-the-power-unified-cx-card.png",
+  cardPortrait: "/covers/unlocking-the-power-unified-cx-portrait.png",
 
   download: {
     jotformId: "250201862296454",
@@ -1157,6 +1159,7 @@ const navigatingCorporateCommute: ReportLanding = {
   },
 
   cardImage: "/covers/navigating-corporate-commute-for-gccs-in-india-card.png",
+  cardPortrait: "/covers/navigating-corporate-commute-for-gccs-in-india-portrait.png",
 
   download: {
     jotformId: "260490193043452",
@@ -1310,6 +1313,7 @@ const transformingCxThroughGccs: ReportLanding = {
   },
 
   cardImage: "/covers/transforming-cx-through-gccs-card.png",
+  cardPortrait: "/covers/transforming-cx-through-gccs-portrait.png",
 
   download: {
     jotformId: "241762483249463",
@@ -1413,6 +1417,7 @@ const cloudComputingNewNormal: ReportLanding = {
   },
 
   cardImage: "/covers/cloud-computing-new-normal-beyond-card.png",
+  cardPortrait: "/covers/cloud-computing-new-normal-beyond-portrait.png",
 
   download: {
     jotformId: "211600107593446",
@@ -1529,6 +1534,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
   },
 
   cardImage: "/covers/south-east-asia-response-guide-card.png",
+  cardPortrait: "/covers/south-east-asia-response-guide-portrait.png",
 
   download: {
     jotformId: "211602133570442",
@@ -1698,6 +1704,7 @@ const aiLedPersonalization: ReportLanding = {
   },
 
   cardImage: "/covers/ai-led-personalization-card.png",
+  cardPortrait: "/covers/ai-led-personalization-portrait.png",
 
   download: {
     jotformId: "200151888635458",
@@ -1852,6 +1859,7 @@ const contentMarketingDoneRight: ReportLanding = {
   },
 
   cardImage: "/covers/content-marketing-done-right-card.png",
+  cardPortrait: "/covers/content-marketing-done-right-portrait.png",
 
   download: {
     jotformId: "90447985712467",
@@ -1988,6 +1996,7 @@ const stateOfConsumerEngagementGcc2019: ReportLanding = {
   },
 
   cardImage: "/covers/state-of-consumer-engagement-gcc-2019-card.png",
+  cardPortrait: "/covers/state-of-consumer-engagement-gcc-2019-portrait.png",
 
   download: {
     jotformId: "92538569205465",
@@ -2100,6 +2109,7 @@ const abmBestPracticesIndia2018: ReportLanding = {
   },
 
   cardImage: "/covers/abm-best-practices-report-india-2018-card.png",
+  cardPortrait: "/covers/abm-best-practices-report-india-2018-portrait.png",
 
   download: {
     jotformId: "80661672684465",
@@ -2237,6 +2247,7 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
   },
 
   cardImage: "/covers/b2c-marketing-automation-india-2017-card.png",
+  cardPortrait: "/covers/b2c-marketing-automation-india-2017-portrait.png",
 
   download: {
     jotformId: "81703707306453",
@@ -2363,6 +2374,7 @@ const publishersGuideToSmarterMonetization: ReportLanding = {
   },
 
   cardImage: "/covers/publishers-guide-to-smarter-monetization-card.png",
+  cardPortrait: "/covers/publishers-guide-to-smarter-monetization-portrait.png",
 
   download: {
     jotformId: "200331930902443",
@@ -2424,6 +2436,7 @@ const corporateGiftingTrendsIndia2019: ReportLanding = {
   },
 
   cardImage: "/covers/corporate-gifting-trends-india-2019-card.png",
+  cardPortrait: "/covers/corporate-gifting-trends-india-2019-portrait.png",
 
   download: {
     jotformId: "83171595973469",
@@ -2477,6 +2490,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
   },
 
   cardImage: "/covers/etutoring-best-practices-whitepaper-2016-card.png",
+  cardPortrait: "/covers/etutoring-best-practices-whitepaper-2016-portrait.png",
 
   download: {
     jotformId: "81703041906450",

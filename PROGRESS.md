@@ -56,6 +56,22 @@ What is built and waiting for the files:
 - The home page's featured-reports band still uses the landscape `cardImage`
   and is untouched
 
+**All fifteen vertical covers are in and the shelf is complete.** The user
+supplied the remaining fourteen at `~/Documents/researchnxt.com/covers/`,
+each matched to its slug by filename (all fourteen matched confidently; the
+"India GCC CX Report" file is `transforming-cx-through-gccs`, distinct from
+the explicitly named State of Consumer Engagement GCC 2019). All aspect
+ratios sit within 2 to 4 percent of A4, so the full-bleed crop is negligible.
+Each was downscaled with sharp to 1190 wide as
+`public/covers/<slug>-portrait.png` and wired via `cardPortrait`, verified
+per entry inside its own const block (a naive lookahead first mis-skipped
+`publishers-guide-to-smarter-monetization`, caught by the per-block check and
+fixed by hand). **One quality note: `ai-led.png` is only 603x822**, below the
+1190 target, kept at native size rather than upscaled; a higher-resolution
+original would be worth swapping in later. The letterbox fallback in the
+library is now dead code in practice but stays for any future report that
+launches before its cover art.
+
 **The first vertical cover is in.** The user supplied the ACM report's flat
 A4 cover (`report-cover.png`, 5880x8334, found at
 `~/Documents/researchnxt.com/` and identical to `~/Downloads/Report Cover
