@@ -31,10 +31,20 @@ overflow the canvas.
 `cardImage` now points at `/covers/automation-campaign-management-card.png`;
 the old `-zoho-card.png` is deleted (git history keeps it). Lint clean.
 
-**If approved**: move the script into `scripts/` in the repo with the two
-TTFs (OFL) and a config entry per report, regenerate all ~15. The other
-covers are mostly flat artwork rather than transparent mockups, so
-`coverHeight`/`coverRight`/`coverTop` need eyeballing per report.
+**Revised on user direction to the no-text variant.** The library card sets
+the title in HTML below the image, so the title inside the artwork said
+everything twice. The shipped card is now just the deep field, the plate-blue
+glow (recentred behind the mock) and the tablet mockup centred at height 860.
+The generator keeps both compositions behind a `--plain` flag; the full
+text treatment remains available for surfaces with no HTML caption, an Open
+Graph image being the obvious one.
+
+**If approved for rollout**: move the script into `scripts/` in the repo with
+the two TTFs (OFL) and a config entry per report, regenerate all ~15 as
+`--plain`. The other covers are mostly flat artwork rather than transparent
+mockups, so sizing needs eyeballing per report, and flat rectangles may want
+a slight rotation or shadow to sit as objects on the field the way the tablet
+does.
 
 ## Single quick reads now render as a spotlight band, 2026-08-07
 
