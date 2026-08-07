@@ -56,7 +56,7 @@ eye:
 | photo: panellist | inline `image` block |
 | A Step Forward | same |
 | photo: speaker group | inline `image` block |
-| download form | `jotformId` |
+| download form | `jotformId`, but moved to the sticky aside, see below |
 
 - **`Event.body` gained two block types**: `heading`, mirroring what an
   insights article already supports, and `image`, which is what lets the
@@ -69,7 +69,17 @@ eye:
   upgraded from the 1024x576 crop to the full 1920x1080 collage
 - **The form is Jotform 243521499246462**, read off the source page and
   matching the archive, mounted through the existing `JotformEmbed` client
-  component at the foot of the page where the source puts it
+  component. It sits in a **sticky right-hand column, as on the interview
+  pages**, rather than as a band at the foot: on user direction, and it is the
+  better place, since a recap this long would otherwise bury the one action
+  below five sections of prose. The events template now shares the interview
+  template's exact measurements, `lg:grid-cols-[minmax(0,1fr)_minmax(0,23rem)]`
+  with `gap-12 lg:gap-16`, and the aside carries no panel and no heading of
+  its own because the embed brings its own framing
+- **That aside is now shared.** It previously held only the `facts` list, so
+  it is now `facts || jotformId`, stacking both where an event has both. No
+  event does yet: this one has a form and no facts, the four programme
+  launches have facts and no form
 - Alt text for all four photographs was written from looking at each image,
   not guessed from filenames
 

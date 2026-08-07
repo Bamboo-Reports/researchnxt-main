@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { Container } from "@/components/ui/container";
 import { Emphasised } from "@/components/ui/emphasis";
@@ -10,9 +11,8 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { eventHref, events, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { getInsightProject } from "@/content/insights";
-import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { formatDate } from "@/lib/date";
-import { step } from "@/lib/motion";
+import { delay, step } from "@/lib/motion";
 
 /**
  * One event. An event is a record of something that already happened, so the
@@ -103,11 +103,14 @@ export default async function EventPage({ params }: Params) {
 
       <Section spacing="default">
         <Container>
+          {/* Two columns whenever there is anything to park beside the piece,
+              on the interview pages' measurements so the two read as one
+              template. */}
           <div
             className={
-              event.facts?.length
-                ? "grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16"
-                : "grid gap-10"
+              event.facts?.length || event.jotformId
+                ? "grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,23rem)] lg:gap-16"
+                : "grid gap-12"
             }
           >
             <div className="flex flex-col gap-8">
@@ -119,7 +122,7 @@ export default async function EventPage({ params }: Params) {
                   src={`https://www.linkedin.com/embed/feed/update/${event.video.linkedInPost}?compact=1`}
                   title={event.video.caption}
                   allowFullScreen
-                  className="anim-rise aspect-[71/45] w-full max-w-[45rem] rounded-lg border border-line"
+                  className="anim-rise aspect-[71/45] w-full rounded-lg border border-line"
                 />
               ) : (
                 <Image
@@ -156,7 +159,7 @@ export default async function EventPage({ params }: Params) {
                         width={2048}
                         height={1152}
                         loading="lazy"
-                        sizes="(min-width: 768px) 42rem, 100vw"
+                        sizes="(min-width: 1024px) 34rem, (min-width: 640px) 60vw, 100vw"
                         className="my-2 aspect-video w-full rounded-md border border-line object-cover"
                       />
                     ) : (
@@ -185,54 +188,51 @@ export default async function EventPage({ params }: Params) {
               ) : null}
             </div>
 
-            {/* The event's own facts, where the source page lists them. The
-                conference participations have none, so the aside is dropped
-                and the body runs the full width. */}
-            {event.facts?.length ? (
-              <aside className="lg:sticky lg:top-24 lg:self-start">
-                <dl className="flex flex-col">
-                  {event.facts.map((fact, index) => (
-                    <div
-                      key={fact.label}
-                      className={`flex flex-col gap-1 py-4 ${
-                        index > 0 ? "border-t border-line" : "pt-0"
-                      }`}
-                    >
-                      <dt className="text-sm font-semibold text-ink-muted">
-                        {fact.label}
-                      </dt>
-                      <dd className="text-base leading-relaxed text-ink">
-                        {fact.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
+            {/* The column beside the piece: the event's own facts where the
+                source lists them, and the download form where it has one.
+                A conference participation has neither, so the aside is
+                dropped and the body runs the full width. */}
+            {event.facts?.length || event.jotformId ? (
+              <aside className="flex flex-col gap-10 lg:sticky lg:top-24 lg:self-start">
+                {event.facts?.length ? (
+                  <dl className="flex flex-col">
+                    {event.facts.map((fact, index) => (
+                      <div
+                        key={fact.label}
+                        className={`flex flex-col gap-1 py-4 ${
+                          index > 0 ? "border-t border-line" : "pt-0"
+                        }`}
+                      >
+                        <dt className="text-sm font-semibold text-ink-muted">
+                          {fact.label}
+                        </dt>
+                        <dd className="text-base leading-relaxed text-ink">
+                          {fact.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                ) : null}
+
+                {/* No panel and no heading of its own, as on the interview
+                    pages: the embed carries its own title and framing. */}
+                {event.jotformId ? (
+                  <div
+                    id="download"
+                    className="anim-rise scroll-mt-24"
+                    style={delay(160)}
+                  >
+                    <JotformEmbed
+                      formId={event.jotformId}
+                      title="Download the handbook"
+                    />
+                  </div>
+                ) : null}
               </aside>
             ) : null}
           </div>
         </Container>
       </Section>
-
-      {/* The download form the source page closes with, in the same place. */}
-      {event.jotformId ? (
-        <Section surface="subtle" bordered spacing="tight">
-          <Container>
-            <div className="max-w-[45rem]">
-              <SectionHeading
-                title="Get the handbook"
-                lede="The report launched at this event, free to download."
-                className="mb-8"
-              />
-              <div id="download" className="scroll-mt-24">
-                <JotformEmbed
-                  formId={event.jotformId}
-                  title="Download the handbook"
-                />
-              </div>
-            </div>
-          </Container>
-        </Section>
-      ) : null}
 
       {event.speakers?.length ? (
         <Section surface="subtle" bordered spacing="tight">
