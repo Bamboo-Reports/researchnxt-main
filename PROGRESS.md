@@ -138,6 +138,13 @@ month journey…") instead of copy written from the event record. Note this
 verbatim ruling sits alongside the older carried-as-published precedent and
 overrides house normalisation for microsite content on this landing.
 
+**The Rohit Shrivastav quote card is removed on user direction.** It was the
+landing's only voice, so the whole voices band goes with it, along with the
+now-unreferenced `public/voices/ai-led-personalization/rohit-srivastav.png`.
+It was the baked-artwork rendition of the microsite's Client Testimonial,
+which the landing now expresses through the success-story spotlight with the
+facts beside it, so the page no longer said it twice.
+
 **Structure revised too, on user direction.** The facts do not stand as
 their own band above the credits (the user asked for that section's
 removal); on the microsite they sit to the right of the client testimonial.

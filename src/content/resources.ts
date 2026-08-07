@@ -1861,19 +1861,6 @@ const aiLedPersonalization: ReportLanding = {
 
   /* The microsite's "Client Testimonial", carried as the one voice card it
      is: the quote is baked into the artwork, so it is quoted here too. */
-  voices: {
-    items: [
-      {
-        image: "/voices/ai-led-personalization/rohit-srivastav.png",
-        quote:
-          "Research NXT has the knowledge and experience of providing Marketing Solutions that we were seeking in a vendor.",
-        name: "Rohit Shrivastav",
-        role: "Head of Growth",
-        company: "Netcore Solutions",
-      },
-    ],
-  },
-
   spotlights: [
     {
       /* Heading and both sentences verbatim from the microsite. */
