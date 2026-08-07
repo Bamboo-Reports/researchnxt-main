@@ -104,6 +104,36 @@ one-interview landings (consumer-engagement, publishers-guide, etutoring);
 grids and tabs everywhere else unchanged. Verified per landing by counting
 the registry; lint clean; not browser-checked.
 
+## GCC CX testimonials added to the transforming-cx landing, 2026-08-07
+
+The user caught four testimonials on the live source
+(`/bambooreports/transforming-cx-through-gcc-ebook/`) that the migrated
+landing never carried; the entry even had a comment asserting "this page runs
+no quote cards", which was wrong about the page even if right about the
+cards: the source runs them as **plain text testimonials**, not baked
+artwork, which is presumably how the migration missed them.
+
+- `ReportLanding.voices` items' `image` is now optional, and `QuoteCarousel`
+  gained a text mode: no artwork renders a panel-grammar `figure` with the
+  quote at `text-title` and a name, role, company `figcaption`, `h-full` so
+  short quotes match the tallest card. Both keys switched from `voice.image`
+  to `voice.name`. Image-carrying voices bands (b2c, south-east, unified-cx
+  and the implementors guide) render exactly as before
+- The four quotes were extracted from the raw source HTML, not a summary,
+  and are **quoted as written**, American spellings included, matching the
+  south-east precedent. The speakers are exactly the landing's four
+  interviewees. Attributions as the page states them: Vineet Dwivedi (Global
+  Head, Alcon Global Services), Sharda Nenwani Gupta (MD & Global Business
+  Services Head, India, no company on the page though her interview says GBS
+  Bayer India), Geetanjali Chugh Kothari (CMO, Future Generali India Life
+  Insurance), Vivek Veeraraghavan (SVP of Digital Transformation APAC,
+  Northern Trust)
+- The band sits where voices always sits, between the interviews and the
+  credits, with no heading of its own
+
+Lint clean. Not browser-checked; the new text-card mode is the thing to look
+at, especially that the four cards hold one height in the rail.
+
 ## Multi-row card stacks become single-row rails site-wide, 2026-08-07
 
 Follow-up on the user flagging `south-east-asia-response-guide`: its six

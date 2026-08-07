@@ -263,8 +263,12 @@ export type ReportLanding = {
    */
   voices?: {
     items: {
-      /** Path under /public. */
-      image: string;
+      /**
+       * Path under /public, where the source bakes the quote into card
+       * artwork. Omitted where the source runs plain text testimonials, and
+       * the carousel then sets the quote as text instead.
+       */
+      image?: string;
       quote: string;
       name: string;
       role: string;
@@ -1386,7 +1390,43 @@ const transformingCxThroughGccs: ReportLanding = {
     ],
   },
 
-  /* This page runs no quote cards, so the landing carries no voices band. */
+  /* The source page runs these as plain text testimonials under "View
+     Insights shared by GCC Leaders", not baked quote cards, so there is no
+     artwork to carry and the copy is quoted as written, American spellings
+     included. Attributions are as the page states them: Sharda's testimonial
+     names no company (her interview record says GBS Bayer India) and styles
+     her role differently from that record; both carried as published. */
+  voices: {
+    items: [
+      {
+        quote:
+          "We should ensure that the change is adopted well both in the customer experience ecosystem and within the organization to consider any digital transformation initiative effective",
+        name: "Vineet Dwivedi",
+        role: "Global Head",
+        company: "Alcon Global Services",
+      },
+      {
+        quote:
+          "The hybrid model of in-house capabilities and specialized third-party expertise enables us to navigate the complexities of digital transformation effectively",
+        name: "Sharda Nenwani Gupta",
+        role: "MD & Global Business Services Head, India",
+      },
+      {
+        quote:
+          "From the perspective of improving awareness and customer experience (CX) levels, insurers will focus on expanding their reach through API plug-ins and integrate more self-service options across their digital platforms",
+        name: "Geetanjali Chugh Kothari",
+        role: "CMO",
+        company: "Future Generali India Life Insurance",
+      },
+      {
+        quote:
+          "We should evaluate the actual need for something to be automated and not just for the sake of it; otherwise, we will end up automating a bad process",
+        name: "Vivek Veeraraghavan",
+        role: "SVP of Digital Transformation APAC",
+        company: "Northern Trust",
+      },
+    ],
+  },
 
   credits: {
     sponsor: {

@@ -78,20 +78,38 @@ export function QuoteCarousel({
         className="flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {voices.items.map((voice) => (
-          <li key={voice.image} className="w-full shrink-0 snap-center">
-            <Image
-              src={voice.image}
-              alt={[`"${voice.quote}"`, voice.name, voice.role, voice.company]
-                .filter(Boolean)
-                .join(", ")}
-              width={1748}
-              height={692}
-              // The band is capped at max-w-3xl, so tell the optimiser the
-              // real rendered width instead of letting it assume full-viewport
-              // and ship the 1748px original.
-              sizes="(min-width: 48rem) 48rem, 100vw"
-              className="w-full rounded-lg"
-            />
+          <li key={voice.name} className="w-full shrink-0 snap-center">
+            {voice.image ? (
+              <Image
+                src={voice.image}
+                alt={[`"${voice.quote}"`, voice.name, voice.role, voice.company]
+                  .filter(Boolean)
+                  .join(", ")}
+                width={1748}
+                height={692}
+                // The band is capped at max-w-3xl, so tell the optimiser the
+                // real rendered width instead of letting it assume
+                // full-viewport and ship the 1748px original.
+                sizes="(min-width: 48rem) 48rem, 100vw"
+                className="w-full rounded-lg"
+              />
+            ) : (
+              /* No artwork from the source: the quote is set as text in the
+                 same panel grammar the rest of the site uses. `h-full` keeps
+                 a short quote's card as tall as the longest one's, so the
+                 dots never jump while the rail scrolls. */
+              <figure className="flex h-full flex-col justify-between gap-8 rounded-lg border border-line bg-surface p-8 sm:p-10">
+                <blockquote className="text-title font-display-soft text-ink">
+                  &ldquo;{voice.quote}&rdquo;
+                </blockquote>
+                <figcaption className="text-sm leading-relaxed text-ink-soft">
+                  <span className="font-semibold text-ink">{voice.name}</span>
+                  {", "}
+                  {voice.role}
+                  {voice.company ? `, ${voice.company}` : null}
+                </figcaption>
+              </figure>
+            )}
           </li>
         ))}
       </ul>
@@ -110,7 +128,7 @@ export function QuoteCarousel({
         <div className="flex flex-wrap items-center justify-center gap-0.5">
           {voices.items.map((voice, dot) => (
             <button
-              key={voice.image}
+              key={voice.name}
               type="button"
               aria-label={voice.name}
               aria-current={dot === index ? "true" : undefined}
