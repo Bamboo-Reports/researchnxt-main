@@ -62,8 +62,10 @@ library.
   the single source of truth for the navbar, footer, address and socials.
 - **Server components by default.** The navbar, the two forms, the two motion
   components (`Reveal`, `FigureValue`), the two scrolling rails
-  (`QuoteCarousel`, `ReportCardRail`) and the three hero components
-  (`HeroQuestions`, `HeroIntro`, `HeroField`) are the only client components.
+  (`QuoteCarousel`, `ReportCardRail`), the three hero components
+  (`HeroQuestions`, `HeroIntro`, `HeroField`) and `VideoEmbed`, which keeps a
+  YouTube recording a poster until it is clicked, are the only client
+  components.
 - **GSAP is in the stack for authored motion** (`HeroIntro` owns the hero
   entrance timeline). Content must stay visible by default: GSAP animates
   FROM hidden states only when `data-motion="on"`, never hides content in

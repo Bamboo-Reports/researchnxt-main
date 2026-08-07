@@ -4,6 +4,224 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-07
 
+## Report highlights become a card plate, 2026-08-07
+
+The figure-led treatment of `HighlightsBand` was a ledger: a fixed 8.5rem
+figure column with the claim set beside it. On
+`/resources/reports-whitepapers/content-marketing-done-right` that left a
+gulf between a short number and its sentence, and the one unfigured finding
+sat in the middle of the run carrying a lone signal dash where a number
+should be. Replaced with a card plate, on user direction, asking for icons
+and cards.
+
+Each finding is now its own bordered card on the subtle ground: theme glyph
+in the accent chip, the figure at `text-display-sm` on the tabular face
+still counting up through `FigureValue`, the claim beneath. Never more than
+three across, because these claims are sentences and a fourth column
+squeezes them to two words a line: 2 or 4 findings go two up, everything
+else two up then three.
+
+The unfigured finding is not a row of the plate but its headline, so it
+leads at full width in an accent-soft card. On the content-marketing page
+that is exactly right: "First of its kind Content Marketing Technology Stack
+for the Indian market" is the claim the report is selling.
+
+The index treatment for all-label sets is untouched.
+
+### Glyph keywords extended
+
+`THEME_KEYWORDS` was tuned against the two all-label reports, so figure-led
+claims mostly fell through to the compass default. Added eleven rules
+covering the figure sets: technology stack, video, social media or channel,
+plan/intend/next year, budget or gifting, effectiveness, optimisation,
+sales alignment, ABM, email, mobile. Checked against every highlight the
+seven reports carry. The ABM plate no longer shows the same target three
+times.
+
+Verified in Chrome on the content-marketing page (5 findings, lead card plus
+2x2) and the ABM page (6 findings, 3x2).
+
+---
+
+## Content marketing launch page diffed against its live post, 2026-08-07
+
+`/resources/events/content-marketing-done-right/content-marketing-report-launch`
+against `researchnxt.com/events/content-marketing-report-event-launch/`.
+Four things the source publishes were missing.
+
+- **The launch recording.** YouTube `xXwLZXt3uRw`, poster from the source's
+  own overlay, saved as
+  `public/events/content-marketing-report-launch/session-report-launch.png`.
+  Uses the `sessions` field added for the ai-led launch.
+- **The two interview quotes.** Amit Kapoor (Cigniti) and Ranjit Behera
+  (BankBazaar), each card linking to the published interview. New `quotes`
+  field on the `Event` type. Names and roles come from the interviews
+  themselves: the source page writes them as "Amit Kumar" and "Ranjit
+  Behra", both wrong.
+- **Speaker portraits.** Three, normalised the same way as the ai-led set.
+- **The report panel.** Cover, name and "Read the full report", using the
+  `reportBand` field. `facts` on `reportBand` is now optional, because this
+  event already lists the same four beside its write-up and the ai-led one
+  does not.
+
+### Then reshaped on user direction
+
+The write-up band went the same way as the ai-led one, in stages:
+
+- **Banner image removed.** An event that leads with recordings does not
+  need a still above them, so the banner is dropped whenever `sessions` is
+  set. `hasPiece` in the template is what decides this.
+- **The two write-up paragraphs moved below the deck link**, inside the
+  sessions band. Same rule: where the recordings lead, the write-up follows
+  them.
+- **The four facts moved into the report band**, verbatim from the source
+  panel this time ("Research Focus: B2B", "Jun 2019 – Nov 2019", pipes and
+  capitals as written), and off the event's own `facts`. With no piece and
+  no facts left, the write-up band drops entirely.
+
+The template gained a third layout on the way: where an event has facts but
+no piece, they spread four across the width instead of sitting in a 23rem
+column beside nothing. Nothing currently uses it, since this event's facts
+then moved to the report band, but it is what keeps the aside honest.
+
+### Quote card portraits
+
+The interviews' own thumbnails are composed banners: the photograph on the
+left, the name, role and client logo set beside it. Cropping one to a circle
+gives you a disc of set copy. So the quote cards carry a square cut of the
+same photograph, taken from the left 49% of the banner, which stops short of
+the divider. Saved as
+`public/events/content-marketing-report-launch/quote-<slug>.jpg` and set on
+the quote rather than read off the interview record.
+
+### LinkedIn on the speakers
+
+All three profiles are on the source page and are now on the cards, the same
+treatment as the ai-led launch. Santosh Abraham's matches the URL the user
+supplied for the ai-led page.
+
+**The slide deck is a link, not an embed.** The source runs the "Full
+Presentation of Event Launch" as a 300px-square SlideShare iframe with an
+empty anchor under it. New `deck` field renders it as a named link to
+`slideshare.net/AkshaykumarRokade/nasscom-martech-researchnxt` instead.
+
+---
+
+## AI-led ebook launch page filled in from the live post, 2026-08-07
+
+Diffed `/resources/events/ai-led-personalization/ai-led-ebook-launch` against
+`researchnxt.com/events/ai-led-ebook-launch/`. The local page carried the
+title, lede, facts and the speaker list, and nothing else the source publishes.
+Four things were missing; all four are now in.
+
+### The four session recordings
+
+The source page is built around them, and they were not on ours at all. They
+are now a "Watch the sessions" band, in the source's running order, with the
+YouTube ids and the poster stills taken from the source's own player overlays:
+
+| Session | YouTube id |
+| --- | --- |
+| Keynote, David Raab, Founder, CDP Institute | `K73A41ed_Fw` |
+| Panel discussion, Customer engagement as a driver of growth | `X0SgCIUiu5M` |
+| Fireside chat, Building the right foundation: marketing with data | `l4S6q9UjN8Q` |
+| Panel discussion, Personalization a competitive advantage | `YNjogt0zGso` |
+
+Posters saved under `public/events/ai-led-ebook-launch/session-*.png`,
+unmodified from the source. The keynote leads the band at two-thirds width
+with its label set beside it; the other three run three up beneath.
+
+New `sessions` field on the `Event` type, so any other event with published
+recordings gets the same band for free.
+
+### `VideoEmbed`, a new client component
+
+`src/components/media/video-embed.tsx`. Four YouTube iframes to show four
+still frames would load the player and its cookies on every visit, so the
+poster is the default and the iframe (on `youtube-nocookie.com`, autoplay on)
+replaces it only on the click that means to watch. This is the sixth entry on
+the client-component list in `CLAUDE.md`, which has been updated.
+
+### Speaker portraits
+
+All fifteen headshots pulled from the source, centre-cropped square with a
+slight upward bias so no head is clipped, resized to 560px and saved as
+progressive JPEG at `public/events/ai-led-ebook-launch/speaker-<slug>.jpg`.
+The 6.5MB Rahul Mishra original is now 41KB. Contact-sheet checked: all
+fifteen crops frame the face. `alt=""` on each, because the name is the next
+line down.
+
+### Speaker cards: LinkedIn, no interview link
+
+The source links every speaker card to a LinkedIn profile, which we did not
+carry over at all. All fifteen names now link out, and the "Read the
+interview" line is gone on user direction, so the card is portrait, name to
+LinkedIn, role.
+
+Two exceptions worth knowing:
+
+- **Ravi Santhanam has no link.** The source page's card for him points at
+  TV Naarayan's profile (`naarayan-t-v-4b59621`), so there is no correct URL
+  to carry over. Field left unset; the name renders as plain text.
+- **Santosh Valecha and Santosh Abraham** were supplied by the user
+  (`santushv`, `santoshabraham`). The source has none for Abraham and a
+  different one for Valecha (`santosh-v-valecha`).
+
+`interview` stays on the `Event` type and the template still renders it: the
+south-east Asia and B2C automation report launches both set it, and both
+still show their interview links.
+
+### The report band and the client story band
+
+Two bands below the speakers, on user direction, both from the source page:
+
+- **The report band.** Report name over its subtitle, the four engagement
+  facts as a tick list, "Read the full report" to
+  `/resources/reports-whitepapers/ai-led-personalization`, the tablet cover
+  mockup at right. New `reportBand` field; the href resolves from the
+  programme's `reportSlug` rather than living in content.
+- **The client success story band.** Netcore's testimonial artwork and "Read
+  the story" at left, the engagement facts at right, on the report landing's
+  own measurements so the two pages carry one band. New `clientStory` field
+  pointing at the success-story slug inside the event's project.
+
+Facts on both are verbatim from the source, pipes, capitals and en dash
+included, which is how the report landing already carries them.
+
+### The write-up band removed on user direction
+
+A report panel and a client-story link were added to the aside first, then
+removed along with everything else above the sessions: on user direction the
+whole two-column band is gone from this event, banner image, body paragraph,
+facts list, report panel and story link. The page now runs title, sessions,
+speakers.
+
+Done in content, not by deleting template code: `body`, `facts` and the
+short-lived `reportCta` are off `aiLedEbookLaunch`, `reportCta` is off the
+`Event` type again, and the band itself is gated on
+
+```
+event.video || event.body?.length || event.facts?.length || event.jotformId
+```
+
+so it drops banner and all when there is nothing to put in it. Every other
+event has body or facts, so all seven render exactly as before, verified on
+`content-marketing-report-launch` (banner, body and the four facts all still
+there).
+
+`image` and `imageAlt` stay on the event, because the events library card
+still uses them.
+
+### Verified
+
+`npm run lint` clean, `tsc --noEmit` clean. Checked in Chrome at 1489px: all
+four posters render, the keynote player loads and reports 1:07:21 on click,
+the fifteen portraits render with their LinkedIn marks, the report band and
+the client story band both render, the page goes straight from the title to
+the sessions with no banner, and `scrollWidth === clientWidth` so nothing
+overflows.
+Not checked at 375 / 768.
+
 ## New report-library card for ACM, candidate for a full rollout, 2026-08-07
 
 The user flagged the `/resources/reports-whitepapers` cards as dated. They are

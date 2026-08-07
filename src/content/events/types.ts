@@ -79,21 +79,101 @@ export type Event = {
   video?: { linkedInPost: string; caption: string };
 
   /**
+   * The recordings of the event's own sessions, in running order, where the
+   * source page publishes them. Each carries the YouTube id from the source's
+   * player and the still the source uses as its overlay, so the programme is
+   * watchable from the page rather than only described in the body.
+   */
+  sessions?: {
+    /** "Keynote", "Panel discussion", "Fireside chat". */
+    kind: string;
+    title: string;
+    /** The `youtu.be/<id>` id from the source page. */
+    videoId: string;
+    /** Path under /public. */
+    poster: string;
+  }[];
+
+  /**
+   * A slide deck the source page embeds. Linked out rather than embedded:
+   * the source's SlideShare iframe renders at 300px square with an empty
+   * anchor beneath it, which is worse than a link that says what it is.
+   */
+  deck?: { title: string; href: string };
+
+  /**
+   * Pull quotes the source page runs from the programme's interviews, each
+   * pointing back at the full piece. `interview` is the slug inside the
+   * event's own `project`.
+   */
+  quotes?: {
+    text: string;
+    name: string;
+    role: string;
+    /**
+     * Path under /public. The interview's own thumbnail is a composed
+     * banner with the set copy beside the photograph, so it cannot be
+     * cropped to a circle; the card carries a square cut of the same
+     * photograph instead.
+     */
+    image?: string;
+    interview: string;
+  }[];
+
+  /**
    * Jotform id for the download form the source page closes with, where it
    * has one. A conference recap that gives nothing away carries none.
    */
   jotformId?: string;
 
   /**
-   * Speakers, in running order. `interview` links a speaker to their
-   * published interview when the same person appears in the experts-view
-   * library; the slug is resolved inside `project`.
+   * The report the event launched, as the source page's own panel: the cover
+   * artwork, the report's two-line name and the engagement facts, with the
+   * href resolved from the programme's `reportSlug`.
+   */
+  reportBand?: {
+    title: string;
+    subtitle: string;
+    /** Path under /public. */
+    artwork: string;
+    artworkAlt: string;
+    /**
+     * Optional: an event that already lists its facts beside the write-up
+     * does not repeat them under the cover.
+     */
+    facts?: { label: string; value: string }[];
+  };
+
+  /**
+   * The client story the engagement produced, as the source page closes on
+   * it. `story` is the success-story slug inside the event's own `project`,
+   * `card` is the microsite's testimonial artwork, and the facts are the
+   * engagement's own, carried verbatim from the source, pipes and capitals
+   * included.
+   */
+  clientStory?: {
+    story: string;
+    /** Path under /public. */
+    card: string;
+    facts: { label: string; value: string }[];
+  };
+
+  /**
+   * Speakers, in running order. A card carries the portrait, the LinkedIn
+   * profile where the source page links one, and a link to the speaker's
+   * published interview where the event sets `interview` and the same person
+   * appears in the experts-view library under `project`.
    */
   speakers?: {
     name: string;
     role: string;
     /** Path under /public. */
     image?: string;
+    /**
+     * The speaker's LinkedIn profile, as the source page links each card.
+     * Omitted where the source has no link, or links the wrong person.
+     */
+    linkedIn?: string;
     interview?: string;
   }[];
 };
