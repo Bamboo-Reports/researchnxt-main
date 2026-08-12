@@ -39,14 +39,12 @@ export const webengage: SuccessStory = {
     "WebEngage is a full-stack marketing automation suite that drives growth for consumer businesses by enabling them to engage users via multiple channels like push, in-app, SMS, on-site notifications, web push, and email. The platform's analytical capabilities also make it possible for businesses to get a 360 degree view of their users, product and campaigns, and to compare the impact of each channel of engagement.",
   ],
 
+  /* The source page carries the two participant quotes below and no words
+     from WebEngage itself: the Avlesh Singh sentence that used to lead this
+     list is baked into the poster artwork, not page copy, and his name
+     appears nowhere on the page. The source runs no recording either, so the
+     artwork stays a still. */
   quotes: [
-    {
-      quote:
-        "We want marketers in the GCC region to refer to this study as a benchmark report for measuring and creating consumer engagement strategies.",
-      name: "Avlesh Singh",
-      role: "Co-founder and CEO",
-      company: "WebEngage",
-    },
     {
       quote:
         "Analytics tracking is the key to understanding customer behaviour and engagement.",

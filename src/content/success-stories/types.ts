@@ -39,6 +39,37 @@ export type SuccessStory = {
   image: string;
   imageAlt: string;
 
+  /**
+   * The client testimonial recording, where the source page carries one. The
+   * artwork in `image` is its poster and has a play button baked into it, so
+   * without this the page shows a control that does nothing.
+   *
+   * Read the source's markup, not just its embed ids, when transcribing one:
+   * the Zycus page carries two Wistia embeds but the first is an Elementor
+   * widget marked hidden on desktop, tablet and phone alike, so only the
+   * second ever plays.
+   */
+  video?: { host: "youtube" | "wistia"; videoId: string; title: string };
+
+  /**
+   * The client speaking about the engagement, which the source pages set under
+   * the recordings at full measure rather than as one card among the
+   * participants' quotes. Kept apart from `quotes` for that reason: it is the
+   * client speaking about the work, not a participant speaking about the
+   * subject.
+   */
+  testimonial?: {
+    /**
+     * Optional: the Zycus page names its speaker under the recordings without
+     * setting any of their words as text, and inventing a sentence to fill the
+     * gap would put copy on the page the source never carried.
+     */
+    quote?: string;
+    name: string;
+    role: string;
+    company?: string;
+  };
+
   /** The client's mark, on a light surface. Path under /public. */
   logo?: string;
 
@@ -66,9 +97,34 @@ export type SuccessStory = {
     role: string;
     /** Omitted where the source page names no company. */
     company?: string;
-    /** Path under /public. */
+    /**
+     * A square portrait, shown as the disc beside the attribution. Path under
+     * /public. Must be a head shot, not interview key art: key art is 16:9
+     * and a disc crop of it keeps a sliver of the artwork and none of the
+     * face.
+     */
     image?: string;
+    /**
+     * The speaker's published interview, where the source page links one
+     * under the quote.
+     */
+    href?: string;
   }[];
+
+  /**
+   * The event the programme closed with, where the source page points at one.
+   * Only the story's own heading and sentences live here: the event's title,
+   * artwork and URL are resolved from the events registry by slug, so the
+   * event stays described in exactly one place and a typo fails the build.
+   */
+  launchEvent?: {
+    title: string;
+    /** Paragraphs, in order, as the source page sets them. */
+    description: string[];
+    linkLabel: string;
+    /** Slug within the story's own `project`. */
+    slug: string;
+  };
 
   /**
    * The full case study document. It is hosted off-site on the live pages, so

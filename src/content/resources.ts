@@ -2267,21 +2267,10 @@ const abmBestPracticesIndia2018: ReportLanding = {
     ],
   },
 
-  /* The microsite's "Client Testimonial", carried as the one voice card it is:
-     the quote is baked into the artwork, so it is quoted here too. */
-  voices: {
-    items: [
-      {
-        image:
-          "/success-stories/abm-best-practices-report-india-2018/insideview.png",
-        quote:
-          "Research NXT did a fantastic job by creating one of the most comprehensive pieces of research on Account Based Marketing (ABM) for the Indian market.",
-        name: "Sesha Rao",
-        role: "Former MD, India operations",
-        company: "InsideView",
-      },
-    ],
-  },
+  /* No voices band. The one card here was the case study's poster artwork with
+     the sentence baked into it read out as a quote, but that sentence is on
+     neither source page: "Sesha Rao" appears nowhere on the ABM case study.
+     See PROGRESS.md. */
 
   spotlights: [
     {
@@ -2300,7 +2289,8 @@ const abmBestPracticesIndia2018: ReportLanding = {
     sponsor: {
       label: "In association with",
       name: "InsideView",
-      logo: "/logos/trusted/insideview.png",
+      /* The supplied full lockup, replacing a 417x92 crop. */
+      logo: "/logos/trusted/insideview-lockup.png",
     },
     partnerLabel: "Research partner",
   },
@@ -2626,6 +2616,57 @@ export const reportLandings: ReportLanding[] = [
 export function getReportLanding(slug: string) {
   return reportLandings.find((report) => report.slug === slug);
 }
+
+/* ---------------------------------------------------------------------------
+   The reports-whitepapers library shelf. Most entries are report landings;
+   an edition entry is an industry cut of a report whose full story lives in
+   an insights article, so its card links straight there instead of to a
+   landing of its own.
+--------------------------------------------------------------------------- */
+
+export type ReportShelfItem = {
+  title: string;
+  href: string;
+  /** Portrait cover (A4, 210:297) under /public. */
+  portrait?: string;
+  /** Landscape fallback, letterboxed on a muted plate, when no portrait exists. */
+  cardImage?: string;
+};
+
+/** Industry editions of the Implementor's Guide to AI, shelved after it. */
+const implementorsGuideEditions: ReportShelfItem[] = [
+  {
+    title: "Implementor's Guide to AI: Financial Edition",
+    href: "/resources/insights/implementors-guide-to-ai/finance-leaders-transition-from-caution-to-customer-centric-scale",
+    portrait: "/covers/implementors-guide-to-ai-finance-edition-portrait.png",
+  },
+  {
+    title: "Implementor's Guide to AI: Manufacturing Edition",
+    href: "/resources/insights/implementors-guide-to-ai/manufacturing-automotive-energy-leaders-move-from-pilots-to-scale",
+    portrait:
+      "/covers/implementors-guide-to-ai-manufacturing-edition-portrait.png",
+  },
+  {
+    title: "Implementor's Guide to AI: Retail & Consumer Goods Edition",
+    href: "/resources/insights/implementors-guide-to-ai/retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale",
+    portrait:
+      "/covers/implementors-guide-to-ai-retail-consumer-goods-edition-portrait.png",
+  },
+];
+
+export const reportShelf: ReportShelfItem[] = reportLandings.flatMap(
+  (report) => {
+    const entry: ReportShelfItem = {
+      title: report.hero.title,
+      href: `/resources/reports-whitepapers/${report.slug}`,
+      portrait: report.cardPortrait,
+      cardImage: report.cardImage,
+    };
+    return report.slug === "implementors-guide-to-ai"
+      ? [entry, ...implementorsGuideEditions]
+      : [entry];
+  },
+);
 
 /**
  * The most recently published reports, newest first. The home page's "Latest

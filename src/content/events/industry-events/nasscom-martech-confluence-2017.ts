@@ -18,8 +18,8 @@ export const nasscomMartechConfluence2017: Event = {
   imageAlt: "Research NXT at NASSCOM MarTECH Confluence 2017",
 
   body: [
-    "NASSCOM MarTech Confluence 2017 provided a unique forum for marketing technologists, marketers and digital leaders to come together and explore the exciting potential of newer technologies for intelligent marketing. The confluence, with the theme **Re-imagining CX with Intelligent Marketing Technology**, provided a balance between the visionary and the practical, exploring what is here today and what is coming tomorrow.",
-    "Research NXT was part of NASSCOM MarTech Confluence 2017 as its Ecosystem Partner. NASSCOM's flagship one-day event was held on **31 August 2017 at ITC Grand, Lower Parel, Mumbai**.",
+    "NASSCOM MarTech Confluence 2017 provided a unique forum for marketing technologists, marketers and digital leaders to come together and explore the exciting potential of newer technologies for intelligent marketing. The confluence, with the theme **Re-imagining CX with Intelligent Marketing Technology**, provided a balance between the visionary and the practical, exploring what is here today and what is coming tomorrow. It was all about re-imagining customer experience with intelligent marketing.",
+    "Research NXT was excited to be part of NASSCOM MarTech Confluence 2017 as its Ecosystem Partner. NASSCOM's flagship one-day event was held on **31 August 2017 at ITC Grand, Lower Parel, Mumbai**.",
     "**Post the confluence, participants were in a position to:**",
     {
       list: [
@@ -28,7 +28,16 @@ export const nasscomMartechConfluence2017: Event = {
         "Play a leadership role in helping their organisations craft their roadmap for intelligent marketing, including technology investments and skills development.",
       ],
     },
-    "**The themes the confluence ran on:**",
+    /* The source sets this here, between the two lists: a collage from the
+       previous year's confluence, which is what it is, so the alt says so
+       rather than implying it pictures the 2017 event. */
+    {
+      image: "/events/nasscom-martech-confluence-2016-collage.png",
+      alt: "Photographs from NASSCOM MarTECH Confluence 2016 at Hyatt Regency, Mumbai, including a panel discussion with Research NXT's Santosh Abraham.",
+    },
+    /* No lead-in line before this list: the source runs the four themes
+       straight after the collage above, and the one that used to sit here
+       was written for this page rather than taken from the source. */
     {
       list: [
         "**Drawing the technology landscape for intelligent marketing.** In-depth understanding of machine learning, bots, automated content generation, neural machine translation and others.",

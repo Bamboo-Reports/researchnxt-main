@@ -4,31 +4,45 @@ import Image from "next/image";
 import { useState } from "react";
 
 /**
- * A YouTube recording that stays a poster until it is asked for.
+ * A recording that stays a poster until it is asked for.
  *
  * The launch event carries four full session recordings. Mounting four
- * YouTube iframes to show four still frames would pull in the player and its
+ * iframes to show four still frames would pull in the player and its
  * cookies on every visit, so the poster is the default and the iframe only
  * replaces it on the click that means to watch. That trade is the reason this
  * is one of the few client components in the tree.
+ *
+ * Two hosts, because the source pages use both: the events are on YouTube and
+ * the Netcore client testimonial is on Wistia.
  */
 
 type VideoEmbedProps = {
-  /** The `youtu.be/<id>` id from the source page. */
+  /** The id from the source page: `youtu.be/<id>`, or the Wistia media id. */
   videoId: string;
+  /** Which player hosts it. Defaults to YouTube, which most sources use. */
+  host?: "youtube" | "wistia";
   /** Path under /public: the thumbnail the source page uses as its overlay. */
   poster: string;
   /** Names the recording for the play control and the iframe. */
   title: string;
 };
 
-export function VideoEmbed({ videoId, poster, title }: VideoEmbedProps) {
+export function VideoEmbed({
+  videoId,
+  host = "youtube",
+  poster,
+  title,
+}: VideoEmbedProps) {
   const [playing, setPlaying] = useState(false);
 
   if (playing) {
     return (
       <iframe
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+        src={
+          host === "wistia"
+            ? `https://fast.wistia.net/embed/iframe/${videoId}?autoPlay=1`
+            : `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`
+        }
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

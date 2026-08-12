@@ -27,6 +27,33 @@ import { delay, step } from "@/lib/motion";
 
 type Params = { params: Promise<{ project: string; event: string }> };
 
+/**
+ * A speaker's initials, for the disc that stands in where a source page
+ * published no portrait. Honorifics are dropped so "Dr Ulrich Spiesshofer"
+ * reads US rather than DU.
+ */
+const HONORIFICS = new Set([
+  "dr",
+  "dr.",
+  "mr",
+  "mr.",
+  "ms",
+  "ms.",
+  "mrs",
+  "mrs.",
+  "prof",
+  "prof.",
+]);
+
+function initials(name: string) {
+  const words = name
+    .split(/\s+/)
+    .filter((word) => word && !HONORIFICS.has(word.toLowerCase()));
+  const first = words[0]?.[0] ?? "";
+  const last = words.length > 1 ? (words[words.length - 1][0] ?? "") : "";
+  return (first + last).toUpperCase();
+}
+
 export function generateStaticParams() {
   return events.map((event) => ({
     project: event.project,
@@ -75,6 +102,23 @@ export default async function EventPage({ params }: Params) {
   const reportHref = programme?.reportSlug
     ? `/resources/reports-whitepapers/${programme.reportSlug}`
     : undefined;
+
+  /* Speakers under the headings the source files them under, in the order
+     those headings first appear. An event that groups nobody comes back as a
+     single untitled set, which renders exactly as it did before grouping
+     existed. */
+  const speakerGroups: {
+    title?: string;
+    items: NonNullable<typeof event.speakers>;
+  }[] = [];
+  for (const speaker of event.speakers ?? []) {
+    const last = speakerGroups[speakerGroups.length - 1];
+    if (last && last.title === speaker.group) {
+      last.items.push(speaker);
+    } else {
+      speakerGroups.push({ title: speaker.group, items: [speaker] });
+    }
+  }
 
   return (
     <main id="main">
@@ -151,13 +195,21 @@ export default async function EventPage({ params }: Params) {
                   {/* Where a recap has a highlights reel it opens with it, in
                   place of the banner, which is the order the source uses.
                   Not lazy here: above the fold, it is the first thing. */}
-                  {event.video ? (
+                  {event.video && "linkedInPost" in event.video ? (
                     <iframe
                       src={`https://www.linkedin.com/embed/feed/update/${event.video.linkedInPost}?compact=1`}
                       title={event.video.caption}
                       allowFullScreen
                       className="anim-rise aspect-[71/45] w-full rounded-lg border border-line"
                     />
+                  ) : event.video ? (
+                    <div className="anim-rise">
+                      <VideoEmbed
+                        videoId={event.video.youTubeId}
+                        poster={event.video.poster ?? event.image}
+                        title={event.video.caption}
+                      />
+                    </div>
                   ) : (
                     <Image
                       src={event.image}
@@ -169,7 +221,7 @@ export default async function EventPage({ params }: Params) {
                     />
                   )}
                   {introBody?.length ? (
-                    <div className="flex max-w-[68ch] flex-col gap-5">
+                    <div className="flex flex-col gap-5">
                       {introBody.map((block) =>
                         typeof block === "string" ? (
                           <p
@@ -288,6 +340,32 @@ export default async function EventPage({ params }: Params) {
         </Section>
       ) : null}
 
+      {/* Photographs from the day, in the source's own grid. Each is a
+          plain image: they are a record of the room, and captioning eight
+          of them "attendees at the summit" would say nothing. */}
+      {event.gallery?.images.length ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <SectionHeading title={event.gallery.title} className="mb-10" />
+            <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {event.gallery.images.map((photo, index) => (
+                <Image
+                  key={photo.src}
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw"
+                  style={step(index)}
+                  className="aspect-[4/3] w-full rounded-md border border-line object-cover"
+                />
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
       {/* The programme as it ran. The opening session leads at full width
           because it is the keynote and the source page gives it the same
           weight; the rest sit three up beneath it. */}
@@ -306,17 +384,23 @@ export default async function EventPage({ params }: Params) {
               {event.sessions.map((session, index) => {
                 /* The opening session runs the width of the band with its
                    label set beside it, so the row that follows reads as the
-                   rest of the programme rather than as four equal clips. */
-                const lead = index === 0;
+                   rest of the programme rather than as four equal clips.
+                   A lone recording has no row to lead, so it stacks instead:
+                   the film at the reading measure with its name under it,
+                   rather than a caption stranded in an empty right column. */
+                const only = event.sessions?.length === 1;
+                const lead = index === 0 && !only;
 
                 return (
                   <li
                     key={session.videoId}
                     style={step(index)}
                     className={
-                      lead
-                        ? "grid items-center gap-6 lg:col-span-3 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-10"
-                        : "flex flex-col gap-4"
+                      only
+                        ? "mx-auto flex w-full max-w-4xl flex-col gap-4 lg:col-span-3"
+                        : lead
+                          ? "grid items-center gap-6 lg:col-span-3 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:gap-10"
+                          : "flex flex-col gap-4"
                     }
                   >
                     <VideoEmbed
@@ -330,7 +414,7 @@ export default async function EventPage({ params }: Params) {
                       </span>
                       <span
                         className={
-                          lead
+                          lead || only
                             ? "text-title font-display-soft text-ink"
                             : "text-base leading-relaxed text-ink"
                         }
@@ -343,26 +427,10 @@ export default async function EventPage({ params }: Params) {
               })}
             </Reveal>
 
-            {/* The source embeds this as a 300px SlideShare iframe with an
-                empty anchor under it. A link that names the deck is more
-                use than the embed was. */}
-            {event.deck ? (
-              <p className="mt-8">
-                <a
-                  href={event.deck.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base font-semibold text-accent hover:text-accent-hover"
-                >
-                  {event.deck.title}
-                </a>
-              </p>
-            ) : null}
-
             {/* The write-up sits here rather than above, because the
                 recordings are what the page leads with. */}
             {hasSessions && event.body?.length ? (
-              <div className="mt-10 flex max-w-[68ch] flex-col gap-5 border-t border-line pt-8">
+              <div className="mt-10 flex flex-col gap-5 border-t border-line pt-8">
                 {event.body.map((block) =>
                   typeof block === "string" ? (
                     <p
@@ -486,75 +554,195 @@ export default async function EventPage({ params }: Params) {
         <Section surface="subtle" bordered spacing="tight">
           <Container>
             <SectionHeading title="Who spoke" className="mb-10" />
-            <Reveal
-              as="ul"
-              className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3"
-            >
-              {event.speakers.map((speaker, index) => {
-                /* Only where the event sets one: the ai-led launch links its
+            {speakerGroups.map((group, groupIndex) => (
+              <div
+                key={group.title ?? "all"}
+                className={groupIndex > 0 ? "mt-12" : undefined}
+              >
+                {group.title ? (
+                  <h3 className="mb-6 text-headline font-display-soft text-ink">
+                    {group.title}
+                  </h3>
+                ) : null}
+                {/* Three across is the default shelf. A set of four runs as
+                    one row instead, so the last card is not left alone on a
+                    second. */}
+                <Reveal
+                  as="ul"
+                  className={`grid gap-x-8 gap-y-6 sm:grid-cols-2 ${
+                    group.items.length === 4
+                      ? "lg:grid-cols-4"
+                      : "lg:grid-cols-3"
+                  }`}
+                >
+                  {group.items.map((speaker, index) => {
+                    /* Only where the event sets one: the ai-led launch links its
                    speakers to LinkedIn alone, the two report launches that
                    name their interviewees still link the interview. */
-                const interview = speaker.interview
-                  ? getExpertInterview(event.project, speaker.interview)
-                  : undefined;
+                    const interview = speaker.interview
+                      ? getExpertInterview(event.project, speaker.interview)
+                      : undefined;
 
-                return (
-                  <li
-                    key={speaker.name}
-                    style={step(index)}
-                    className="flex flex-col gap-1 border-t border-line pt-4"
-                  >
-                    {/* Decorative: the name sits right beside it, so an alt
+                    return (
+                      <li
+                        key={speaker.name}
+                        style={step(index)}
+                        className="flex flex-col gap-1 border-t border-line pt-4"
+                      >
+                        {/* Decorative: the name sits right beside it, so an alt
                       repeating it would only double up for a screen
                       reader. */}
-                    {speaker.image ? (
-                      <Image
-                        src={speaker.image}
-                        alt=""
-                        width={112}
-                        height={112}
-                        loading="lazy"
-                        sizes="56px"
-                        className="mb-1 size-14 rounded-full border border-line object-cover"
-                      />
-                    ) : null}
-                    {/* The name carries the profile link, as the source page
+                        {speaker.image ? (
+                          <Image
+                            src={speaker.image}
+                            alt=""
+                            width={112}
+                            height={112}
+                            loading="lazy"
+                            sizes="56px"
+                            className="mb-1 size-14 rounded-full border border-line object-cover"
+                          />
+                        ) : (
+                          /* No portrait published for this speaker: their
+                         initials stand in, so the row of cards keeps one
+                         rhythm instead of some starting with a disc and
+                         some with the name. Decorative, like the portrait
+                         it replaces, since the name follows it. */
+                          <span
+                            aria-hidden="true"
+                            className="mb-1 flex size-14 items-center justify-center rounded-full border border-line bg-surface-muted text-sm font-semibold text-ink-muted"
+                          >
+                            {initials(speaker.name)}
+                          </span>
+                        )}
+                        {/* The name carries the profile link, as the source page
                       has it. Where the source links the wrong person the
                       field is unset and the name is plain text. */}
-                    {speaker.linkedIn ? (
-                      <a
-                        href={speaker.linkedIn}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-2 text-base font-semibold text-ink transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:text-accent"
-                      >
-                        {speaker.name}
-                        <SocialIcon
-                          label="LinkedIn"
-                          className="size-3.5 shrink-0 opacity-70 transition-opacity duration-200 group-hover:opacity-100"
-                        />
-                        <span className="sr-only">on LinkedIn</span>
-                      </a>
-                    ) : (
-                      <span className="text-base font-semibold text-ink">
-                        {speaker.name}
-                      </span>
-                    )}
-                    <span className="text-sm leading-relaxed text-ink-soft">
-                      {speaker.role}
-                    </span>
-                    {interview ? (
-                      <Link
-                        href={interviewHref(interview)}
-                        className="mt-1 self-start text-sm font-semibold text-accent hover:text-accent-hover"
-                      >
-                        Read the interview
-                      </Link>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </Reveal>
+                        {speaker.linkedIn ? (
+                          <a
+                            href={speaker.linkedIn}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-2 text-base font-semibold text-ink transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:text-accent"
+                          >
+                            {speaker.name}
+                            <SocialIcon
+                              label="LinkedIn"
+                              className="size-3.5 shrink-0 opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+                            />
+                            <span className="sr-only">on LinkedIn</span>
+                          </a>
+                        ) : (
+                          <span className="text-base font-semibold text-ink">
+                            {speaker.name}
+                          </span>
+                        )}
+                        <span className="text-sm leading-relaxed text-ink-soft">
+                          {speaker.role}
+                        </span>
+                        {speaker.company ? (
+                          <span className="text-sm font-semibold leading-relaxed text-ink-muted">
+                            {speaker.company}
+                          </span>
+                        ) : null}
+                        {interview ? (
+                          <Link
+                            href={interviewHref(interview)}
+                            className="mt-1 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                          >
+                            Read the interview
+                          </Link>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </Reveal>
+              </div>
+            ))}
+
+            {/* What the panel covered, where the source page sets it under the
+                speaker cards rather than above them. */}
+            {event.bodyAfterSpeakers?.length ? (
+              <div className="mt-12 flex flex-col gap-5">
+                {event.bodyAfterSpeakers.map((block) =>
+                  typeof block === "string" ? (
+                    <p
+                      key={block}
+                      className="text-base leading-relaxed text-ink-soft"
+                    >
+                      <Emphasised text={block} />
+                    </p>
+                  ) : "list" in block ? (
+                    <ul
+                      key={block.list.join("")}
+                      className="flex flex-col gap-3"
+                    >
+                      {block.list.map((item) => (
+                        <li
+                          key={item}
+                          className="flex gap-3 text-base leading-relaxed text-ink-soft"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2.5 h-1 w-3 shrink-0 rounded-[1px] bg-signal"
+                          />
+                          <span>
+                            <Emphasised text={item} />
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : "heading" in block ? (
+                    <h3
+                      key={block.heading}
+                      className="text-headline font-display-soft text-ink"
+                    >
+                      {block.heading}
+                    </h3>
+                  ) : (
+                    <Image
+                      key={block.image}
+                      src={block.image}
+                      alt={block.alt}
+                      width={1280}
+                      height={720}
+                      loading="lazy"
+                      className="w-full rounded-lg border border-line object-cover"
+                    />
+                  ),
+                )}
+              </div>
+            ) : null}
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* The deck, in its own band. Embedded at the slides' own 4:3 on the
+          reading measure, rather than at the source's 300px square, with a
+          link out beneath for anyone the frame fails. */}
+      {event.deck ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <SectionHeading title={event.deck.title} className="mb-8" />
+            <div className="anim-rise mx-auto flex max-w-4xl flex-col gap-4">
+              <iframe
+                src={event.deck.href}
+                title={event.deck.title}
+                allowFullScreen
+                loading="lazy"
+                className="aspect-[4/3] w-full rounded-lg border border-line bg-surface-muted"
+              />
+              <p>
+                <a
+                  href={event.deck.page ?? event.deck.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-semibold text-accent hover:text-accent-hover"
+                >
+                  Open the presentation on SlideShare
+                </a>
+              </p>
+            </div>
           </Container>
         </Section>
       ) : null}

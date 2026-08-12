@@ -2,7 +2,423 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-07
+Last updated: 2026-08-12
+
+## Two NASSCOM industry events checked; deck embedded, 2026-08-12
+
+**NTLF 2019** (`researchnxt.com/events/nasscom-ntlf-thenext/`). The source
+runs a "Key Speakers" band as four lineup graphics with all fifteen names,
+titles and companies baked into the artwork: unreadable to a screen reader,
+unsearchable, and unusable at a phone's width. Read off the graphics and set
+as cards instead, under the four headings the source groups them by
+(evangelists, CEOs, Indian industry leaders, CXOs), on user direction. The
+source's "Click to view agenda" link is not carried: the PDF it points at now
+404s.
+
+`Event.speakers[]` gained `group`; the band renders one subheading and grid
+per run of speakers sharing a group, and a list where nobody has one renders
+exactly as before. Where a speaker has no portrait the card now shows an
+initials disc, so a row keeps one rhythm instead of some cards starting with
+a disc and some with the name. Honorifics are dropped from the initials, so
+"Dr Ulrich Spiesshofer" reads US.
+
+**MarTech Confluence 2017**
+(`researchnxt.com/events/nasscom-martech-confluence-2017/`). The source sets
+a photo collage between its two lists, which is a collage from the *2016*
+confluence, so the alt text says so rather than implying it pictures 2017.
+Neither page has a video, gallery, deck or LinkedIn link.
+
+A closer copy check then found two more: the opening paragraph had dropped
+the source's closing sentence, "It is all about re-imagining customer
+experience with intelligent marketing", and "Research NXT is excited to be
+part of" had lost the "excited". Both restored, in the past tense the rest of
+these write-ups use. The lead-in above the four themes,
+"The themes the confluence ran on:", was written for this page and is not on
+the source, which runs the themes straight after the collage: removed.
+
+Not carried, on purpose: the source's closing "Click here to register",
+"book an appointment with our analysts at the confluence" and
+"For registrations & further information" blocks. They are 2017 calls to
+action for an event nine years past, and republishing them would invite
+readers to register for something that has already happened.
+
+**The deck embed.** The content-marketing launch's deck pointed at the
+SlideShare *public page*, which sends `X-Frame-Options: SAMEORIGIN`, so the
+frame came back "refused to connect". `deck` now takes the `embed_code/key/…`
+URL in `href` and the public page in `page`, for the link beneath the frame.
+The deck also moved out of the sessions band into its own band for every
+event, so it renders whether or not the event has recordings, and a lone
+session now stacks with its title beneath the film rather than stranding the
+caption in an empty right column.
+
+## HYSEA BizSUMMIT 2020 checked against its source, 2026-08-12
+
+Checked against `researchnxt.com/events/hysea-bizsummit-2020/`. No video on
+this one (confirmed with the `youtube_url` sweep, not just the iframe check).
+
+**The photo gallery was missing.** The source runs a "Hysea BizSummit 2020
+Glimpse" band of eight photographs. `Event` gained a `gallery`, kept apart
+from `body`'s single-`image` block because eight photos belong in a grid
+under a heading, not stacked full width down the reading column. Files in
+`public/events/hysea-bizsummit-2020/`. Alt text is empty on all eight: they
+are a record of the room, and captioning each "attendees at the summit"
+would add noise for a screen reader rather than information.
+
+**Speaker portraits were missing**, now in
+`public/events/speakers/industry-events/`, with roles split from
+organisations onto the `company` line.
+
+**"Full Presentation of Event Launch" was missing, and could not have
+rendered.** The source embeds a SlideShare deck; `Event.deck` already
+existed, but the template only rendered it *inside* the sessions band, so an
+event with a deck and no sessions dropped it silently. Added a standalone
+deck band, gated on `!hasSessions`, so the content-marketing launch (the only
+other event with a deck, and it has sessions) is untouched and still shows
+its deck once. The deck is embedded there, at the slides' own 4:3 on the
+reading measure rather than the source's 300px square, with a link out
+beneath it. SlideShare sends no `X-Frame-Options` and no `frame-ancestors`,
+so the frame is permitted.
+
+**Four of the five LinkedIn links on the source point at the wrong person.**
+Walking the speaker markup in order: Madhuri Duggirala's card links to Jay
+Magdani, Subhendu Pattnaik's to Jay Magdani, Satinder Juneja's to Diptarup
+Chakraborti, Ankush Garg's to Jay Magdani. Only Santosh Abraham's is his own.
+The correct four were supplied by the user and are carried instead, so this
+page's profiles are deliberately **not** the source's. Worth fixing on the
+live WordPress page too: it currently misattributes four named people.
+
+## Southeast Asia launch event checked against its source, 2026-08-12
+
+Checked against
+`researchnxt.com/events/business-strategy-report-launch-event/`. Four gaps.
+
+**A third missing recording**, found by the `youtube_url` sweep described
+below: `7OkdfqgIuhg`, visible, now opening the page.
+
+**Speaker portraits.** None were set. The source's own cards use hexagon
+framed cut-outs on transparent grounds, which crop badly to the card disc;
+on user direction the portraits came from the report landing's voices band
+instead (`/voices/south-east-asia-response-guide/*.jpg`, 400x400 clean
+cut-outs of the same six people), so the two pages now share one set.
+
+**Roles split from organisations** on every card, using the `company` line
+added for the 2017 webinar. Where the source runs the two together in a
+phrase ("CEO of Singlife", "Managing Director at DHL eCommerce") they are
+split at the preposition, so all six read the same way down the column
+rather than two of them keeping the organisation inline.
+
+**The closing report panel was missing.** The source ends on "SOUTHEAST ASIA
+RESPONSE GUIDE - 2021", the four research facts and "Read Full Report". Now a
+`reportBand` with the facts verbatim, hyphens and en dash included. The
+event's own top-level `facts` were dropped in the same move: they were the
+same four in house style, sitting in the sidebar, while the source puts them
+under the report's name.
+
+The interview links are gone from these cards too, as with the 2017 webinar.
+**No LinkedIn links were added: the source links no profile on any of these
+six cards.** The three LinkedIn URLs in that page's markup belong to David
+Raab, Scott Brinker and Avnish Anand, none of whom spoke here. A profile URL
+guessed from a name would risk pointing at the wrong person, which is the
+case the `linkedIn` field's own comment warns about.
+
+## Elementor video widgets: two recordings recovered, 2026-08-12
+
+**The "no recording on this source page" findings below were partly wrong.**
+Detection searched the markup for iframes, `youtube.com/embed` and `youtu.be`.
+An Elementor page carries its YouTube recording in the video widget's
+`data-settings` attribute as a `youtube_url` key and renders the player from
+script, so none of those searches finds it. Re-swept every source page for
+`widget_type="video"` and `youtube_url`, checking each widget for
+`elementor-hidden-*` the way the Zycus Wistia embeds needed:
+
+- 2017 report launch webinar: `KNjOpqdyrZo`, visible. **Was missing.**
+- 2017 Netcore case study: `5EW2XHDtPLI`, visible. **Was missing.**
+- AI-led Netcore case study: `SzqSS9Gd1G4`, hidden at every breakpoint. Its
+  visible embed is the Wistia one already carried. Correct as it stood.
+- Zycus case study: `sGZOD1bam7E`, hidden at every breakpoint. Correct as it
+  stood.
+- WebEngage and ABM case studies: genuinely no video widget. Correct.
+
+Both missing recordings are now carried. `Event.video` widened from a
+LinkedIn-only shape to a union with `{ youTubeId, caption, poster }`, played
+through `VideoEmbed` so the player is not pulled in until clicked; the poster
+still came from the source's own `image_overlay` to
+`public/events/b2c-marketing-automation-report-launch-still.jpg`. The case
+study uses the existing `SuccessStory.video` with `host: "youtube"`.
+
+The rule is written into `Event.video`'s doc comment: search for
+`youtube_url`, not just iframes, and check the widget's hidden classes.
+
+Also on the 2017 webinar, on user direction: speaker portraits added from the
+source (`public/events/speakers/b2c-marketing-automation-india-2017/`, four
+square head shots), Santosh Abraham's LinkedIn set, and the "Read the
+interview" links dropped from this event's cards, since the source links each
+card to LinkedIn alone and two ways through one card is one too many. Done by
+clearing `interview` on these speakers only, so the other events keep theirs
+(the Southeast Asia launch still runs twelve). Both write-up blocks lost
+their `max-w-[68ch]` cap and run the container width, and a panel of exactly
+four speakers runs as one row (`lg:grid-cols-4`) rather than leaving one card
+alone on a second; three or five keep the three-across shelf.
+
+`Event.speakers[]` gained an optional `company`, set on its own line under
+the job title, which is the split the source page makes ("VP & Head of
+Marketing | PolicyBoss.com"). The four speakers here use it. Everywhere else
+`role` still carries both, so no other event changed.
+
+## 2017 report launch webinar checked against its source, 2026-08-12
+
+Checked against
+`researchnxt.com/events/webinar-marketing-automation-transform-the-way-you-do-marketing/`.
+No invented copy on this one. Three gaps; the recording it was first reported
+to lack is covered in the entry above, along with the speaker LinkedIn links
+and the write-up order.
+
+**The three takeaways were prose.** The source sets "Tune in to this 45 min
+Panel discussion and learn from experts:" followed by three bullets; they had
+been folded into the tail of a paragraph. Now a `{ list }` block, so they
+read as the three points they are.
+
+**The client testimonial band was missing.** The source closes on "Client
+Testimonial", the Kalpit Jain artwork, "Download Case Study", and the four
+engagement facts. The `Event` type already had `clientStory` for exactly this
+(the AI-led launch uses it), so it is now set: the case study artwork, the
+way through to the story, and the facts verbatim from the source with its
+pipes, capitals and en dash. The event's own top-level `facts` were dropped
+in the same move, since they were the same four in house style and the source
+puts them under the testimonial rather than beside the write-up.
+
+## 2017 Netcore success story checked; ABM landing credits, 2026-08-12
+
+Checked against
+`researchnxt.com/b2c-mas-report-india-2017/b2c-market-automation-case-study/`.
+This completes the pass over all five success stories.
+
+**A quote from the wrong case study.** The story led with a Kalpit Jain
+quote whose text was the Zycus testimonial, "Research NXT is our partner of
+choice for prospect databases...", pasted here and re-attributed. It is on
+neither source page and "Kalpit" appears nowhere on this one. Removed. His
+name stays in the image alt: the poster artwork is
+`Kalpit-Jain-Case-Study-Featured-IMG`, so he is who it pictures.
+
+**The banner-as-avatar fault, now cleared everywhere.** Meera Iyer and Prasad
+Pimple pointed at `/experts/*` key art (1024x500) cropped into 44px discs.
+The source page uses square head shots, pulled from it to
+`public/success-stories/b2c-marketing-automation-india-2017/`. The
+`/experts/*` files stay where they are: they are the interviews' own
+thumbnails and correct in that role.
+
+Added the source's "View entire interview" links under both quotes, and its
+launch event band, pointing at the published report launch webinar. Renamed
+the second fact's label from "Engagement" to "Format", which is what the
+source calls it. No recording on this source page either.
+
+## ABM report landing, 2026-08-12
+
+Removed the landing's one voices card: it was the case study's poster artwork
+with the baked-in sentence read out as a Sesha Rao quote, and that sentence
+is on neither source page. The credits mark for "In association with" is now
+the supplied full InsideView lockup at
+`public/logos/trusted/insideview-lockup.png`, replacing a 417x92 crop; saved
+under a new name rather than over the old file, so the image cache cannot
+serve the old one. The story's own `logo` field was pointed at it too, for
+consistency, though nothing reads that field since the hero mark was removed.
+
+## InsideView success story checked against its source page, 2026-08-12
+
+Checked against `researchnxt.com/case-study/abm-case-study/`.
+
+**No recording on the source page**, same as WebEngage: no Wistia, no
+YouTube embed, and the only iframe is Google Tag Manager. The artwork stays a
+still. Three of the five case studies front a recording (both Netcore pages
+and Zycus); this one and WebEngage do not.
+
+**A fourth quote the source page does not carry.** "Research NXT did a
+fantastic job by creating one of the most comprehensive pieces of research on
+Account Based Marketing..." was set as a Sesha Rao quote; "Sesha" appears
+nowhere on the source. Baked into the poster artwork like the others, and
+removed on user direction. His name stays in the image alt text, which is who
+the artwork pictures.
+
+**No research parameters either.** The four facts on this story duplicated
+`abmBestPracticesIndia2018.facts` on the report landing, and the source case
+study lists none: it names the report and points at it instead. Cleared to
+`facts: []`. The report band still runs, because the programme has a report,
+so the band is now the cover and the link.
+
+That exposed three template gaps, all fixed: the facts `<dl>` rendered empty
+when a story has no facts, the band never named the report, and it had
+nothing to say in place of the parameters. It now sets `report.hero.title` as
+its heading, which is what the source pages put above their report details,
+and falls back from the facts list to the deliverables read again as a plain
+tick list, which is what a source page with no parameters sets there. On
+InsideView that band is now the report's name, "100+ Surveys, 6 Marketing
+leader interviews, 200+ Targeted downloads, 25 Product demos", and the link,
+matching the source. Stories that do state parameters are untouched.
+
+Added the "View entire interview" links the source runs under both quotes,
+pointing at the published Diptarup Chakraborti and Satinder Juneja
+interviews. Also hyphenated "first-of-its-kind" in the third body bullet to
+match the source.
+
+## WebEngage success story checked, case study link moved, 2026-08-12
+
+Checked against `researchnxt.com/case-study/webengage-case-study/`.
+
+**No recording on the source page.** Searched its markup for Wistia, Vimeo,
+YouTube and any iframe: the only YouTube references are the footer's social
+icons, and the single iframe is Google Tag Manager. The artwork stays a still,
+which is what it already was.
+
+**A third quote the source page does not carry.** "We want marketers in the
+GCC region to refer to this study as a benchmark report..." was set as an
+Avlesh Singh quote, but the string "Avlesh" appears nowhere on the source
+page; like the Netcore and Zycus sentences, it is baked into the poster
+artwork. Removed on user direction, leaving the two participant quotes the
+source does carry, Shahin Riaz and Devam Saxena. His name stays in the
+image's alt text, which is correct: he is who the artwork pictures.
+
+**The case study link moved, for every story.** It now follows the opening
+paragraph rather than sitting at the foot of the page, which is where the
+source pages put their "Download Full Case Study" button. That retires the
+`!hasReportBand` fallback: the link no longer lives in the report band at
+all, so the band carries only "Read the full report". Body blocks render
+through a `Fragment` so the button can be injected after the first one.
+
+## Zycus success story checked against its source page, 2026-08-12
+
+Same pass as the Netcore story, against
+`researchnxt.com/case-study/zycus-prospect-database-case-study/`.
+
+**A recording that was not there.** The page showed the poster as a still
+with its baked-in play button; the source backs it with Wistia. It now runs
+one recording, `v0tjz7ihsh`.
+
+Worth knowing for the next transcription: the source markup contains two
+Wistia embeds, `a78fa476gp` and `v0tjz7ihsh`, and this was first read as two
+videos on the strength of the ids alone. The first sits in an Elementor
+widget carrying `elementor-hidden-desktop elementor-hidden-tablet
+elementor-hidden-phone`, so it is hidden at every breakpoint and never plays.
+Read the widget's classes, not just the embed ids. The Netcore page was
+rechecked the same way and genuinely has one visible embed.
+
+**Another quote the source page does not carry.** "Research NXT is our
+partner of choice for prospect databases..." is baked into the poster
+artwork, not page copy (confirmed absent from the source HTML). Removed on
+user direction, which leaves the story with no In their words band at all,
+as the source page has none. The source names the speaker under the
+recordings without setting any of her words as text, so `testimonial.quote`
+is now optional and the attribution stands alone: Preeti Shetty, Senior
+Manager, Zycus, which is also how the source styles the role (it was
+"Senior Manager, CRM Technology").
+
+**An empty report band, introduced by the Netcore work.** The band was
+rendered unconditionally, so on Zycus, which produced no report and states no
+research parameters, it came out as an empty definition list beside an empty
+image column. It is now gated on `hasReportBand` (a report or at least one
+fact), and the case study link falls back to the copy column when there is no
+band to hold it.
+
+Deliverables now use the source page's own heading and description pairing,
+and `StatsCards` picks its column count from the number of stats, so three
+deliverables fill their row instead of leaving a fourth slot empty. Card
+figures dropped a step to `text-3xl`/`sm:text-4xl` so a worded value
+("On demand") sits level with the numerals beside it.
+
+Checked the other three stories after these changes: all still render their
+still image, no empty bands, quotes intact.
+
+## Netcore success story rebuilt against its source page, 2026-08-12
+
+Checked `/resources/success-stories/ai-led-personalization/netcore` against
+`researchnxt.com/case-study/netcore-case-study/` on user direction. Five
+faults, all fixed; copy is the source page's own throughout, nothing
+paraphrased or invented.
+
+**A play button that did nothing.** The hero artwork has a play button baked
+into it and was rendered as a still `Image`. The source page backs it with a
+Wistia recording (`mizyu760l7`). `VideoEmbed` now takes a `host` of
+`"youtube" | "wistia"` (YouTube stays the default, which the events use) and
+`SuccessStory` takes a `video`, so the poster fronts a real player.
+
+**A quote the source page does not carry.** "Research NXT has the knowledge
+and experience of providing marketing solutions that we were seeking in a
+vendor" is baked into the poster artwork, not page copy, and was set as the
+client testimonial. Replaced with the testimonial the page actually runs
+under the recording, attributed as published: Rohit Srivastav, Head of Growth
+Marketing, Netcore. The name was also misspelt "Shrivastav" (the interview
+record has it right).
+
+**Wrong portraits for David Raab and Scott Brinker.** Both were pointed at
+`/experts/*` interview key art, which is 16:9 with baked titling, then
+cropped into a 44px disc: a sliver of banner and no face. The source page
+uses square head shots, pulled from it to
+`public/success-stories/ai-led-personalization/{david-raab,scott-brinker}-portrait.png`
+(195x195). `quotes[].image` is documented as head-shot-only for this reason,
+and `quotes[].href` was added for the source page's "View entire interview"
+link under each.
+
+**A stretched Netcore lockup in the hero.** The mark was rendered in a
+hard-coded 432x91 box whatever the file's ratio, so the 720x232 lockup came
+out squashed. Removed on user direction: the client is named in the title and
+carried by the testimonial artwork. Nothing else reads `SuccessStory.logo`
+now; the field is left in place as content.
+
+**Order and layout, per user direction.** The page now runs: body copy at
+full width, the recording, the client testimonial at full width in normal
+weight (it briefly ran at `text-title` display weight, which read as a pull
+quote), Key deliverables, In their words, then the report band. The
+programme facts moved out of the sidebar into that closing band: report cover
+left, the four facts and the actions right, matching the source page's report
+details section. The cover is resolved from the reports registry through the
+programme's `reportSlug`, so it stays described in one place.
+
+A "Check out the Launch Event" band closes the page, below the report band,
+carrying the source page's two sentences beside the event artwork, both
+artwork and link pointing at
+`/resources/events/ai-led-personalization/ai-led-ebook-launch`. Added as
+`SuccessStory.launchEvent`, which holds only the story's own heading, copy
+and link label: the event's title, artwork and URL are resolved from the
+events registry by slug, the way the report landings resolve theirs, and an
+unknown slug throws rather than rendering a dead band.
+
+Key deliverables moved off `StatsBento` onto a new `StatsCards` export in
+`components/stats-band.tsx`: four equal bordered cards. The bento promotes
+its first tile to a double-height accent feature, which claims a ranking
+among four peer deliverables that the source page does not make. `StatsBento`
+is untouched and still used by About and the solution pages.
+
+Other stories are unaffected: with no `video` or `testimonial` they keep the
+still image in the copy column. Note for later: the 2017 B2C Netcore story
+has the same banner-as-avatar fault (`meera-iyer-bigbasket.jpg` and
+`prasad-pimple-hdfc-life.png` are 1024x500), not yet fixed.
+
+## Reports library shelf gains edition cards, 2026-08-12
+
+The reports-whitepapers library previously mapped `reportLandings` directly,
+so every card had to be a landing page. Added a `reportShelf` list in
+`src/content/resources.ts`: it is built from `reportLandings` (title, href,
+portrait, cardImage), and edition entries, industry cuts of a report whose
+full story lives in an insights article, are spliced in so their card links
+straight to that article instead of a landing of its own.
+
+Three editions shelved, in order directly after the main Implementor's
+Guide, each linking to its insights article and carrying a 1414x2000
+portrait cover (the A4 ratio the shelf expects) copied from the untracked
+`sf-covers/` drop into `public/covers/`:
+
+- "Financial Edition" (`fins.png` →
+  `implementors-guide-to-ai-finance-edition-portrait.png`) →
+  `.../finance-leaders-transition-from-caution-to-customer-centric-scale`
+- "Manufacturing Edition" (`mfg.png` →
+  `implementors-guide-to-ai-manufacturing-edition-portrait.png`) →
+  `.../manufacturing-automotive-energy-leaders-move-from-pilots-to-scale`
+- "Retail & Consumer Goods Edition" (`rcg.png` →
+  `implementors-guide-to-ai-retail-consumer-goods-edition-portrait.png`) →
+  `.../retail-consumer-goods-leaders-shift-from-experiments-to-loyalty-led-scale`
+
+The library page (`src/app/resources/reports-whitepapers/page.tsx`) now maps
+`reportShelf`; keys switched from slug to href. Lint clean. `sf-covers/`
+itself is untracked scratch input, not site content.
 
 ## Report highlights become a card plate, 2026-08-07
 
