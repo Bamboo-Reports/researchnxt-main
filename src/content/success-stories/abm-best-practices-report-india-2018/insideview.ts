@@ -19,17 +19,13 @@ export const insideview: SuccessStory = {
   imageAlt:
     "Sesha Rao, former MD of India operations at InsideView, on the ABM Best Practices Report: India, 2018",
 
-  logo: "/logos/trusted/insideview.png",
+  logo: "/logos/trusted/insideview-lockup.png",
 
-  facts: [
-    { label: "Research focus", value: "B2B" },
-    {
-      label: "Engagement",
-      value: "Interviews, virtual event, social media promotion",
-    },
-    { label: "Geography", value: "India" },
-    { label: "Timeframe of research", value: "May 2018 to June 2018" },
-  ],
+  /* The source page states no research parameters: where the other case
+     studies list them, this one names the report and points at it. The same
+     four facts are already on the report landing, which is where they belong,
+     so the report band here runs the cover and the link alone. */
+  facts: [],
 
   deliverables: [
     { value: "100+", label: "Surveys" },
@@ -44,19 +40,17 @@ export const insideview: SuccessStory = {
       list: [
         "Connecting with Indian B2B marketing leaders to discuss their views on ABM.",
         "Exploring how top Indian B2B brands have been leveraging ABM as a strategy and combating the inherent challenges.",
-        "Identifying the first of its kind Indian ABM Tech Stack.",
+        "Identifying the first-of-its-kind Indian ABM Tech Stack.",
       ],
     },
   ],
 
+  /* The two participant quotes the source page carries, each with the "View
+     entire interview" link it runs beneath them. The Sesha Rao sentence that
+     used to lead this list is baked into the poster artwork, not page copy:
+     his name appears nowhere on the source. The source runs no recording, so
+     the artwork stays a still. */
   quotes: [
-    {
-      quote:
-        "Research NXT did a fantastic job by creating one of the most comprehensive pieces of research on Account Based Marketing (ABM) for the Indian market.",
-      name: "Sesha Rao",
-      role: "Former MD, India operations",
-      company: "InsideView",
-    },
     {
       quote:
         "We should pay more and get the right talent for the job. Never get less skilled talent to execute your ABM strategy.",
@@ -65,6 +59,7 @@ export const insideview: SuccessStory = {
       company: "Zycus",
       image:
         "/success-stories/abm-best-practices-report-india-2018/diptarup-chakraborti.png",
+      href: "/resources/experts-view/abm-best-practices-report-india-2018/diptarup-chakraborti",
     },
     {
       quote:
@@ -74,6 +69,7 @@ export const insideview: SuccessStory = {
       company: "LTI",
       image:
         "/success-stories/abm-best-practices-report-india-2018/satinder-juneja.png",
+      href: "/resources/experts-view/abm-best-practices-report-india-2018/satinder-juneja",
     },
   ],
 

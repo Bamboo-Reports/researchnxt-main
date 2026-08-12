@@ -70,6 +70,46 @@ export function StatsBento({ stats }: { stats: Stat[] }) {
   );
 }
 
+/**
+ * The same figures as equal cards rather than a bento. The bento promotes its
+ * first tile to a saturated feature, which is right where one figure leads;
+ * a success story's deliverables are a set of four peers, and singling one
+ * out would claim a ranking the source page does not make.
+ */
+export function StatsCards({ stats }: { stats: Stat[] }) {
+  /* Columns follow the count, so three deliverables fill their row rather
+     than leaving a fourth slot empty. A figure can be a word ("On demand"),
+     so the value is sized to sit level with the numerals beside it. */
+  const columns =
+    stats.length % 4 === 0
+      ? "sm:grid-cols-2 lg:grid-cols-4"
+      : stats.length % 3 === 0
+        ? "sm:grid-cols-2 lg:grid-cols-3"
+        : "sm:grid-cols-2";
+
+  return (
+    <Reveal className={`grid gap-3 lg:auto-rows-fr ${columns}`}>
+      {stats.map((stat, index) => (
+        <div
+          key={stat.label}
+          className="flex min-h-36 flex-col justify-between gap-6 rounded-md border border-line bg-surface p-6 sm:p-7"
+          style={step(index)}
+        >
+          <span aria-hidden="true" className="h-1 w-6 rounded-[1px] bg-signal" />
+          <div className="flex flex-col gap-2">
+            <span className="font-display text-3xl leading-tight sm:text-4xl">
+              <FigureValue value={stat.value} />
+            </span>
+            <span className="text-sm leading-relaxed text-ink-soft">
+              {stat.label}
+            </span>
+          </div>
+        </div>
+      ))}
+    </Reveal>
+  );
+}
+
 /** Standalone band wrapper, for pages that show the figures as their own strip. */
 export function StatsBand({ stats }: { stats: Stat[] }) {
   return (

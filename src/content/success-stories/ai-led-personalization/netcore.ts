@@ -17,7 +17,15 @@ export const netcore: SuccessStory = {
 
   image: "/success-stories/ai-led-personalization/netcore.png",
   imageAlt:
-    "Rohit Shrivastav, Head of Growth at Netcore Solutions, on working with Research NXT",
+    "Rohit Srivastav, Head of Growth Marketing at Netcore, on working with Research NXT",
+
+  /* The source page runs the client testimonial as a Wistia recording behind
+     this poster. */
+  video: {
+    host: "wistia",
+    videoId: "mizyu760l7",
+    title: "Rohit Srivastav of Netcore on the AI in marketing study",
+  },
 
   logo: "/logos/trusted/netcore-lockup.png",
 
@@ -46,21 +54,26 @@ export const netcore: SuccessStory = {
     "Amid the ongoing pandemic, Netcore started a much-anticipated initiative of reaching out to the top consumer-facing brands in India, to understand how they had been innovating and using AI powered tools in unforeseen market conditions. They teamed up with Research NXT and started engaging with top thought leaders to explore their expert opinions. This resulted in **the first book on AI in marketing** during the pandemic, carrying thought-provoking trends and best in class insights.",
   ],
 
+  /* Quotes and attributions as the source page publishes them. The client
+     testimonial is the one under the recording; the sentence baked into the
+     poster artwork is not copy the page carries, so it is not set here. */
+  testimonial: {
+    quote:
+      "Netcore teamed up with Research NXT and initiated a much-anticipated business-facing study in India to understand the adoption of AI-powered marketing tools in unforeseen market conditions. We engaged with 20+ top thought leaders. This resulted in the first 'Book on AI in Marketing' during the pandemic and has best-in-class thought-provoking trends and insights",
+    name: "Rohit Srivastav",
+    role: "Head of Growth Marketing",
+    company: "Netcore",
+  },
+
   quotes: [
-    {
-      quote:
-        "Research NXT has the knowledge and experience of providing marketing solutions that we were seeking in a vendor.",
-      name: "Rohit Shrivastav",
-      role: "Head of Growth",
-      company: "Netcore Solutions",
-    },
     {
       quote:
         "AI is productised, as simplified AI is already used across organisations. I do not think organisations need to reach a particular maturity level to implement AI.",
       name: "David Raab",
       role: "Founder",
       company: "CDP Institute",
-      image: "/experts/david-raab.jpg",
+      image: "/success-stories/ai-led-personalization/david-raab-portrait.png",
+      href: "/resources/experts-view/ai-led-personalization/david-raab",
     },
     {
       quote:
@@ -68,9 +81,21 @@ export const netcore: SuccessStory = {
       name: "Scott Brinker",
       role: "Editor",
       company: "chiefmartec.com",
-      image: "/experts/scott-brinker.png",
+      image:
+        "/success-stories/ai-led-personalization/scott-brinker-portrait.png",
+      href: "/resources/experts-view/ai-led-personalization/scott-brinker",
     },
   ],
+
+  launchEvent: {
+    title: "Check out the Launch Event",
+    description: [
+      "Netcore and Research NXT culminated their 6 month journey to build the market knowledge in AI in Marketing, and speaking to 10+ marketing leaders in the industry with a virtual event.",
+      "Watch this amazing interaction for in-depth insight in the field of Personalization in Marketing.",
+    ],
+    linkLabel: "Watch the launch event",
+    slug: "ai-led-ebook-launch",
+  },
 
   /* The live page links the same HubSpot document as the 2017 B2C marketing
      automation case study. Carried as found; see PROGRESS.md. */

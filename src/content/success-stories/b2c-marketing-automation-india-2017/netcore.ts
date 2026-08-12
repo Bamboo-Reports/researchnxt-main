@@ -19,13 +19,21 @@ export const netcore: SuccessStory = {
   imageAlt:
     "Kalpit Jain, CEO of Netcore Solutions, on working with Research NXT",
 
+  /* The source page fronts this poster with a YouTube recording, carried in
+     the Elementor widget's `data-settings` rather than as an iframe. */
+  video: {
+    host: "youtube",
+    videoId: "5EW2XHDtPLI",
+    title: "Kalpit Jain of Netcore on working with Research NXT",
+  },
+
   logo: "/logos/trusted/netcore-lockup.png",
 
   facts: [
     { label: "Research focus", value: "B2C marketing automation" },
     {
-      label: "Engagement",
-      value: "Interviews, virtual event, social media promotion",
+      label: "Format",
+      value: "Engagement interviews, virtual event, social media promotion",
     },
     { label: "Geography", value: "India" },
     { label: "Timeframe of research", value: "February 2017 to May 2017" },
@@ -49,21 +57,22 @@ export const netcore: SuccessStory = {
     },
   ],
 
+  /* The two participant quotes the source page carries, each with the "View
+     entire interview" link it runs beneath them. A third quote attributed to
+     Kalpit Jain used to lead this list, but its text was the Zycus
+     testimonial about prospect databases, pasted here and re-attributed: it
+     is on neither source page, and "Kalpit" appears nowhere on this one.
+     The source runs no recording, so the artwork stays a still. */
   quotes: [
-    {
-      quote:
-        "Research NXT is our partner of choice for prospect databases, as the team understands our requirements and enables our campaigns with an accurate database with maximum coverage in our target accounts.",
-      name: "Kalpit Jain",
-      role: "Chief Executive Officer",
-      company: "Netcore Solutions",
-    },
     {
       quote:
         "Before adopting any marketing technology it is important to genuinely understand the needs of your customers.",
       name: "Meera Iyer",
       role: "Head of Marketing",
       company: "BigBasket",
-      image: "/experts/meera-iyer-bigbasket.jpg",
+      image:
+        "/success-stories/b2c-marketing-automation-india-2017/meera-iyer-portrait.jpg",
+      href: "/resources/experts-view/b2c-marketing-automation-india-2017/meera-iyer",
     },
     {
       quote:
@@ -71,9 +80,24 @@ export const netcore: SuccessStory = {
       name: "Prasad Pimple",
       role: "AVP, Marketing",
       company: "HDFC Life",
-      image: "/experts/prasad-pimple-hdfc-life.png",
+      image:
+        "/success-stories/b2c-marketing-automation-india-2017/prasad-pimple-portrait.png",
+      href: "/resources/experts-view/b2c-marketing-automation-india-2017/prasad-pimple",
     },
   ],
+
+  /* The source page closes on its launch event, listing what the session
+     covered. */
+  launchEvent: {
+    title: "Check out the Launch Event",
+    description: [
+      "How Marketing Automation has evolved in India.",
+      "What are the best practices and preparation required to implement Marketing Automation.",
+      "How latest trends like AI in Marketing [Chatbots, Machine Learning] is impacting businesses.",
+    ],
+    linkLabel: "Watch the launch event",
+    slug: "report-launch-webinar",
+  },
 
   document: {
     label: "Download the full case study",
