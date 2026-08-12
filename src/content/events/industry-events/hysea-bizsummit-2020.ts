@@ -22,17 +22,66 @@ export const hyseaBizsummit2020: Event = {
     "The final session of the summit was a panel discussion on **10X Marketing, the latest tools and processes**, with Santosh Abraham of Research NXT alongside leaders from Google, Deloitte Digital, L&T Infotech and Cigniti Technologies.",
   ],
 
+  gallery: {
+    title: "Hysea BizSummit 2020 Glimpse",
+    images: [
+      { src: "/events/hysea-bizsummit-2020/glimpse-1.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-2.png", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-3.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-4.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-5.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-6.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-7.jpeg", alt: "" },
+      { src: "/events/hysea-bizsummit-2020/glimpse-8.jpeg", alt: "" },
+    ],
+  },
+
+  /* Roles as the source page sets them, the organisation on its own line.
+     Profiles are NOT the source's: it links four of the five cards to the
+     wrong person (Madhuri Duggirala's, Subhendu Pattnaik's and Ankush Garg's
+     to Jay Magdani, Satinder Juneja's to Diptarup Chakraborti). The four
+     below were supplied by the user; only Santosh Abraham's matches the
+     source. See PROGRESS.md. */
   speakers: [
-    { name: "Madhuri Duggirala", role: "Sr. Director, Scaled Services, Google" },
+    {
+      name: "Madhuri Duggirala",
+      role: "Sr. Director, Scaled Services",
+      company: "Google",
+      image: "/events/speakers/industry-events/madhuri-duggirala.png",
+      linkedIn: "https://www.linkedin.com/in/madhuris/",
+    },
     {
       name: "Subhendu Pattnaik",
-      role: "SVP and Global Head of Marketing, Cigniti Technologies",
+      role: "SVP & Global Head Marketing",
+      company: "Cigniti Technologies",
+      image: "/events/speakers/industry-events/subhendu-pattnaik.png",
+      linkedIn: "https://www.linkedin.com/in/subhendupattnaik/",
     },
     {
       name: "Satinder Juneja",
-      role: "Head of Corporate Marketing, L&T Infotech",
+      role: "Head Corporate Marketing",
+      company: "L&T Infotech Ltd.",
+      image: "/events/speakers/industry-events/satinder-juneja.png",
+      linkedIn: "https://www.linkedin.com/in/satinder11/",
     },
-    { name: "Ankush Garg", role: "Director Consulting, Deloitte Digital" },
-    { name: "Santosh Abraham", role: "CEO, Research NXT" },
+    {
+      name: "Ankush Garg",
+      role: "Director Consulting",
+      company: "Deloitte Digital",
+      image: "/events/speakers/industry-events/ankush-garg.png",
+      linkedIn: "https://www.linkedin.com/in/ankushgarg/",
+    },
+    {
+      name: "Santosh Abraham",
+      role: "CEO",
+      company: "Research NXT",
+      image: "/events/speakers/industry-events/santosh-abraham.png",
+      linkedIn: "https://www.linkedin.com/in/santoshabraham/",
+    },
   ],
+
+  deck: {
+    title: "Full Presentation of Event Launch",
+    href: "https://www.slideshare.net/slideshow/embed_code/key/ChtHewN3d3itP0?startSlide=1",
+  },
 };

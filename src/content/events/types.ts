@@ -68,15 +68,37 @@ export type Event = {
   )[];
 
   /**
-   * A highlights video hosted on LinkedIn, given as the `urn:li:ugcPost:…`
-   * id from the post URL. It stays an embed rather than a self-hosted file
-   * because the post is where the video actually lives, and re-uploading it
-   * would fork the view count and the comments away from the original.
+   * The event's own recording, opening the page in place of the banner, which
+   * is the order the source pages use. Either a LinkedIn post, given as the
+   * `urn:li:ugcPost:…` id from the post URL, or a YouTube id.
    *
-   * Where it is set it opens the page in place of the banner, which is the
-   * order the source page uses.
+   * A LinkedIn highlights reel stays an embed rather than a self-hosted file
+   * because the post is where the video actually lives, and re-uploading it
+   * would fork the view count and the comments away from the original. A
+   * YouTube recording stays a poster until it is clicked, through
+   * `VideoEmbed`, so the player is not pulled in on every visit.
+   *
+   * Note when transcribing: an Elementor page carries its YouTube recording
+   * in the widget's `data-settings` attribute, not as an iframe, so searching
+   * the markup for iframes or `youtube.com/embed` finds nothing on a page
+   * that plainly has a video. Search for `youtube_url` too, and check the
+   * widget for `elementor-hidden-*` classes before carrying it.
    */
-  video?: { linkedInPost: string; caption: string };
+  video?:
+    | { linkedInPost: string; caption: string }
+    | { youTubeId: string; caption: string; poster?: string };
+
+  /**
+   * Body blocks that belong below the speaker cards, where the source page
+   * introduces the panel first and only then says what it covered. Same block
+   * shapes as `body`.
+   */
+  bodyAfterSpeakers?: (
+    | string
+    | { list: string[] }
+    | { heading: string }
+    | { image: string; alt: string }
+  )[];
 
   /**
    * The recordings of the event's own sessions, in running order, where the
@@ -95,11 +117,26 @@ export type Event = {
   }[];
 
   /**
-   * A slide deck the source page embeds. Linked out rather than embedded:
-   * the source's SlideShare iframe renders at 300px square with an empty
-   * anchor beneath it, which is worse than a link that says what it is.
+   * Photographs from the day, as a source page's own gallery band. Kept apart
+   * from `body`'s `image` block, which places one photograph in the reading
+   * flow: a set of eight belongs in a grid under its own heading, not as
+   * eight full-width images stacked down the column.
    */
-  deck?: { title: string; href: string };
+  gallery?: {
+    title: string;
+    images: { src: string; alt: string }[];
+  };
+
+  /**
+   * A slide deck the source page embeds, shown at the slides' own 4:3 rather
+   * than the source's 300px square.
+   *
+   * `href` must be SlideShare's `embed_code/key/…` URL, which is what the
+   * source's own iframe uses: a deck's public page sends
+   * `X-Frame-Options: SAMEORIGIN` and renders as a blank frame. `page` is
+   * that public URL, for the link out beneath the frame.
+   */
+  deck?: { title: string; href: string; page?: string };
 
   /**
    * Pull quotes the source page runs from the programme's interviews, each
@@ -167,6 +204,19 @@ export type Event = {
   speakers?: {
     name: string;
     role: string;
+    /**
+     * The heading the source page files this speaker under, where it groups
+     * them ("CEOs Defining The Next Technology Agenda"). Speakers sharing a
+     * group render under one subheading, in the order they first appear; a
+     * list where nobody has a group renders as one flat set.
+     */
+    group?: string;
+    /**
+     * The speaker's organisation, where the source page sets it apart from the
+     * job title rather than running the two together. Rendered on its own line
+     * under the title, so a long title does not push the company out of sight.
+     */
+    company?: string;
     /** Path under /public. */
     image?: string;
     /**

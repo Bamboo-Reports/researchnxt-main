@@ -35,4 +35,105 @@ export const nasscomTechnologyLeadershipForum2019: Event = {
       ],
     },
   ],
+
+  /* The source runs its "Key Speakers" band as four lineup graphics with every
+     name, title and company baked into the artwork, which leaves the whole
+     line-up unreadable to a screen reader and unsearchable. Read off those
+     graphics and set as cards instead, in the order the source groups them:
+     evangelists, CEOs, Indian industry leaders, then CXOs.
+
+     The source's "Click to view agenda" link is not carried: it points at
+     nasscom.in/ntlf/images/ntlf-agenda.pdf, which now 404s. */
+  speakers: [
+    {
+      name: "Brian David Johnson",
+      group: "Evangelists Defining The Next",
+      role: "Futurist in Residence",
+      company: "Arizona University",
+    },
+    {
+      name: "Vala Afshar",
+      group: "Evangelists Defining The Next",
+      role: "Chief Digital Evangelist",
+      company: "Salesforce",
+    },
+    {
+      name: "Ronald Van Loon",
+      group: "Evangelists Defining The Next",
+      role: "Director",
+      company: "Advertisment",
+    },
+    {
+      name: "Paul Polman",
+      group: "CEOs Defining The Next Technology Agenda",
+      role: "CEO",
+      company: "Unilever",
+    },
+    {
+      name: "Dr Ulrich Spiesshofer",
+      group: "CEOs Defining The Next Technology Agenda",
+      role: "CEO",
+      company: "ABB",
+    },
+    {
+      name: "Shai Weiss",
+      group: "CEOs Defining The Next Technology Agenda",
+      role: "CEO",
+      company: "Virgin Atlantic",
+    },
+    {
+      name: "Uday Kotak",
+      group: "Indian Industry Leaders Defining India Next",
+      role: "Vice Chairman & MD",
+      company: "Kotak Mahindra Bank",
+    },
+    {
+      name: "Samina Vaziralli",
+      group: "Indian Industry Leaders Defining India Next",
+      role: "Executive Vice-chairman",
+      company: "Cipla",
+    },
+    {
+      name: "Nisa Godrej",
+      group: "Indian Industry Leaders Defining India Next",
+      role: "Chairperson",
+      company: "Godrej Consumer Products",
+    },
+    {
+      name: "Karenann Terrell",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "Chief Digital & Technology Officer",
+      company: "GSK",
+    },
+    {
+      name: "Paul Daugherty",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "Chief Technology & Innovation Officer",
+      company: "Accenture",
+    },
+    {
+      name: "Bryson Koehler",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "CTO",
+      company: "Equifax",
+    },
+    {
+      name: "Chandra Dandapani",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "Chief Design & Technology Officer",
+      company: "CBRE",
+    },
+    {
+      name: "Bask Iyer",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "CIO",
+      company: "VMWare",
+    },
+    {
+      name: "Sebastian Gass",
+      group: "CXOs Defining The Next Technologies Of Innovation",
+      role: "CIO",
+      company: "Chevron",
+    },
+  ],
 };

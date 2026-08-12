@@ -36,7 +36,11 @@ export const contentMarketingReportLaunch: Event = {
 
   deck: {
     title: "Full presentation of the event launch",
-    href: "https://www.slideshare.net/AkshaykumarRokade/nasscom-martech-researchnxt",
+    /* SlideShare's own embed URL: the deck's public page below cannot be
+       framed, it sends X-Frame-Options: SAMEORIGIN and the frame comes back
+       "refused to connect". */
+    href: "https://www.slideshare.net/slideshow/embed_code/key/k0P2iZZZrnqnIR?startSlide=1",
+    page: "https://www.slideshare.net/slideshow/nasscom-martech-researchnxt/244470395",
   },
 
   /* The two interview quotes the source page runs beside the recording.
