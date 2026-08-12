@@ -968,7 +968,7 @@ export default async function ReportLandingPage({ params }: Params) {
                 </p>
                 <span className="flex h-16 items-center">
                   {report.credits.sponsor.logos ? (
-                    <span className="flex items-center gap-3">
+                    <span className="flex flex-wrap items-center justify-center gap-3">
                       {report.credits.sponsor.logos.map((sponsor, index) => (
                         <span
                           key={sponsor.name}
@@ -988,9 +988,15 @@ export default async function ReportLandingPage({ params }: Params) {
                             width={180}
                             height={48}
                             unoptimized
-                            /* Two marks share the row, so each gets half
-                               the single-mark budget. */
-                            className="max-h-10 w-auto max-w-[8.5rem] object-contain"
+                            /* Both paired marks are wordmark lockups, so they
+                               share a cap height: equal height is equal text
+                               size, and the wider lockup simply runs longer,
+                               wrapping to its own line where the column is
+                               narrow. The height must be definite, not a max:
+                               these lazy images have no intrinsic size before
+                               they load, and a 0x0 box never intersects the
+                               viewport, so the load never fires. */
+                            className="h-6 w-auto"
                           />
                         </span>
                       ))}
@@ -1002,7 +1008,7 @@ export default async function ReportLandingPage({ params }: Params) {
                       width={240}
                       height={168}
                       unoptimized
-                      className="max-h-12 w-auto max-w-44 object-contain"
+                      className="h-12 w-auto max-w-44 object-contain"
                     />
                   ) : null}
                 </span>

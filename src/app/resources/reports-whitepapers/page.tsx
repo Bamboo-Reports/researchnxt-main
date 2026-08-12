@@ -6,7 +6,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { reportLandings } from "@/content/resources";
+import { reportShelf } from "@/content/resources";
 import { step } from "@/lib/motion";
 
 /**
@@ -36,23 +36,23 @@ export default function ReportsWhitepapersPage() {
               shows its landscape card letterboxed on a muted plate, so the
               shelf stays uniform while the covers arrive one by one. */}
           <Reveal className="grid gap-x-8 gap-y-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-            {reportLandings.map((report, index) => (
+            {reportShelf.map((report, index) => (
               <Link
-                key={report.slug}
-                href={`/resources/reports-whitepapers/${report.slug}`}
+                key={report.href}
+                href={report.href}
                 className="group flex flex-col gap-4 border-t border-line pt-4 transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
                 style={step(index)}
               >
-                {report.cardPortrait ? (
+                {report.portrait ? (
                   <Image
-                    src={report.cardPortrait}
+                    src={report.portrait}
                     alt=""
                     width={840}
                     height={1188}
                     sizes="(min-width: 1024px) 18rem, (min-width: 640px) 30vw, 45vw"
                     className="mt-1 aspect-[210/297] w-full rounded-md object-cover"
                   />
-                ) : (
+                ) : report.cardImage ? (
                   <span className="mt-1 flex aspect-[210/297] w-full items-center rounded-md bg-surface-muted p-3">
                     <Image
                       src={report.cardImage}
@@ -63,9 +63,11 @@ export default function ReportsWhitepapersPage() {
                       className="w-full rounded-sm object-contain"
                     />
                   </span>
+                ) : (
+                  <span className="mt-1 aspect-[210/297] w-full rounded-md bg-surface-muted" />
                 )}
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
-                  {report.hero.title}
+                  {report.title}
                 </h2>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
                   View the report
