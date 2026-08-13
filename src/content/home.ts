@@ -1,21 +1,84 @@
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { latestReports } from "@/content/resources";
+import { gccIntelligenceLink, solutions } from "@/content/solutions";
 import type { FeaturedResource } from "./types";
 
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
-  headline: "Turnkey research solutions personalised to your marketing goals.",
+  headline:
+    "Know the market. Name the accounts. Reach the people inside them.",
+  lede: "A boutique market intelligence firm for B2B technology leaders. We size opportunities, map target universes and carry the research through to qualified conversations a sales team can act on.",
   cta: {
     label: "Let's craft your solution",
     href: "/contact",
   },
-  /** A "\n" in a question is a chosen line break at larger widths; it
-      collapses to a space in the narrow mobile column. */
-  questions: [
-    "Is the quality of your marketing leads\nimpacting revenue?",
-    "Is your customer engagement based on\naccount intelligence?",
-    "Is a bad prospect database impacting\nmarketing ROI?",
+} as const;
+
+/** Card copy where a page's own meta description runs too long for a
+    three-line card; every other card reads the meta description as is. */
+const cardDescriptions: Record<string, string> = {
+  "account-intelligence":
+    "Heightened target account control, whitespace opportunities, and sharper selling propositions.",
+};
+
+/** The four solutions, derived from the solutions registry so their names
+    and descriptions stay described in one place. The GCC Intelligence card
+    goes out to Bamboo Reports, as the nav does. */
+export const whatWeDo = {
+  eyebrow: "What we do",
+  title: "From market data to qualified pipeline",
+  /* Every name is two words, so the single space becomes a chosen "\n"
+     break and the row shares one two-line rhythm; the template renders the
+     titles with `sm:whitespace-pre-line`. */
+  items: [
+    ...solutions.map((solution) => ({
+      title: solution.navLabel.replace(" ", "\n"),
+      description:
+        cardDescriptions[solution.slug] ?? solution.metaDescription,
+      href: `/solutions/${solution.slug}`,
+      external: false,
+    })),
+    {
+      title: gccIntelligenceLink.label.replace(" ", "\n"),
+      description: gccIntelligenceLink.description,
+      href: gccIntelligenceLink.href as string,
+      external: true,
+    },
+  ],
+} as const;
+
+/** The engagement as four steps, Define to Engage. The last step is the
+    band's one saturated card: the engagement ends in pipeline, so the card
+    that says so carries the weight. */
+export const engagementSteps = {
+  eyebrow: "How an engagement runs",
+  title: "From a definition workshop to a conversation your sales team can take",
+  steps: [
+    {
+      name: "Define",
+      description:
+        "Workshops and reverse funnel analysis to agree the ICP and the size of the prize.",
+      outcome: "Agreed scope and ICP",
+    },
+    {
+      name: "Build",
+      description:
+        "The universe assembled bottom-up: accounts, centres and named contacts, verified before use.",
+      outcome: "A working target universe",
+    },
+    {
+      name: "Validate",
+      description:
+        "Surveys and senior interviews test the assumptions against what the market actually does.",
+      outcome: "Evidence you can defend",
+    },
+    {
+      name: "Engage",
+      description:
+        "Content, campaigns and roundtables turn the studied audience into consented conversations.",
+      outcome: "Qualified pipeline",
+    },
   ],
 } as const;
 

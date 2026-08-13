@@ -97,32 +97,44 @@ export const milestones = {
   ],
 } as const;
 
-export const howWeWork = {
-  eyebrow: "How we work",
-  title: "Four habits behind every **engagement**",
-  /* Habit titles carry "\n" for the same two-line rhythm as the
-     milestones. */
-  lede: "None of this is exotic. It is simply the difference between research a team quotes in a board pack and research that goes into a slide and never comes out again.",
-  habits: [
+/** The three engagement modes and the assurance row beneath them, from the
+    user-supplied mockup. The mockup's timeframe kickers ("24 to 48 hours")
+    were dropped on user direction. */
+export const engagementModes = {
+  eyebrow: "How to engage us",
+  title: "Three ways in, sized to the decision in front of you",
+  modes: [
     {
-      title: "Define before\nyou count",
+      title: "Data products",
       description:
-        "Workshops and reverse funnel analysis agree what a qualified account looks like before any list is built. Most disappointing research fails here, not later.",
+        "On-demand prospect lists, account slices and platform data cuts against an agreed ICP.",
     },
     {
-      title: "Build\nbottom-up",
+      title: "Research programmes",
       description:
-        "Numbers are assembled from the units underneath them, so a figure can always be traced back to what it is made of and defended in a review.",
+        "Discovery, surveys, senior interviews and a designed report you own and can publish.",
     },
     {
-      title: "Test the\nassumptions",
+      title: "Pipeline programmes",
       description:
-        "Findings are checked against real-world evidence: deals, disclosures and analyst assessments. Primary interviews are commissioned where a validation gap justifies them.",
+        "ABM activation, qualified lead delivery and executive roundtables with your team in the room.",
+    },
+  ],
+  assurances: [
+    {
+      title: "Sourcing you can put through review",
+      description:
+        "Majority publicly available information, validated by analysts, with primary layers from surveys and interviews.",
     },
     {
-      title: "Finish at\nthe conversation",
+      title: "95%+ contact accuracy",
       description:
-        "The audience studied becomes the audience engaged: content, campaigns and roundtables that turn readers into consented, qualified conversations.",
+        "On business email and title, with every field on a defined refresh cycle.",
+    },
+    {
+      title: "Consent captured before handover",
+      description:
+        "Non-disclosure and data processing agreements supported for enterprise approval processes.",
     },
   ],
 } as const;

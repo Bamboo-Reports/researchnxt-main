@@ -4,6 +4,97 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-13
 
+## About: How we work replaced by How to engage us; navy purged site-wide, 2026-08-13
+
+**About page:** the "How we work / Four habits behind every engagement"
+section is gone (the `howWeWork` export with it), replaced from a
+user-supplied mockup by `engagementModes`: eyebrow "How to engage us",
+title "Three ways in, sized to the decision in front of you", three
+bordered mode cards (Data products, Research programmes, Pipeline
+programmes); the mockup's timeframe kickers ("24 to 48 hours", "6 to 12
+weeks", "Project or retainer") were dropped on user direction (the
+`timeframe` fields are deleted from content too), so each card opens
+straight on its name. The layout then went through a four-way variant
+review (tiles, stations, ledger, soft panels behind the temporary
+picker); the user chose **stations** (`ModesStations`): no boxes, the
+three modes as columns on one continuous rule with the signal tick, the
+page's joined-timeline grammar. The other variants and the picker are
+deleted. Then an
+assurance row of three ruled stations (Sourcing you can put through
+review; 95%+ contact accuracy; Consent captured before handover). The
+mockup's tracked all-caps kickers became sentence case per CLAUDE.md.
+Verified in SSR output; lint clean.
+
+**Navy (bg-deep) no longer renders anywhere**, on user direction ("we
+don't want this anywhere"), and a memory was saved
+(no-navy-deep-surfaces): the homepage Engage card moved to `bg-accent`
+(stats-bento feature treatment, white text, outcome in white not
+orange), error.tsx and loading.tsx moved from the deep band to the
+light hero wash with standard buttons, and VideoEmbed's letterbox and
+hover scrim moved from `bg-deep` to `bg-ink`. The deep tokens and the
+Section/Button/Badge/Card deep variants and `EvidenceField` still exist
+in code but nothing renders them. The engagement step cards also lost
+`lg:auto-rows-fr` and a step of padding (user: boxes too tall with dead
+space); subgrid alone keeps their rows level.
+
+## Homepage hero recomposed, 2026-08-13
+
+Three user-directed changes, in sequence, all uncommitted (the pushed
+branch `content/h1b-roundtable-and-about` predates them):
+
+- **New copy.** Headline "Know the market. Name the accounts. Reach the
+  people inside them." with a new `hero.lede` beneath it ("A boutique
+  market intelligence firm... qualified conversations a sales team can act
+  on."). The lede got its own `data-hero-lede` step in the HeroIntro GSAP
+  timeline, between the word resolve and the CTA.
+- **The three rotating questions are gone** ("Is the quality of your
+  marketing leads...", etc). `hero.questions` deleted from content, the
+  `HeroQuestions` usage and its timeline step removed. The component file
+  stays (still listed in CLAUDE.md's client components) but nothing
+  renders it now.
+- **The orange beam field is retired from the band**, on user direction
+  ("plain white with some light gradients for now"). The hero now uses the
+  same `hero-wash` treatment as every inner-page hero, with ink copy and
+  the primary CTA instead of white-on-orange. `HeroField` and its CSS
+  remain in the repo unused, should the field come back.
+
+Verified live: light wash renders, headline/lede/CTA present and
+sequenced; note that in an occluded Chrome tab the GSAP entrance crawls
+(rAF throttling), which is a background-tab artifact, not a bug. SSR HTML
+carries the new copy. Lint clean. Worth flagging: `site.tagline` and the
+homepage meta description still carry the old "turnkey research
+solutions" line; not changed because the user has not asked.
+
+**What we do band added**, on user direction, after the Experts View
+section and before Why Research NXT: eyebrow "What we do", title "From
+market data to qualified pipeline", and the four solutions as stations on
+one rule (the About page's joined-timeline grammar) on the muted surface.
+`home.whatWeDo` derives its items from the solutions registry
+(`navLabel` + `metaDescription` for the three internal pages, plus
+`gccIntelligenceLink` out to Bamboo Reports with an external "Visit
+Bamboo Reports" link), so solution copy stays described in one place.
+Verified live in section order with all four cards. Card titles carry a
+chosen "\n" break (two-line rhythm, `sm:whitespace-pre-line`), and the
+Account Intelligence card reads a shortened `cardDescriptions` override
+("Heightened target account control, whitespace opportunities, and
+sharper selling propositions.") because its meta description ran long;
+the page's own SEO description is untouched.
+
+**How an engagement runs band added** after What we do, from a
+user-supplied mockup, adapted to house rules: sentence-case eyebrow (the
+mockup's tracked all-caps kicker is against CLAUDE.md), title "From a
+definition workshop to a conversation your sales team can take", four
+step cards (Define, Build, Validate, Engage) numbered with the tick
+device because the order is the information, each closing on its outcome
+line in accent semibold. The Engage card is the band's one saturated
+moment on `bg-deep`, with body in `text-on-deep` and the "Qualified
+pipeline" outcome in `text-accent-on-deep`, NOT the mockup's orange text,
+because brand orange is never text on any surface. Subgrid rows keep
+labels, names, copy and outcomes aligned across the row. Verified in SSR
+output; lint clean.
+
+## Bamboo Reports GCC roundtable published under events, 2026-08-13
+
 ## Bamboo Reports GCC roundtable published under events, 2026-08-13
 
 New event page at

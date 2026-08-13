@@ -15,7 +15,7 @@ import {
   aboutHero,
   aboutIntro,
   advisoryBoard,
-  howWeWork,
+  engagementModes,
   milestones,
   story,
   team,
@@ -241,6 +241,31 @@ function TeamSplit() {
   );
 }
 
+/** The engagement modes as stations on one rule, the page's
+    joined-timeline grammar. Chosen from a four-way variant review. */
+function ModesStations() {
+  return (
+    <Reveal className="grid gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      {engagementModes.modes.map((mode, index) => (
+        <div
+          key={mode.title}
+          className="row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10"
+          style={step(index)}
+        >
+          <span
+            aria-hidden="true"
+            className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
+          />
+          <h3 className="text-title font-display-soft">{mode.title}</h3>
+          <p className="text-sm leading-relaxed text-ink-soft">
+            {mode.description}
+          </p>
+        </div>
+      ))}
+    </Reveal>
+  );
+}
+
 export default function AboutPage() {
   return (
     <main id="main">
@@ -333,36 +358,29 @@ export default function AboutPage() {
         </Container>
       </Section>
 
+      {/* How to engage us: three mode cards, each opening on its timeframe
+          in the accent label device, then the assurance row as stations on
+          one rule beneath a hairline, per the user-supplied mockup. */}
       <Section bordered spacing="default">
         <Container>
           <SectionHeading
-            eyebrow={howWeWork.eyebrow}
-            title={accentedTitle(howWeWork.title)}
-            className="mb-6"
+            eyebrow={engagementModes.eyebrow}
+            title={engagementModes.title}
+            className="mb-12"
           />
-          {/* Outside the heading so it runs the container width; the
-              heading's own lede is capped at 64ch. */}
-          <p className="mb-12 text-lg leading-relaxed text-ink-soft">
-            {howWeWork.lede}
-          </p>
-          {/* The habits share one rule like the timeline above; the signal
-              tick marks each station without numbering them. */}
-          <Reveal className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {howWeWork.habits.map((habit, index) => (
+          <ModesStations />
+          <Reveal className="mt-12 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {engagementModes.assurances.map((assurance, index) => (
               <div
-                key={habit.title}
-                className="row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10"
+                key={assurance.title}
+                className="row-span-2 grid grid-rows-subgrid gap-y-2 border-t border-line pt-5 sm:pr-8 lg:pr-10"
                 style={step(index)}
               >
-                <span
-                  aria-hidden="true"
-                  className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
-                />
-                <h3 className="text-title font-display-soft sm:whitespace-pre-line">
-                  {habit.title}
-                </h3>
+                <p className="text-base font-semibold text-ink">
+                  {assurance.title}
+                </p>
                 <p className="text-sm leading-relaxed text-ink-soft">
-                  {habit.description}
+                  {assurance.description}
                 </p>
               </div>
             ))}

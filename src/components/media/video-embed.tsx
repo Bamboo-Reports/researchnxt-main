@@ -46,7 +46,7 @@ export function VideoEmbed({
         title={title}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        className="aspect-video w-full rounded-lg border border-line bg-deep"
+        className="aspect-video w-full rounded-lg border border-line bg-ink"
       />
     );
   }
@@ -56,7 +56,7 @@ export function VideoEmbed({
       type="button"
       onClick={() => setPlaying(true)}
       aria-label={`Play the recording: ${title}`}
-      className="group relative block aspect-video w-full overflow-hidden rounded-lg border border-line bg-deep"
+      className="group relative block aspect-video w-full overflow-hidden rounded-lg border border-line bg-ink"
     >
       <Image
         src={poster}
@@ -68,7 +68,7 @@ export function VideoEmbed({
       />
       <span
         aria-hidden="true"
-        className="absolute inset-0 bg-deep/20 transition-colors duration-200 group-hover:bg-deep/35"
+        className="absolute inset-0 bg-ink/20 transition-colors duration-200 group-hover:bg-ink/35"
       />
       <span
         aria-hidden="true"

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { HeroField } from "@/components/home/hero-field";
+import Link from "next/link";
 import { HeroIntro } from "@/components/home/hero-intro";
-import { HeroQuestions } from "@/components/home/hero-questions";
 import { TrustedLogos } from "@/components/home/trusted-logos";
 import { NavLink } from "@/components/layout/nav-link";
 import { Reveal } from "@/components/motion/reveal";
@@ -13,9 +12,11 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { resourcesNav } from "@/config/nav";
 import {
   differentiators,
+  engagementSteps,
   featuredInterviews,
   featuredReports,
   hero,
+  whatWeDo,
 } from "@/content/home";
 import { step } from "@/lib/motion";
 
@@ -28,44 +29,19 @@ export default function HomePage() {
 
   return (
     <main id="main">
-      {/* Problem-to-promise over a luminous beam field, after the Shinkei
-          reference the user supplied. The field renders in `HeroField`: four
-          CSS layers documented with the `.hero-field` block in globals.css
-          (vivid base wash, stepped beam system, counter-flowing light sweep,
-          grain), with GSAP adding the load settle and pointer parallax on
-          their shared wrapper. White copy sits straight on the field as in
-          the reference; the base wash weights its deep pocket through the
-          copy column so the headline clears display contrast.
-
-          Nothing here is an image, so the field costs no download and scales
-          to any viewport. The drift is gated behind `data-motion`, and the
-          reduced-motion block stops it outright. */}
-      <Section
-        spacing="none"
-        className="on-signal relative isolate overflow-hidden bg-signal"
-      >
-        <HeroField />
-
+      {/* Promise over the site's light hero wash: plain white with the soft
+          accent gradients the inner-page heroes use, on user direction. The
+          orange beam field (`HeroField`) is retired from this band for now;
+          the component stays in the repo should it come back. */}
+      <Section spacing="none" className="hero-wash border-b border-line">
         <Container className="py-24 sm:py-28 lg:py-36">
-          {/* Centred composition, as in the reference: question, promise, then
-              the one action, arriving in that order. HeroIntro choreographs
-              the entrance as a GSAP timeline; the words of the headline are
-              split into spans so it can resolve word by word. The whitespace
-              between spans keeps the accessible name one sentence. */}
+          {/* Centred composition: the promise, the lede, then the one action,
+              arriving in that order. HeroIntro choreographs the entrance as a
+              GSAP timeline; the words of the headline are split into spans so
+              it can resolve word by word. The whitespace between spans keeps
+              the accessible name one sentence. */}
           <HeroIntro className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <div data-hero-questions className="w-full">
-              <HeroQuestions
-                questions={hero.questions}
-                toneClass="text-white"
-                dotClass="bg-white/60"
-                centered
-              />
-            </div>
-
-            {/* mt-3, not the mt-7 the scale suggests: the dot row above ends
-                with ~19px of its 44px touch targets' invisible padding, so
-                the visible gap here is already ~31px. */}
-            <h1 className="mt-3 max-w-[22ch] text-balance text-display-sm font-display text-white">
+            <h1 className="max-w-[22ch] text-balance text-display-sm font-display text-ink">
               {hero.headline.split(" ").map((word, index) => (
                 <span key={index}>
                   <span data-hero-word className="inline-block">
@@ -75,10 +51,15 @@ export default function HomePage() {
               ))}
             </h1>
 
+            <p
+              data-hero-lede
+              className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-soft"
+            >
+              {hero.lede}
+            </p>
+
             <div data-hero-cta className="mt-9">
-              <Button href={hero.cta.href} variant="on-deep">
-                {hero.cta.label}
-              </Button>
+              <Button href={hero.cta.href}>{hero.cta.label}</Button>
             </div>
           </HeroIntro>
         </Container>
@@ -145,6 +126,131 @@ export default function HomePage() {
                 style={step(index)}
               />
             ))}
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* What we do: the four solutions as stations on one rule, the joined
+          timeline grammar the About page uses; the GCC Intelligence card
+          goes out to Bamboo Reports, as the nav does. */}
+      <Section surface="muted" bordered spacing="default">
+        <Container>
+          <SectionHeading
+            eyebrow={whatWeDo.eyebrow}
+            title={whatWeDo.title}
+            className="mb-12"
+          />
+          <Reveal className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {whatWeDo.items.map((item, index) => (
+              <div
+                key={item.title}
+                className="row-span-4 grid grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:pr-8 lg:pr-10"
+                style={step(index)}
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
+                />
+                {/* The chosen "\n" break applies once the cards sit in a
+                    grid; in the single mobile column it collapses to a
+                    space. */}
+                <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-ink-soft">
+                  {item.description}
+                </p>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                  >
+                    Visit Bamboo Reports
+                    <span className="sr-only"> (opens in a new tab)</span>
+                    <TrailingArrow />
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                  >
+                    Explore
+                    <span className="sr-only"> {item.title}</span>
+                    <TrailingArrow />
+                  </Link>
+                )}
+              </div>
+            ))}
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* How an engagement runs: the four steps as cards, numbered because
+          the order is the information. The closing Engage card is the
+          band's one saturated moment on the accent blue, the stats-bento
+          feature treatment; its outcome line is white because brand orange
+          is never text on any surface. */}
+      <Section bordered spacing="default">
+        <Container>
+          <SectionHeading
+            eyebrow={engagementSteps.eyebrow}
+            title={engagementSteps.title}
+            className="mb-12"
+          />
+          {/* No auto-rows-fr here: the subgrid alone keeps the four cards'
+              rows level, and fr rows would stretch the cards with dead
+              space. */}
+          <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {engagementSteps.steps.map((stage, index) => {
+              const closing = index === engagementSteps.steps.length - 1;
+
+              return (
+                <div
+                  key={stage.name}
+                  className={`row-span-4 grid grid-rows-subgrid gap-y-2.5 rounded-md p-5 sm:p-6 ${
+                    closing ? "bg-accent" : "border border-line bg-surface"
+                  }`}
+                  style={step(index)}
+                >
+                  <p
+                    className={`flex items-center gap-3 text-sm font-semibold ${
+                      closing ? "text-white/85" : "text-accent"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`size-1.5 shrink-0 rounded-[1px] ${
+                        closing ? "bg-white/60" : "bg-signal"
+                      }`}
+                    />
+                    Step {index + 1}
+                  </p>
+                  <h3
+                    className={`text-title font-display-soft ${
+                      closing ? "text-white" : "text-ink"
+                    }`}
+                  >
+                    {stage.name}
+                  </h3>
+                  <p
+                    className={`text-sm leading-relaxed ${
+                      closing ? "text-white/85" : "text-ink-soft"
+                    }`}
+                  >
+                    {stage.description}
+                  </p>
+                  <p
+                    className={`self-end text-sm font-semibold ${
+                      closing ? "text-white" : "text-accent"
+                    }`}
+                  >
+                    {stage.outcome}
+                  </p>
+                </div>
+              );
+            })}
           </Reveal>
         </Container>
       </Section>
