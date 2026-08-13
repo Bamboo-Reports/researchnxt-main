@@ -2,7 +2,227 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-12
+Last updated: 2026-08-13
+
+## Bamboo Reports GCC roundtable published under events, 2026-08-13
+
+New event page at
+`/resources/events/bamboo-reports/h1b-shock-strategic-reset`, authored from
+the user-supplied draft `h1b-roundtable.md` (repo root, untracked scratch
+input like `sf-covers/`). The H-1B / GCC roundtable, Hilton Bengaluru,
+13 November 2025.
+
+**New project segment `bamboo-reports`.** The roundtable belongs to the
+Bamboo Reports GCC research, not to any marketing report programme, so
+`getInsightProject` finds nothing and the breadcrumb runs Events / date.
+That exposed a template bug: the first breadcrumb separator rendered
+unconditionally, so a programme-less event showed "Events / / date". The
+separator now renders inside the programme conditional
+(`src/app/resources/events/[project]/[event]/page.tsx`); conference
+participations were already programme-carrying (industry-events resolves a
+programme), so nothing else changes.
+
+**All images are local**, on user direction: the draft pointed at catbox
+and ufs.sh, and everything was downloaded to
+`public/events/h1b-shock-strategic-reset/` (hero.jpg 1920x1080, fifteen
+800x800 headshots under `speakers/`, sixteen webp photos under `gallery/`,
+~12MB total). No remote image hosts are referenced.
+
+**Content mapping** (`src/content/events/bamboo-reports/h1b-shock-strategic-reset.ts`):
+the draft's H3s became the body's heading blocks; highlights, the two
+context points, signals and playbook prompts are `list` blocks with `**`
+emphasis; the final takeaway is `bodyAfterSpeakers` so it lands under the
+panel. Facts: Format / Venue / Hosted by. The draft's em dashes became
+colons per the house rule. Gallery of sixteen with empty alts (HYSEA
+precedent). Fifteen speakers in draft order, no LinkedIn links (the draft
+supplies none, and guessed URLs risk the wrong person); Madhav Vemuri's
+line is "Inpace, formerly ABB" because the draft lists "Inpace / X ABB"
+with no title. The draft's suggested live path /roundtables/... was not
+used: content URLs follow /resources/events/<project>/<leaf>.
+
+Verified in the browser: breadcrumb "Events / 13 November 2025", all 8
+headings, 15 speaker cards, 16 gallery images, 3 facts, 32 images total
+with zero broken, no horizontal overflow; the event lists second on
+/resources/events (after the undated recap, per the newest-first sort).
+Lint clean.
+
+**"Who spoke" redesigned: tiles, chosen from a four-way variant review.**
+Candidates (behind the temporary variant picker, since deleted): the
+incumbent hairline discs, a five-across portrait wall, a compact
+two-column roster ledger, and tiles. The user chose tiles:
+`SpeakersTiles` renders each speaker on a white bordered card (56px disc,
+name, role, company), three across, for EVERY event with speakers.
+Shared pieces extracted on the way: `SpeakerNameLink`,
+`SpeakerInterviewLink`, `SpeakerGroupTitle`, so group subheadings (NTLF),
+LinkedIn names and interview links all survive. The rejected variants and
+`src/components/dev/variant-picker.tsx` are deleted. Verified live:
+picker gone, 15 tiles render on the roundtable.
+
+The closing takeaway moved below the gallery, on user direction: the
+`bodyAfterSpeakers` block left the speakers band and renders as its own
+subtle band after the gallery (heading promoted h3 to h2 now that it
+opens a band). An event with no gallery, the 2017 webinar, still gets the
+block directly after its speakers, so its reading order is unchanged.
+Verified live: the page now runs Who spoke, Moments, then the takeaway.
+
+Two follow-ups on user direction, both verified live: the gallery band
+moved below the speakers band in the event template (so "Who spoke"
+precedes "Moments from..."; the gallery dropped its subtle surface since
+it now sits beside the subtle speakers band; this reorders HYSEA's
+gallery below its speakers too), and this event's speakers are sorted
+A to Z by name in the content module rather than the draft's running
+order.
+
+Also on user direction: the About page's fifth fact value changed from
+"Built in-house" to "GCC Intelligence" (label unchanged).
+
+## About page: final QA pass, 2026-08-13
+
+Full-page QA in Chrome against the running dev server (already up on
+localhost:3000; not started by the agent), plus computed-style checks via
+the JS console.
+
+**One defect found and fixed.** `TeamSplit` wrapped its two columns in
+`<article className="contents">`; a `display: contents` element generates
+no box, so the `.anim-stagger > *` entrance landed on it and never
+visually ran: the band appeared without its reveal (content stayed
+visible, per the motion rule, but the stagger was dead). The wrapper is
+now a `Fragment`, the columns sit directly under the `Reveal`, and both
+were confirmed live running `rise-in` to opacity 1. A comment in
+`TeamSplit` warns against reintroducing a contents wrapper there.
+
+**Checked and healthy:** no horizontal overflow at any tested width
+(scrollWidth == clientWidth); page height ~4,186px with contiguous
+sections (65 / 255 / 965 / 1548 / 2115 / 2800), no dead gaps; heading
+outline is one h1 then h2 per band, h3 for cards and the founder, h4 for
+Advisory board and Team; all type resolves to DM Sans (thesis 60px/800,
+band headlines 44px/700, body 16px/26px, small 14px); the fact figures
+render on the tabular face and the two-line title rhythm holds across the
+timeline and habits rows; the portrait loads with correct alt; zero
+console errors. Desktop (~1500px) screenshots confirmed every band's
+layout: thesis + facts split, story, the joined timeline rule, habits,
+and the team split with the two-line CMO role.
+
+**Not verified:** phone-width layout. The window manager pinned the
+browser window size, so sub-sm widths could not be tested; code-wise all
+grids collapse to one column and the "\n" breaks collapse to spaces
+below sm, and there is no horizontal overflow at the widths that were
+testable.
+
+## About page: variant review resolved, 2026-08-13
+
+Both open layouts were chosen through a temporary Prev/Next variant picker
+rendered in the page; the picker (`src/components/dev/variant-picker.tsx`)
+and every rejected variant are now deleted and the page is final again.
+
+**Facts: `FactsSplit`.** The founding story (2017, founded and
+bootstrapped, with its detail line) on an accent-soft panel at left, the
+four measurements as ruled cells beside it. Rejected: ruled ledger, stats
+bento, measurement strip, lead-and-grid.
+
+**Team: `TeamSplit`**, the same grammar as the facts band so the two ends
+of the page rhyme: the founder's identity (portrait, name, role, socials)
+on an accent-soft panel left; bio, affiliations and the advisory board
+block as ruled blocks right. Rejected across two rounds: plate, mirrored,
+panel, dossier (round one, all portrait-beside-text), then editorial and
+roster (round two). Shared helpers kept: `PersonPortrait`,
+`AffiliationsList`, `PersonSocials`.
+
+Post-selection tweaks on user direction: the first advisor's role reads
+"Former MD of..." rather than "Former managing director of..."; the second
+advisor's role carries a forced two-line break ("Former four-time SaaS\n
+chief marketing officer.", rendered `whitespace-pre-line`); and the
+analyst-team note ("Behind every engagement...") sits under its own "Team"
+header (`advisoryBoard.noteTitle`) as the last ruled block of the right
+column, below the Advisory board block, mirroring its heading style. It
+briefly ran inside the founder's bio copy between those two placements.
+With "Team" now a sub-header, the section eyebrow changed from "The team"
+to "The people" so the two labels stop colliding.
+
+Lint and the impeccable detector are clean.
+
+## About page rebuilt on new positioning copy, 2026-08-13
+
+The About page was still the transcription of the old WordPress page ("Who we
+are?", "Our culture", the 500k+/1.5k+ stats). Replaced wholesale with new
+copy supplied by the user: pipeline-first positioning ("Research that ends in
+a pipeline, not a PDF."), the firm's story, a timeline, working habits, the
+founder plus an advisory board, and an ecosystem recognition band.
+
+`src/content/about.ts` was rewritten; the old `whoWeAre`, `culture`,
+`aboutStats` and `leadership` exports are gone (nothing else imported them).
+New exports: `aboutHero`, `aboutFacts` + `aboutPhoto`, `story`, `milestones`,
+`howWeWork`, `team`, `advisoryBoard`, `recognition`. Copy is the user's
+verbatim, sentence case on labels; no em dashes anywhere in it.
+
+Page structure (`src/app/about/page.tsx`), all house devices, no new
+components:
+
+- **Hero**: the "About Us" title alone, no lede, on user direction (a
+  boutique-firm lede sat under it briefly and was reverted). The pipeline
+  headline opens the page body as `aboutIntro`, now at `text-display-sm`
+  in the display face: it is the page's thesis, so it carries the page's
+  largest type below the hero, over the short orange rule with the
+  boutique-firm paragraph beneath.
+- **Fact ledger**: the five facts (2017 founded and bootstrapped, 50+
+  clients, 2018 NASSCOM partner, 60,000+ subscribers, Built in-house Bamboo
+  Reports) ran as a stats bento first (feature tile on the accent, then
+  quiet tiles; an event photograph sat beside it briefly and was removed);
+  the user then asked for something other than a bento, and a full-page
+  overhaul through the impeccable and frontend-design skills replaced it
+  with a ruled ledger: one hairline row per fact, the figure in a 16rem
+  display column left, the claim right, `items-baseline` so figure and
+  claim share a baseline. Only the founding row carries a `detail` line.
+  `AboutFact.count` still marks which values count up (50+ and 60,000+
+  through `FigureValue`; 2017 and 2018 are dates and stay still). The
+  page-wide overhaul direction: the page was four repeats of
+  heading-plus-card-grid, so cards gave way to ruled lines as the page's
+  device, matching the site's field-report grammar.
+- **Our story**: three paragraphs at the container's full width (a 72ch cap
+  was removed on user direction) and a secondary "Visit Bamboo Reports"
+  button out to bambooreports.com.
+- **What shaped the firm**: four milestone stations (2017, 2018, 2022,
+  Today) on the muted surface. The horizontal gap went to zero with padding
+  inside each column instead, so the columns' top rules join into one
+  continuous timeline; the tick and accent year mark the stations along it.
+  Subgrid rows keep titles and copy aligned.
+- **How we work**: the same station treatment as the timeline: one shared
+  rule, each habit's station marked by the orange signal dash. The stations
+  were briefly numbered 1 to 4; removed on user direction. Both this row
+  and the timeline had titles wrapping to a mix of one and two lines; on
+  user direction every milestone and habit title now carries a chosen "\n"
+  break (the solutions-page pattern, rendered `sm:whitespace-pre-line`) so
+  all eight cards share a two-line rhythm; the breaks collapse to spaces in
+  the single mobile column.
+  The "None of this is exotic" paragraph sits under the SectionHeading as
+  its own full-width paragraph rather than as the heading's lede, whose
+  64ch cap the user asked to escape.
+- **The team**: Santosh's card keeps its previous layout (photo, role, bio,
+  affiliations, socials) with the new role "Founder & CEO", the shorter bio,
+  and affiliations trimmed to FLAME and MIDAS. The advisory board sits inside
+  the same band, reworked on user direction (via the impeccable and
+  frontend-design skills) from two bare hairline blurbs plus an orphan
+  paragraph into one plate: each advisor's copy is split verbatim at its
+  sentence break into a role headline (`font-display-soft`) over a
+  credential line under a hairline, on white bordered tiles whose hairlines
+  stay level via subgrid, and the analyst-team note closes the plate as a
+  full-width tile on `bg-accent-soft` with the signal tick. Content shape
+  changed with it: `advisoryBoard.members` is now `{ role, credential }[]`
+  rather than strings.
+- **In the room**: REMOVED FROM THE PAGE for now, on user direction, so the
+  page closes on the team band. The `recognition` export stays in
+  `src/content/about.ts` with the awards folded into its prose (it earlier
+  ran deep navy with award tiles, then as a light one-paragraph band);
+  restoring the band is one import away.
+
+Two-tone `**` accents were added to section titles (PDF, technology,
+engagement, accountable), rendered through `accentedTitle`; every band on
+the page is now a light surface, so `text-accent` clears contrast wherever
+they appear. Metadata description reads from `aboutIntro.lede`.
+
+Verified: `npm run lint` clean. Not run (needs permission): a dev-server
+visual check and `tsc`; worth a look in the browser, particularly the proof
+band at tablet widths and the photo crop at `lg`.
 
 ## Two NASSCOM industry events checked; deck embedded, 2026-08-12
 

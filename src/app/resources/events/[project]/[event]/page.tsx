@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { SectionHeading } from "@/components/ui/section-heading";
+import type { Event as EventRecord } from "@/content/events";
 import { eventHref, events, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { getInsightProject } from "@/content/insights";
@@ -52,6 +53,125 @@ function initials(name: string) {
   const first = words[0]?.[0] ?? "";
   const last = words.length > 1 ? (words[words.length - 1][0] ?? "") : "";
   return (first + last).toUpperCase();
+}
+
+type Speaker = NonNullable<EventRecord["speakers"]>[number];
+type SpeakerGroup = { title?: string; items: Speaker[] };
+type SpeakersProps = { groups: SpeakerGroup[]; project: string };
+
+/** The name, carrying the LinkedIn profile where the event sets one, as
+    every speaker variant renders it. */
+function SpeakerNameLink({ speaker }: { speaker: Speaker }) {
+  if (!speaker.linkedIn) {
+    return (
+      <span className="text-base font-semibold text-ink">{speaker.name}</span>
+    );
+  }
+  return (
+    <a
+      href={speaker.linkedIn}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-2 text-base font-semibold text-ink transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:text-accent"
+    >
+      {speaker.name}
+      <SocialIcon
+        label="LinkedIn"
+        className="size-3.5 shrink-0 opacity-70 transition-opacity duration-200 group-hover:opacity-100"
+      />
+      <span className="sr-only">on LinkedIn</span>
+    </a>
+  );
+}
+
+/** The way through to a speaker's published interview, where one exists. */
+function SpeakerInterviewLink({
+  project,
+  speaker,
+}: {
+  project: string;
+  speaker: Speaker;
+}) {
+  const interview = speaker.interview
+    ? getExpertInterview(project, speaker.interview)
+    : undefined;
+  if (!interview) return null;
+  return (
+    <Link
+      href={interviewHref(interview)}
+      className="mt-1 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+    >
+      Read the interview
+    </Link>
+  );
+}
+
+/** Group subheading, shared by every speaker variant. */
+function SpeakerGroupTitle({ title }: { title?: string }) {
+  if (!title) return null;
+  return (
+    <h3 className="mb-6 text-headline font-display-soft text-ink">{title}</h3>
+  );
+}
+
+/** The speaker cards: each on a white bordered tile, three across, the
+    panel as a plate of cards. Chosen from a four-way variant review. */
+function SpeakersTiles({ groups, project }: SpeakersProps) {
+  return (
+    <>
+      {groups.map((group, groupIndex) => (
+        <div
+          key={group.title ?? "all"}
+          className={groupIndex > 0 ? "mt-12" : undefined}
+        >
+          <SpeakerGroupTitle title={group.title} />
+          <Reveal
+            as="ul"
+            className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {group.items.map((speaker, index) => (
+              <li
+                key={speaker.name}
+                style={step(index)}
+                className="flex items-start gap-4 rounded-md border border-line bg-surface p-5"
+              >
+                {speaker.image ? (
+                  <Image
+                    src={speaker.image}
+                    alt=""
+                    width={112}
+                    height={112}
+                    loading="lazy"
+                    sizes="56px"
+                    className="size-14 shrink-0 rounded-full border border-line object-cover"
+                  />
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="flex size-14 shrink-0 items-center justify-center rounded-full border border-line bg-surface-muted text-sm font-semibold text-ink-muted"
+                  >
+                    {initials(speaker.name)}
+                  </span>
+                )}
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <SpeakerNameLink speaker={speaker} />
+                  <span className="text-sm leading-relaxed text-ink-soft">
+                    {speaker.role}
+                  </span>
+                  {speaker.company ? (
+                    <span className="text-sm font-semibold leading-relaxed text-ink-muted">
+                      {speaker.company}
+                    </span>
+                  ) : null}
+                  <SpeakerInterviewLink project={project} speaker={speaker} />
+                </span>
+              </li>
+            ))}
+          </Reveal>
+        </div>
+      ))}
+    </>
+  );
 }
 
 export function generateStaticParams() {
@@ -137,16 +257,24 @@ export default async function EventPage({ params }: Params) {
               >
                 Events
               </Link>
-              <span aria-hidden="true">/</span>
-              {reportHref && programme ? (
-                <Link
-                  href={reportHref}
-                  className="text-accent hover:text-accent-hover"
-                >
-                  {programme.name}
-                </Link>
-              ) : programme ? (
-                <span>{programme.name}</span>
+              {/* The separator belongs to the programme: an event with no
+                  programme record (the Bamboo Reports roundtable, the
+                  conference participations) runs Events / date, not
+                  Events / / date. */}
+              {programme ? (
+                <>
+                  <span aria-hidden="true">/</span>
+                  {reportHref ? (
+                    <Link
+                      href={reportHref}
+                      className="text-accent hover:text-accent-hover"
+                    >
+                      {programme.name}
+                    </Link>
+                  ) : (
+                    <span>{programme.name}</span>
+                  )}
+                </>
               ) : null}
               {/* The separator belongs to the date, so a recap with no stated
                   event date ends the trail at the programme rather than on a
@@ -340,32 +468,6 @@ export default async function EventPage({ params }: Params) {
         </Section>
       ) : null}
 
-      {/* Photographs from the day, in the source's own grid. Each is a
-          plain image: they are a record of the room, and captioning eight
-          of them "attendees at the summit" would say nothing. */}
-      {event.gallery?.images.length ? (
-        <Section surface="subtle" bordered spacing="tight">
-          <Container>
-            <SectionHeading title={event.gallery.title} className="mb-10" />
-            <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {event.gallery.images.map((photo, index) => (
-                <Image
-                  key={photo.src}
-                  src={photo.src}
-                  alt={photo.alt}
-                  width={1024}
-                  height={768}
-                  loading="lazy"
-                  sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw"
-                  style={step(index)}
-                  className="aspect-[4/3] w-full rounded-md border border-line object-cover"
-                />
-              ))}
-            </Reveal>
-          </Container>
-        </Section>
-      ) : null}
-
       {/* The programme as it ran. The opening session leads at full width
           because it is the keynote and the source page gives it the same
           weight; the rest sit three up beneath it. */}
@@ -554,165 +656,92 @@ export default async function EventPage({ params }: Params) {
         <Section surface="subtle" bordered spacing="tight">
           <Container>
             <SectionHeading title="Who spoke" className="mb-10" />
-            {speakerGroups.map((group, groupIndex) => (
-              <div
-                key={group.title ?? "all"}
-                className={groupIndex > 0 ? "mt-12" : undefined}
-              >
-                {group.title ? (
-                  <h3 className="mb-6 text-headline font-display-soft text-ink">
-                    {group.title}
-                  </h3>
-                ) : null}
-                {/* Three across is the default shelf. A set of four runs as
-                    one row instead, so the last card is not left alone on a
-                    second. */}
-                <Reveal
-                  as="ul"
-                  className={`grid gap-x-8 gap-y-6 sm:grid-cols-2 ${
-                    group.items.length === 4
-                      ? "lg:grid-cols-4"
-                      : "lg:grid-cols-3"
-                  }`}
-                >
-                  {group.items.map((speaker, index) => {
-                    /* Only where the event sets one: the ai-led launch links its
-                   speakers to LinkedIn alone, the two report launches that
-                   name their interviewees still link the interview. */
-                    const interview = speaker.interview
-                      ? getExpertInterview(event.project, speaker.interview)
-                      : undefined;
+            <SpeakersTiles groups={speakerGroups} project={event.project} />
 
-                    return (
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* Photographs from the day, below the speakers so the record of who
+          was in the room precedes the pictures of it. Each is a plain
+          image: captioning sixteen of them "attendees at the roundtable"
+          would say nothing. */}
+      {event.gallery?.images.length ? (
+        <Section bordered spacing="tight">
+          <Container>
+            <SectionHeading title={event.gallery.title} className="mb-10" />
+            <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {event.gallery.images.map((photo, index) => (
+                <Image
+                  key={photo.src}
+                  src={photo.src}
+                  alt={photo.alt}
+                  width={1024}
+                  height={768}
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 100vw"
+                  style={step(index)}
+                  className="aspect-[4/3] w-full rounded-md border border-line object-cover"
+                />
+              ))}
+            </Reveal>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* What the panel covered, or the recap's closing takeaway: its own
+          band after the gallery, so the sign-off follows the pictures of the
+          day. An event with no gallery (the 2017 webinar) still reads the
+          same, with the block directly after its speakers. */}
+      {event.bodyAfterSpeakers?.length ? (
+        <Section surface="subtle" bordered spacing="tight">
+          <Container>
+            <div className="flex flex-col gap-5">
+              {event.bodyAfterSpeakers.map((block) =>
+                typeof block === "string" ? (
+                  <p
+                    key={block}
+                    className="text-base leading-relaxed text-ink-soft"
+                  >
+                    <Emphasised text={block} />
+                  </p>
+                ) : "list" in block ? (
+                  <ul key={block.list.join("")} className="flex flex-col gap-3">
+                    {block.list.map((item) => (
                       <li
-                        key={speaker.name}
-                        style={step(index)}
-                        className="flex flex-col gap-1 border-t border-line pt-4"
+                        key={item}
+                        className="flex gap-3 text-base leading-relaxed text-ink-soft"
                       >
-                        {/* Decorative: the name sits right beside it, so an alt
-                      repeating it would only double up for a screen
-                      reader. */}
-                        {speaker.image ? (
-                          <Image
-                            src={speaker.image}
-                            alt=""
-                            width={112}
-                            height={112}
-                            loading="lazy"
-                            sizes="56px"
-                            className="mb-1 size-14 rounded-full border border-line object-cover"
-                          />
-                        ) : (
-                          /* No portrait published for this speaker: their
-                         initials stand in, so the row of cards keeps one
-                         rhythm instead of some starting with a disc and
-                         some with the name. Decorative, like the portrait
-                         it replaces, since the name follows it. */
-                          <span
-                            aria-hidden="true"
-                            className="mb-1 flex size-14 items-center justify-center rounded-full border border-line bg-surface-muted text-sm font-semibold text-ink-muted"
-                          >
-                            {initials(speaker.name)}
-                          </span>
-                        )}
-                        {/* The name carries the profile link, as the source page
-                      has it. Where the source links the wrong person the
-                      field is unset and the name is plain text. */}
-                        {speaker.linkedIn ? (
-                          <a
-                            href={speaker.linkedIn}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group flex items-center gap-2 text-base font-semibold text-ink transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:text-accent"
-                          >
-                            {speaker.name}
-                            <SocialIcon
-                              label="LinkedIn"
-                              className="size-3.5 shrink-0 opacity-70 transition-opacity duration-200 group-hover:opacity-100"
-                            />
-                            <span className="sr-only">on LinkedIn</span>
-                          </a>
-                        ) : (
-                          <span className="text-base font-semibold text-ink">
-                            {speaker.name}
-                          </span>
-                        )}
-                        <span className="text-sm leading-relaxed text-ink-soft">
-                          {speaker.role}
+                        <span
+                          aria-hidden="true"
+                          className="mt-2.5 h-1 w-3 shrink-0 rounded-[1px] bg-signal"
+                        />
+                        <span>
+                          <Emphasised text={item} />
                         </span>
-                        {speaker.company ? (
-                          <span className="text-sm font-semibold leading-relaxed text-ink-muted">
-                            {speaker.company}
-                          </span>
-                        ) : null}
-                        {interview ? (
-                          <Link
-                            href={interviewHref(interview)}
-                            className="mt-1 self-start text-sm font-semibold text-accent hover:text-accent-hover"
-                          >
-                            Read the interview
-                          </Link>
-                        ) : null}
                       </li>
-                    );
-                  })}
-                </Reveal>
-              </div>
-            ))}
-
-            {/* What the panel covered, where the source page sets it under the
-                speaker cards rather than above them. */}
-            {event.bodyAfterSpeakers?.length ? (
-              <div className="mt-12 flex flex-col gap-5">
-                {event.bodyAfterSpeakers.map((block) =>
-                  typeof block === "string" ? (
-                    <p
-                      key={block}
-                      className="text-base leading-relaxed text-ink-soft"
-                    >
-                      <Emphasised text={block} />
-                    </p>
-                  ) : "list" in block ? (
-                    <ul
-                      key={block.list.join("")}
-                      className="flex flex-col gap-3"
-                    >
-                      {block.list.map((item) => (
-                        <li
-                          key={item}
-                          className="flex gap-3 text-base leading-relaxed text-ink-soft"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="mt-2.5 h-1 w-3 shrink-0 rounded-[1px] bg-signal"
-                          />
-                          <span>
-                            <Emphasised text={item} />
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : "heading" in block ? (
-                    <h3
-                      key={block.heading}
-                      className="text-headline font-display-soft text-ink"
-                    >
-                      {block.heading}
-                    </h3>
-                  ) : (
-                    <Image
-                      key={block.image}
-                      src={block.image}
-                      alt={block.alt}
-                      width={1280}
-                      height={720}
-                      loading="lazy"
-                      className="w-full rounded-lg border border-line object-cover"
-                    />
-                  ),
-                )}
-              </div>
-            ) : null}
+                    ))}
+                  </ul>
+                ) : "heading" in block ? (
+                  <h2
+                    key={block.heading}
+                    className="text-headline font-display-soft text-ink"
+                  >
+                    {block.heading}
+                  </h2>
+                ) : (
+                  <Image
+                    key={block.image}
+                    src={block.image}
+                    alt={block.alt}
+                    width={1280}
+                    height={720}
+                    loading="lazy"
+                    className="w-full rounded-lg border border-line object-cover"
+                  />
+                ),
+              )}
+            </div>
           </Container>
         </Section>
       ) : null}

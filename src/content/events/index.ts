@@ -10,6 +10,7 @@
 
 import { aiLedEbookLaunch } from "./ai-led-personalization/ai-led-ebook-launch";
 import { marketingAutomationRoundtable } from "./automation-campaign-management/marketing-automation-roundtable";
+import { h1bShockStrategicReset } from "./bamboo-reports/h1b-shock-strategic-reset";
 import { businessStrategyReportLaunch } from "./south-east-asia-response-guide/business-strategy-report-launch";
 import { contentMarketingReportLaunch } from "./content-marketing-done-right/content-marketing-report-launch";
 import { reportLaunchWebinar } from "./b2c-marketing-automation-india-2017/report-launch-webinar";
@@ -21,6 +22,9 @@ export type { Event } from "./types";
 
 /** Every published event, newest first. */
 export const events = [
+  // Bamboo Reports GCC research
+  h1bShockStrategicReset,
+
   // Automation & Campaign Management
   marketingAutomationRoundtable,
 
