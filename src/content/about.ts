@@ -3,7 +3,10 @@
     ecosystem recognition band. */
 
 export const aboutHero = {
-  title: "About Us",
+  title: "About us",
+  /** Search-snippet length; the page lede runs longer than a SERP shows. */
+  metaDescription:
+    "A boutique market intelligence firm for B2B technology leaders: we size markets, name accounts and carry research through to conversations sales can act on.",
 } as const;
 
 /** The positioning statement opens the page body, under the plain hero. */
@@ -45,7 +48,7 @@ export const aboutFacts: AboutFact[] = [
     count: true,
   },
   {
-    value: "GCC Intelligence",
+    value: "GCC intelligence",
     label: "Bamboo Reports, our own product, now used by enterprise teams",
   },
 ];

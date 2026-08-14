@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { ReportCardRail } from "@/components/report-card-rail";
@@ -16,10 +16,10 @@ import {
   getProjectInsights,
   insightHref,
   insights,
+  insightsLibrary,
 } from "@/content/insights";
-import { getReportLanding } from "@/content/resources";
-import { formatDate } from "@/lib/date";
 import { delay, step } from "@/lib/motion";
+import { og } from "@/lib/og";
 import type { ArticleBlock } from "@/content/insights";
 
 /**
@@ -130,6 +130,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: insight.metaTitle,
     description: insight.metaDescription,
     alternates: { canonical: insightHref(insight) },
+    openGraph: og(insight.thumbnail),
   };
 }
 
@@ -141,11 +142,8 @@ export default async function InsightPage({ params }: Params) {
 
   // The programme's report landing, when it has been built; the breadcrumb
   // links to it and falls back to plain text when it has not.
-  const report = projectMeta.reportSlug
-    ? getReportLanding(projectMeta.reportSlug)
-    : undefined;
-  const reportHref = report
-    ? `/resources/reports-whitepapers/${report.slug}`
+  const reportHref = projectMeta.reportSlug
+    ? `/resources/reports-whitepapers/${projectMeta.reportSlug}`
     : undefined;
 
   const others = getProjectInsights(project).filter(
@@ -154,38 +152,17 @@ export default async function InsightPage({ params }: Params) {
 
   return (
     <main id="main">
-      {/* Hero. The title carries the piece, so the band stays a slim wash with
-          the trail back to the library above it. */}
+      {/* Hero. The title carries the piece, so the band stays a slim wash
+          with the trail back to the library above it. */}
       <Section spacing="none" className="hero-wash border-b border-line">
         <Container className="py-12 sm:py-16">
           <div className="anim-rise flex flex-col gap-6" style={step(0)}>
-            <nav
-              aria-label="Breadcrumb"
-              className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-ink-muted"
-            >
-              <Link
-                href="/resources/insights"
-                className="text-accent hover:text-accent-hover"
-              >
-                Insights
-              </Link>
-              <span aria-hidden="true">/</span>
-              {reportHref ? (
-                <Link
-                  href={reportHref}
-                  className="text-accent hover:text-accent-hover"
-                >
-                  {projectMeta.name}
-                </Link>
-              ) : (
-                <span>{projectMeta.name}</span>
-              )}
-              <span aria-hidden="true">/</span>
-              <time dateTime={insight.published}>
-                {formatDate(insight.published)}
-              </time>
-            </nav>
-
+            <Breadcrumbs
+              items={[
+                { label: insightsLibrary.title, href: "/resources/insights" },
+                { label: projectMeta.name, href: reportHref },
+              ]}
+            />
             <h1 className="max-w-[24ch] text-display-sm font-display text-ink">
               {insight.title}
             </h1>
@@ -219,7 +196,7 @@ export default async function InsightPage({ params }: Params) {
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div
                 id="download"
-                className="anim-rise scroll-mt-24"
+                className="anim-rise scroll-mt-32"
                 style={delay(160)}
               >
                 <JotformEmbed

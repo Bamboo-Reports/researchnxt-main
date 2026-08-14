@@ -12,8 +12,8 @@ export type ExpertProject = {
   lede: string;
   /**
    * Slug of the report landing in `content/resources`, once it exists. When
-   * set, the interview pages link to it and take their download form from it,
-   * so the form is configured in exactly one place.
+   * set, the interview pages link their breadcrumb to it and take their
+   * download form from it, so the form is configured in exactly one place.
    */
   reportSlug?: string;
   /**

@@ -18,7 +18,6 @@ type SectionHeadingProps = {
   as?: "h1" | "h2" | "h3";
   /** Sizes the title independently of its heading level. */
   size?: keyof typeof titleSizes;
-  inverted?: boolean;
   className?: string;
 };
 
@@ -36,7 +35,6 @@ export function SectionHeading({
   align = "left",
   as: Tag = "h2",
   size,
-  inverted = false,
   className,
 }: SectionHeadingProps) {
   const resolvedSize = size ?? (Tag === "h1" ? "display" : "headline");
@@ -51,10 +49,7 @@ export function SectionHeading({
     >
       {eyebrow ? (
         <p
-          className={cn(
-            "flex items-center gap-3 text-sm font-semibold",
-            inverted ? "text-accent-on-deep" : "text-accent",
-          )}
+          className="flex items-center gap-3 text-sm font-semibold text-accent"
         >
           <span
             aria-hidden="true"
@@ -63,19 +58,13 @@ export function SectionHeading({
           {eyebrow}
           <span
             aria-hidden="true"
-            className={cn(
-              "h-px min-w-8 flex-1",
-              inverted ? "rule-ticks-deep" : "rule-ticks",
-            )}
+            className="h-px min-w-8 flex-1 rule-ticks"
           />
         </p>
       ) : null}
 
       <Tag
-        className={cn(
-          titleSizes[resolvedSize],
-          inverted ? "text-white" : "text-ink",
-        )}
+        className={cn(titleSizes[resolvedSize], "text-ink")}
       >
         {title}
       </Tag>
@@ -83,9 +72,8 @@ export function SectionHeading({
       {lede ? (
         <p
           className={cn(
-            "max-w-[64ch] text-lg leading-relaxed",
+            "max-w-[64ch] text-lg leading-relaxed text-ink-soft",
             align === "center" && "mx-auto",
-            inverted ? "text-on-deep" : "text-ink-soft",
           )}
         >
           {lede}

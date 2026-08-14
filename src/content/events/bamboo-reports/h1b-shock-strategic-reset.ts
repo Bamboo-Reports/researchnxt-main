@@ -9,8 +9,8 @@ import type { Event } from "../types";
  *
  * `project` is `bamboo-reports`: the roundtable belongs to the Bamboo
  * Reports GCC research rather than to any of the marketing report
- * programmes. There is no insights record for it, so the breadcrumb runs
- * Events / date, like the conference participations.
+ * programmes. There is deliberately no insights record for it, so its page
+ * renders no report band, like the conference participations.
  */
 export const h1bShockStrategicReset: Event = {
   slug: "h1b-shock-strategic-reset",
@@ -22,10 +22,10 @@ export const h1bShockStrategicReset: Event = {
 
   title:
     "H-1B shock or strategic reset? Bengaluru roundtable reveals India's GCC power shift",
-  lede: "Hosted by Research NXT and Bamboo Reports, leaders across marketing, strategy, sales, and GCC operations debated how global delivery and decision-making are being rebuilt around India.",
+  lede: "Hosted by Research NXT and Bamboo Reports, leaders across marketing, strategy, sales and GCC operations debated how global delivery and decision-making are being rebuilt around India.",
   date: "2025-11-13",
   excerpt:
-    "Leaders across marketing, strategy, sales, and GCC operations debated how global delivery and decision-making are being rebuilt around India, from the H-1B reset to GCCs running budgets in-market.",
+    "Leaders across marketing, strategy, sales and GCC operations debated how global delivery and decision-making are being rebuilt around India, from the H-1B reset to GCCs running budgets in-market.",
 
   image: "/events/h1b-shock-strategic-reset/hero.jpg",
   imageAlt: "Roundtable discussion on India's GCC power shift",

@@ -206,7 +206,7 @@ export type ReportLanding = {
    * "*Exclusive offer from". The items are the sponsor's promises, so they
    * are quoted from the source and never paraphrased. The band renders as
    * the site's bento strip with the sponsor on the accent feature tile, so
-   * `logo` is the mark's on-deep (white) variant.
+   * `logo` is the mark's white variant.
    */
   offer?: {
     label: string;
@@ -2681,3 +2681,10 @@ export function latestReports(count: number) {
     )
     .slice(0, count);
 }
+
+/** Copy for the /resources/reports-whitepapers listing page. */
+export const reportsLibrary = {
+  title: "Reports & whitepapers",
+  lede: "Original research reports and whitepapers for business and marketing leaders.",
+  cardCta: "View the report",
+} as const;

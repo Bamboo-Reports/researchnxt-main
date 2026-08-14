@@ -6,9 +6,11 @@ import type { FeaturedResource } from "./types";
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
-  headline:
-    "Know the market. Name the accounts. Reach the people inside them.",
-  lede: "A boutique market intelligence firm for B2B technology leaders. We size opportunities, map target universes and carry the research through to qualified conversations a sales team can act on.",
+  headline: "Know the market. Name the accounts.",
+  /* The payoff, set as its own accent-coloured line the way the Bamboo
+     Reports hero sets "GCC GTM enablement". */
+  headlineAccent: "Reach the people inside them.",
+  lede: "A boutique market intelligence firm for B2B technology leaders. We turn research into qualified conversations your sales team can act on.",
   cta: {
     label: "Let's craft your solution",
     href: "/contact",
@@ -184,35 +186,28 @@ export const featuredInterviews: FeaturedResource[] = featured.map(
   },
 );
 
-export const quickReads: FeaturedResource[] = [
-  {
-    kind: "Article",
-    title:
-      "Unified Customer Experience: The Next Frontier for Businesses in Qatar",
-    summary: "",
-    href: "https://researchnxt.com/customer-experience/unified-customer-experience-the-next-frontier-for-businesses-in-qatar/",
-    external: true,
+/**
+ * Band headings and link labels on the homepage that are not derived from
+ * another content module.
+ */
+export const homeBands = {
+  featuredReports: {
+    eyebrow: "Featured reports",
+    title: "Latest reports and guides",
+    lede: "Original research published for business and marketing leaders.",
+    cta: "All reports",
   },
-  {
-    kind: "Article",
-    title:
-      "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
-    summary: "",
-    href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+  expertsView: {
+    eyebrow: "Experts view",
+    title: "Perspectives from the people doing the work",
+    lede: "Interviews with thought leaders, buyers and vendors across B2B technology.",
+    cta: "All interviews",
   },
-  {
-    kind: "Article",
-    title:
-      "Automate, Target, Win in 2024: How Marketing Automation Supercharges Your Campaigns",
-    summary: "",
-    href: "https://researchnxt.com/campaign-management/how-marketing-automation-supercharges-your-campaigns/",
-    external: true,
+  trustedBy: {
+    eyebrow: "Trusted by",
+    title: "Teams building what comes next",
+    lede: "Organisations that have trusted our research, intelligence and engagement programmes.",
   },
-  {
-    kind: "Article",
-    title: "2024 Outlook on Maturing Digital CX and the Role of Indian GCCs",
-    summary: "",
-    href: "https://researchnxt.com/bambooreports/indian-gccs-digital-cx-outlook-2024/",
-    external: true,
-  },
-];
+  bambooCta: "Visit Bamboo Reports",
+  exploreCta: "Explore",
+} as const;

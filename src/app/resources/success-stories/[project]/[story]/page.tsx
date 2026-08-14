@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { VideoEmbed } from "@/components/media/video-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { StatsCards } from "@/components/stats-band";
@@ -17,10 +18,11 @@ import { getReportLanding } from "@/content/resources";
 import {
   getSuccessStory,
   successStories,
+  successStoriesLibrary,
   successStoryHref,
 } from "@/content/success-stories";
-import { formatDate } from "@/lib/date";
 import { step } from "@/lib/motion";
+import { og } from "@/lib/og";
 
 /**
  * One success story. The engagement already happened, so the page leads with
@@ -48,6 +50,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: story.metaTitle,
     description: story.metaDescription,
     alternates: { canonical: successStoryHref(story) },
+    openGraph: og(story.image),
   };
 }
 
@@ -83,38 +86,22 @@ export default async function SuccessStoryPage({ params }: Params) {
 
   return (
     <main id="main">
-      {/* Hero. The title carries the piece, so the band stays a slim wash with
-          the trail back to the library and the date above it. */}
+      {/* Hero. The title carries the piece, so the band stays a slim wash
+          with the trail back to the library above it. */}
       <Section spacing="none" className="hero-wash border-b border-line">
         <Container className="py-12 sm:py-16">
           <div className="anim-rise flex flex-col gap-6" style={step(0)}>
-            <nav
-              aria-label="Breadcrumb"
-              className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-ink-muted"
-            >
-              <Link
-                href="/resources/success-stories"
-                className="text-accent hover:text-accent-hover"
-              >
-                Success stories
-              </Link>
-              <span aria-hidden="true">/</span>
-              {reportHref && programme ? (
-                <Link
-                  href={reportHref}
-                  className="text-accent hover:text-accent-hover"
-                >
-                  {programme.name}
-                </Link>
-              ) : programme ? (
-                <span>{programme.name}</span>
-              ) : null}
-              <span aria-hidden="true">/</span>
-              <time dateTime={story.published}>
-                {formatDate(story.published)}
-              </time>
-            </nav>
-
+            <Breadcrumbs
+              items={[
+                {
+                  label: successStoriesLibrary.title,
+                  href: "/resources/success-stories",
+                },
+                ...(programme
+                  ? [{ label: programme.name, href: reportHref }]
+                  : []),
+              ]}
+            />
             {/* No client mark in the hero. It was set to a fixed 432x91 box
                 whatever the file's own ratio, so a 720x232 lockup rendered
                 squashed, and the client is already named in the title and

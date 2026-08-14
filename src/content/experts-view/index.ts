@@ -435,3 +435,10 @@ export function getPerspectiveInterviews(perspective: ExpertPerspective) {
 export function interviewHref(interview: { project: string; slug: string }) {
   return `/resources/experts-view/${interview.project}/${interview.slug}`;
 }
+
+/** Copy for the /resources/experts-view listing page. */
+export const expertsViewLibrary = {
+  title: "Experts view",
+  lede: "Interviews with the leaders behind our research: what they built, what it cost them and what they would do differently.",
+  cardCta: "Read the interview",
+} as const;

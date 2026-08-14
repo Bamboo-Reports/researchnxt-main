@@ -91,10 +91,10 @@ export default function NotFound() {
                     strokeWidth="6"
                     strokeLinecap="round"
                   />
-                  <circle cx="20" cy="112" r="6" fill="var(--color-deep)" />
+                  <circle cx="20" cy="112" r="6" fill="var(--color-ink)" />
                   <circle cx="164" cy="112" r="6" fill="var(--color-accent)" />
                   <circle cx="356" cy="112" r="6" fill="var(--color-accent)" />
-                  <circle cx="500" cy="112" r="6" fill="var(--color-deep)" />
+                  <circle cx="500" cy="112" r="6" fill="var(--color-ink)" />
                 </svg>
               </div>
 

@@ -57,3 +57,10 @@ export function getSuccessStory(project: string, slug: string) {
 export function successStoryHref(story: { project: string; slug: string }) {
   return `/resources/success-stories/${story.project}/${story.slug}`;
 }
+
+/** Copy for the /resources/success-stories listing page. */
+export const successStoriesLibrary = {
+  title: "Success stories",
+  lede: "What business and marketing leaders commissioned from Research NXT, and what the research delivered.",
+  cardCta: "Read the story",
+} as const;

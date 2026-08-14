@@ -43,7 +43,7 @@ export type InsightProject = {
   name: string;
   /**
    * Slug of the report landing in `content/resources`, when the programme has
-   * one. The article's breadcrumb links to it.
+   * one. The article breadcrumb links to it, as do event pages' report bands.
    */
   reportSlug?: string;
 };

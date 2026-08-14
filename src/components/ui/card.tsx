@@ -12,19 +12,17 @@ type CardProps = React.ComponentProps<"div"> & {
   /** When set, the whole card becomes a link with a hover affordance. */
   href?: string;
   external?: boolean;
-  surface?: "plain" | "panel" | "deep";
+  surface?: "plain" | "panel";
 };
 
 const surfaces = {
   plain: "border-t border-line pt-5",
   panel: "rounded-lg border border-line bg-surface p-6",
-  deep: "on-deep rounded-lg border border-deep-line bg-deep p-6 text-white",
 } as const;
 
 const hovers = {
   plain: "hover:border-accent",
   panel: "hover:border-accent hover:bg-surface-subtle",
-  deep: "hover:border-accent",
 } as const;
 
 export function Card({

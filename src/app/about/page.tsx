@@ -24,7 +24,7 @@ import { step } from "@/lib/motion";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: aboutIntro.lede,
+  description: aboutHero.metaDescription,
   alternates: { canonical: "/about" },
 };
 
@@ -62,7 +62,7 @@ function FactsSplit() {
       >
         <span aria-hidden="true" className="h-1 w-6 rounded-[1px] bg-signal" />
         <div className="flex flex-col gap-3">
-          <span className="font-display text-5xl sm:text-6xl">
+          <span className="font-display text-figure-lg">
             <FactValue value={featureFact.value} count={featureFact.count} />
           </span>
           <span className="text-base font-semibold text-ink">
@@ -82,7 +82,7 @@ function FactsSplit() {
             className="flex flex-col gap-3 border-t border-line pt-5"
             style={step(index + 1)}
           >
-            <span className="font-display text-3xl leading-tight sm:text-4xl">
+            <span className="font-display text-figure-sm">
               <FactValue value={fact.value} count={fact.count} />
             </span>
             <p className="text-sm leading-relaxed text-ink-soft">

@@ -23,11 +23,13 @@ export type LegalDocument = {
 
 export const privacyPolicy: LegalDocument = {
   slug: "privacy-policy",
-  title: "Privacy Statement",
+  // Matches the nav's sentence-case links so visitors land on the heading
+  // they clicked. Running text keeps "Privacy Policy" as the document's name.
+  title: "Privacy policy",
   effectiveDate: "1 July 2024",
   intro: [
-    "At Research NXT (www.researchnxt.com), your privacy is a top priority. This Privacy Statement explains what types of information we collect, how we use and protect that information, and your rights regarding your personal data when you use our website. By using our website, you agree to the terms outlined in this Privacy Statement.",
-    "Should you have any questions or require more information about our Privacy Statement, please contact us at privacy@researchnxt.com.",
+    "At Research NXT (www.researchnxt.com), your privacy is a top priority. This Privacy Policy explains what types of information we collect, how we use and protect that information, and your rights regarding your personal data when you use our website. By using our website, you agree to the terms outlined in this Privacy Policy.",
+    "Should you have any questions or require more information about our Privacy Policy, please contact us at enquiry@researchnxt.com.",
   ],
   sections: [
     {
@@ -102,7 +104,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "Controlling your personal information",
       paragraphs: [
-        "You have the right to control the use of your personal information. If you have previously consented to us using your personal data for direct marketing purposes, you may opt out at any time by contacting us at privacy@researchnxt.com.",
+        "You have the right to control the use of your personal information. If you have previously consented to us using your personal data for direct marketing purposes, you may opt out at any time by contacting us at enquiry@researchnxt.com.",
         "We do not sell, distribute, or lease your personal information to third parties unless we have your permission or are required by law. We may share your data with trusted partners, but only if you have consented to this during the collection process or if it is necessary to provide services.",
         "If you would like to know what personal information we hold about you, or if you believe any data we are holding is incorrect or incomplete, please contact us. We will promptly correct any information found to be inaccurate.",
       ],
@@ -120,17 +122,17 @@ export const privacyPolicy: LegalDocument = {
       ],
     },
     {
-      heading: "Updates to this Privacy Statement",
+      heading: "Updates to this Privacy Policy",
       paragraphs: [
-        "We may update this Privacy Statement periodically. When we do, we will post the updated version on this page with the new effective date. Please review this page from time to time to stay informed of any changes.",
+        "We may update this Privacy Policy periodically. When we do, we will post the updated version on this page with the new effective date. Please review this page from time to time to stay informed of any changes.",
       ],
     },
     {
       heading: "Contact us",
       paragraphs: [
-        "If you have any questions about this Privacy Statement or the data we collect, please contact us at:",
+        "If you have any questions about this Privacy Policy or the data we collect, please contact us at:",
         "Research NXT, 91 Springboard Sky Loft, Creaticity Mall, Opposite Golf Course, Shastrinagar, Pune, Maharashtra 411006.",
-        "Email: privacy@researchnxt.com",
+        "Email: enquiry@researchnxt.com",
       ],
     },
   ],

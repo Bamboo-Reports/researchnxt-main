@@ -11,13 +11,14 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { SocialIcon } from "@/components/ui/social-icon";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Event as EventRecord } from "@/content/events";
-import { eventHref, events, getEvent } from "@/content/events";
+import { eventHref, events, eventsLibrary, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { getInsightProject } from "@/content/insights";
 import { getSuccessStory, successStoryHref } from "@/content/success-stories";
-import { formatDate } from "@/lib/date";
 import { delay, step } from "@/lib/motion";
+import { og } from "@/lib/og";
 
 /**
  * One event. An event is a record of something that already happened, so the
@@ -190,6 +191,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: event.metaTitle,
     description: event.metaDescription,
     alternates: { canonical: eventHref(event) },
+    openGraph: og(event.image),
   };
 }
 
@@ -242,51 +244,22 @@ export default async function EventPage({ params }: Params) {
 
   return (
     <main id="main">
-      {/* Hero. The title carries the piece, so the band stays a slim wash with
-          the trail back to the library and the date above it. */}
+      {/* Hero. The title carries the piece, so the band stays a slim wash
+          with the trail back to the library above it. */}
       <Section spacing="none" className="hero-wash border-b border-line">
         <Container className="py-12 sm:py-16">
           <div className="anim-rise flex flex-col gap-6" style={step(0)}>
-            <nav
-              aria-label="Breadcrumb"
-              className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-ink-muted"
-            >
-              <Link
-                href="/resources/events"
-                className="text-accent hover:text-accent-hover"
-              >
-                Events
-              </Link>
-              {/* The separator belongs to the programme: an event with no
-                  programme record (the Bamboo Reports roundtable, the
-                  conference participations) runs Events / date, not
-                  Events / / date. */}
-              {programme ? (
-                <>
-                  <span aria-hidden="true">/</span>
-                  {reportHref ? (
-                    <Link
-                      href={reportHref}
-                      className="text-accent hover:text-accent-hover"
-                    >
-                      {programme.name}
-                    </Link>
-                  ) : (
-                    <span>{programme.name}</span>
-                  )}
-                </>
-              ) : null}
-              {/* The separator belongs to the date, so a recap with no stated
-                  event date ends the trail at the programme rather than on a
-                  dangling slash. */}
-              {event.date ? (
-                <>
-                  <span aria-hidden="true">/</span>
-                  <time dateTime={event.date}>{formatDate(event.date)}</time>
-                </>
-              ) : null}
-            </nav>
-
+            {/* An event with no programme record (the Bamboo Reports
+                roundtable, the conference participations) ends the trail at
+                the library. */}
+            <Breadcrumbs
+              items={[
+                { label: eventsLibrary.title, href: "/resources/events" },
+                ...(programme
+                  ? [{ label: programme.name, href: reportHref }]
+                  : []),
+              ]}
+            />
             <h1 className="max-w-[24ch] text-display-sm font-display text-ink">
               {event.title}
             </h1>
@@ -452,7 +425,7 @@ export default async function EventPage({ params }: Params) {
                   {event.jotformId ? (
                     <div
                       id="download"
-                      className="anim-rise scroll-mt-24"
+                      className="anim-rise scroll-mt-32"
                       style={delay(160)}
                     >
                       <JotformEmbed

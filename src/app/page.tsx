@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { HeroIntro } from "@/components/home/hero-intro";
 import { TrustedLogos } from "@/components/home/trusted-logos";
@@ -16,6 +17,7 @@ import {
   featuredInterviews,
   featuredReports,
   hero,
+  homeBands,
   whatWeDo,
 } from "@/content/home";
 import { step } from "@/lib/motion";
@@ -29,17 +31,35 @@ export default function HomePage() {
 
   return (
     <main id="main">
-      {/* Promise over the site's light hero wash: plain white with the soft
-          accent gradients the inner-page heroes use, on user direction. The
-          orange beam field (`HeroField`) is retired from this band for now;
-          the component stays in the repo should it come back. */}
-      <Section spacing="none" className="hero-wash border-b border-line">
-        <Container className="py-24 sm:py-28 lg:py-36">
-          {/* Centred composition: the promise, the lede, then the one action,
-              arriving in that order. HeroIntro choreographs the entrance as a
-              GSAP timeline; the words of the headline are split into spans so
-              it can resolve word by word. The whitespace between spans keeps
-              the accessible name one sentence. */}
+      {/* Promise over the user-supplied field photograph (used as is, PNG
+          included on direction), composed the way the Bamboo Reports HeroV2
+          composes its artwork: the photo drifts slowly under a white veil
+          that fades into the page surface, the type stays ink with the
+          payoff line in the accent. `hero-wash` stays underneath as the
+          paint before the image loads. (Bamboo's capabilities rail on the
+          band's foot was tried and removed on user direction; the What we
+          do band below carries the four solutions.) */}
+      <Section
+        spacing="none"
+        className="hero-wash relative overflow-hidden border-b border-line"
+      >
+        <Image
+          src="/hero-updated.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-image-drift pointer-events-none object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="hero-veil pointer-events-none absolute inset-0"
+        />
+        <Container className="relative py-24 sm:py-28 lg:py-32">
+          {/* HeroIntro choreographs the entrance as a GSAP timeline; the
+              words of the headline are split into spans so it can resolve
+              word by word. The whitespace between word spans keeps each
+              accessible name one sentence. */}
           <HeroIntro className="mx-auto flex max-w-3xl flex-col items-center text-center">
             <h1 className="max-w-[22ch] text-balance text-display-sm font-display text-ink">
               {hero.headline.split(" ").map((word, index) => (
@@ -49,6 +69,15 @@ export default function HomePage() {
                   </span>{" "}
                 </span>
               ))}
+              <span className="block text-accent">
+                {hero.headlineAccent.split(" ").map((word, index) => (
+                  <span key={index}>
+                    <span data-hero-word className="inline-block">
+                      {word}
+                    </span>{" "}
+                  </span>
+                ))}
+              </span>
             </h1>
 
             <p
@@ -71,15 +100,15 @@ export default function HomePage() {
         <Container>
           <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Featured reports"
-              title="Latest reports and guides"
-              lede="Original research published for business and marketing leaders."
+              eyebrow={homeBands.featuredReports.eyebrow}
+              title={homeBands.featuredReports.title}
+              lede={homeBands.featuredReports.lede}
             />
             <NavLink
               item={reportsLink}
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
-              All reports
+              {homeBands.featuredReports.cta}
               <TrailingArrow />
             </NavLink>
           </div>
@@ -100,19 +129,19 @@ export default function HomePage() {
 
       {/* Experts view shares the report-card system so both resource sections
           scan consistently, while the white band keeps them distinct. */}
-      <Section bordered spacing="default" className="bg-white">
+      <Section surface="bright" bordered spacing="default">
         <Container>
           <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Experts view"
-              title="Perspectives from the people doing the work"
-              lede="Interviews with thought leaders, buyers and vendors across B2B technology."
+              eyebrow={homeBands.expertsView.eyebrow}
+              title={homeBands.expertsView.title}
+              lede={homeBands.expertsView.lede}
             />
             <NavLink
               item={interviewsLink}
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
-              All interviews
+              {homeBands.expertsView.cta}
               <TrailingArrow />
             </NavLink>
           </div>
@@ -167,7 +196,7 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
                   >
-                    Visit Bamboo Reports
+                    {homeBands.bambooCta}
                     <span className="sr-only"> (opens in a new tab)</span>
                     <TrailingArrow />
                   </a>
@@ -176,7 +205,7 @@ export default function HomePage() {
                     href={item.href}
                     className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
                   >
-                    Explore
+                    {homeBands.exploreCta}
                     <span className="sr-only"> {item.title}</span>
                     <TrailingArrow />
                   </Link>
@@ -317,9 +346,9 @@ export default function HomePage() {
       <Section bordered spacing="default">
         <Container>
           <SectionHeading
-            eyebrow="Trusted by"
-            title="Teams building what comes next"
-            lede="Organisations that have trusted our research, intelligence and engagement programmes."
+            eyebrow={homeBands.trustedBy.eyebrow}
+            title={homeBands.trustedBy.title}
+            lede={homeBands.trustedBy.lede}
             className="mb-12 max-w-3xl"
           />
           <TrustedLogos />

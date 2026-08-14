@@ -68,3 +68,10 @@ export function getEvent(project: string, slug: string) {
 export function eventHref(event: { project: string; slug: string }) {
   return `/resources/events/${event.project}/${event.slug}`;
 }
+
+/** Copy for the /resources/events listing page. */
+export const eventsLibrary = {
+  title: "Events",
+  lede: "Launches, roundtables and engagements from Research NXT, run alongside the research programmes they belong to.",
+  cardCta: "See the event",
+} as const;

@@ -8,9 +8,10 @@
    report: precise, ruled, measured. Structure comes from hairlines and from
    the type scale, never from boxes and shadows.
 
-   Colour strategy is Committed. A cool blue-cast off-white body, interrupted by
-   deep ink-blue bands where the brand blue carries 100% of the surface rather
-   than trimming it, with the brand orange as the single signal mark.
+   Colour strategy is Committed. A cool blue-cast off-white body, with
+   saturated moments carried by the brand accent blue and the brand orange
+   as the single signal mark. Navy drench surfaces are retired on user
+   direction; the only navy left is Bamboo Reports' own announcement strip.
 
    The brand orange is 2.3:1 on the body surface, so it never carries text
    anywhere. It ticks, underlines the active nav item and marks a required
@@ -27,14 +28,14 @@
   /* Surfaces — off-white with chroma pulled toward the brand hue, never warm.
      Cream and sand are the saturated default; this reads as daylight on glass. */
   --color-surface: oklch(0.989 0.004 245);
+  /* Pure white, for a band that must sit brighter than the off-white ground. */
+  --color-surface-bright: oklch(1 0 0);
+  /* Bamboo Reports' ledger navy, carried over verbatim for the cross-brand
+     announcement strip only. Not a site surface: the site's own saturated
+     moments stay bg-accent. */
+  --color-bamboo-navy: hsl(205 78% 13%);
   --color-surface-subtle: oklch(0.969 0.006 245);
   --color-surface-muted: oklch(0.944 0.009 245);
-
-  /* Drench — the deep end of the brand blue. Hero and closing bands sit here,
-     where colour carries the whole surface instead of trimming it. */
-  --color-deep: #04243a;
-  --color-deep-raised: #072f4a;
-  --color-deep-line: #16496c;
 
   /* Lines — hairlines carry structure instead of shadows. */
   --color-line: #dde3ea;
@@ -47,14 +48,6 @@
   --color-accent: #0073b6;
   --color-accent-hover: #005f96;
   --color-accent-soft: #e4f1fa;
-
-  /* On the drenched bands the accent has to invert: #0079bf on #04243a is only
-     2.6:1. `accent-on-deep` is 7.1:1 there and is the only accent allowed
-     to carry text inside a deep band. */
-  --color-accent-on-deep: #58b6ea;
-
-  /* Body copy on the deep bands. */
-  --color-on-deep: #c9dced;
 
   /* Brand orange from the logo tile. The single signal mark: the tick that
      opens a section, the active nav underline, the required-field marker.
@@ -87,6 +80,20 @@
   --text-title: clamp(1.25rem, 1.12rem + 0.6vw, 1.5rem);
   --text-title--line-height: 1.25;
   --text-title--letter-spacing: -0.015em;
+
+  /* Figures — the stat values on the About facts and the stats bands. Fluid
+     steps replacing the raw text-3xl..text-7xl ladders those bands carried. */
+  --text-figure-sm: clamp(1.875rem, 1.72rem + 0.7vw, 2.25rem);
+  --text-figure-sm--line-height: 1.1;
+  --text-figure-sm--letter-spacing: -0.02em;
+
+  --text-figure: clamp(2.25rem, 1.98rem + 1.2vw, 3rem);
+  --text-figure--line-height: 1.05;
+  --text-figure--letter-spacing: -0.025em;
+
+  --text-figure-lg: clamp(3rem, 2.46rem + 2.4vw, 4.5rem);
+  --text-figure-lg--line-height: 1;
+  --text-figure-lg--letter-spacing: -0.03em;
 
   /* Layout */
   --spacing-gutter: 1.5rem;
@@ -138,15 +145,11 @@
     text-wrap: pretty;
   }
 
-  /* A single visible focus treatment everywhere, including on deep bands. */
+  /* A single visible focus treatment everywhere. */
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 2px;
-  }
-
-  .on-deep :focus-visible {
-    outline-color: var(--color-accent-on-deep);
   }
 
   /* The orange hero field is the one band where neither accent works as a
@@ -194,17 +197,6 @@
     background-position: 0 50%;
   }
 
-  .rule-ticks-deep {
-    background-image: linear-gradient(
-      to right,
-      var(--color-deep-line) 0 1px,
-      transparent 1px 100%
-    );
-    background-size: 5px 1px;
-    background-repeat: repeat-x;
-    background-position: 0 50%;
-  }
-
   /* Light brand wash for the solution-page heroes, standing in until real
      background images land. Blue-led from the accent tints, with a whisper of
      the signal orange in one corner; light enough that ink text keeps AA. */
@@ -221,6 +213,46 @@
         transparent 60%
       ),
       linear-gradient(115deg, var(--color-accent-soft), var(--color-surface) 62%);
+  }
+
+  /* The veil over the hero photograph. Not a flat sheet, which read as fog:
+     a radial pool of light behind the centred text block carries the ink
+     type's contrast, a whisper of white keeps the whole frame in the site's
+     high key, and the fade into the page surface is held to the bottom edge
+     so the sky and the golden hills stay vivid. */
+  .hero-veil {
+    background:
+      radial-gradient(
+        48rem 26rem at 50% 36%,
+        color-mix(in oklab, var(--color-surface-bright) 72%, transparent),
+        color-mix(in oklab, var(--color-surface-bright) 34%, transparent) 55%,
+        transparent 78%
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-surface-bright) 22%, transparent) 0%,
+        color-mix(in oklab, var(--color-surface-bright) 8%, transparent) 60%,
+        color-mix(in oklab, var(--color-surface) 55%, transparent) 88%,
+        var(--color-surface) 100%
+      );
+  }
+
+  /* Slow Ken Burns drift on the hero photograph, ported from the Bamboo
+     Reports hero. Transform-only so it stays on the GPU; slow enough to feel
+     like light, not motion. Static by default; the motion gate opts it in. */
+  [data-motion="on"] .hero-image-drift {
+    animation: hero-image-drift 28s ease-in-out infinite alternate;
+    transform-origin: 50% 60%;
+    will-change: transform;
+  }
+
+  @keyframes hero-image-drift {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07) translateY(-1.5%);
+    }
   }
 
   /* Truncates a heading to a fixed number of lines with an ellipsis, so a

@@ -2,7 +2,327 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-13
+Last updated: 2026-08-14
+
+## Hero veil reshaped after "very faded" feedback, 2026-08-14
+
+Verified in the browser against the user's running dev server (Chrome
+automation, localhost:3000): the flat white sheet
+(from-surface-bright/70 via-45 to-surface) was indeed fogging the whole
+photograph. Replaced by a `.hero-veil` utility in globals: a radial
+pool of light (72%->34%->transparent, 48x26rem at 50% 36%) behind the
+centred text block carries the ink type's contrast, a whisper-tint
+linear layer (22%->8%) keeps the high key, and the fade to
+`--color-surface` is compressed to the bottom ~12% for the seam into
+the next band. Sky and hills confirmed vivid in screenshots.
+
+Perf side-quest, resolved as environmental: the entrance animation
+crawled and Runtime.evaluate froze during checking, so the word blur
+tween, the Ken Burns drift and the navbar backdrop-blur were each
+suspected and temporarily removed. The controlled test (all animations
+killed via injected CSS) still showed ~916ms avg frames with a 27s max,
+proving the dev machine/environment was the bottleneck, not the page,
+so ALL THREE were restored verbatim. Net change from this pass is the
+veil only. The user should judge motion feel in a normal browsing
+session, not under automation.
+
+## Hero recomposed on the Bamboo HeroV2 pattern, 2026-08-14
+
+On user direction ("check how bamboo-reports-web done here in hero
+section do it similarly") the hero now mirrors Bamboo's HeroV2, ported
+into this site's idiom: the photo drifts (Ken Burns `hero-image-drift`,
+28s alternate scale 1→1.07, added to globals GATED behind
+`data-motion="on"` so the static image is the default); a white veil
+(`from-surface-bright/70 via-45 to-surface`) fades the photo into the
+page, replacing the previous white-text-on-ink-scrim treatment (h1 back
+to ink, lede to ink-soft, section underpaint back to hero-wash); the
+headline's payoff line "Reach the people inside them." is now
+`hero.headlineAccent` in home.ts, rendered as its own block line in
+text-accent (as Bamboo sets "GCC GTM enablement"); and the band closes
+on a `data-hero-rail` nav, the four whatWeDo solutions on a ruled
+hairline rail (divide-y, lg 4-up divide-x, title + clamp-2 description
++ TrailingArrow, GCC external in a new tab), which HeroIntro's timeline
+now lands last. The user then removed the rail (it duplicated the
+"What we do" band below): the nav, its HeroIntro tween and the
+data-hero-rail marker are gone, the hero is back to the centred
+max-w-3xl stack with symmetric py, and everything else from the Bamboo
+port stays (photo drift, white veil to-surface, ink type, accent payoff
+line). Lint, tsc and detector (pre-existing advisory only) clean;
+browser look pending.
+
+## Homepage hero photo added, 2026-08-14
+
+The user supplied `hero-updated.png` (1672x941, a golden-hour field of
+hills under a blue sky, echoing the brand blue+orange) and asked for it
+as the hero image, "png as is", so it was moved to
+`public/hero-updated.png` unconverted (new filename, honouring the
+never-overwrite-images rule; it is ~1.9MB, next/image still serves
+optimised derivatives). The homepage hero Section is now
+relative/overflow-hidden with a `fill` priority Image behind the
+centred composition and a top-to-bottom veil
+(`surface-bright/80 → /45 → /15`) so the ink headline keeps AA over
+the sky while the field shows through at the foot. The OG fallback in layout.tsx still points at /hero.webp, unchanged.
+Then on user direction the type went white: the light veil flipped to
+an ink scrim (`from-ink/60 via-ink/40 to-ink/15`, strongest behind the
+headline over the bright sky), h1 `text-white`, lede `text-white/90`,
+and the pre-load fallback changed from `hero-wash` to `bg-ink` so the
+white type never flashes on a light ground. Primary CTA (bg-accent,
+white label) unchanged. Lint clean; needs a browser look for scrim
+strength, and note the accent focus ring may sit low-contrast over the
+photo if that shows up in review.
+
+## Homepage hero: ledger tried, centred kept, 2026-08-14
+
+The hero placement went through a design pass (impeccable +
+frontend-design skills): three options with ASCII previews (three-line
+ledger, left-aligned stack, refined centred). The user first picked the
+ledger, saw it, and reverted: "centered one should've looked better".
+The centred `max-w-3xl` composition is restored byte-for-byte
+(headline string in home.ts, 22ch balanced h1 at display-sm, 52ch lede,
+mt-6/mt-9 rhythm, lg:py-36), with the page comment now recording that
+centred was KEPT over a ledger variant after a side-by-side review, so
+a later pass does not re-propose it. HeroIntro untouched throughout.
+The lede was then tightened on user request: "We size opportunities,
+map target universes and carry the research through to qualified
+conversations a sales team can act on" became "We turn research into
+qualified conversations your sales team can act on"; the dropped
+sizing/mapping detail is covered by the What we do band below. Lint
+and tsc clean.
+
+## QA round three: sentence case, navy code deleted, figure scale, 2026-08-14
+
+User decisions applied. (1) Privacy effective date confirmed correct as
+"1 July 2024", unchanged. (2) Consent lines around the Jotforms:
+explicitly ignored, closed. (3) Sentence case is the nav convention:
+solutionsNav and solutions.ts navLabels ("Prospect database", "Account
+intelligence", "Research-based marketing", "GCC intelligence"; the home
+What we do cards derive from navLabel so they follow), footer "About
+us"/"Contact us"/"Privacy policy", legalNav, the legal document title
+(h1/tab now "Privacy policy"; running prose keeps "Privacy Policy" as
+the document's name), aboutHero "About us", and the about fact value
+"GCC intelligence". Solution page headlines/metaTitles keep their title
+case as display copy. (4) All navy deep code deleted: evidence-field.tsx
+and data-plate.tsx removed; deep variants stripped from Section, Card,
+Badge, Button (on-deep/on-deep-quiet) and the unused `inverted` prop
+from SectionHeading; globals lost --color-deep/-raised/-line,
+--color-accent-on-deep, --color-on-deep, .on-deep focus rule and
+.rule-ticks-deep; not-found.tsx's two decorative circles now use
+--color-ink; CLAUDE.md's deep bullet rewritten (bg-bamboo-navy is the
+one navy left, announcement strip only). (6) Figures joined the type
+scale: new fluid --text-figure-sm/--text-figure/--text-figure-lg tokens
+replace the raw text-3xl..text-7xl ladders on the About facts and both
+stats bands; src/ has no raw step sizes left. Lint, tsc and detector
+(one pre-existing advisory) clean. Still open: hero consolidation
+passes (user deferred), browser verification of recent changes.
+
+## QA round two: OG images, home copy migration, small fixes, 2026-08-14
+
+User decisions applied: `enquiry@researchnxt.com` is the only published
+address (the three `privacy@` mentions in legal.ts are replaced; the
+effective date still awaits the user). Open Graph wired site-wide:
+layout gains a `/hero.webp` fallback image, a new `src/lib/og.ts`
+helper returns the full openGraph block (Next merges shallowly, so
+pages must carry siteName/type themselves), and the five resource
+detail templates pass their own artwork (insight/interview thumbnail,
+event image, story image, report cover); solutions pages have no
+artwork and inherit the fallback. Homepage band copy moved to a new
+`homeBands` export in home.ts (Featured reports / Experts view /
+Trusted by headings+ledes, "All reports", "All interviews",
+"Visit Bamboo Reports", "Explore"). Dedicated `metaDescription` fields
+added for about/careers/contact (their ledes ran ~230 chars or read
+wrong as snippets) and pages point at them. The Prospect Database
+lede/metaDescription no longer says "TAT" and gained its full stop.
+Footer column labels are `<p>` not `h2`; contact sidebar labels are
+`h3`. sitemap.ts stamps real `published`/`date` values on
+insight/event/story routes and omits lastModified elsewhere instead of
+faking `new Date()`. The ReportCardRail aria-label duplication was
+judged legitimate (it names the scroll region) and left alone. Still
+awaiting user: legal effective date, nav casing scheme, consent lines
+around the Jotforms, deep-variant deletion, hero consolidation, About
+figure type sizes. Lint and tsc clean.
+
+## Sticky announcement bar; report microsites keep no breadcrumb, 2026-08-14
+
+A campaign strip now rides inside the sticky navbar header, above the
+nav row: "The Q2 India GCC report: every GCC move, tracked." with a
+"Register for free" pill linking to
+bambooreports.com/reports/india-gcc-report-q2-2026?src=rnxt-announce
+(new tab). Ported from bamboo-reports-web's AnnouncementBar; copy lives
+in `src/content/announcement.ts`, component in
+`src/components/layout/announcement-bar.tsx`. On user direction it uses
+Bamboo Reports' own ledger navy, added as a distinct `--color-bamboo-navy`
+token (hsl(205 78% 13%)); this is a sanctioned cross-brand exception to
+the no-navy rule (memory updated), the site's own surfaces stay
+non-navy. Knock-ons handled: the mobile nav sheet's fixed top moved
+16→28 (bar ~3rem + nav 4rem) and every `scroll-mt-24` anchor offset
+became `scroll-mt-32`. Separately, the breadcrumb added to the report
+landing pages earlier today was removed on user direction (the
+microsites' hero stays clean); the other four detail templates keep
+theirs. Lint and tsc clean; not browser-verified (dev server needs user
+permission).
+
+## Breadcrumbs restored properly, shared component, 2026-08-14
+
+On user direction the detail-page breadcrumbs came back, done right this
+time: one shared `src/components/breadcrumbs.tsx` (items of
+label+optional href, "/" separators, unlinked current-less trail, same
+type treatment as the old hand-rolled navs) instead of four divergent
+copies. All five resource detail templates now carry it: events and
+success stories run Library / Programme (programme omitted when the
+record has none, e.g. the Bamboo Reports roundtable), insights and
+experts-view run Library / Programme with the programme linking to its
+report landing (restoring the outbound links the QA flagged as lost;
+insights got its `reportHref` lookup back, experts-view reuses its
+`report`), and report landings run a single back-link to the shelf,
+placed above the cover grid. No dates anywhere, per the earlier
+decision. Type-doc comments in insights/experts-view types.ts updated
+to match. Lint and tsc clean.
+
+## Pagination: shared pager, events and reports now page, 2026-08-14
+
+The numbered pager that insights and experts-view each carried locally
+is extracted to `src/components/pagination.tsx` (label, current,
+totalPages, and an `href(page)` callback so both the single-param
+`?page=N` scheme and experts-view's multi-section `?<param>=N#fragment`
+scheme fit); both pages now use it. Events (9 cards) pages at 6 like
+insights, and reports (18 cards) pages at 12, three rows of the
+four-column shelf; both follow the insights pattern exactly
+(resolvePage clamp, page 1 canonicalises to the bare path, "page N"
+metadata titles, Reveal keyed on the page so the stagger replays). Lint
+and tsc clean; not yet verified in a browser since dev-server runs need
+user permission.
+
+## Contact: Jotform replaces the dead placeholder form, 2026-08-14
+
+The contact page now takes enquiries through Jotform (form
+92022271643449, iframe titled "Business enquiry form"), via the shared
+`JotformEmbed`. The never-submitting `ContactForm`
+(`src/components/forms/contact-form.tsx`) and its `formConfirmation`
+copy in `contact.ts` are deleted; `forms/fields.tsx` stays
+(download-form still uses it). The page lede's "respond within 24
+hours" promise is now backed by a real submission path. Lint and tsc
+clean.
+
+## QA fixes: the no-input batch applied, 2026-08-14
+
+Everything from the audit that needed no user decision is fixed; lint
+and tsc clean, detector back to its single pre-existing advisory (the
+deliberate global grid wash).
+
+Applied: social icons consolidated into `src/components/ui/social-icon`
+(now monochrome currentColor including LinkedIn, YouTube added with an
+evenodd play cutout; `layout/social-icons.tsx` deleted, footer uses the
+shared component). Privacy document renamed "Privacy Policy" throughout
+`legal.ts` to match every link (email/date left for the user). Careers
+Jotform iframe title now "Job application form". Dead code deleted:
+`src/lib/date.ts` (formatDate) and the unreferenced `quickReads` export
+in `home.ts`. Stale breadcrumb/date comments rewritten in
+insights/index.ts, insights/types.ts, experts-view/types.ts, the h1b
+event file (which confirms bamboo-reports is deliberately unregistered,
+so that audit item was not a bug), events/types.ts and the three
+listing-page headers. `sizes` added to insights and experts-view cards;
+events card intrinsic ratio fixed to 1280x720. Experts-view detail title
+got the `max-w-[24ch]` clamp the other templates have.
+"Research-based Marketing" navLabel recapitalised; footer "Contact us"
+now "Contact Us". Homepage's raw `bg-white` band replaced by a new
+`surface="bright"` Section variant backed by a `--color-surface-bright`
+token. Reports shelf stagger capped at two rows. Two serial commas
+dropped (h1b lede+excerpt, experts-view lede). Listing-page copy moved
+to content: new `eventsLibrary`/`insightsLibrary`/`expertsViewLibrary`/
+`successStoriesLibrary` (in each library's index.ts) and
+`reportsLibrary` (resources.ts) hold title/lede/cardCta, pages read
+them; careers band headings moved to `careersBands` in careers.ts.
+
+Deferred for user decision: contact form Jotform id (dead placeholder
+still live on the primary CTA path), careers-page consent line, where
+insights/experts-view detail pages should link out now breadcrumbs are
+gone, pagination for events (9 items) and reports (18), detail-hero
+consolidation onto PageHero and lede presence, homepage band copy
+migration, nav casing scheme overall, "All interviews" label, OG
+images, deep-variant deletion, notFound policy, footer/contact heading
+levels, raw sizes on About figures and stats-band, legal effective date
+and privacy@ address.
+
+## Site-wide QA audit run, findings reported, fixes pending, 2026-08-14
+
+A full content/design QA swept every page (hero sections excluded on
+user direction; they will be reworked separately): the impeccable
+detector over src (one advisory, the deliberate global grid wash,
+dismissed), mechanical greps for the CLAUDE.md rules, and three parallel
+audit agents (core pages; the five listing pages; the six detail
+templates). Findings are reported in chat and NOT yet fixed. Highest
+severity: the contact form (primary CTA target) is the dead phase-c
+placeholder that claims "we respond within 24 hours" while submitting
+nowhere, while careers now has a live Jotform; insights and experts-view
+detail pages lost their only outbound links when breadcrumbs were
+removed; privacy page h1 says "Privacy Statement" behind links saying
+"Privacy Policy"; duplicate social icon components
+(ui/social-icon.tsx with raw LinkedIn hex, used by about + event detail,
+vs the new layout/social-icons.tsx monochrome set in the footer);
+events library (9 items) exceeds the 6-per-page size with no
+pagination; `src/lib/date.ts` formatDate is dead code; missing `sizes`
+on insights/experts-view listing images; bamboo-reports programme slug
+unregistered in insightProjects; listing-page ledes/CTA labels
+hard-coded in JSX against the copy-in-content rule; assorted stale
+comments describing removed breadcrumbs/dates; no per-page openGraph
+images anywhere. Full ranked list in the conversation of 2026-08-14.
+
+## Careers: Jotform replaces the placeholder application form, 2026-08-14
+
+The careers page now takes applications through Jotform (form
+242812511285048, "[RNXT] Job Application Leads"), rendered with the
+existing `JotformEmbed` component, which already implements the
+user-supplied iframe plus resize-handler snippet (minus the
+scrollTo(0,0), dropped deliberately as the component documents). The
+never-submitting `ApplicationForm` placeholder
+(`src/components/forms/application-form.tsx`) was deleted; nothing else
+used it. The form band then dropped its two-column split on user
+direction: the "What are you looking for in your next job?" heading is
+centred and the Jotform runs full container width below it. Lint clean.
+
+## Footer: social icons and About label, 2026-08-14
+
+The footer's social row now renders brand marks instead of text labels:
+user-supplied Twitter/X, LinkedIn and YouTube SVGs live in
+`src/components/layout/social-icons.tsx`, redrawn monochrome in
+`currentColor` (per the no-raw-hex token rule; the supplied X mark was
+white and LinkedIn/YouTube carried brand hex) so they inherit the same
+`text-ink-soft`/`hover:text-ink` treatment the labels had. The YouTube
+play triangle became an evenodd cutout since the mark is now one colour.
+Links keep `aria-label`; icons are `aria-hidden` at `size-5`. Also the
+footer Company column's "About Research NXT" is now "About Us"
+(`src/config/nav.ts`). A mailto envelope icon joined the social row as
+a fourth item beside YouTube (user first asked for it on the address
+email, then moved it here): stroked `currentColor` SVG at `size-5`,
+`aria-hidden`, link labelled "Email enquiry@researchnxt.com". The
+address block's text mailto link stays as it was. Lint clean.
+
+## Breadcrumbs removed from all resource detail pages, 2026-08-14
+
+On user direction, the hero breadcrumb nav ("Library / programme /
+date") is gone from every resource detail page: events (done first,
+below), then experts-view (`[project]/[person]/page.tsx`), insights
+(`[project]/[slug]/page.tsx`) and success stories
+(`[project]/[story]/page.tsx`). Each hero now opens straight on the
+title. Unused leftovers were removed per file: insights lost its
+`report`/`reportHref` block and the `Link`, `getReportLanding` and
+`formatDate` imports; experts-view lost `reportHref` and the `Link`
+import (`report` stays for the download form); success stories lost only
+the `formatDate` import (its report band still uses `Link` and
+`reportHref`). Lint clean.
+
+## Events library: dates removed from cards, 2026-08-14
+
+On user direction, event dates no longer render anywhere and the event
+detail hero lost its breadcrumb entirely: the `<time>` block was removed
+from the `/resources/events` listing cards
+(`src/app/resources/events/page.tsx`), then the whole
+"Events / programme / date" breadcrumb nav was removed from the
+detail-page hero (`src/app/resources/events/[project]/[event]/page.tsx`),
+so the hero opens straight on the title. The now-unused `formatDate`
+imports went with them; `programme`/`reportHref` stay, still used by the
+report band lower on the page. The `date` field in
+`src/content/events.ts` still exists but nothing renders it. Lint clean.
 
 ## About: How we work replaced by How to engage us; navy purged site-wide, 2026-08-13
 

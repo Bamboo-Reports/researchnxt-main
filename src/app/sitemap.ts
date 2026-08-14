@@ -49,19 +49,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const insightRoutes = insights.map((insight) => ({
     path: insightHref(insight),
     priority: 0.6,
+    lastModified: insight.published,
   }));
 
   const eventRoutes = events.map((event) => ({
     path: eventHref(event),
     priority: 0.5,
+    lastModified: event.date,
   }));
 
   const successStoryRoutes = successStories.map((story) => ({
     path: successStoryHref(story),
     priority: 0.5,
+    lastModified: story.published,
   }));
-
-  const lastModified = new Date();
 
   return [
     ...staticRoutes,
@@ -71,9 +72,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...insightRoutes,
     ...eventRoutes,
     ...successStoryRoutes,
-  ].map((route) => ({
+  ].map((route: { path: string; priority: number; lastModified?: string }) => ({
     url: `${site.url}${route.path}`,
-    lastModified,
+    // Real publication dates where the content records carry them; routes
+    // without one omit the field rather than faking it with the build time.
+    ...(route.lastModified ? { lastModified: route.lastModified } : {}),
     priority: route.priority,
   }));
 }

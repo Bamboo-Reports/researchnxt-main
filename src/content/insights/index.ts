@@ -110,8 +110,8 @@ export const insightProjects: InsightProject[] = [
     reportSlug: "b2c-marketing-automation-india-2017",
   },
   /* Not a research programme: the bucket the conference participations sit in,
-     so those events get a URL segment and a breadcrumb label. It carries no
-     `reportSlug`, so the breadcrumb names it without linking. */
+     so those events get a URL segment and a programme name. It carries no
+     `reportSlug`, so no report band renders on its event pages. */
   {
     slug: "industry-events",
     name: "Industry events",
@@ -202,3 +202,10 @@ export function getProjectInsights(project: string) {
 export function insightHref(insight: { project: string; slug: string }) {
   return `/resources/insights/${insight.project}/${insight.slug}`;
 }
+
+/** Copy for the /resources/insights listing page. */
+export const insightsLibrary = {
+  title: "Insights",
+  lede: "Articles, guides and toolkits from the Research NXT team, written alongside the research programmes they draw on.",
+  cardCta: "Read the article",
+} as const;

@@ -9,16 +9,16 @@ import type { SolutionPage } from "./types";
 
 const prospectDatabase: SolutionPage = {
   slug: "prospect-database",
-  navLabel: "Prospect Database",
+  navLabel: "Prospect database",
   metaTitle: "Prospect Database",
   metaDescription:
-    "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
+    "On-demand custom prospect database with an industry-best accuracy rate and committed turnaround times.",
 
   hero: {
     eyebrow: "",
     headline: "Prospect Database",
     lede:
-      "On-demand custom prospect database with industry-best accuracy rate and TAT commitment",
+      "On-demand custom prospect database with an industry-best accuracy rate and committed turnaround times.",
     primary: {
       label: "Get a free database quality assessment",
       href: "/contact",
@@ -90,7 +90,7 @@ const prospectDatabase: SolutionPage = {
 
 const accountIntelligence: SolutionPage = {
   slug: "account-intelligence",
-  navLabel: "Account Intelligence",
+  navLabel: "Account intelligence",
   metaTitle: "Account Intelligence",
   metaDescription:
     "Ensures you gain heightened target account control, understand opportunities within whitespaces, and strategically develop your unique selling propositions.",
@@ -160,7 +160,7 @@ const accountIntelligence: SolutionPage = {
 
 const researchBasedMarketing: SolutionPage = {
   slug: "research-based-marketing",
-  navLabel: "Research-based Marketing",
+  navLabel: "Research-based marketing",
   metaTitle: "Research-Based Marketing",
   metaDescription:
     "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",

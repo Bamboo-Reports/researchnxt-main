@@ -7,6 +7,7 @@ import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { isNavGroup, primaryNav, type NavGroup } from "@/config/nav";
 import { cn } from "@/lib/cn";
+import { AnnouncementBar } from "./announcement-bar";
 import { Logo } from "./logo";
 import { NavLink } from "./nav-link";
 
@@ -99,6 +100,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-[var(--z-sticky)] border-b border-line bg-surface/80 backdrop-blur-md">
+      <AnnouncementBar />
       <Container>
         <div className="flex h-16 items-center justify-between gap-6">
           <Logo />
@@ -263,7 +265,8 @@ export function Navbar() {
         <div
           ref={sheetRef}
           id="mobile-nav"
-          className="anim-menu fixed inset-x-0 bottom-0 top-16 z-[var(--z-sheet)] overflow-y-auto border-t border-line bg-surface lg:hidden"
+          /* Top offset = announcement bar (3rem) + nav row (4rem). */
+          className="anim-menu fixed inset-x-0 bottom-0 top-28 z-[var(--z-sheet)] overflow-y-auto border-t border-line bg-surface lg:hidden"
         >
           <Container className="py-8">
             <nav aria-label="Mobile" className="flex flex-col gap-8">

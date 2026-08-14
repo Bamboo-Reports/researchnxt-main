@@ -16,19 +16,19 @@ export type NavGroup = {
 
 export const solutionsNav: NavItem[] = [
   {
-    label: "Prospect Database",
+    label: "Prospect database",
     href: "/solutions/prospect-database",
   },
   {
-    label: "Account Intelligence",
+    label: "Account intelligence",
     href: "/solutions/account-intelligence",
   },
   {
-    label: "Research-Based Marketing",
+    label: "Research-based marketing",
     href: "/solutions/research-based-marketing",
   },
   {
-    label: "GCC Intelligence",
+    label: "GCC intelligence",
     href: "https://bambooreports.com/",
     external: true,
   },
@@ -73,17 +73,17 @@ export const footerNav: NavGroup[] = [
   {
     label: "Company",
     items: [
-      { label: "About Research NXT", href: "/about" },
+      { label: "About us", href: "/about" },
       { label: "Careers", href: "/careers" },
       { label: "Contact us", href: "/contact" },
-      { label: "Privacy Policy", href: "/privacy-policy" },
+      { label: "Privacy policy", href: "/privacy-policy" },
     ],
   },
   { label: "Resources", items: resourcesNav },
 ];
 
 export const legalNav: NavItem[] = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Privacy policy", href: "/privacy-policy" },
 ];
 
 export function isNavGroup(item: NavItem | NavGroup): item is NavGroup {
