@@ -72,10 +72,15 @@ export default async function ReportsWhitepapersPage({ searchParams }: Params) {
               full bleed. A report that does not have its portrait cover yet
               shows its landscape card letterboxed on a muted plate, so the
               shelf stays uniform while the covers arrive one by one. */}
+          {page.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {reportsLibrary.empty}
+            </p>
+          ) : null}
           {/* Keyed on the page so the stagger replays when the set changes. */}
           <Reveal
             key={current}
-            className="grid gap-x-8 gap-y-10 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
+            className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 sm:gap-x-8 lg:grid-cols-4"
           >
             {page.map((report, index) => (
               <Link

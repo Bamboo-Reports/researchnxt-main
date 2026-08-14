@@ -60,14 +60,18 @@ export function Button({
   if (props.href !== undefined) {
     const { href, external, ...rest } = props;
     if (external) {
+      const { children, ...anchorRest } = rest as React.ComponentProps<"a">;
       return (
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
           className={classes}
-          {...(rest as React.ComponentProps<"a">)}
-        />
+          {...anchorRest}
+        >
+          {children}
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
       );
     }
     return <Link href={href} className={classes} {...rest} />;

@@ -22,7 +22,7 @@ export function Pagination({
   if (totalPages < 2) return null;
 
   const stepLink =
-    "inline-flex h-9 items-center rounded-full border border-line-strong px-4 text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:bg-surface-muted";
+    "relative inline-flex h-9 items-center rounded-full border border-line-strong px-4 before:absolute before:-inset-y-1 before:inset-x-0 before:content-[''] text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:bg-surface-muted";
 
   return (
     <nav
@@ -49,7 +49,7 @@ export function Pagination({
                   href={href(page)}
                   aria-current={isCurrent ? "page" : undefined}
                   className={cn(
-                    "font-figure inline-flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)]",
+                    "font-figure relative inline-flex size-9 items-center justify-center rounded-full text-sm font-semibold before:absolute before:-inset-1 before:content-[''] transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)]",
                     isCurrent
                       ? "bg-accent text-white"
                       : "text-ink-soft hover:bg-accent-soft hover:text-accent",

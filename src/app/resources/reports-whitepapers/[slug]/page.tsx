@@ -470,10 +470,12 @@ function CardSpotlight({
   item: ReportCardItem;
   linkLabel: string;
 }) {
-  const image = (
+  /* When the artwork is the whole link, it must carry the accessible name;
+     beside the plain figure it stays decorative. */
+  const image = (linked: boolean) => (
     <Image
       src={item.image ?? "/resource-placeholder.svg"}
-      alt=""
+      alt={linked ? item.title : ""}
       width={1280}
       height={720}
       sizes="(min-width: 1024px) 32rem, 100vw"
@@ -503,14 +505,14 @@ function CardSpotlight({
           className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
           style={delay(120)}
         >
-          {image}
+          {image(true)}
         </Link>
       ) : (
         <div
           className="anim-rise overflow-hidden rounded-lg border border-line"
           style={delay(120)}
         >
-          {image}
+          {image(false)}
         </div>
       )}
     </div>
@@ -664,7 +666,7 @@ export default async function ReportLandingPage({ params }: Params) {
               {report.download.jotformId ? (
                 <JotformEmbed
                   formId={report.download.jotformId}
-                  title="Download the report"
+                  title="Report download form"
                 />
               ) : (
                 <DownloadForm

@@ -145,11 +145,11 @@ export const expertPerspectives: {
 }[] = [
   {
     id: "thought-leader",
-    label: "Thought Leader's Perspective",
+    label: "Thought leader's perspective",
     param: "thought-leaders",
   },
-  { id: "buyer", label: "Buyer's Perspective", param: "buyers" },
-  { id: "vendor", label: "Vendor's Perspective", param: "vendors" },
+  { id: "buyer", label: "Buyer's perspective", param: "buyers" },
+  { id: "vendor", label: "Vendor's perspective", param: "vendors" },
 ];
 
 export const expertProjects: ExpertProject[] = [
@@ -441,4 +441,5 @@ export const expertsViewLibrary = {
   title: "Experts view",
   lede: "Interviews with the leaders behind our research: what they built, what it cost them and what they would do differently.",
   cardCta: "Read the interview",
+  empty: "No interviews are published yet. New conversations land here as the research programmes run.",
 } as const;

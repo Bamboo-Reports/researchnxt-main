@@ -37,6 +37,11 @@ export default function SuccessStoriesPage() {
 
       <Section spacing="default">
         <Container>
+          {successStories.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {successStoriesLibrary.empty}
+            </p>
+          ) : null}
           <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {successStories.map((story, index) => (
               <Link

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
-import { accentedTitle } from "@/components/ui/accented-title";
+import { RuledHeading } from "@/components/ui/ruled-heading";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { careersBands, careersHero, openings } from "@/content/careers";
@@ -22,13 +22,7 @@ export default function CareersPage() {
       <Section spacing="default">
         <Container>
           <div className="flex flex-col gap-6">
-            <h2 className="text-headline font-display-soft">
-              {accentedTitle(careersBands.openings)}
-            </h2>
-            <span
-              aria-hidden="true"
-              className="h-0.5 w-12 rounded-[1px] bg-signal"
-            />
+            <RuledHeading title={careersBands.openings} />
           </div>
           <Reveal as="ul" className="mt-10 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {openings.map((opening, index) => (

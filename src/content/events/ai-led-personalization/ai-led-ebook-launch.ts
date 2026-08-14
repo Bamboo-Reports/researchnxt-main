@@ -55,7 +55,7 @@ export const aiLedEbookLaunch: Event = {
     /* The same four facts the source states, in its own words. */
     facts: [
       {
-        label: "Research Focus",
+        label: "Research focus",
         value: "AI Powered Business Strategies of B2C Brands",
       },
       {
@@ -63,7 +63,7 @@ export const aiLedEbookLaunch: Event = {
         value: "Engagement Interviews | Virtual Event | Social Media Promotion",
       },
       { label: "Geography", value: "India" },
-      { label: "Timeframe of Research", value: "April 2020 – Sept 2020" },
+      { label: "Timeframe of research", value: "April 2020 – Sept 2020" },
     ],
   },
 
@@ -74,7 +74,7 @@ export const aiLedEbookLaunch: Event = {
     card: "/success-stories/ai-led-personalization/netcore-card.png",
     facts: [
       {
-        label: "Research Focus",
+        label: "Research focus",
         value: "AI Powered Business Strategies of B2C Brands",
       },
       {
@@ -82,7 +82,7 @@ export const aiLedEbookLaunch: Event = {
         value: "Interviews | Virtual Event | Social Media Promotion",
       },
       { label: "Geography", value: "India" },
-      { label: "Timeframe of Research", value: "April 2020 – Sept 2020" },
+      { label: "Timeframe of research", value: "April 2020 – Sept 2020" },
     ],
   },
 

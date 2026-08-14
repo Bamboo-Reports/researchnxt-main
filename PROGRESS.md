@@ -4,6 +4,60 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-08-14
 
+## Full UI/UX QA round two: fixes applied, 2026-08-14
+
+Three parallel code audits (component usage, a11y/UX states,
+responsive/copy) swept the whole site; the browser was too janky for a
+visual crawl (renderer at ~1fps under automation, established earlier),
+so this round is source-driven. Fixes applied, lint/tsc/detector clean:
+
+- Detail heroes normalised to PageHero rhythm: all four resource detail
+  templates now use Section spacing="tight" (dropping the identical
+  manual padding), gap-8 and 64ch ledes. Ledes still absent on
+  insights/experts-view detail (content decision, open).
+- A11y: report CardSpotlight's image-only link now carries the item
+  title as alt (was nameless); form fields no longer suppress the
+  keyboard focus ring; Breadcrumbs render ol/li; footer link columns
+  are a nav aria-label="Footer"; sr-only "(opens in a new tab)" now
+  emitted centrally by Button/Card external branches (ResourceCard's
+  own copy removed to avoid doubling) and added to footer socials
+  (via aria-label), announcement bar, speaker LinkedIn links, the
+  SlideShare deck link and download-form external segments.
+- Touch targets: footer social/mail links padded to 40px (-m-2.5
+  p-2.5), pagination steps/numbers and both carousel arrow sets get
+  before-pseudo expansion to ~44px, mobile sheet links get padded hit
+  areas without layout shift.
+- Mobile sheet top offset is now MEASURED from the header
+  (headerRef.offsetHeight on open + resize) instead of the hardcoded
+  top-28 that was 1px short and broke if the announcement strip
+  wrapped.
+- Empty states: all five libraries carry `empty` copy in their content
+  modules and render it on zero items (experts-view when all sections
+  are empty).
+- Consistency: three success-story arrow CTAs got their missing
+  `group` (arrows never animated); "Research focus"/"Timeframe of
+  research" casing unified across content; experts-view perspective
+  headings sentence-cased; solutions.ts GCC link label matches nav;
+  curly apostrophes normalised in solutions.ts (not-found.tsx keeps
+  its JSX-safe curly form, that is why it differed); iframe titles are
+  noun phrases ("Report download form", "Handbook download form");
+  About portrait alts emptied (name already adjacent); 404 min-h calc
+  corrected 9rem->7rem and its CTA matches error.tsx ("Back to home");
+  RuledHeading extracted to ui/ruled-heading.tsx and shared by
+  about+careers; dead CTABand and CardFooter deleted; announcement bar
+  aligned to the site container (px-gutter, max-w-page); reports shelf
+  base gap tightened (gap-x-5) for 360px cards; homepage
+  differentiators band and About story band went subtle to break
+  double/triple default-surface runs.
+
+Deliberately not done (need decisions or a visual pass): ledes on
+insights/experts detail heroes, surface rhythm inside the events
+detail and report microsite tails (conditional band chains), report
+CTA verb unification ("View the report" vs "Read the full report"),
+VideoEmbed focus handoff to the iframe, JotformEmbed's fixed 539px
+no-scroll fallback, hero photo crop/sizes at mobile, centralising
+detail-page CTA strings.
+
 ## Hero veil reshaped after "very faded" feedback, 2026-08-14
 
 Verified in the browser against the user's running dev server (Chrome

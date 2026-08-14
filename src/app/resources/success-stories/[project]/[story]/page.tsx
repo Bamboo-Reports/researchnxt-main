@@ -88,9 +88,9 @@ export default async function SuccessStoryPage({ params }: Params) {
     <main id="main">
       {/* Hero. The title carries the piece, so the band stays a slim wash
           with the trail back to the library above it. */}
-      <Section spacing="none" className="hero-wash border-b border-line">
-        <Container className="py-12 sm:py-16">
-          <div className="anim-rise flex flex-col gap-6" style={step(0)}>
+      <Section spacing="tight" className="hero-wash border-b border-line">
+        <Container>
+          <div className="anim-rise flex flex-col gap-8" style={step(0)}>
             <Breadcrumbs
               items={[
                 {
@@ -110,7 +110,7 @@ export default async function SuccessStoryPage({ params }: Params) {
             <h1 className="max-w-[24ch] text-display-sm font-display text-ink">
               {story.title}
             </h1>
-            <p className="max-w-[60ch] text-lg leading-relaxed text-ink-soft">
+            <p className="max-w-[64ch] text-lg leading-relaxed text-ink-soft">
               {story.lede}
             </p>
           </div>
@@ -285,7 +285,7 @@ export default async function SuccessStoryPage({ params }: Params) {
                   {quote.href ? (
                     <Link
                       href={quote.href}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
+                      className="group inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
                     >
                       View entire interview
                       <TrailingArrow />
@@ -368,7 +368,7 @@ export default async function SuccessStoryPage({ params }: Params) {
                   {reportHref ? (
                     <Link
                       href={reportHref}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
+                      className="group inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
                     >
                       Read the full report
                       <TrailingArrow />
@@ -413,7 +413,7 @@ export default async function SuccessStoryPage({ params }: Params) {
                 <div>
                   <Link
                     href={eventHref(launch)}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
+                    className="group inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-hover"
                   >
                     {story.launchEvent.linkLabel}
                     <TrailingArrow />

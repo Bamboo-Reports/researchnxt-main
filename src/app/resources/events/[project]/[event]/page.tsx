@@ -80,7 +80,7 @@ function SpeakerNameLink({ speaker }: { speaker: Speaker }) {
         label="LinkedIn"
         className="size-3.5 shrink-0 opacity-70 transition-opacity duration-200 group-hover:opacity-100"
       />
-      <span className="sr-only">on LinkedIn</span>
+      <span className="sr-only">on LinkedIn (opens in a new tab)</span>
     </a>
   );
 }
@@ -246,9 +246,9 @@ export default async function EventPage({ params }: Params) {
     <main id="main">
       {/* Hero. The title carries the piece, so the band stays a slim wash
           with the trail back to the library above it. */}
-      <Section spacing="none" className="hero-wash border-b border-line">
-        <Container className="py-12 sm:py-16">
-          <div className="anim-rise flex flex-col gap-6" style={step(0)}>
+      <Section spacing="tight" className="hero-wash border-b border-line">
+        <Container>
+          <div className="anim-rise flex flex-col gap-8" style={step(0)}>
             {/* An event with no programme record (the Bamboo Reports
                 roundtable, the conference participations) ends the trail at
                 the library. */}
@@ -264,7 +264,7 @@ export default async function EventPage({ params }: Params) {
               {event.title}
             </h1>
             {event.lede ? (
-              <p className="max-w-[60ch] text-lg leading-relaxed text-ink-soft">
+              <p className="max-w-[64ch] text-lg leading-relaxed text-ink-soft">
                 {event.lede}
               </p>
             ) : null}
@@ -430,7 +430,7 @@ export default async function EventPage({ params }: Params) {
                     >
                       <JotformEmbed
                         formId={event.jotformId}
-                        title="Download the handbook"
+                        title="Handbook download form"
                       />
                     </div>
                   ) : null}
@@ -742,6 +742,7 @@ export default async function EventPage({ params }: Params) {
                   className="text-sm font-semibold text-accent hover:text-accent-hover"
                 >
                   Open the presentation on SlideShare
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </p>
             </div>

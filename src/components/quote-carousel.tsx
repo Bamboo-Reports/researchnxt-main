@@ -66,7 +66,7 @@ export function QuoteCarousel({
   }, []);
 
   const arrow =
-    "inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink-soft transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:text-ink disabled:pointer-events-none disabled:opacity-30";
+    "relative inline-flex size-10 before:absolute before:-inset-1 before:content-[''] shrink-0 items-center justify-center rounded-full border border-line-strong text-ink-soft transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:text-ink disabled:pointer-events-none disabled:opacity-30";
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-5">

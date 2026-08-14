@@ -17,6 +17,11 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  /* The sheet starts where the header ends. Measured rather than hardcoded:
+     the announcement bar's height is content (it can wrap on very narrow
+     screens or when the campaign copy changes), so a constant would drift. */
+  const [sheetTop, setSheetTop] = useState<number>();
 
   // Route change closes everything — otherwise a dropdown survives navigation.
   // Adjusted during render rather than in an effect: React re-runs this
@@ -47,6 +52,10 @@ export function Navbar() {
     document.body.style.overflow = "hidden";
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
+    const measure = () => setSheetTop(headerRef.current?.offsetHeight);
+    measure();
+    window.addEventListener("resize", measure);
+
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Tab" || !sheetRef.current) return;
       const focusable = sheetRef.current.querySelectorAll<HTMLElement>(
@@ -72,6 +81,7 @@ export function Navbar() {
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", measure);
       document.body.style.overflow = previousOverflow;
       previouslyFocused?.focus();
     };
@@ -99,7 +109,10 @@ export function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-[var(--z-sticky)] border-b border-line bg-surface/80 backdrop-blur-md">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-[var(--z-sticky)] border-b border-line bg-surface/80 backdrop-blur-md"
+    >
       <AnnouncementBar />
       <Container>
         <div className="flex h-16 items-center justify-between gap-6">
@@ -265,8 +278,8 @@ export function Navbar() {
         <div
           ref={sheetRef}
           id="mobile-nav"
-          /* Top offset = announcement bar (3rem) + nav row (4rem). */
           className="anim-menu fixed inset-x-0 bottom-0 top-28 z-[var(--z-sheet)] overflow-y-auto border-t border-line bg-surface lg:hidden"
+          style={sheetTop !== undefined ? { top: sheetTop } : undefined}
         >
           <Container className="py-8">
             <nav aria-label="Mobile" className="flex flex-col gap-8">
@@ -276,7 +289,7 @@ export function Navbar() {
                     <Link
                       key={entry.label}
                       href={entry.href}
-                      className="text-lg font-semibold text-ink"
+                      className="-my-2 py-2 text-lg font-semibold text-ink"
                     >
                       {entry.label}
                     </Link>
@@ -297,7 +310,7 @@ export function Navbar() {
                         <li key={item.label}>
                           <NavLink
                             item={item}
-                            className="text-base font-medium text-ink"
+                            className="-my-1.5 block py-1.5 text-base font-medium text-ink"
                           />
                         </li>
                       ))}
@@ -305,7 +318,7 @@ export function Navbar() {
                         <li>
                           <Link
                             href={entry.href}
-                            className="text-base font-medium text-accent"
+                            className="-my-1.5 block py-1.5 text-base font-medium text-accent"
                           >
                             All {entry.label.toLowerCase()}
                           </Link>

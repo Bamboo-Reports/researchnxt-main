@@ -30,7 +30,7 @@ const prospectDatabase: SolutionPage = {
       "Achieve greater campaigns success with our **on-demand custom prospect databases**",
     body: [
       "The impact of any marketing campaign relies on the quality of the prospect data in terms of accuracy of intended targets, preciseness of information, standardised quality of records and lowest bounce rate of emails.",
-      "Nevertheless, the marketing campaign’s success depends upon an effective strategy that you are already amazing at, and your focus should be only that. On the other hand, we are good at getting the right data to make your marketing campaigns successful. So, leave that part to us.",
+      "Nevertheless, the marketing campaign's success depends upon an effective strategy that you are already amazing at, and your focus should be only that. On the other hand, we are good at getting the right data to make your marketing campaigns successful. So, leave that part to us.",
     ],
   },
 
@@ -101,7 +101,7 @@ const accountIntelligence: SolutionPage = {
     lede:
       "Ensures you gain heightened target account control, understand opportunities within whitespaces, and strategically develop your unique selling propositions.",
     primary: {
-      label: "Let’s craft a personalised solution for you",
+      label: "Let's craft a personalised solution for you",
       href: "/contact",
     },
   },
@@ -171,7 +171,7 @@ const researchBasedMarketing: SolutionPage = {
     lede:
       "Ensures greater visibility, increased coverage, industry authority, and marketing spend optimisation.",
     primary: {
-      label: "Let’s craft a personalised solution for you",
+      label: "Let's craft a personalised solution for you",
       href: "/contact",
     },
   },
@@ -180,15 +180,15 @@ const researchBasedMarketing: SolutionPage = {
     title: "Connect effectively through **Research-Based Marketing**",
     body: [
       "High impact thought leadership marketing campaigns backed up with well researched and targeted content.",
-      "Our Research-Based Marketing approach ensures you gain visibility, credibility, and personalised engagement opportunities within your target accounts’ power structures.",
+      "Our Research-Based Marketing approach ensures you gain visibility, credibility, and personalised engagement opportunities within your target accounts' power structures.",
     ],
   },
 
   capabilities: {
     title: "**Credible & unique brand voice** aligned with your positioning",
     body: [
-      "Today’s savvy marketplace has very short attention spans, and to counter such acute snap judgements, careful content positioning is the key.",
-      "You will need to ensure that your communications cut through the noise. To gain visibility, credibility, and initiate personalised engagement with your target accounts’ power structures, your stories have to be compelling and yet insightful. Our Research-Based Marketing approach ensures you excel at it.",
+      "Today's savvy marketplace has very short attention spans, and to counter such acute snap judgements, careful content positioning is the key.",
+      "You will need to ensure that your communications cut through the noise. To gain visibility, credibility, and initiate personalised engagement with your target accounts' power structures, your stories have to be compelling and yet insightful. Our Research-Based Marketing approach ensures you excel at it.",
     ],
     items: [
       {
@@ -241,7 +241,7 @@ export const solutions: SolutionPage[] = [
 
 export const gccIntelligenceLink = {
   slug: "gcc-intelligence",
-  label: "GCC Intelligence",
+  label: "GCC intelligence",
   href: site.bambooReports,
   external: true,
   description:

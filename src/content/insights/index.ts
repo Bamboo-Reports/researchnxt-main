@@ -208,4 +208,5 @@ export const insightsLibrary = {
   title: "Insights",
   lede: "Articles, guides and toolkits from the Research NXT team, written alongside the research programmes they draw on.",
   cardCta: "Read the article",
+  empty: "No articles are published yet. New writing lands here alongside the research programmes.",
 } as const;

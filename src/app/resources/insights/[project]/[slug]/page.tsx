@@ -154,9 +154,9 @@ export default async function InsightPage({ params }: Params) {
     <main id="main">
       {/* Hero. The title carries the piece, so the band stays a slim wash
           with the trail back to the library above it. */}
-      <Section spacing="none" className="hero-wash border-b border-line">
-        <Container className="py-12 sm:py-16">
-          <div className="anim-rise flex flex-col gap-6" style={step(0)}>
+      <Section spacing="tight" className="hero-wash border-b border-line">
+        <Container>
+          <div className="anim-rise flex flex-col gap-8" style={step(0)}>
             <Breadcrumbs
               items={[
                 { label: insightsLibrary.title, href: "/resources/insights" },
@@ -201,7 +201,7 @@ export default async function InsightPage({ params }: Params) {
               >
                 <JotformEmbed
                   formId={insight.jotformId}
-                  title="Download the report"
+                  title="Report download form"
                 />
               </div>
             </aside>

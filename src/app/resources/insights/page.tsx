@@ -68,6 +68,11 @@ export default async function InsightsPage({ searchParams }: Params) {
 
       <Section spacing="default">
         <Container>
+          {page.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {insightsLibrary.empty}
+            </p>
+          ) : null}
           {/* Keyed on the page so the stagger replays when the set changes. */}
           <Reveal
             key={current}

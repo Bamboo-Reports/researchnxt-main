@@ -136,6 +136,16 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
         lede={expertsViewLibrary.lede}
       />
 
+      {sections.length === 0 ? (
+        <Section spacing="default">
+          <Container>
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {expertsViewLibrary.empty}
+            </p>
+          </Container>
+        </Section>
+      ) : null}
+
       {sections.map((section, index) => {
         const start = (section.current - 1) * PER_PAGE;
         const interviews = section.interviews.slice(start, start + PER_PAGE);

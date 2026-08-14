@@ -54,9 +54,7 @@ export function ResourceCard({
 
       <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
         Read more
-        {resource.external ? (
-          <span className="sr-only">(opens in a new tab)</span>
-        ) : null}
+        {/* The external hint now comes from Card's external branch. */}
         <TrailingArrow />
       </span>
     </Card>

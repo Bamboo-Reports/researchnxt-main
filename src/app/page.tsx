@@ -287,7 +287,7 @@ export default function HomePage() {
       {/* Why Research NXT. Bento tiles in the same system as the About stats:
           the lead claim carries the brand blue as the double-height feature
           tile, the rest stay quiet white so the highlight reads once. */}
-      <Section bordered spacing="default">
+      <Section surface="subtle" bordered spacing="default">
         <Container>
           {/* No max-width on this one: the long title needs the full container
               to settle onto two balanced lines at desktop widths. */}

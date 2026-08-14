@@ -9,8 +9,8 @@ import { announcement } from "@/content/announcement";
  */
 export function AnnouncementBar() {
   return (
-    <div className="bg-bamboo-navy px-4 py-2 text-white">
-      <div className="mx-auto flex min-h-8 max-w-7xl items-center justify-center gap-3 text-center text-sm font-semibold">
+    <div className="bg-bamboo-navy px-gutter py-2 text-white">
+      <div className="mx-auto flex min-h-8 max-w-page items-center justify-center gap-3 text-center text-sm font-semibold">
         <span className="hidden sm:inline">{announcement.message}</span>
         <span className="sm:hidden">{announcement.messageShort}</span>
         <a
@@ -21,6 +21,7 @@ export function AnnouncementBar() {
         >
           <span className="hidden sm:inline">{announcement.cta}</span>
           <span className="sm:hidden">{announcement.ctaShort}</span>
+          <span className="sr-only"> (opens in a new tab)</span>
           <TrailingArrow />
         </a>
       </div>

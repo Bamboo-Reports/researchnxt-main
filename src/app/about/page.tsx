@@ -8,6 +8,7 @@ import { accentedTitle } from "@/components/ui/accented-title";
 import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
+import { RuledHeading } from "@/components/ui/ruled-heading";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { SocialIcon } from "@/components/ui/social-icon";
 import {
@@ -29,19 +30,6 @@ export const metadata: Metadata = {
 };
 
 type Person = (typeof team.people)[number];
-
-/** Section opener in the solution-page style, for bands that open on a
-    headline with no eyebrow: the title over a short orange rule. */
-function RuledHeading({ title }: { title: string }) {
-  return (
-    <>
-      <h2 className="text-headline font-display-soft">
-        {accentedTitle(title)}
-      </h2>
-      <span aria-hidden="true" className="h-0.5 w-12 rounded-[1px] bg-signal" />
-    </>
-  );
-}
 
 /** A fact's figure. Years read as dates, so only measurements count up. */
 function FactValue({ value, count }: { value: string; count?: boolean }) {
@@ -158,7 +146,7 @@ function PersonPortrait({
     <div className="relative aspect-square w-full max-w-sm self-start overflow-hidden rounded-md">
       <Image
         src={person.image}
-        alt={person.name}
+        alt=""
         fill
         sizes={sizes}
         className="object-cover"
@@ -287,7 +275,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section bordered spacing="default">
+      <Section surface="subtle" bordered spacing="default">
         <Container>
           <div className="flex flex-col gap-6">
             <SectionHeading

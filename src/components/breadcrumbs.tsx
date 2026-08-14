@@ -13,25 +13,24 @@ export type Crumb = {
  */
 export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-ink-muted"
-    >
-      {items.map((item, index) => (
-        <span key={item.label} className="flex items-center gap-x-3">
-          {index > 0 ? <span aria-hidden="true">/</span> : null}
-          {item.href ? (
-            <Link
-              href={item.href}
-              className="text-accent transition-colors duration-200 hover:text-accent-hover"
-            >
-              {item.label}
-            </Link>
-          ) : (
-            <span>{item.label}</span>
-          )}
-        </span>
-      ))}
+    <nav aria-label="Breadcrumb">
+      <ol className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-semibold text-ink-muted">
+        {items.map((item, index) => (
+          <li key={item.label} className="flex items-center gap-x-3">
+            {index > 0 ? <span aria-hidden="true">/</span> : null}
+            {item.href ? (
+              <Link
+                href={item.href}
+                className="text-accent transition-colors duration-200 hover:text-accent-hover"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <span>{item.label}</span>
+            )}
+          </li>
+        ))}
+      </ol>
     </nav>
   );
 }

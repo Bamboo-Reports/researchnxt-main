@@ -63,4 +63,5 @@ export const successStoriesLibrary = {
   title: "Success stories",
   lede: "What business and marketing leaders commissioned from Research NXT, and what the research delivered.",
   cardCta: "Read the story",
+  empty: "No stories are published yet. Client engagements land here once their results can be shared.",
 } as const;

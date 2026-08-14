@@ -52,6 +52,7 @@ export function Card({
           style={style}
         >
           {children}
+          <span className="sr-only"> (opens in a new tab)</span>
         </a>
       );
     }
@@ -90,17 +91,3 @@ export function CardBody({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
-export function CardFooter({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn(
-        "mt-auto flex items-center gap-2 pt-5 text-sm font-semibold text-accent",
-        className,
-      )}
-      {...props}
-    />
-  );
-}

@@ -74,4 +74,5 @@ export const eventsLibrary = {
   title: "Events",
   lede: "Launches, roundtables and engagements from Research NXT, run alongside the research programmes they belong to.",
   cardCta: "See the event",
+  empty: "No events are published yet. Launches and roundtables land here as they happen.",
 } as const;

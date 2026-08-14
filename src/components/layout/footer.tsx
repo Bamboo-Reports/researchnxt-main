@@ -38,8 +38,8 @@ export function Footer() {
                     href={channel.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={channel.label}
-                    className="block text-ink-soft transition-colors duration-200 hover:text-ink"
+                    aria-label={`${channel.label} (opens in a new tab)`}
+                    className="-m-2.5 block p-2.5 text-ink-soft transition-colors duration-200 hover:text-ink"
                   >
                     <SocialIcon label={channel.label} className="size-5" />
                   </a>
@@ -50,7 +50,7 @@ export function Footer() {
                 <a
                   href={`mailto:${site.email}`}
                   aria-label={`Email ${site.email}`}
-                  className="block text-ink-soft transition-colors duration-200 hover:text-ink"
+                  className="-m-2.5 block p-2.5 text-ink-soft transition-colors duration-200 hover:text-ink"
                 >
                   <svg
                     aria-hidden="true"
@@ -71,7 +71,7 @@ export function Footer() {
           </div>
 
           {/* Link columns */}
-          <div className="grid gap-10 sm:grid-cols-3">
+          <nav aria-label="Footer" className="grid gap-10 sm:grid-cols-3">
             {footerNav.map((group) => (
               <div key={group.label} className="flex flex-col gap-5">
                 {/* Not a heading: three extra page-level h2s after the main
@@ -95,7 +95,7 @@ export function Footer() {
                 </ul>
               </div>
             ))}
-          </div>
+          </nav>
         </div>
 
         <div className="flex flex-col gap-4 border-t border-line py-6 text-sm text-ink-muted sm:flex-row sm:items-center sm:justify-between">
