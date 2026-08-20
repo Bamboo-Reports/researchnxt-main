@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { ApplicationForm } from "@/components/forms/application-form";
+import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
-import { accentedTitle } from "@/components/ui/accented-title";
+import { RuledHeading } from "@/components/ui/ruled-heading";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { careersHero, openings } from "@/content/careers";
+import { careersBands, careersHero, openings } from "@/content/careers";
 import { step } from "@/lib/motion";
 
 export const metadata: Metadata = {
   title: "Careers",
-  description: careersHero.lede,
+  description: careersHero.metaDescription,
   alternates: { canonical: "/careers" },
 };
 
@@ -22,13 +22,7 @@ export default function CareersPage() {
       <Section spacing="default">
         <Container>
           <div className="flex flex-col gap-6">
-            <h2 className="text-headline font-display-soft">
-              {accentedTitle("Positions we are currently hiring for")}
-            </h2>
-            <span
-              aria-hidden="true"
-              className="h-0.5 w-12 rounded-[1px] bg-signal"
-            />
+            <RuledHeading title={careersBands.openings} />
           </div>
           <Reveal as="ul" className="mt-10 grid gap-x-10 gap-y-10 sm:grid-cols-2">
             {openings.map((opening, index) => (
@@ -52,11 +46,15 @@ export default function CareersPage() {
 
       <Section surface="subtle" bordered spacing="default">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
-            <h2 className="text-headline font-display-soft">
-              What are you looking for in your next job?
+          <div className="flex flex-col gap-12">
+            <h2 className="text-center text-headline font-display-soft">
+              {careersBands.apply}
             </h2>
-            <ApplicationForm role="General application" submitLabel="Apply now" />
+            {/* Applications land through Jotform, not a local form. */}
+            <JotformEmbed
+              formId="242812511285048"
+              title="Job application form"
+            />
           </div>
         </Container>
       </Section>

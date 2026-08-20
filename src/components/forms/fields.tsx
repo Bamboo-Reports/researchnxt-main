@@ -12,8 +12,10 @@ const control =
   "w-full rounded-none border-0 border-b border-line-strong bg-transparent px-0 py-2.5 " +
   "text-base text-ink placeholder:text-ink-muted " +
   "transition-[border-color,box-shadow] duration-200 [transition-timing-function:var(--ease-out-quart)] " +
-  "hover:border-ink-muted focus:border-accent focus:shadow-[inset_0_-1px_0_0_var(--color-accent)] " +
-  "focus-visible:outline-none";
+  /* Mouse focus keeps the quiet accent underline; keyboard focus keeps the
+     global ring on top of it rather than suppressing it, so the only control
+     on the site does not have the weakest focus treatment. */
+  "hover:border-ink-muted focus:border-accent focus:shadow-[inset_0_-1px_0_0_var(--color-accent)]";
 
 export function Field({
   label,

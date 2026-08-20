@@ -20,26 +20,23 @@ export default function Error({
 
   return (
     <main id="main">
-      <Section surface="deep" spacing="loose">
+      <Section spacing="loose" className="hero-wash border-b border-line">
         <Container width="narrow">
           <SectionHeading
             as="h1"
             size="display-sm"
-            inverted
             eyebrow="Something went wrong"
             title="This page failed to load"
             lede="Try again. If it keeps happening, let us know and we will look into it."
           />
           <div className="mt-10 flex flex-wrap gap-3">
-            <Button onClick={reset} variant="on-deep">
-              Try again
-            </Button>
-            <Button href="/" variant="on-deep-quiet">
+            <Button onClick={reset}>Try again</Button>
+            <Button href="/" variant="secondary">
               Back to home
             </Button>
           </div>
           {error.digest ? (
-            <p className="font-figure mt-8 text-xs text-on-deep">
+            <p className="font-figure mt-8 text-xs text-ink-muted">
               Reference: {error.digest}
             </p>
           ) : null}

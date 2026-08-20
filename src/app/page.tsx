@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { HeroField } from "@/components/home/hero-field";
+import Image from "next/image";
+import Link from "next/link";
 import { HeroIntro } from "@/components/home/hero-intro";
-import { HeroQuestions } from "@/components/home/hero-questions";
 import { TrustedLogos } from "@/components/home/trusted-logos";
 import { NavLink } from "@/components/layout/nav-link";
 import { Reveal } from "@/components/motion/reveal";
@@ -13,9 +13,12 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { resourcesNav } from "@/config/nav";
 import {
   differentiators,
+  engagementSteps,
   featuredInterviews,
   featuredReports,
   hero,
+  homeBands,
+  whatWeDo,
 } from "@/content/home";
 import { step } from "@/lib/motion";
 
@@ -28,44 +31,37 @@ export default function HomePage() {
 
   return (
     <main id="main">
-      {/* Problem-to-promise over a luminous beam field, after the Shinkei
-          reference the user supplied. The field renders in `HeroField`: four
-          CSS layers documented with the `.hero-field` block in globals.css
-          (vivid base wash, stepped beam system, counter-flowing light sweep,
-          grain), with GSAP adding the load settle and pointer parallax on
-          their shared wrapper. White copy sits straight on the field as in
-          the reference; the base wash weights its deep pocket through the
-          copy column so the headline clears display contrast.
-
-          Nothing here is an image, so the field costs no download and scales
-          to any viewport. The drift is gated behind `data-motion`, and the
-          reduced-motion block stops it outright. */}
+      {/* Promise over the user-supplied field photograph (used as is, PNG
+          included on direction), composed the way the Bamboo Reports HeroV2
+          composes its artwork: the photo drifts slowly under a white veil
+          that fades into the page surface, the type stays ink with the
+          payoff line in the accent. `hero-wash` stays underneath as the
+          paint before the image loads. (Bamboo's capabilities rail on the
+          band's foot was tried and removed on user direction; the What we
+          do band below carries the four solutions.) */}
       <Section
         spacing="none"
-        className="on-signal relative isolate overflow-hidden bg-signal"
+        className="hero-wash relative overflow-hidden border-b border-line"
       >
-        <HeroField />
-
-        <Container className="py-24 sm:py-28 lg:py-36">
-          {/* Centred composition, as in the reference: question, promise, then
-              the one action, arriving in that order. HeroIntro choreographs
-              the entrance as a GSAP timeline; the words of the headline are
-              split into spans so it can resolve word by word. The whitespace
-              between spans keeps the accessible name one sentence. */}
+        <Image
+          src="/hero-updated.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="hero-image-drift pointer-events-none object-cover"
+        />
+        <div
+          aria-hidden="true"
+          className="hero-veil pointer-events-none absolute inset-0"
+        />
+        <Container className="relative py-24 sm:py-28 lg:py-32">
+          {/* HeroIntro choreographs the entrance as a GSAP timeline; the
+              words of the headline are split into spans so it can resolve
+              word by word. The whitespace between word spans keeps each
+              accessible name one sentence. */}
           <HeroIntro className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <div data-hero-questions className="w-full">
-              <HeroQuestions
-                questions={hero.questions}
-                toneClass="text-white"
-                dotClass="bg-white/60"
-                centered
-              />
-            </div>
-
-            {/* mt-3, not the mt-7 the scale suggests: the dot row above ends
-                with ~19px of its 44px touch targets' invisible padding, so
-                the visible gap here is already ~31px. */}
-            <h1 className="mt-3 max-w-[22ch] text-balance text-display-sm font-display text-white">
+            <h1 className="max-w-[22ch] text-balance text-display-sm font-display text-ink">
               {hero.headline.split(" ").map((word, index) => (
                 <span key={index}>
                   <span data-hero-word className="inline-block">
@@ -73,12 +69,26 @@ export default function HomePage() {
                   </span>{" "}
                 </span>
               ))}
+              <span className="block text-accent">
+                {hero.headlineAccent.split(" ").map((word, index) => (
+                  <span key={index}>
+                    <span data-hero-word className="inline-block">
+                      {word}
+                    </span>{" "}
+                  </span>
+                ))}
+              </span>
             </h1>
 
+            <p
+              data-hero-lede
+              className="mt-6 max-w-[52ch] text-lg leading-relaxed text-ink-soft"
+            >
+              {hero.lede}
+            </p>
+
             <div data-hero-cta className="mt-9">
-              <Button href={hero.cta.href} variant="on-deep">
-                {hero.cta.label}
-              </Button>
+              <Button href={hero.cta.href}>{hero.cta.label}</Button>
             </div>
           </HeroIntro>
         </Container>
@@ -90,15 +100,15 @@ export default function HomePage() {
         <Container>
           <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Featured reports"
-              title="Latest reports and guides"
-              lede="Original research published for business and marketing leaders."
+              eyebrow={homeBands.featuredReports.eyebrow}
+              title={homeBands.featuredReports.title}
+              lede={homeBands.featuredReports.lede}
             />
             <NavLink
               item={reportsLink}
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
-              All reports
+              {homeBands.featuredReports.cta}
               <TrailingArrow />
             </NavLink>
           </div>
@@ -119,19 +129,19 @@ export default function HomePage() {
 
       {/* Experts view shares the report-card system so both resource sections
           scan consistently, while the white band keeps them distinct. */}
-      <Section bordered spacing="default" className="bg-white">
+      <Section surface="bright" bordered spacing="default">
         <Container>
           <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Experts view"
-              title="Perspectives from the people doing the work"
-              lede="Interviews with thought leaders, buyers and vendors across B2B technology."
+              eyebrow={homeBands.expertsView.eyebrow}
+              title={homeBands.expertsView.title}
+              lede={homeBands.expertsView.lede}
             />
             <NavLink
               item={interviewsLink}
               className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
             >
-              All interviews
+              {homeBands.expertsView.cta}
               <TrailingArrow />
             </NavLink>
           </div>
@@ -149,10 +159,135 @@ export default function HomePage() {
         </Container>
       </Section>
 
+      {/* What we do: the four solutions as stations on one rule, the joined
+          timeline grammar the About page uses; the GCC Intelligence card
+          goes out to Bamboo Reports, as the nav does. */}
+      <Section surface="muted" bordered spacing="default">
+        <Container>
+          <SectionHeading
+            eyebrow={whatWeDo.eyebrow}
+            title={whatWeDo.title}
+            className="mb-12"
+          />
+          <Reveal className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {whatWeDo.items.map((item, index) => (
+              <div
+                key={item.title}
+                className="row-span-4 grid grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:pr-8 lg:pr-10"
+                style={step(index)}
+              >
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
+                />
+                {/* The chosen "\n" break applies once the cards sit in a
+                    grid; in the single mobile column it collapses to a
+                    space. */}
+                <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                  {item.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-ink-soft">
+                  {item.description}
+                </p>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                  >
+                    {homeBands.bambooCta}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                    <TrailingArrow />
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                  >
+                    {homeBands.exploreCta}
+                    <span className="sr-only"> {item.title}</span>
+                    <TrailingArrow />
+                  </Link>
+                )}
+              </div>
+            ))}
+          </Reveal>
+        </Container>
+      </Section>
+
+      {/* How an engagement runs: the four steps as cards, numbered because
+          the order is the information. The closing Engage card is the
+          band's one saturated moment on the accent blue, the stats-bento
+          feature treatment; its outcome line is white because brand orange
+          is never text on any surface. */}
+      <Section bordered spacing="default">
+        <Container>
+          <SectionHeading
+            eyebrow={engagementSteps.eyebrow}
+            title={engagementSteps.title}
+            className="mb-12"
+          />
+          {/* No auto-rows-fr here: the subgrid alone keeps the four cards'
+              rows level, and fr rows would stretch the cards with dead
+              space. */}
+          <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {engagementSteps.steps.map((stage, index) => {
+              const closing = index === engagementSteps.steps.length - 1;
+
+              return (
+                <div
+                  key={stage.name}
+                  className={`row-span-4 grid grid-rows-subgrid gap-y-2.5 rounded-md p-5 sm:p-6 ${
+                    closing ? "bg-accent" : "border border-line bg-surface"
+                  }`}
+                  style={step(index)}
+                >
+                  <p
+                    className={`flex items-center gap-3 text-sm font-semibold ${
+                      closing ? "text-white/85" : "text-accent"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`size-1.5 shrink-0 rounded-[1px] ${
+                        closing ? "bg-white/60" : "bg-signal"
+                      }`}
+                    />
+                    Step {index + 1}
+                  </p>
+                  <h3
+                    className={`text-title font-display-soft ${
+                      closing ? "text-white" : "text-ink"
+                    }`}
+                  >
+                    {stage.name}
+                  </h3>
+                  <p
+                    className={`text-sm leading-relaxed ${
+                      closing ? "text-white/85" : "text-ink-soft"
+                    }`}
+                  >
+                    {stage.description}
+                  </p>
+                  <p
+                    className={`self-end text-sm font-semibold ${
+                      closing ? "text-white" : "text-accent"
+                    }`}
+                  >
+                    {stage.outcome}
+                  </p>
+                </div>
+              );
+            })}
+          </Reveal>
+        </Container>
+      </Section>
+
       {/* Why Research NXT. Bento tiles in the same system as the About stats:
           the lead claim carries the brand blue as the double-height feature
           tile, the rest stay quiet white so the highlight reads once. */}
-      <Section bordered spacing="default">
+      <Section surface="subtle" bordered spacing="default">
         <Container>
           {/* No max-width on this one: the long title needs the full container
               to settle onto two balanced lines at desktop widths. */}
@@ -211,9 +346,9 @@ export default function HomePage() {
       <Section bordered spacing="default">
         <Container>
           <SectionHeading
-            eyebrow="Trusted by"
-            title="Teams building what comes next"
-            lede="Organisations that have trusted our research, intelligence and engagement programmes."
+            eyebrow={homeBands.trustedBy.eyebrow}
+            title={homeBands.trustedBy.title}
+            lede={homeBands.trustedBy.lede}
             className="mb-12 max-w-3xl"
           />
           <TrustedLogos />

@@ -48,9 +48,7 @@ export function StatsBento({ stats }: { stats: Stat[] }) {
             <div className="flex flex-col gap-1.5">
               <span
                 className={`font-display ${
-                  feature
-                    ? "text-5xl sm:text-6xl lg:text-7xl"
-                    : "text-4xl sm:text-5xl"
+                  feature ? "text-figure-lg" : "text-figure"
                 }`}
               >
                 <FigureValue value={stat.value} />
@@ -97,7 +95,7 @@ export function StatsCards({ stats }: { stats: Stat[] }) {
         >
           <span aria-hidden="true" className="h-1 w-6 rounded-[1px] bg-signal" />
           <div className="flex flex-col gap-2">
-            <span className="font-display text-3xl leading-tight sm:text-4xl">
+            <span className="font-display text-figure-sm">
               <FigureValue value={stat.value} />
             </span>
             <span className="text-sm leading-relaxed text-ink-soft">

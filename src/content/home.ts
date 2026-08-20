@@ -1,21 +1,86 @@
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
 import { latestReports } from "@/content/resources";
+import { gccIntelligenceLink, solutions } from "@/content/solutions";
 import type { FeaturedResource } from "./types";
 
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
-  headline: "Turnkey research solutions personalised to your marketing goals.",
+  headline: "Know the market. Name the accounts.",
+  /* The payoff, set as its own accent-coloured line the way the Bamboo
+     Reports hero sets "GCC GTM enablement". */
+  headlineAccent: "Reach the people inside them.",
+  lede: "A boutique market intelligence firm for B2B technology leaders. We turn research into qualified conversations your sales team can act on.",
   cta: {
     label: "Let's craft your solution",
     href: "/contact",
   },
-  /** A "\n" in a question is a chosen line break at larger widths; it
-      collapses to a space in the narrow mobile column. */
-  questions: [
-    "Is the quality of your marketing leads\nimpacting revenue?",
-    "Is your customer engagement based on\naccount intelligence?",
-    "Is a bad prospect database impacting\nmarketing ROI?",
+} as const;
+
+/** Card copy where a page's own meta description runs too long for a
+    three-line card; every other card reads the meta description as is. */
+const cardDescriptions: Record<string, string> = {
+  "account-intelligence":
+    "Heightened target account control, whitespace opportunities, and sharper selling propositions.",
+};
+
+/** The four solutions, derived from the solutions registry so their names
+    and descriptions stay described in one place. The GCC Intelligence card
+    goes out to Bamboo Reports, as the nav does. */
+export const whatWeDo = {
+  eyebrow: "What we do",
+  title: "From market data to qualified pipeline",
+  /* Every name is two words, so the single space becomes a chosen "\n"
+     break and the row shares one two-line rhythm; the template renders the
+     titles with `sm:whitespace-pre-line`. */
+  items: [
+    ...solutions.map((solution) => ({
+      title: solution.navLabel.replace(" ", "\n"),
+      description:
+        cardDescriptions[solution.slug] ?? solution.metaDescription,
+      href: `/solutions/${solution.slug}`,
+      external: false,
+    })),
+    {
+      title: gccIntelligenceLink.label.replace(" ", "\n"),
+      description: gccIntelligenceLink.description,
+      href: gccIntelligenceLink.href as string,
+      external: true,
+    },
+  ],
+} as const;
+
+/** The engagement as four steps, Define to Engage. The last step is the
+    band's one saturated card: the engagement ends in pipeline, so the card
+    that says so carries the weight. */
+export const engagementSteps = {
+  eyebrow: "How an engagement runs",
+  title: "From a definition workshop to a conversation your sales team can take",
+  steps: [
+    {
+      name: "Define",
+      description:
+        "Workshops and reverse funnel analysis to agree the ICP and the size of the prize.",
+      outcome: "Agreed scope and ICP",
+    },
+    {
+      name: "Build",
+      description:
+        "The universe assembled bottom-up: accounts, centres and named contacts, verified before use.",
+      outcome: "A working target universe",
+    },
+    {
+      name: "Validate",
+      description:
+        "Surveys and senior interviews test the assumptions against what the market actually does.",
+      outcome: "Evidence you can defend",
+    },
+    {
+      name: "Engage",
+      description:
+        "Content, campaigns and roundtables turn the studied audience into consented conversations.",
+      outcome: "Qualified pipeline",
+    },
   ],
 } as const;
 
@@ -121,35 +186,28 @@ export const featuredInterviews: FeaturedResource[] = featured.map(
   },
 );
 
-export const quickReads: FeaturedResource[] = [
-  {
-    kind: "Article",
-    title:
-      "Unified Customer Experience: The Next Frontier for Businesses in Qatar",
-    summary: "",
-    href: "https://researchnxt.com/customer-experience/unified-customer-experience-the-next-frontier-for-businesses-in-qatar/",
-    external: true,
+/**
+ * Band headings and link labels on the homepage that are not derived from
+ * another content module.
+ */
+export const homeBands = {
+  featuredReports: {
+    eyebrow: "Featured reports",
+    title: "Latest reports and guides",
+    lede: "Original research published for business and marketing leaders.",
+    cta: "All reports",
   },
-  {
-    kind: "Article",
-    title:
-      "AI is the Future, and the Future is Now: A Preview of the Implementor's Guide to AI",
-    summary: "",
-    href: "/resources/insights/implementors-guide-to-ai/ai-is-the-future-and-the-future-is-now",
+  expertsView: {
+    eyebrow: "Experts view",
+    title: "Perspectives from the people doing the work",
+    lede: "Interviews with thought leaders, buyers and vendors across B2B technology.",
+    cta: "All interviews",
   },
-  {
-    kind: "Article",
-    title:
-      "Automate, Target, Win in 2024: How Marketing Automation Supercharges Your Campaigns",
-    summary: "",
-    href: "https://researchnxt.com/campaign-management/how-marketing-automation-supercharges-your-campaigns/",
-    external: true,
+  trustedBy: {
+    eyebrow: "Trusted by",
+    title: "Teams building what comes next",
+    lede: "Organisations that have trusted our research, intelligence and engagement programmes.",
   },
-  {
-    kind: "Article",
-    title: "2024 Outlook on Maturing Digital CX and the Role of Indian GCCs",
-    summary: "",
-    href: "https://researchnxt.com/bambooreports/indian-gccs-digital-cx-outlook-2024/",
-    external: true,
-  },
-];
+  bambooCta: "Visit Bamboo Reports",
+  exploreCta: "Explore",
+} as const;

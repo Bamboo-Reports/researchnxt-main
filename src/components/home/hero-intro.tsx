@@ -4,10 +4,10 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 /**
- * The hero's entrance, choreographed as one GSAP timeline: the question line
- * rises in, the headline resolves word by word out of a blur, and the CTA
- * lands last. Children opt in with `data-hero-questions`, `data-hero-word`
- * and `data-hero-cta`; anything unmarked is left alone.
+ * The hero's entrance, choreographed as one GSAP timeline: the headline
+ * resolves word by word out of a blur, the lede follows, and the CTA lands
+ * last. Children opt in with `data-hero-word`, `data-hero-lede` and
+ * `data-hero-cta`; anything unmarked is left alone.
  *
  * The content is visible by default and GSAP only ever animates it FROM a
  * hidden state once the motion flag is set, so a no-JS visit, a failed
@@ -30,21 +30,21 @@ export function HeroIntro({
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-      tl.from("[data-hero-questions]", {
-        y: 24,
+      tl.from("[data-hero-word]", {
+        y: 34,
         autoAlpha: 0,
-        duration: 0.7,
+        filter: "blur(10px)",
+        duration: 0.9,
+        stagger: 0.055,
       })
         .from(
-          "[data-hero-word]",
+          "[data-hero-lede]",
           {
-            y: 34,
+            y: 22,
             autoAlpha: 0,
-            filter: "blur(10px)",
-            duration: 0.9,
-            stagger: 0.055,
+            duration: 0.6,
           },
-          0.12,
+          "-=0.6",
         )
         .from(
           "[data-hero-cta]",
@@ -53,7 +53,7 @@ export function HeroIntro({
             autoAlpha: 0,
             duration: 0.6,
           },
-          "-=0.55",
+          "-=0.45",
         );
     }, ref);
 

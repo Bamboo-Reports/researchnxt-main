@@ -85,7 +85,7 @@ export const businessStrategyReportLaunch: Event = {
     artworkAlt: "Cover of the Southeast Asia Response Guide, 2021",
     facts: [
       {
-        label: "Research Focus",
+        label: "Research focus",
         value:
           "The Best of Business Strategies In The New Normal in Southeast Asia",
       },
@@ -94,7 +94,7 @@ export const businessStrategyReportLaunch: Event = {
         value: "Engagement Interviews | Virtual Event | Social Media Promotion",
       },
       { label: "Geography", value: "Southeast Asia" },
-      { label: "Timeframe of Research", value: "April 2020 – Sept 2020" },
+      { label: "Timeframe of research", value: "April 2020 – Sept 2020" },
     ],
   },
 };

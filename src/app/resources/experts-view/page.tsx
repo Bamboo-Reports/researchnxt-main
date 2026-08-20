@@ -5,14 +5,15 @@ import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Pagination } from "@/components/pagination";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import {
   expertPerspectives,
+  expertsViewLibrary,
   getPerspectiveInterviews,
   interviewHref,
 } from "@/content/experts-view";
-import { cn } from "@/lib/cn";
 import { step } from "@/lib/motion";
 import type { ExpertInterview } from "@/content/experts-view";
 
@@ -30,9 +31,6 @@ type Params = { searchParams: Promise<SearchParams> };
 
 const PER_PAGE = 6;
 const PATH = "/resources/experts-view";
-
-const lede =
-  "Interviews with the leaders behind our research: what they built, what it cost them, and what they would do differently.";
 
 /** Clamps whatever arrived in a page param to a real page number. */
 function resolvePage(raw: string | string[] | undefined, totalPages: number) {
@@ -85,8 +83,11 @@ export async function generateMetadata({
   const search = query.toString();
 
   return {
-    title: paged.length > 0 ? "Experts view, more interviews" : "Experts view",
-    description: lede,
+    title:
+      paged.length > 0
+        ? `${expertsViewLibrary.title}, more interviews`
+        : expertsViewLibrary.title,
+    description: expertsViewLibrary.lede,
     alternates: { canonical: `${PATH}${search ? `?${search}` : ""}` },
   };
 }
@@ -109,91 +110,17 @@ function InterviewCard({
         alt=""
         width={640}
         height={360}
+        sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 100vw"
         className="mt-1 aspect-video w-full rounded-md object-cover"
       />
       <h3 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
         {interview.title}
       </h3>
       <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-        Read the interview
+        {expertsViewLibrary.cardCta}
         <TrailingArrow />
       </span>
     </Link>
-  );
-}
-
-/** Numbered pager. Rendered as links so every page is crawlable and shareable. */
-function Pagination({
-  label,
-  param,
-  current,
-  totalPages,
-  searchParams,
-}: {
-  label: string;
-  param: string;
-  current: number;
-  totalPages: number;
-  searchParams: SearchParams;
-}) {
-  if (totalPages < 2) return null;
-
-  const href = (page: number) => buildHref(searchParams, param, page);
-  const stepLink =
-    "inline-flex h-9 items-center rounded-full border border-line-strong px-4 text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:bg-surface-muted";
-
-  return (
-    <nav
-      aria-label={`${label} pages`}
-      className="mt-12 flex flex-wrap items-center justify-center gap-2 border-t border-line pt-8"
-    >
-      {current > 1 ? (
-        <Link href={href(current - 1)} rel="prev" className={stepLink}>
-          Previous
-        </Link>
-      ) : (
-        <span className={cn(stepLink, "pointer-events-none opacity-40")}>
-          Previous
-        </span>
-      )}
-
-      <ol className="flex items-center gap-1 px-2">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          (page) => {
-            const isCurrent = page === current;
-            return (
-              <li key={page}>
-                <Link
-                  href={href(page)}
-                  aria-current={isCurrent ? "page" : undefined}
-                  className={cn(
-                    "font-figure inline-flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)]",
-                    isCurrent
-                      ? "bg-accent text-white"
-                      : "text-ink-soft hover:bg-accent-soft hover:text-accent",
-                  )}
-                >
-                  {page}
-                  <span className="sr-only">
-                    {isCurrent ? ` (current page of ${label})` : ` of ${label}`}
-                  </span>
-                </Link>
-              </li>
-            );
-          },
-        )}
-      </ol>
-
-      {current < totalPages ? (
-        <Link href={href(current + 1)} rel="next" className={stepLink}>
-          Next
-        </Link>
-      ) : (
-        <span className={cn(stepLink, "pointer-events-none opacity-40")}>
-          Next
-        </span>
-      )}
-    </nav>
   );
 }
 
@@ -203,7 +130,21 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
 
   return (
     <main id="main">
-      <PageHero eyebrow="Resources" title="Experts view" lede={lede} />
+      <PageHero
+        eyebrow="Resources"
+        title={expertsViewLibrary.title}
+        lede={expertsViewLibrary.lede}
+      />
+
+      {sections.length === 0 ? (
+        <Section spacing="default">
+          <Container>
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {expertsViewLibrary.empty}
+            </p>
+          </Container>
+        </Section>
+      ) : null}
 
       {sections.map((section, index) => {
         const start = (section.current - 1) * PER_PAGE;
@@ -216,7 +157,7 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
             spacing="default"
             bordered={index > 0}
             surface={index % 2 === 1 ? "subtle" : "default"}
-            className="scroll-mt-24"
+            className="scroll-mt-32"
           >
             <Container>
               <SectionHeading title={section.label} className="mb-12" />
@@ -236,11 +177,10 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
               </Reveal>
 
               <Pagination
-                label={section.label}
-                param={section.param}
+                label={`${section.label} pages`}
                 current={section.current}
                 totalPages={section.totalPages}
-                searchParams={params}
+                href={(page) => buildHref(params, section.param, page)}
               />
             </Container>
           </Section>

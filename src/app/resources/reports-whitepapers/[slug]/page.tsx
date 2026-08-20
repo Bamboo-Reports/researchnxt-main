@@ -25,6 +25,7 @@ import {
   type ReportLanding,
 } from "@/content/resources";
 import { delay, step } from "@/lib/motion";
+import { og } from "@/lib/og";
 
 /**
  * Landing page template for a single report, mirroring the structure of the
@@ -469,10 +470,12 @@ function CardSpotlight({
   item: ReportCardItem;
   linkLabel: string;
 }) {
-  const image = (
+  /* When the artwork is the whole link, it must carry the accessible name;
+     beside the plain figure it stays decorative. */
+  const image = (linked: boolean) => (
     <Image
       src={item.image ?? "/resource-placeholder.svg"}
-      alt=""
+      alt={linked ? item.title : ""}
       width={1280}
       height={720}
       sizes="(min-width: 1024px) 32rem, 100vw"
@@ -502,14 +505,14 @@ function CardSpotlight({
           className="anim-rise group block overflow-hidden rounded-lg border border-line transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-accent"
           style={delay(120)}
         >
-          {image}
+          {image(true)}
         </Link>
       ) : (
         <div
           className="anim-rise overflow-hidden rounded-lg border border-line"
           style={delay(120)}
         >
-          {image}
+          {image(false)}
         </div>
       )}
     </div>
@@ -607,6 +610,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     alternates: {
       canonical: `/resources/reports-whitepapers/${report.slug}`,
     },
+    openGraph: og(report.hero.cover),
   };
 }
 
@@ -635,6 +639,8 @@ export default async function ReportLandingPage({ params }: Params) {
           height, so the padding stays tight around it. */}
       <Section spacing="none" className="hero-wash border-b border-line">
         <Container className="py-8 sm:py-10">
+          {/* No breadcrumb here: the report landings read as microsites, and
+              a trail crowds their cover-and-form hero. */}
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,24rem)_minmax(0,26rem)] lg:justify-center lg:gap-16">
             <div className="flex flex-col justify-center">
               <h1 className="sr-only">{report.hero.title}</h1>
@@ -652,7 +658,7 @@ export default async function ReportLandingPage({ params }: Params) {
 
             <div
               id="download"
-              className="anim-rise scroll-mt-24"
+              className="anim-rise scroll-mt-32"
               style={delay(160)}
             >
               {/* The form sits directly on the hero wash: no panel, no
@@ -660,7 +666,7 @@ export default async function ReportLandingPage({ params }: Params) {
               {report.download.jotformId ? (
                 <JotformEmbed
                   formId={report.download.jotformId}
-                  title="Download the report"
+                  title="Report download form"
                 />
               ) : (
                 <DownloadForm

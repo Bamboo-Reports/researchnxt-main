@@ -26,13 +26,12 @@ export type Event = {
    */
   lede?: string;
   /**
-   * Date the event ran, ISO `YYYY-MM-DD`.
+   * Date the event ran, ISO `YYYY-MM-DD`. Orders the library newest first;
+   * nothing renders it since dates were dropped from the cards and pages.
    *
    * Optional, because a source page does not always state one: the marketing
    * automation roundtable is written up as a recap with no date anywhere on
-   * the article, the events listing or its metadata. Where it is absent the
-   * templates omit the `<time>` rather than showing the write-up's own
-   * publication date, which would be a different fact.
+   * the article, the events listing or its metadata.
    */
   date?: string;
   /** One or two sentences for the library card. */

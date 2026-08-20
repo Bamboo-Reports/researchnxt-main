@@ -6,7 +6,11 @@ import { Reveal } from "@/components/motion/reveal";
 import { TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { successStories, successStoryHref } from "@/content/success-stories";
+import {
+  successStories,
+  successStoriesLibrary,
+  successStoryHref,
+} from "@/content/success-stories";
 import { step } from "@/lib/motion";
 
 /**
@@ -16,22 +20,28 @@ import { step } from "@/lib/motion";
  * Pagination joins when the list outgrows one view, as those libraries page.
  */
 
-const lede =
-  "What business and marketing leaders commissioned from Research NXT, and what the research delivered.";
-
 export const metadata: Metadata = {
-  title: "Success stories",
-  description: lede,
+  title: successStoriesLibrary.title,
+  description: successStoriesLibrary.lede,
   alternates: { canonical: "/resources/success-stories" },
 };
 
 export default function SuccessStoriesPage() {
   return (
     <main id="main">
-      <PageHero eyebrow="Resources" title="Success stories" lede={lede} />
+      <PageHero
+        eyebrow="Resources"
+        title={successStoriesLibrary.title}
+        lede={successStoriesLibrary.lede}
+      />
 
       <Section spacing="default">
         <Container>
+          {successStories.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {successStoriesLibrary.empty}
+            </p>
+          ) : null}
           <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {successStories.map((story, index) => (
               <Link
@@ -58,7 +68,7 @@ export default function SuccessStoriesPage() {
                   {story.excerpt}
                 </p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-                  Read the story
+                  {successStoriesLibrary.cardCta}
                   <TrailingArrow />
                 </span>
               </Link>

@@ -62,6 +62,8 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Research NXT",
     locale: "en_IN",
+    // Site-wide share card; detail pages swap in their own artwork via og().
+    images: ["/hero.webp"],
   },
 };
 

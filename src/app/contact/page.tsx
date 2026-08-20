@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/forms/contact-form";
+import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { PageHero } from "@/components/layout/page-hero";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -8,7 +8,7 @@ import { contactPage } from "@/content/contact";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: contactPage.lede,
+  description: contactPage.metaDescription,
   alternates: { canonical: "/contact" },
 };
 
@@ -22,13 +22,14 @@ function Detail({
 }) {
   return (
     <div className="flex flex-col gap-3 border-t border-line pt-6">
-      <h2 className="flex items-center gap-2.5 text-sm font-semibold text-ink">
+      {/* h3: these sit under the aside's h2, not beside it. */}
+      <h3 className="flex items-center gap-2.5 text-sm font-semibold text-ink">
         <span
           aria-hidden="true"
           className="size-1.5 shrink-0 rounded-[1px] bg-signal"
         />
         {label}
-      </h2>
+      </h3>
       {children}
     </div>
   );
@@ -77,7 +78,11 @@ export default function ContactPage() {
             </aside>
 
             <div className="border-t-2 border-ink pt-8">
-              <ContactForm />
+              {/* Enquiries land through Jotform, not a local form. */}
+              <JotformEmbed
+                formId="92022271643449"
+                title="Business enquiry form"
+              />
             </div>
           </div>
         </Container>

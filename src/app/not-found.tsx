@@ -14,7 +14,7 @@ export default function NotFound() {
     <main id="main">
       <Section
         spacing="none"
-        className="hero-wash flex min-h-[calc(100svh-9rem)] items-center border-b border-line"
+        className="hero-wash flex min-h-[calc(100svh-7rem)] items-center border-b border-line"
       >
         <Container>
           <div className="grid items-center gap-14 py-16 sm:py-20 lg:grid-cols-[1fr_0.9fr] lg:gap-20 lg:py-24">
@@ -38,7 +38,7 @@ export default function NotFound() {
 
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href="/" size="lg">
-                  Go to homepage
+                  Back to home
                 </Button>
                 <Button
                   href="/contact"
@@ -91,10 +91,10 @@ export default function NotFound() {
                     strokeWidth="6"
                     strokeLinecap="round"
                   />
-                  <circle cx="20" cy="112" r="6" fill="var(--color-deep)" />
+                  <circle cx="20" cy="112" r="6" fill="var(--color-ink)" />
                   <circle cx="164" cy="112" r="6" fill="var(--color-accent)" />
                   <circle cx="356" cy="112" r="6" fill="var(--color-accent)" />
-                  <circle cx="500" cy="112" r="6" fill="var(--color-deep)" />
+                  <circle cx="500" cy="112" r="6" fill="var(--color-ink)" />
                 </svg>
               </div>
 

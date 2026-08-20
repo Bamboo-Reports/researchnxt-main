@@ -5,9 +5,9 @@ import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
 import { TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Pagination } from "@/components/pagination";
 import { Section } from "@/components/ui/section";
-import { insightHref, insights } from "@/content/insights";
-import { cn } from "@/lib/cn";
+import { insightHref, insights, insightsLibrary } from "@/content/insights";
 import { step } from "@/lib/motion";
 
 /**
@@ -22,9 +22,6 @@ type Params = { searchParams: Promise<SearchParams> };
 
 const PER_PAGE = 6;
 const PATH = "/resources/insights";
-
-const lede =
-  "Articles, guides and toolkits from the Research NXT team, written alongside the research programmes they draw on.";
 
 const totalPages = Math.max(1, Math.ceil(insights.length / PER_PAGE));
 
@@ -47,72 +44,13 @@ export async function generateMetadata({
   const current = resolvePage((await searchParams).page);
 
   return {
-    title: current > 1 ? `Insights, page ${current}` : "Insights",
-    description: lede,
+    title:
+      current > 1
+        ? `${insightsLibrary.title}, page ${current}`
+        : insightsLibrary.title,
+    description: insightsLibrary.lede,
     alternates: { canonical: pageHref(current) },
   };
-}
-
-/** Numbered pager. Rendered as links so every page is crawlable and shareable. */
-function Pagination({ current }: { current: number }) {
-  if (totalPages < 2) return null;
-
-  const stepLink =
-    "inline-flex h-9 items-center rounded-full border border-line-strong px-4 text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)] hover:border-ink hover:bg-surface-muted";
-
-  return (
-    <nav
-      aria-label="Insights pages"
-      className="mt-12 flex flex-wrap items-center justify-center gap-2 border-t border-line pt-8"
-    >
-      {current > 1 ? (
-        <Link href={pageHref(current - 1)} rel="prev" className={stepLink}>
-          Previous
-        </Link>
-      ) : (
-        <span className={cn(stepLink, "pointer-events-none opacity-40")}>
-          Previous
-        </span>
-      )}
-
-      <ol className="flex items-center gap-1 px-2">
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          (page) => {
-            const isCurrent = page === current;
-            return (
-              <li key={page}>
-                <Link
-                  href={pageHref(page)}
-                  aria-current={isCurrent ? "page" : undefined}
-                  className={cn(
-                    "font-figure inline-flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-200 [transition-timing-function:var(--ease-out-quart)]",
-                    isCurrent
-                      ? "bg-accent text-white"
-                      : "text-ink-soft hover:bg-accent-soft hover:text-accent",
-                  )}
-                >
-                  {page}
-                  {isCurrent ? (
-                    <span className="sr-only"> (current page)</span>
-                  ) : null}
-                </Link>
-              </li>
-            );
-          },
-        )}
-      </ol>
-
-      {current < totalPages ? (
-        <Link href={pageHref(current + 1)} rel="next" className={stepLink}>
-          Next
-        </Link>
-      ) : (
-        <span className={cn(stepLink, "pointer-events-none opacity-40")}>
-          Next
-        </span>
-      )}
-    </nav>
-  );
 }
 
 export default async function InsightsPage({ searchParams }: Params) {
@@ -122,10 +60,19 @@ export default async function InsightsPage({ searchParams }: Params) {
 
   return (
     <main id="main">
-      <PageHero eyebrow="Resources" title="Insights" lede={lede} />
+      <PageHero
+        eyebrow="Resources"
+        title={insightsLibrary.title}
+        lede={insightsLibrary.lede}
+      />
 
       <Section spacing="default">
         <Container>
+          {page.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {insightsLibrary.empty}
+            </p>
+          ) : null}
           {/* Keyed on the page so the stagger replays when the set changes. */}
           <Reveal
             key={current}
@@ -143,6 +90,7 @@ export default async function InsightsPage({ searchParams }: Params) {
                   alt=""
                   width={640}
                   height={360}
+                  sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 100vw"
                   className="mt-1 aspect-video w-full rounded-md object-cover"
                 />
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
@@ -152,14 +100,19 @@ export default async function InsightsPage({ searchParams }: Params) {
                   {insight.excerpt}
                 </p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-                  Read the article
+                  {insightsLibrary.cardCta}
                   <TrailingArrow />
                 </span>
               </Link>
             ))}
           </Reveal>
 
-          <Pagination current={current} />
+          <Pagination
+            label="Insights pages"
+            current={current}
+            totalPages={totalPages}
+            href={pageHref}
+          />
         </Container>
       </Section>
     </main>

@@ -1,15 +1,9 @@
 import { cn } from "@/lib/cn";
 
-/**
- * Vertical band.
- *
- * `deep` is the drenched surface where the brand blue carries the whole band
- * rather than trimming it — the hero and the closing CTA. It carries the
- * `on-deep` class so focus rings switch to the lit accent inside it.
- */
+/** Vertical band. */
 
 type SectionProps = React.ComponentProps<"section"> & {
-  surface?: "default" | "subtle" | "muted" | "deep";
+  surface?: "default" | "bright" | "subtle" | "muted";
   /** Vertical rhythm. Spacing varies band to band so the page has a pulse. */
   spacing?: "tight" | "default" | "loose" | "none";
   /** Hairline above the section — how bands separate without shadows. */
@@ -18,9 +12,9 @@ type SectionProps = React.ComponentProps<"section"> & {
 
 const surfaces = {
   default: "bg-surface text-ink",
+  bright: "bg-surface-bright text-ink",
   subtle: "bg-surface-subtle text-ink",
   muted: "bg-surface-muted text-ink",
-  deep: "on-deep bg-deep text-white",
 } as const;
 
 const spacings = {
@@ -42,7 +36,7 @@ export function Section({
       className={cn(
         surfaces[surface],
         spacings[spacing],
-        bordered && (surface === "deep" ? "border-t border-deep-line" : "border-t border-line"),
+        bordered && "border-t border-line",
         className,
       )}
       {...props}

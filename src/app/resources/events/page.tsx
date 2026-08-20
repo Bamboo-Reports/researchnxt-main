@@ -3,37 +3,78 @@ import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/layout/page-hero";
 import { Reveal } from "@/components/motion/reveal";
+import { Pagination } from "@/components/pagination";
 import { TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
-import { eventHref, events } from "@/content/events";
-import { formatDate } from "@/lib/date";
+import { eventHref, events, eventsLibrary } from "@/content/events";
 import { step } from "@/lib/motion";
 
 /**
  * Events library: launches, roundtables and engagements, newest first, in the
- * same card grammar as the insights and experts-view libraries. Pagination
- * joins when the list outgrows one view, as those libraries page.
+ * same card grammar as the insights and experts-view libraries, paginated the
+ * way insights pages.
  */
 
-const lede =
-  "Launches, roundtables and engagements from Research NXT, run alongside the research programmes they belong to.";
+type SearchParams = Record<string, string | string[] | undefined>;
+type Params = { searchParams: Promise<SearchParams> };
 
-export const metadata: Metadata = {
-  title: "Events",
-  description: lede,
-  alternates: { canonical: "/resources/events" },
-};
+const PER_PAGE = 6;
+const PATH = "/resources/events";
 
-export default function EventsPage() {
+const totalPages = Math.max(1, Math.ceil(events.length / PER_PAGE));
+
+/** Clamps whatever arrived in the page param to a real page number. */
+function resolvePage(raw: string | string[] | undefined) {
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  const parsed = Number.parseInt(value ?? "1", 10);
+  if (!Number.isFinite(parsed)) return 1;
+  return Math.min(Math.max(parsed, 1), totalPages);
+}
+
+/** Page 1 canonicalises to the bare path, so there is no `?page=1` URL. */
+function pageHref(page: number) {
+  return page > 1 ? `${PATH}?page=${page}` : PATH;
+}
+
+export async function generateMetadata({
+  searchParams,
+}: Params): Promise<Metadata> {
+  const current = resolvePage((await searchParams).page);
+
+  return {
+    title:
+      current > 1
+        ? `${eventsLibrary.title}, page ${current}`
+        : eventsLibrary.title,
+    description: eventsLibrary.lede,
+    alternates: { canonical: pageHref(current) },
+  };
+}
+
+export default async function EventsPage({ searchParams }: Params) {
+  const current = resolvePage((await searchParams).page);
+  const start = (current - 1) * PER_PAGE;
+  const page = events.slice(start, start + PER_PAGE);
+
   return (
     <main id="main">
-      <PageHero eyebrow="Resources" title="Events" lede={lede} />
+      <PageHero
+        eyebrow="Resources"
+        title={eventsLibrary.title}
+        lede={eventsLibrary.lede}
+      />
 
       <Section spacing="default">
         <Container>
-          <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((event, index) => (
+          {page.length === 0 ? (
+            <p className="max-w-[52ch] text-lg leading-relaxed text-ink-soft">
+              {eventsLibrary.empty}
+            </p>
+          ) : null}
+          {/* Keyed on the page so the stagger replays when the set changes. */}
+          <Reveal key={current} className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {page.map((event, index) => (
               <Link
                 key={`${event.project}/${event.slug}`}
                 href={eventHref(event)}
@@ -44,18 +85,10 @@ export default function EventsPage() {
                   src={event.image}
                   alt=""
                   width={1280}
-                  height={583}
+                  height={720}
                   sizes="(min-width: 1024px) 24rem, (min-width: 640px) 45vw, 100vw"
                   className="mt-1 aspect-video w-full rounded-md object-cover"
                 />
-                {event.date ? (
-                  <time
-                    dateTime={event.date}
-                    className="text-sm font-semibold text-ink-muted"
-                  >
-                    {formatDate(event.date)}
-                  </time>
-                ) : null}
                 <h2 className="clamp-3 text-base font-semibold transition-colors duration-200 group-hover:text-accent">
                   {event.title}
                 </h2>
@@ -63,12 +96,19 @@ export default function EventsPage() {
                   {event.excerpt}
                 </p>
                 <span className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-accent">
-                  See the event
+                  {eventsLibrary.cardCta}
                   <TrailingArrow />
                 </span>
               </Link>
             ))}
           </Reveal>
+
+          <Pagination
+            label="Events pages"
+            current={current}
+            totalPages={totalPages}
+            href={pageHref}
+          />
         </Container>
       </Section>
     </main>

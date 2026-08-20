@@ -2,7 +2,692 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-12
+Last updated: 2026-08-14
+
+## Full UI/UX QA round two: fixes applied, 2026-08-14
+
+Three parallel code audits (component usage, a11y/UX states,
+responsive/copy) swept the whole site; the browser was too janky for a
+visual crawl (renderer at ~1fps under automation, established earlier),
+so this round is source-driven. Fixes applied, lint/tsc/detector clean:
+
+- Detail heroes normalised to PageHero rhythm: all four resource detail
+  templates now use Section spacing="tight" (dropping the identical
+  manual padding), gap-8 and 64ch ledes. Ledes still absent on
+  insights/experts-view detail (content decision, open).
+- A11y: report CardSpotlight's image-only link now carries the item
+  title as alt (was nameless); form fields no longer suppress the
+  keyboard focus ring; Breadcrumbs render ol/li; footer link columns
+  are a nav aria-label="Footer"; sr-only "(opens in a new tab)" now
+  emitted centrally by Button/Card external branches (ResourceCard's
+  own copy removed to avoid doubling) and added to footer socials
+  (via aria-label), announcement bar, speaker LinkedIn links, the
+  SlideShare deck link and download-form external segments.
+- Touch targets: footer social/mail links padded to 40px (-m-2.5
+  p-2.5), pagination steps/numbers and both carousel arrow sets get
+  before-pseudo expansion to ~44px, mobile sheet links get padded hit
+  areas without layout shift.
+- Mobile sheet top offset is now MEASURED from the header
+  (headerRef.offsetHeight on open + resize) instead of the hardcoded
+  top-28 that was 1px short and broke if the announcement strip
+  wrapped.
+- Empty states: all five libraries carry `empty` copy in their content
+  modules and render it on zero items (experts-view when all sections
+  are empty).
+- Consistency: three success-story arrow CTAs got their missing
+  `group` (arrows never animated); "Research focus"/"Timeframe of
+  research" casing unified across content; experts-view perspective
+  headings sentence-cased; solutions.ts GCC link label matches nav;
+  curly apostrophes normalised in solutions.ts (not-found.tsx keeps
+  its JSX-safe curly form, that is why it differed); iframe titles are
+  noun phrases ("Report download form", "Handbook download form");
+  About portrait alts emptied (name already adjacent); 404 min-h calc
+  corrected 9rem->7rem and its CTA matches error.tsx ("Back to home");
+  RuledHeading extracted to ui/ruled-heading.tsx and shared by
+  about+careers; dead CTABand and CardFooter deleted; announcement bar
+  aligned to the site container (px-gutter, max-w-page); reports shelf
+  base gap tightened (gap-x-5) for 360px cards; homepage
+  differentiators band and About story band went subtle to break
+  double/triple default-surface runs.
+
+Deliberately not done (need decisions or a visual pass): ledes on
+insights/experts detail heroes, surface rhythm inside the events
+detail and report microsite tails (conditional band chains), report
+CTA verb unification ("View the report" vs "Read the full report"),
+VideoEmbed focus handoff to the iframe, JotformEmbed's fixed 539px
+no-scroll fallback, hero photo crop/sizes at mobile, centralising
+detail-page CTA strings.
+
+## Hero veil reshaped after "very faded" feedback, 2026-08-14
+
+Verified in the browser against the user's running dev server (Chrome
+automation, localhost:3000): the flat white sheet
+(from-surface-bright/70 via-45 to-surface) was indeed fogging the whole
+photograph. Replaced by a `.hero-veil` utility in globals: a radial
+pool of light (72%->34%->transparent, 48x26rem at 50% 36%) behind the
+centred text block carries the ink type's contrast, a whisper-tint
+linear layer (22%->8%) keeps the high key, and the fade to
+`--color-surface` is compressed to the bottom ~12% for the seam into
+the next band. Sky and hills confirmed vivid in screenshots.
+
+Perf side-quest, resolved as environmental: the entrance animation
+crawled and Runtime.evaluate froze during checking, so the word blur
+tween, the Ken Burns drift and the navbar backdrop-blur were each
+suspected and temporarily removed. The controlled test (all animations
+killed via injected CSS) still showed ~916ms avg frames with a 27s max,
+proving the dev machine/environment was the bottleneck, not the page,
+so ALL THREE were restored verbatim. Net change from this pass is the
+veil only. The user should judge motion feel in a normal browsing
+session, not under automation.
+
+## Hero recomposed on the Bamboo HeroV2 pattern, 2026-08-14
+
+On user direction ("check how bamboo-reports-web done here in hero
+section do it similarly") the hero now mirrors Bamboo's HeroV2, ported
+into this site's idiom: the photo drifts (Ken Burns `hero-image-drift`,
+28s alternate scale 1→1.07, added to globals GATED behind
+`data-motion="on"` so the static image is the default); a white veil
+(`from-surface-bright/70 via-45 to-surface`) fades the photo into the
+page, replacing the previous white-text-on-ink-scrim treatment (h1 back
+to ink, lede to ink-soft, section underpaint back to hero-wash); the
+headline's payoff line "Reach the people inside them." is now
+`hero.headlineAccent` in home.ts, rendered as its own block line in
+text-accent (as Bamboo sets "GCC GTM enablement"); and the band closes
+on a `data-hero-rail` nav, the four whatWeDo solutions on a ruled
+hairline rail (divide-y, lg 4-up divide-x, title + clamp-2 description
++ TrailingArrow, GCC external in a new tab), which HeroIntro's timeline
+now lands last. The user then removed the rail (it duplicated the
+"What we do" band below): the nav, its HeroIntro tween and the
+data-hero-rail marker are gone, the hero is back to the centred
+max-w-3xl stack with symmetric py, and everything else from the Bamboo
+port stays (photo drift, white veil to-surface, ink type, accent payoff
+line). Lint, tsc and detector (pre-existing advisory only) clean;
+browser look pending.
+
+## Homepage hero photo added, 2026-08-14
+
+The user supplied `hero-updated.png` (1672x941, a golden-hour field of
+hills under a blue sky, echoing the brand blue+orange) and asked for it
+as the hero image, "png as is", so it was moved to
+`public/hero-updated.png` unconverted (new filename, honouring the
+never-overwrite-images rule; it is ~1.9MB, next/image still serves
+optimised derivatives). The homepage hero Section is now
+relative/overflow-hidden with a `fill` priority Image behind the
+centred composition and a top-to-bottom veil
+(`surface-bright/80 → /45 → /15`) so the ink headline keeps AA over
+the sky while the field shows through at the foot. The OG fallback in layout.tsx still points at /hero.webp, unchanged.
+Then on user direction the type went white: the light veil flipped to
+an ink scrim (`from-ink/60 via-ink/40 to-ink/15`, strongest behind the
+headline over the bright sky), h1 `text-white`, lede `text-white/90`,
+and the pre-load fallback changed from `hero-wash` to `bg-ink` so the
+white type never flashes on a light ground. Primary CTA (bg-accent,
+white label) unchanged. Lint clean; needs a browser look for scrim
+strength, and note the accent focus ring may sit low-contrast over the
+photo if that shows up in review.
+
+## Homepage hero: ledger tried, centred kept, 2026-08-14
+
+The hero placement went through a design pass (impeccable +
+frontend-design skills): three options with ASCII previews (three-line
+ledger, left-aligned stack, refined centred). The user first picked the
+ledger, saw it, and reverted: "centered one should've looked better".
+The centred `max-w-3xl` composition is restored byte-for-byte
+(headline string in home.ts, 22ch balanced h1 at display-sm, 52ch lede,
+mt-6/mt-9 rhythm, lg:py-36), with the page comment now recording that
+centred was KEPT over a ledger variant after a side-by-side review, so
+a later pass does not re-propose it. HeroIntro untouched throughout.
+The lede was then tightened on user request: "We size opportunities,
+map target universes and carry the research through to qualified
+conversations a sales team can act on" became "We turn research into
+qualified conversations your sales team can act on"; the dropped
+sizing/mapping detail is covered by the What we do band below. Lint
+and tsc clean.
+
+## QA round three: sentence case, navy code deleted, figure scale, 2026-08-14
+
+User decisions applied. (1) Privacy effective date confirmed correct as
+"1 July 2024", unchanged. (2) Consent lines around the Jotforms:
+explicitly ignored, closed. (3) Sentence case is the nav convention:
+solutionsNav and solutions.ts navLabels ("Prospect database", "Account
+intelligence", "Research-based marketing", "GCC intelligence"; the home
+What we do cards derive from navLabel so they follow), footer "About
+us"/"Contact us"/"Privacy policy", legalNav, the legal document title
+(h1/tab now "Privacy policy"; running prose keeps "Privacy Policy" as
+the document's name), aboutHero "About us", and the about fact value
+"GCC intelligence". Solution page headlines/metaTitles keep their title
+case as display copy. (4) All navy deep code deleted: evidence-field.tsx
+and data-plate.tsx removed; deep variants stripped from Section, Card,
+Badge, Button (on-deep/on-deep-quiet) and the unused `inverted` prop
+from SectionHeading; globals lost --color-deep/-raised/-line,
+--color-accent-on-deep, --color-on-deep, .on-deep focus rule and
+.rule-ticks-deep; not-found.tsx's two decorative circles now use
+--color-ink; CLAUDE.md's deep bullet rewritten (bg-bamboo-navy is the
+one navy left, announcement strip only). (6) Figures joined the type
+scale: new fluid --text-figure-sm/--text-figure/--text-figure-lg tokens
+replace the raw text-3xl..text-7xl ladders on the About facts and both
+stats bands; src/ has no raw step sizes left. Lint, tsc and detector
+(one pre-existing advisory) clean. Still open: hero consolidation
+passes (user deferred), browser verification of recent changes.
+
+## QA round two: OG images, home copy migration, small fixes, 2026-08-14
+
+User decisions applied: `enquiry@researchnxt.com` is the only published
+address (the three `privacy@` mentions in legal.ts are replaced; the
+effective date still awaits the user). Open Graph wired site-wide:
+layout gains a `/hero.webp` fallback image, a new `src/lib/og.ts`
+helper returns the full openGraph block (Next merges shallowly, so
+pages must carry siteName/type themselves), and the five resource
+detail templates pass their own artwork (insight/interview thumbnail,
+event image, story image, report cover); solutions pages have no
+artwork and inherit the fallback. Homepage band copy moved to a new
+`homeBands` export in home.ts (Featured reports / Experts view /
+Trusted by headings+ledes, "All reports", "All interviews",
+"Visit Bamboo Reports", "Explore"). Dedicated `metaDescription` fields
+added for about/careers/contact (their ledes ran ~230 chars or read
+wrong as snippets) and pages point at them. The Prospect Database
+lede/metaDescription no longer says "TAT" and gained its full stop.
+Footer column labels are `<p>` not `h2`; contact sidebar labels are
+`h3`. sitemap.ts stamps real `published`/`date` values on
+insight/event/story routes and omits lastModified elsewhere instead of
+faking `new Date()`. The ReportCardRail aria-label duplication was
+judged legitimate (it names the scroll region) and left alone. Still
+awaiting user: legal effective date, nav casing scheme, consent lines
+around the Jotforms, deep-variant deletion, hero consolidation, About
+figure type sizes. Lint and tsc clean.
+
+## Sticky announcement bar; report microsites keep no breadcrumb, 2026-08-14
+
+A campaign strip now rides inside the sticky navbar header, above the
+nav row: "The Q2 India GCC report: every GCC move, tracked." with a
+"Register for free" pill linking to
+bambooreports.com/reports/india-gcc-report-q2-2026?src=rnxt-announce
+(new tab). Ported from bamboo-reports-web's AnnouncementBar; copy lives
+in `src/content/announcement.ts`, component in
+`src/components/layout/announcement-bar.tsx`. On user direction it uses
+Bamboo Reports' own ledger navy, added as a distinct `--color-bamboo-navy`
+token (hsl(205 78% 13%)); this is a sanctioned cross-brand exception to
+the no-navy rule (memory updated), the site's own surfaces stay
+non-navy. Knock-ons handled: the mobile nav sheet's fixed top moved
+16→28 (bar ~3rem + nav 4rem) and every `scroll-mt-24` anchor offset
+became `scroll-mt-32`. Separately, the breadcrumb added to the report
+landing pages earlier today was removed on user direction (the
+microsites' hero stays clean); the other four detail templates keep
+theirs. Lint and tsc clean; not browser-verified (dev server needs user
+permission).
+
+## Breadcrumbs restored properly, shared component, 2026-08-14
+
+On user direction the detail-page breadcrumbs came back, done right this
+time: one shared `src/components/breadcrumbs.tsx` (items of
+label+optional href, "/" separators, unlinked current-less trail, same
+type treatment as the old hand-rolled navs) instead of four divergent
+copies. All five resource detail templates now carry it: events and
+success stories run Library / Programme (programme omitted when the
+record has none, e.g. the Bamboo Reports roundtable), insights and
+experts-view run Library / Programme with the programme linking to its
+report landing (restoring the outbound links the QA flagged as lost;
+insights got its `reportHref` lookup back, experts-view reuses its
+`report`), and report landings run a single back-link to the shelf,
+placed above the cover grid. No dates anywhere, per the earlier
+decision. Type-doc comments in insights/experts-view types.ts updated
+to match. Lint and tsc clean.
+
+## Pagination: shared pager, events and reports now page, 2026-08-14
+
+The numbered pager that insights and experts-view each carried locally
+is extracted to `src/components/pagination.tsx` (label, current,
+totalPages, and an `href(page)` callback so both the single-param
+`?page=N` scheme and experts-view's multi-section `?<param>=N#fragment`
+scheme fit); both pages now use it. Events (9 cards) pages at 6 like
+insights, and reports (18 cards) pages at 12, three rows of the
+four-column shelf; both follow the insights pattern exactly
+(resolvePage clamp, page 1 canonicalises to the bare path, "page N"
+metadata titles, Reveal keyed on the page so the stagger replays). Lint
+and tsc clean; not yet verified in a browser since dev-server runs need
+user permission.
+
+## Contact: Jotform replaces the dead placeholder form, 2026-08-14
+
+The contact page now takes enquiries through Jotform (form
+92022271643449, iframe titled "Business enquiry form"), via the shared
+`JotformEmbed`. The never-submitting `ContactForm`
+(`src/components/forms/contact-form.tsx`) and its `formConfirmation`
+copy in `contact.ts` are deleted; `forms/fields.tsx` stays
+(download-form still uses it). The page lede's "respond within 24
+hours" promise is now backed by a real submission path. Lint and tsc
+clean.
+
+## QA fixes: the no-input batch applied, 2026-08-14
+
+Everything from the audit that needed no user decision is fixed; lint
+and tsc clean, detector back to its single pre-existing advisory (the
+deliberate global grid wash).
+
+Applied: social icons consolidated into `src/components/ui/social-icon`
+(now monochrome currentColor including LinkedIn, YouTube added with an
+evenodd play cutout; `layout/social-icons.tsx` deleted, footer uses the
+shared component). Privacy document renamed "Privacy Policy" throughout
+`legal.ts` to match every link (email/date left for the user). Careers
+Jotform iframe title now "Job application form". Dead code deleted:
+`src/lib/date.ts` (formatDate) and the unreferenced `quickReads` export
+in `home.ts`. Stale breadcrumb/date comments rewritten in
+insights/index.ts, insights/types.ts, experts-view/types.ts, the h1b
+event file (which confirms bamboo-reports is deliberately unregistered,
+so that audit item was not a bug), events/types.ts and the three
+listing-page headers. `sizes` added to insights and experts-view cards;
+events card intrinsic ratio fixed to 1280x720. Experts-view detail title
+got the `max-w-[24ch]` clamp the other templates have.
+"Research-based Marketing" navLabel recapitalised; footer "Contact us"
+now "Contact Us". Homepage's raw `bg-white` band replaced by a new
+`surface="bright"` Section variant backed by a `--color-surface-bright`
+token. Reports shelf stagger capped at two rows. Two serial commas
+dropped (h1b lede+excerpt, experts-view lede). Listing-page copy moved
+to content: new `eventsLibrary`/`insightsLibrary`/`expertsViewLibrary`/
+`successStoriesLibrary` (in each library's index.ts) and
+`reportsLibrary` (resources.ts) hold title/lede/cardCta, pages read
+them; careers band headings moved to `careersBands` in careers.ts.
+
+Deferred for user decision: contact form Jotform id (dead placeholder
+still live on the primary CTA path), careers-page consent line, where
+insights/experts-view detail pages should link out now breadcrumbs are
+gone, pagination for events (9 items) and reports (18), detail-hero
+consolidation onto PageHero and lede presence, homepage band copy
+migration, nav casing scheme overall, "All interviews" label, OG
+images, deep-variant deletion, notFound policy, footer/contact heading
+levels, raw sizes on About figures and stats-band, legal effective date
+and privacy@ address.
+
+## Site-wide QA audit run, findings reported, fixes pending, 2026-08-14
+
+A full content/design QA swept every page (hero sections excluded on
+user direction; they will be reworked separately): the impeccable
+detector over src (one advisory, the deliberate global grid wash,
+dismissed), mechanical greps for the CLAUDE.md rules, and three parallel
+audit agents (core pages; the five listing pages; the six detail
+templates). Findings are reported in chat and NOT yet fixed. Highest
+severity: the contact form (primary CTA target) is the dead phase-c
+placeholder that claims "we respond within 24 hours" while submitting
+nowhere, while careers now has a live Jotform; insights and experts-view
+detail pages lost their only outbound links when breadcrumbs were
+removed; privacy page h1 says "Privacy Statement" behind links saying
+"Privacy Policy"; duplicate social icon components
+(ui/social-icon.tsx with raw LinkedIn hex, used by about + event detail,
+vs the new layout/social-icons.tsx monochrome set in the footer);
+events library (9 items) exceeds the 6-per-page size with no
+pagination; `src/lib/date.ts` formatDate is dead code; missing `sizes`
+on insights/experts-view listing images; bamboo-reports programme slug
+unregistered in insightProjects; listing-page ledes/CTA labels
+hard-coded in JSX against the copy-in-content rule; assorted stale
+comments describing removed breadcrumbs/dates; no per-page openGraph
+images anywhere. Full ranked list in the conversation of 2026-08-14.
+
+## Careers: Jotform replaces the placeholder application form, 2026-08-14
+
+The careers page now takes applications through Jotform (form
+242812511285048, "[RNXT] Job Application Leads"), rendered with the
+existing `JotformEmbed` component, which already implements the
+user-supplied iframe plus resize-handler snippet (minus the
+scrollTo(0,0), dropped deliberately as the component documents). The
+never-submitting `ApplicationForm` placeholder
+(`src/components/forms/application-form.tsx`) was deleted; nothing else
+used it. The form band then dropped its two-column split on user
+direction: the "What are you looking for in your next job?" heading is
+centred and the Jotform runs full container width below it. Lint clean.
+
+## Footer: social icons and About label, 2026-08-14
+
+The footer's social row now renders brand marks instead of text labels:
+user-supplied Twitter/X, LinkedIn and YouTube SVGs live in
+`src/components/layout/social-icons.tsx`, redrawn monochrome in
+`currentColor` (per the no-raw-hex token rule; the supplied X mark was
+white and LinkedIn/YouTube carried brand hex) so they inherit the same
+`text-ink-soft`/`hover:text-ink` treatment the labels had. The YouTube
+play triangle became an evenodd cutout since the mark is now one colour.
+Links keep `aria-label`; icons are `aria-hidden` at `size-5`. Also the
+footer Company column's "About Research NXT" is now "About Us"
+(`src/config/nav.ts`). A mailto envelope icon joined the social row as
+a fourth item beside YouTube (user first asked for it on the address
+email, then moved it here): stroked `currentColor` SVG at `size-5`,
+`aria-hidden`, link labelled "Email enquiry@researchnxt.com". The
+address block's text mailto link stays as it was. Lint clean.
+
+## Breadcrumbs removed from all resource detail pages, 2026-08-14
+
+On user direction, the hero breadcrumb nav ("Library / programme /
+date") is gone from every resource detail page: events (done first,
+below), then experts-view (`[project]/[person]/page.tsx`), insights
+(`[project]/[slug]/page.tsx`) and success stories
+(`[project]/[story]/page.tsx`). Each hero now opens straight on the
+title. Unused leftovers were removed per file: insights lost its
+`report`/`reportHref` block and the `Link`, `getReportLanding` and
+`formatDate` imports; experts-view lost `reportHref` and the `Link`
+import (`report` stays for the download form); success stories lost only
+the `formatDate` import (its report band still uses `Link` and
+`reportHref`). Lint clean.
+
+## Events library: dates removed from cards, 2026-08-14
+
+On user direction, event dates no longer render anywhere and the event
+detail hero lost its breadcrumb entirely: the `<time>` block was removed
+from the `/resources/events` listing cards
+(`src/app/resources/events/page.tsx`), then the whole
+"Events / programme / date" breadcrumb nav was removed from the
+detail-page hero (`src/app/resources/events/[project]/[event]/page.tsx`),
+so the hero opens straight on the title. The now-unused `formatDate`
+imports went with them; `programme`/`reportHref` stay, still used by the
+report band lower on the page. The `date` field in
+`src/content/events.ts` still exists but nothing renders it. Lint clean.
+
+## About: How we work replaced by How to engage us; navy purged site-wide, 2026-08-13
+
+**About page:** the "How we work / Four habits behind every engagement"
+section is gone (the `howWeWork` export with it), replaced from a
+user-supplied mockup by `engagementModes`: eyebrow "How to engage us",
+title "Three ways in, sized to the decision in front of you", three
+bordered mode cards (Data products, Research programmes, Pipeline
+programmes); the mockup's timeframe kickers ("24 to 48 hours", "6 to 12
+weeks", "Project or retainer") were dropped on user direction (the
+`timeframe` fields are deleted from content too), so each card opens
+straight on its name. The layout then went through a four-way variant
+review (tiles, stations, ledger, soft panels behind the temporary
+picker); the user chose **stations** (`ModesStations`): no boxes, the
+three modes as columns on one continuous rule with the signal tick, the
+page's joined-timeline grammar. The other variants and the picker are
+deleted. Then an
+assurance row of three ruled stations (Sourcing you can put through
+review; 95%+ contact accuracy; Consent captured before handover). The
+mockup's tracked all-caps kickers became sentence case per CLAUDE.md.
+Verified in SSR output; lint clean.
+
+**Navy (bg-deep) no longer renders anywhere**, on user direction ("we
+don't want this anywhere"), and a memory was saved
+(no-navy-deep-surfaces): the homepage Engage card moved to `bg-accent`
+(stats-bento feature treatment, white text, outcome in white not
+orange), error.tsx and loading.tsx moved from the deep band to the
+light hero wash with standard buttons, and VideoEmbed's letterbox and
+hover scrim moved from `bg-deep` to `bg-ink`. The deep tokens and the
+Section/Button/Badge/Card deep variants and `EvidenceField` still exist
+in code but nothing renders them. The engagement step cards also lost
+`lg:auto-rows-fr` and a step of padding (user: boxes too tall with dead
+space); subgrid alone keeps their rows level.
+
+## Homepage hero recomposed, 2026-08-13
+
+Three user-directed changes, in sequence, all uncommitted (the pushed
+branch `content/h1b-roundtable-and-about` predates them):
+
+- **New copy.** Headline "Know the market. Name the accounts. Reach the
+  people inside them." with a new `hero.lede` beneath it ("A boutique
+  market intelligence firm... qualified conversations a sales team can act
+  on."). The lede got its own `data-hero-lede` step in the HeroIntro GSAP
+  timeline, between the word resolve and the CTA.
+- **The three rotating questions are gone** ("Is the quality of your
+  marketing leads...", etc). `hero.questions` deleted from content, the
+  `HeroQuestions` usage and its timeline step removed. The component file
+  stays (still listed in CLAUDE.md's client components) but nothing
+  renders it now.
+- **The orange beam field is retired from the band**, on user direction
+  ("plain white with some light gradients for now"). The hero now uses the
+  same `hero-wash` treatment as every inner-page hero, with ink copy and
+  the primary CTA instead of white-on-orange. `HeroField` and its CSS
+  remain in the repo unused, should the field come back.
+
+Verified live: light wash renders, headline/lede/CTA present and
+sequenced; note that in an occluded Chrome tab the GSAP entrance crawls
+(rAF throttling), which is a background-tab artifact, not a bug. SSR HTML
+carries the new copy. Lint clean. Worth flagging: `site.tagline` and the
+homepage meta description still carry the old "turnkey research
+solutions" line; not changed because the user has not asked.
+
+**What we do band added**, on user direction, after the Experts View
+section and before Why Research NXT: eyebrow "What we do", title "From
+market data to qualified pipeline", and the four solutions as stations on
+one rule (the About page's joined-timeline grammar) on the muted surface.
+`home.whatWeDo` derives its items from the solutions registry
+(`navLabel` + `metaDescription` for the three internal pages, plus
+`gccIntelligenceLink` out to Bamboo Reports with an external "Visit
+Bamboo Reports" link), so solution copy stays described in one place.
+Verified live in section order with all four cards. Card titles carry a
+chosen "\n" break (two-line rhythm, `sm:whitespace-pre-line`), and the
+Account Intelligence card reads a shortened `cardDescriptions` override
+("Heightened target account control, whitespace opportunities, and
+sharper selling propositions.") because its meta description ran long;
+the page's own SEO description is untouched.
+
+**How an engagement runs band added** after What we do, from a
+user-supplied mockup, adapted to house rules: sentence-case eyebrow (the
+mockup's tracked all-caps kicker is against CLAUDE.md), title "From a
+definition workshop to a conversation your sales team can take", four
+step cards (Define, Build, Validate, Engage) numbered with the tick
+device because the order is the information, each closing on its outcome
+line in accent semibold. The Engage card is the band's one saturated
+moment on `bg-deep`, with body in `text-on-deep` and the "Qualified
+pipeline" outcome in `text-accent-on-deep`, NOT the mockup's orange text,
+because brand orange is never text on any surface. Subgrid rows keep
+labels, names, copy and outcomes aligned across the row. Verified in SSR
+output; lint clean.
+
+## Bamboo Reports GCC roundtable published under events, 2026-08-13
+
+## Bamboo Reports GCC roundtable published under events, 2026-08-13
+
+New event page at
+`/resources/events/bamboo-reports/h1b-shock-strategic-reset`, authored from
+the user-supplied draft `h1b-roundtable.md` (repo root, untracked scratch
+input like `sf-covers/`). The H-1B / GCC roundtable, Hilton Bengaluru,
+13 November 2025.
+
+**New project segment `bamboo-reports`.** The roundtable belongs to the
+Bamboo Reports GCC research, not to any marketing report programme, so
+`getInsightProject` finds nothing and the breadcrumb runs Events / date.
+That exposed a template bug: the first breadcrumb separator rendered
+unconditionally, so a programme-less event showed "Events / / date". The
+separator now renders inside the programme conditional
+(`src/app/resources/events/[project]/[event]/page.tsx`); conference
+participations were already programme-carrying (industry-events resolves a
+programme), so nothing else changes.
+
+**All images are local**, on user direction: the draft pointed at catbox
+and ufs.sh, and everything was downloaded to
+`public/events/h1b-shock-strategic-reset/` (hero.jpg 1920x1080, fifteen
+800x800 headshots under `speakers/`, sixteen webp photos under `gallery/`,
+~12MB total). No remote image hosts are referenced.
+
+**Content mapping** (`src/content/events/bamboo-reports/h1b-shock-strategic-reset.ts`):
+the draft's H3s became the body's heading blocks; highlights, the two
+context points, signals and playbook prompts are `list` blocks with `**`
+emphasis; the final takeaway is `bodyAfterSpeakers` so it lands under the
+panel. Facts: Format / Venue / Hosted by. The draft's em dashes became
+colons per the house rule. Gallery of sixteen with empty alts (HYSEA
+precedent). Fifteen speakers in draft order, no LinkedIn links (the draft
+supplies none, and guessed URLs risk the wrong person); Madhav Vemuri's
+line is "Inpace, formerly ABB" because the draft lists "Inpace / X ABB"
+with no title. The draft's suggested live path /roundtables/... was not
+used: content URLs follow /resources/events/<project>/<leaf>.
+
+Verified in the browser: breadcrumb "Events / 13 November 2025", all 8
+headings, 15 speaker cards, 16 gallery images, 3 facts, 32 images total
+with zero broken, no horizontal overflow; the event lists second on
+/resources/events (after the undated recap, per the newest-first sort).
+Lint clean.
+
+**"Who spoke" redesigned: tiles, chosen from a four-way variant review.**
+Candidates (behind the temporary variant picker, since deleted): the
+incumbent hairline discs, a five-across portrait wall, a compact
+two-column roster ledger, and tiles. The user chose tiles:
+`SpeakersTiles` renders each speaker on a white bordered card (56px disc,
+name, role, company), three across, for EVERY event with speakers.
+Shared pieces extracted on the way: `SpeakerNameLink`,
+`SpeakerInterviewLink`, `SpeakerGroupTitle`, so group subheadings (NTLF),
+LinkedIn names and interview links all survive. The rejected variants and
+`src/components/dev/variant-picker.tsx` are deleted. Verified live:
+picker gone, 15 tiles render on the roundtable.
+
+The closing takeaway moved below the gallery, on user direction: the
+`bodyAfterSpeakers` block left the speakers band and renders as its own
+subtle band after the gallery (heading promoted h3 to h2 now that it
+opens a band). An event with no gallery, the 2017 webinar, still gets the
+block directly after its speakers, so its reading order is unchanged.
+Verified live: the page now runs Who spoke, Moments, then the takeaway.
+
+Two follow-ups on user direction, both verified live: the gallery band
+moved below the speakers band in the event template (so "Who spoke"
+precedes "Moments from..."; the gallery dropped its subtle surface since
+it now sits beside the subtle speakers band; this reorders HYSEA's
+gallery below its speakers too), and this event's speakers are sorted
+A to Z by name in the content module rather than the draft's running
+order.
+
+Also on user direction: the About page's fifth fact value changed from
+"Built in-house" to "GCC Intelligence" (label unchanged).
+
+## About page: final QA pass, 2026-08-13
+
+Full-page QA in Chrome against the running dev server (already up on
+localhost:3000; not started by the agent), plus computed-style checks via
+the JS console.
+
+**One defect found and fixed.** `TeamSplit` wrapped its two columns in
+`<article className="contents">`; a `display: contents` element generates
+no box, so the `.anim-stagger > *` entrance landed on it and never
+visually ran: the band appeared without its reveal (content stayed
+visible, per the motion rule, but the stagger was dead). The wrapper is
+now a `Fragment`, the columns sit directly under the `Reveal`, and both
+were confirmed live running `rise-in` to opacity 1. A comment in
+`TeamSplit` warns against reintroducing a contents wrapper there.
+
+**Checked and healthy:** no horizontal overflow at any tested width
+(scrollWidth == clientWidth); page height ~4,186px with contiguous
+sections (65 / 255 / 965 / 1548 / 2115 / 2800), no dead gaps; heading
+outline is one h1 then h2 per band, h3 for cards and the founder, h4 for
+Advisory board and Team; all type resolves to DM Sans (thesis 60px/800,
+band headlines 44px/700, body 16px/26px, small 14px); the fact figures
+render on the tabular face and the two-line title rhythm holds across the
+timeline and habits rows; the portrait loads with correct alt; zero
+console errors. Desktop (~1500px) screenshots confirmed every band's
+layout: thesis + facts split, story, the joined timeline rule, habits,
+and the team split with the two-line CMO role.
+
+**Not verified:** phone-width layout. The window manager pinned the
+browser window size, so sub-sm widths could not be tested; code-wise all
+grids collapse to one column and the "\n" breaks collapse to spaces
+below sm, and there is no horizontal overflow at the widths that were
+testable.
+
+## About page: variant review resolved, 2026-08-13
+
+Both open layouts were chosen through a temporary Prev/Next variant picker
+rendered in the page; the picker (`src/components/dev/variant-picker.tsx`)
+and every rejected variant are now deleted and the page is final again.
+
+**Facts: `FactsSplit`.** The founding story (2017, founded and
+bootstrapped, with its detail line) on an accent-soft panel at left, the
+four measurements as ruled cells beside it. Rejected: ruled ledger, stats
+bento, measurement strip, lead-and-grid.
+
+**Team: `TeamSplit`**, the same grammar as the facts band so the two ends
+of the page rhyme: the founder's identity (portrait, name, role, socials)
+on an accent-soft panel left; bio, affiliations and the advisory board
+block as ruled blocks right. Rejected across two rounds: plate, mirrored,
+panel, dossier (round one, all portrait-beside-text), then editorial and
+roster (round two). Shared helpers kept: `PersonPortrait`,
+`AffiliationsList`, `PersonSocials`.
+
+Post-selection tweaks on user direction: the first advisor's role reads
+"Former MD of..." rather than "Former managing director of..."; the second
+advisor's role carries a forced two-line break ("Former four-time SaaS\n
+chief marketing officer.", rendered `whitespace-pre-line`); and the
+analyst-team note ("Behind every engagement...") sits under its own "Team"
+header (`advisoryBoard.noteTitle`) as the last ruled block of the right
+column, below the Advisory board block, mirroring its heading style. It
+briefly ran inside the founder's bio copy between those two placements.
+With "Team" now a sub-header, the section eyebrow changed from "The team"
+to "The people" so the two labels stop colliding.
+
+Lint and the impeccable detector are clean.
+
+## About page rebuilt on new positioning copy, 2026-08-13
+
+The About page was still the transcription of the old WordPress page ("Who we
+are?", "Our culture", the 500k+/1.5k+ stats). Replaced wholesale with new
+copy supplied by the user: pipeline-first positioning ("Research that ends in
+a pipeline, not a PDF."), the firm's story, a timeline, working habits, the
+founder plus an advisory board, and an ecosystem recognition band.
+
+`src/content/about.ts` was rewritten; the old `whoWeAre`, `culture`,
+`aboutStats` and `leadership` exports are gone (nothing else imported them).
+New exports: `aboutHero`, `aboutFacts` + `aboutPhoto`, `story`, `milestones`,
+`howWeWork`, `team`, `advisoryBoard`, `recognition`. Copy is the user's
+verbatim, sentence case on labels; no em dashes anywhere in it.
+
+Page structure (`src/app/about/page.tsx`), all house devices, no new
+components:
+
+- **Hero**: the "About Us" title alone, no lede, on user direction (a
+  boutique-firm lede sat under it briefly and was reverted). The pipeline
+  headline opens the page body as `aboutIntro`, now at `text-display-sm`
+  in the display face: it is the page's thesis, so it carries the page's
+  largest type below the hero, over the short orange rule with the
+  boutique-firm paragraph beneath.
+- **Fact ledger**: the five facts (2017 founded and bootstrapped, 50+
+  clients, 2018 NASSCOM partner, 60,000+ subscribers, Built in-house Bamboo
+  Reports) ran as a stats bento first (feature tile on the accent, then
+  quiet tiles; an event photograph sat beside it briefly and was removed);
+  the user then asked for something other than a bento, and a full-page
+  overhaul through the impeccable and frontend-design skills replaced it
+  with a ruled ledger: one hairline row per fact, the figure in a 16rem
+  display column left, the claim right, `items-baseline` so figure and
+  claim share a baseline. Only the founding row carries a `detail` line.
+  `AboutFact.count` still marks which values count up (50+ and 60,000+
+  through `FigureValue`; 2017 and 2018 are dates and stay still). The
+  page-wide overhaul direction: the page was four repeats of
+  heading-plus-card-grid, so cards gave way to ruled lines as the page's
+  device, matching the site's field-report grammar.
+- **Our story**: three paragraphs at the container's full width (a 72ch cap
+  was removed on user direction) and a secondary "Visit Bamboo Reports"
+  button out to bambooreports.com.
+- **What shaped the firm**: four milestone stations (2017, 2018, 2022,
+  Today) on the muted surface. The horizontal gap went to zero with padding
+  inside each column instead, so the columns' top rules join into one
+  continuous timeline; the tick and accent year mark the stations along it.
+  Subgrid rows keep titles and copy aligned.
+- **How we work**: the same station treatment as the timeline: one shared
+  rule, each habit's station marked by the orange signal dash. The stations
+  were briefly numbered 1 to 4; removed on user direction. Both this row
+  and the timeline had titles wrapping to a mix of one and two lines; on
+  user direction every milestone and habit title now carries a chosen "\n"
+  break (the solutions-page pattern, rendered `sm:whitespace-pre-line`) so
+  all eight cards share a two-line rhythm; the breaks collapse to spaces in
+  the single mobile column.
+  The "None of this is exotic" paragraph sits under the SectionHeading as
+  its own full-width paragraph rather than as the heading's lede, whose
+  64ch cap the user asked to escape.
+- **The team**: Santosh's card keeps its previous layout (photo, role, bio,
+  affiliations, socials) with the new role "Founder & CEO", the shorter bio,
+  and affiliations trimmed to FLAME and MIDAS. The advisory board sits inside
+  the same band, reworked on user direction (via the impeccable and
+  frontend-design skills) from two bare hairline blurbs plus an orphan
+  paragraph into one plate: each advisor's copy is split verbatim at its
+  sentence break into a role headline (`font-display-soft`) over a
+  credential line under a hairline, on white bordered tiles whose hairlines
+  stay level via subgrid, and the analyst-team note closes the plate as a
+  full-width tile on `bg-accent-soft` with the signal tick. Content shape
+  changed with it: `advisoryBoard.members` is now `{ role, credential }[]`
+  rather than strings.
+- **In the room**: REMOVED FROM THE PAGE for now, on user direction, so the
+  page closes on the team band. The `recognition` export stays in
+  `src/content/about.ts` with the awards folded into its prose (it earlier
+  ran deep navy with award tiles, then as a light one-paragraph band);
+  restoring the band is one import away.
+
+Two-tone `**` accents were added to section titles (PDF, technology,
+engagement, accountable), rendered through `accentedTitle`; every band on
+the page is now a light surface, so `text-accent` clears contrast wherever
+they appear. Metadata description reads from `aboutIntro.lede`.
+
+Verified: `npm run lint` clean. Not run (needs permission): a dev-server
+visual check and `tsc`; worth a look in the browser, particularly the proof
+band at tablet widths and the photo crop at `lg`.
 
 ## Two NASSCOM industry events checked; deck embedded, 2026-08-12
 

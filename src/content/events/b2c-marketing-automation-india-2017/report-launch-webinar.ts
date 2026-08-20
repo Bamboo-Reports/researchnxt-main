@@ -53,13 +53,13 @@ export const reportLaunchWebinar: Event = {
     story: "netcore",
     card: "/success-stories/b2c-marketing-automation-india-2017/netcore.png",
     facts: [
-      { label: "Research Focus", value: "B2C Marketing Automation" },
+      { label: "Research focus", value: "B2C Marketing Automation" },
       {
         label: "Engagement",
         value: "Interviews | Virtual Event | Social Media Promotion",
       },
       { label: "Geography", value: "India" },
-      { label: "Timeframe of Research", value: "Feb 2017 – May 2017" },
+      { label: "Timeframe of research", value: "Feb 2017 – May 2017" },
     ],
   },
 

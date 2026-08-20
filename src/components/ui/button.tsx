@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary" | "ghost" | "on-deep" | "on-deep-quiet";
+type Variant = "primary" | "secondary" | "ghost";
 type Size = "default" | "sm" | "lg";
 
 const variants = {
@@ -10,11 +10,6 @@ const variants = {
     "bg-transparent text-ink border border-line-strong hover:border-ink hover:bg-surface-muted",
   ghost:
     "bg-transparent text-accent border border-transparent hover:bg-accent-soft",
-  /* Inside a deep band the accent blue drops to 2.6:1, so the lead button
-     inverts to white on deep rather than trying to out-shout the surface. */
-  "on-deep": "bg-white text-deep border border-transparent hover:bg-on-deep",
-  "on-deep-quiet":
-    "bg-transparent text-white border border-deep-line hover:border-accent-on-deep hover:bg-white/5",
 } as const;
 
 const sizes = {
@@ -65,14 +60,18 @@ export function Button({
   if (props.href !== undefined) {
     const { href, external, ...rest } = props;
     if (external) {
+      const { children, ...anchorRest } = rest as React.ComponentProps<"a">;
       return (
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
           className={classes}
-          {...(rest as React.ComponentProps<"a">)}
-        />
+          {...anchorRest}
+        >
+          {children}
+          <span className="sr-only"> (opens in a new tab)</span>
+        </a>
       );
     }
     return <Link href={href} className={classes} {...rest} />;

@@ -38,9 +38,10 @@ library.
   Components reference tokens (`bg-accent`, `text-ink-soft`, `border-line`),
   never raw hex. The accent is the logo's brand blue darkened one step to
   `#0073b6` so accent text clears WCAG AA on the tinted bands.
-- **`text-accent` is for light surfaces only.** Inside a `Section surface="deep"`
-  band the accent blue drops to 2.6:1. Use `text-accent-on-deep` there, and
-  `text-on-deep` for body copy.
+- **No navy drench surfaces.** The `deep` tokens and component variants were
+  removed on user direction; saturated moments use `bg-accent` with white
+  text. The only navy in the codebase is `bg-bamboo-navy`, reserved for the
+  cross-brand Bamboo Reports announcement strip.
 - **Brand orange is `bg-signal`, never text.** It is the single signal mark:
   section tick, active nav underline, required-field marker. It fails contrast
   as copy on every surface the site uses, light or deep.

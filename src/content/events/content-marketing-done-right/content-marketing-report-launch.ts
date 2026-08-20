@@ -95,13 +95,13 @@ export const contentMarketingReportLaunch: Event = {
     /* Verbatim from the source panel, pipes, capitals and en dash included,
        which is how the report landings carry their facts too. */
     facts: [
-      { label: "Research Focus", value: "B2B" },
+      { label: "Research focus", value: "B2B" },
       {
         label: "Format",
         value: "Engagement Interviews | Virtual Event | Social Media Promotion",
       },
       { label: "Geography", value: "India" },
-      { label: "Timeframe of Research", value: "Jun 2019 – Nov 2019" },
+      { label: "Timeframe of research", value: "Jun 2019 – Nov 2019" },
     ],
   },
 };

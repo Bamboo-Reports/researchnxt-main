@@ -6,13 +6,12 @@ import { cn } from "@/lib/cn";
  */
 
 type BadgeProps = React.ComponentProps<"span"> & {
-  tone?: "neutral" | "accent" | "deep";
+  tone?: "neutral" | "accent";
 };
 
 const tones = {
   neutral: "border-line-strong bg-surface text-ink-soft",
   accent: "border-accent/40 bg-accent-soft text-accent",
-  deep: "border-deep-line bg-deep text-on-deep",
 } as const;
 
 export function Badge({ tone = "neutral", className, ...props }: BadgeProps) {
