@@ -24,10 +24,4 @@ export const openings: JobOpening[] = [
     summary:
       "Drive end-to-end client acquisition by conducting product demos and managing the full sales cycle from demonstration to closure.",
   },
-  {
-    slug: "trainee-research-associate",
-    title: "Trainee Research Associate",
-    summary:
-      "Support business insights by conducting secondary research and compiling data with accuracy, while learning through a structured training programme.",
-  },
 ];

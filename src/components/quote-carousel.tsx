@@ -154,7 +154,7 @@ export function QuoteCarousel({
               aria-label={voice.name}
               aria-current={dot === index ? "true" : undefined}
               onClick={() => goTo(dot)}
-              className="group inline-flex size-6 items-center justify-center"
+              className="group inline-flex size-10 items-center justify-center"
             >
               <span
                 aria-hidden="true"

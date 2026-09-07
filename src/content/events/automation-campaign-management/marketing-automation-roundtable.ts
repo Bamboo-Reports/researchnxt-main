@@ -9,7 +9,9 @@ import type { Event } from "../types";
  *
  * No `date`: the recap states no event date, and neither the events listing
  * nor the page metadata carries one. The write-up was published 2025-01-13,
- * which is a different fact and is not shown as the event's date.
+ * which is a different fact and is not shown as the event's date; it is
+ * carried as `published` so the listing can place the recap after the
+ * H-1B roundtable and ahead of the 2021 launches, on user direction.
  *
  * No `facts` either: the source runs no research focus, geography or
  * timeframe, the same as the conference participations.
@@ -17,6 +19,7 @@ import type { Event } from "../types";
 export const marketingAutomationRoundtable: Event = {
   slug: "marketing-automation-roundtable",
   project: "automation-campaign-management",
+  published: "2025-01-13",
 
   metaTitle:
     "Redefining Marketing Excellence, the Marketing Automation Roundtable",

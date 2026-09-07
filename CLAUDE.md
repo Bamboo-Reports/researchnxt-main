@@ -61,7 +61,8 @@ library.
   modules so copy edits never touch markup.
 - **Nav and site identity live in `src/config/`** — `nav.ts` and `site.ts` are
   the single source of truth for the navbar, footer, address and socials.
-- **Server components by default.** The navbar, the two forms, the two motion
+- **Server components by default.** The navbar, the two forms, the form anchor
+  bar (`FormAnchorBar`), the two motion
   components (`Reveal`, `FigureValue`), the two scrolling rails
   (`QuoteCarousel`, `ReportCardRail`), the three hero components
   (`HeroQuestions`, `HeroIntro`, `HeroField`) and `VideoEmbed`, which keeps a

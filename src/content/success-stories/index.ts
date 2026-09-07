@@ -17,9 +17,15 @@ import { netcore as netcoreAiLed } from "./ai-led-personalization/netcore";
 import { zycus } from "./prospect-database/zycus";
 import { webengage } from "./state-of-consumer-engagement-gcc-2019/webengage";
 
+import { byProject } from "../project-order";
+
 export type { SuccessStory } from "./types";
 
-/** Every published story, newest first. */
+/**
+ * Every published story, shelved by project (see `projectOrder`) and newest
+ * first within a project. The prospect database is not a research programme,
+ * so it sorts after the programmes.
+ */
 export const successStories = [
   // State of Consumer Engagement, GCC 2019
   webengage,
@@ -39,6 +45,7 @@ export const successStories = [
   zycus,
 ].sort(
   (a, b) =>
+    byProject(a, b) ||
     b.published.localeCompare(a.published) ||
     a.client.localeCompare(b.client, "en"),
 );

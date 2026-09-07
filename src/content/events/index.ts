@@ -20,7 +20,12 @@ import { nasscomTechnologyLeadershipForum2019 } from "./industry-events/nasscom-
 
 export type { Event } from "./types";
 
-/** Every published event, newest first. */
+/**
+ * Every published event, newest first: the H-1B roundtable, then the
+ * marketing automation roundtable, then the launches and conferences. On
+ * user direction this library keeps a chronology rather than the project
+ * order the other libraries shelve by.
+ */
 export const events = [
   // Bamboo Reports GCC research
   h1bShockStrategicReset,
@@ -45,12 +50,10 @@ export const events = [
   nasscomTechnologyLeadershipForum2019,
   nasscomMartechConfluence2017,
 ].sort(
-  // An undated event sorts first: it stands in as "9999", which compares
-  // greater than any real ISO date, and the list runs newest first. The only
-  // one is the marketing automation roundtable, whose write-up is the most
-  // recent thing in the library, so newest-first still holds.
+  // An event with no date sits where its write-up was published. The only
+  // one is the marketing automation roundtable.
   (a, b) =>
-    (b.date ?? "9999").localeCompare(a.date ?? "9999") ||
+    (b.date ?? b.published ?? "").localeCompare(a.date ?? a.published ?? "") ||
     a.title.localeCompare(b.title, "en"),
 );
 
@@ -74,5 +77,6 @@ export const eventsLibrary = {
   title: "Events",
   lede: "Launches, roundtables and engagements from Research NXT, run alongside the research programmes they belong to.",
   cardCta: "See the event",
-  empty: "No events are published yet. Launches and roundtables land here as they happen.",
+  empty:
+    "No events are published yet. Launches and roundtables land here as they happen.",
 } as const;

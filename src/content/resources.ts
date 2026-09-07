@@ -1,5 +1,6 @@
 import { eventHref, getEvent } from "@/content/events";
 import { getExpertInterview, interviewHref } from "@/content/experts-view";
+import { projectRank } from "@/content/project-order";
 import {
   getSuccessStory,
   successStoryHref,
@@ -330,7 +331,7 @@ const implementorsGuideToAI: ReportLanding = {
 
   download: {
     jotformId: "252512579059463",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree to have your contact information, including email, passed on to Salesforce for the purpose of following up on your interests, and that you have read and agree to the ",
@@ -708,7 +709,7 @@ const automationCampaignManagement: ReportLanding = {
 
   download: {
     jotformId: "243521499246462",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree to have your contact information, including email, passed on to Zoho for the purpose of following up on your interests, and that you have read and agree to the ",
@@ -756,9 +757,8 @@ const automationCampaignManagement: ReportLanding = {
 
   /* The microsite lists three quick reads. On user direction the third,
      "Campaign Management and Automation in 2024", is dropped as a duplicate
-     of Naresh Kumar's published interview, and the roundtable write-up is
-     bound for Events, which has no route yet, so its card carries the banner
-     without a link for now. */
+     of Naresh Kumar's published interview; the roundtable write-up links to
+     its event page. */
   quickReads: {
     title: "Quick reads for campaign management",
     items: [
@@ -1030,7 +1030,7 @@ const unlockingThePowerUnifiedCX: ReportLanding = {
 
   download: {
     jotformId: "250201862296454",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree to have your contact information, including email, passed on to Zoho for the purpose of following up on your interests, and that you have read and agree to the ",
@@ -1188,7 +1188,7 @@ const navigatingCorporateCommute: ReportLanding = {
 
   download: {
     jotformId: "260490193043452",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree to have your contact information, including email, passed on to Routematic for the purpose of following up on your interests, and that you have read and agree to the ",
@@ -1342,7 +1342,7 @@ const transformingCxThroughGccs: ReportLanding = {
 
   download: {
     jotformId: "241762483249463",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -1486,7 +1486,7 @@ const cloudComputingNewNormal: ReportLanding = {
 
   download: {
     jotformId: "211600107593446",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -1603,7 +1603,7 @@ const southEastAsiaResponseGuide: ReportLanding = {
 
   download: {
     jotformId: "211602133570442",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -1774,7 +1774,7 @@ const aiLedPersonalization: ReportLanding = {
 
   download: {
     jotformId: "200151888635458",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -1945,7 +1945,7 @@ const contentMarketingDoneRight: ReportLanding = {
 
   download: {
     jotformId: "90447985712467",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2082,7 +2082,7 @@ const stateOfConsumerEngagementGcc2019: ReportLanding = {
 
   download: {
     jotformId: "92538569205465",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2195,7 +2195,7 @@ const abmBestPracticesIndia2018: ReportLanding = {
 
   download: {
     jotformId: "80661672684465",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2323,7 +2323,7 @@ const b2cMarketingAutomationIndia2017: ReportLanding = {
 
   download: {
     jotformId: "81703707306453",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2450,7 +2450,7 @@ const publishersGuideToSmarterMonetization: ReportLanding = {
 
   download: {
     jotformId: "200331930902443",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2512,7 +2512,7 @@ const corporateGiftingTrendsIndia2019: ReportLanding = {
 
   download: {
     jotformId: "83171595973469",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2566,7 +2566,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
 
   download: {
     jotformId: "81703041906450",
-    submitLabel: "Download",
+    submitLabel: "Get the full report",
     consent: [
       {
         text: "By submitting this form, you agree that you have read and agree to the ",
@@ -2595,6 +2595,7 @@ const etutoringBestPracticesWhitepaper2016: ReportLanding = {
   },
 };
 
+/** Every report landing, shelved in `projectOrder`. */
 export const reportLandings: ReportLanding[] = [
   implementorsGuideToAI,
   automationCampaignManagement,
@@ -2611,7 +2612,7 @@ export const reportLandings: ReportLanding[] = [
   publishersGuideToSmarterMonetization,
   corporateGiftingTrendsIndia2019,
   etutoringBestPracticesWhitepaper2016,
-];
+].sort((a, b) => projectRank(a.slug) - projectRank(b.slug));
 
 export function getReportLanding(slug: string) {
   return reportLandings.find((report) => report.slug === slug);
@@ -2669,18 +2670,20 @@ export const reportShelf: ReportShelfItem[] = reportLandings.flatMap(
 );
 
 /**
- * The most recently published reports, newest first. The home page's "Latest
+ * The first reports on the shelf, in `projectOrder`. The home page's "Latest
  * reports" band reads this, so adding a landing is enough to update it.
  */
 export function latestReports(count: number) {
-  return [...reportLandings]
-    .sort(
-      (a, b) =>
-        b.published.localeCompare(a.published) ||
-        a.metaTitle.localeCompare(b.metaTitle, "en"),
-    )
-    .slice(0, count);
+  return reportLandings.slice(0, count);
 }
+
+/**
+ * The bar pinned to the bottom of an interview or article on narrow screens,
+ * where the download form sits below the text instead of beside it.
+ */
+export const downloadBar = {
+  cta: "Get the full report",
+} as const;
 
 /** Copy for the /resources/reports-whitepapers listing page. */
 export const reportsLibrary = {

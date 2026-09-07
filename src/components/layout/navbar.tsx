@@ -18,9 +18,10 @@ export function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  /* The sheet starts where the header ends. Measured rather than hardcoded:
-     the announcement bar's height is content (it can wrap on very narrow
-     screens or when the campaign copy changes), so a constant would drift. */
+  /* The sheet starts where the header ends. `top-28` is the first-paint
+     fallback; the header is then measured, because the announcement bar's
+     height is content (it can wrap on very narrow screens or when the
+     campaign copy changes), so the constant alone would drift. */
   const [sheetTop, setSheetTop] = useState<number>();
 
   // Route change closes everything — otherwise a dropdown survives navigation.
@@ -76,7 +77,7 @@ export function Navbar() {
 
     document.addEventListener("keydown", onKeyDown);
     sheetRef.current
-      ?.querySelector<HTMLElement>('a[href], button:not([disabled])')
+      ?.querySelector<HTMLElement>("a[href], button:not([disabled])")
       ?.focus();
 
     return () => {
@@ -109,28 +110,83 @@ export function Navbar() {
   }
 
   return (
-    <header
-      ref={headerRef}
-      className="sticky top-0 z-[var(--z-sticky)] border-b border-line bg-surface/80 backdrop-blur-md"
-    >
-      <AnnouncementBar />
-      <Container>
-        <div className="flex h-16 items-center justify-between gap-6">
-          <Logo />
+    <header ref={headerRef} className="sticky top-0 z-[var(--z-sticky)]">
+      {/* The blur lives on this inner bar, not on the header: a backdrop
+          filter makes its element the containing block for fixed
+          descendants, which would size the mobile sheet against the header
+          instead of the viewport and collapse it to nothing. */}
+      <div className="border-b border-line bg-surface/80 backdrop-blur-md">
+        <AnnouncementBar />
+        <Container>
+          <div className="flex h-16 items-center justify-between gap-6">
+            <Logo />
 
-          {/* Desktop navigation */}
-          <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
-              {primaryNav.map((entry) => {
-                if (!isNavGroup(entry)) {
+            {/* Desktop navigation */}
+            <nav aria-label="Primary" className="hidden lg:block">
+              <ul className="flex items-center gap-1">
+                {primaryNav.map((entry) => {
+                  if (!isNavGroup(entry)) {
+                    return (
+                      <li key={entry.label}>
+                        <Link
+                          href={entry.href}
+                          aria-current={
+                            isActive(entry.href) ? "page" : undefined
+                          }
+                          className={cn(
+                            "relative inline-flex h-9 items-center rounded-md px-3 text-sm font-semibold transition-colors duration-200",
+                            isActive(entry.href)
+                              ? "text-ink"
+                              : "text-ink-soft hover:text-ink",
+                          )}
+                        >
+                          {entry.label}
+                          <span
+                            aria-hidden="true"
+                            className={cn(
+                              "absolute inset-x-3 -bottom-px h-0.5 origin-left rounded-[1px] bg-signal transition-transform duration-200 [transition-timing-function:var(--ease-out-quart)]",
+                              isActive(entry.href)
+                                ? "scale-x-100"
+                                : "scale-x-0",
+                            )}
+                          />
+                        </Link>
+                      </li>
+                    );
+                  }
+
+                  const open = openGroup === entry.label;
+                  // A group lights up when the reader is on any of its pages,
+                  // whether or not it has an overview page of its own.
+                  const groupActive =
+                    (entry.href !== undefined && isActive(entry.href)) ||
+                    entry.items.some(
+                      (item) => !item.external && isActive(item.href),
+                    );
+
                   return (
-                    <li key={entry.label}>
-                      <Link
-                        href={entry.href}
-                        aria-current={isActive(entry.href) ? "page" : undefined}
+                    <li
+                      key={entry.label}
+                      className="relative"
+                      onMouseEnter={() => {
+                        cancelClose();
+                        setOpenGroup(entry.label);
+                      }}
+                      onMouseLeave={scheduleClose}
+                      onFocus={() => {
+                        cancelClose();
+                        setOpenGroup(entry.label);
+                      }}
+                      onBlur={scheduleClose}
+                    >
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        aria-haspopup="true"
+                        onClick={() => setOpenGroup(open ? null : entry.label)}
                         className={cn(
-                          "relative inline-flex h-9 items-center rounded-md px-3 text-sm font-semibold transition-colors duration-200",
-                          isActive(entry.href)
+                          "relative inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition-colors duration-200",
+                          open || groupActive
                             ? "text-ink"
                             : "text-ink-soft hover:text-ink",
                         )}
@@ -140,138 +196,99 @@ export function Navbar() {
                           aria-hidden="true"
                           className={cn(
                             "absolute inset-x-3 -bottom-px h-0.5 origin-left rounded-[1px] bg-signal transition-transform duration-200 [transition-timing-function:var(--ease-out-quart)]",
-                            isActive(entry.href) ? "scale-x-100" : "scale-x-0",
+                            groupActive ? "scale-x-100" : "scale-x-0",
                           )}
                         />
-                      </Link>
+                        <svg
+                          viewBox="0 0 10 6"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={cn(
+                            "size-2.5 transition-transform duration-150",
+                            open && "rotate-180",
+                          )}
+                        >
+                          <path d="m1 1 4 4 4-4" />
+                        </svg>
+                      </button>
+
+                      {/* Dropdowns are intentionally label-only: the navigation
+                        stays quick to scan instead of becoming a content card. */}
+                      {open ? (
+                        <div className="absolute left-0 top-full z-[var(--z-dropdown)] w-max min-w-56 pt-2">
+                          <div className="anim-menu rounded-lg border border-line bg-surface p-1.5 shadow-xl shadow-ink/10">
+                            <ul>
+                              {entry.items.map((item) => (
+                                <li key={item.label}>
+                                  <NavLink
+                                    item={item}
+                                    withIcon={false}
+                                    className="group flex w-full justify-between gap-6 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-surface-muted"
+                                  >
+                                    <span className="text-sm font-semibold text-ink">
+                                      {item.label}
+                                    </span>
+                                    <TrailingArrow className="text-ink-muted group-hover:text-accent" />
+                                  </NavLink>
+                                </li>
+                              ))}
+                            </ul>
+
+                            {entry.href ? (
+                              <GroupOverviewLink group={entry} />
+                            ) : null}
+                          </div>
+                        </div>
+                      ) : null}
                     </li>
                   );
-                }
+                })}
+              </ul>
+            </nav>
 
-                const open = openGroup === entry.label;
-                const groupActive =
-                  entry.href !== undefined && isActive(entry.href);
-
-                return (
-                  <li
-                    key={entry.label}
-                    className="relative"
-                    onMouseEnter={() => {
-                      cancelClose();
-                      setOpenGroup(entry.label);
-                    }}
-                    onMouseLeave={scheduleClose}
-                    onFocus={() => {
-                      cancelClose();
-                      setOpenGroup(entry.label);
-                    }}
-                    onBlur={scheduleClose}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={open}
-                      aria-haspopup="true"
-                      onClick={() => setOpenGroup(open ? null : entry.label)}
-                      className={cn(
-                        "relative inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition-colors duration-200",
-                        open || groupActive
-                          ? "text-ink"
-                          : "text-ink-soft hover:text-ink",
-                      )}
-                    >
-                      {entry.label}
-                      <span
-                        aria-hidden="true"
-                        className={cn(
-                          "absolute inset-x-3 -bottom-px h-0.5 origin-left rounded-[1px] bg-signal transition-transform duration-200 [transition-timing-function:var(--ease-out-quart)]",
-                          groupActive ? "scale-x-100" : "scale-x-0",
-                        )}
-                      />
-                      <svg
-                        viewBox="0 0 10 6"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className={cn(
-                          "size-2.5 transition-transform duration-150",
-                          open && "rotate-180",
-                        )}
-                      >
-                        <path d="m1 1 4 4 4-4" />
-                      </svg>
-                    </button>
-
-                    {/* Dropdowns are intentionally label-only: the navigation
-                        stays quick to scan instead of becoming a content card. */}
-                    {open ? (
-                      <div className="absolute left-0 top-full z-[var(--z-dropdown)] w-max min-w-56 pt-2">
-                        <div className="anim-menu rounded-lg border border-line bg-surface p-1.5 shadow-xl shadow-ink/10">
-                          <ul>
-                            {entry.items.map((item) => (
-                              <li key={item.label}>
-                                <NavLink
-                                  item={item}
-                                  withIcon={false}
-                                  className="group flex w-full justify-between gap-6 rounded-md px-3 py-2.5 transition-colors duration-200 hover:bg-surface-muted"
-                                >
-                                  <span className="text-sm font-semibold text-ink">
-                                    {item.label}
-                                  </span>
-                                  <TrailingArrow className="text-ink-muted group-hover:text-accent" />
-                                </NavLink>
-                              </li>
-                            ))}
-                          </ul>
-
-                          {entry.href ? (
-                            <GroupOverviewLink group={entry} />
-                          ) : null}
-                        </div>
-                      </div>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <Button href="/contact" size="sm" className="hidden sm:inline-flex">
-              Contact us
-            </Button>
-
-            <button
-              type="button"
-              onClick={() => setMobileOpen((value) => !value)}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-nav"
-              className="inline-flex size-9 items-center justify-center rounded-md text-ink lg:hidden"
-            >
-              <span className="sr-only">
-                {mobileOpen ? "Close menu" : "Open menu"}
-              </span>
-              <svg
-                viewBox="0 0 20 20"
-                aria-hidden="true"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                className="size-5"
+            <div className="flex items-center gap-2">
+              <Button
+                href="/contact"
+                size="sm"
+                className="hidden sm:inline-flex"
               >
-                {mobileOpen ? (
-                  <path d="m5 5 10 10M15 5 5 15" />
-                ) : (
-                  <path d="M3 6h14M3 10h14M3 14h14" />
-                )}
-              </svg>
-            </button>
+                Contact us
+              </Button>
+
+              <button
+                type="button"
+                onClick={() => setMobileOpen((value) => !value)}
+                aria-expanded={mobileOpen}
+                aria-controls={mobileOpen ? "mobile-nav" : undefined}
+                className="relative inline-flex size-9 items-center justify-center rounded-md text-ink before:absolute before:-inset-1 before:content-[''] lg:hidden"
+              >
+                <span className="sr-only">
+                  {mobileOpen ? "Close menu" : "Open menu"}
+                </span>
+                <svg
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  className="size-5"
+                >
+                  {mobileOpen ? (
+                    <path d="m5 5 10 10M15 5 5 15" />
+                  ) : (
+                    <path d="M3 6h14M3 10h14M3 14h14" />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
 
       {/* Mobile sheet */}
       {mobileOpen ? (
@@ -310,7 +327,7 @@ export function Navbar() {
                         <li key={item.label}>
                           <NavLink
                             item={item}
-                            className="-my-1.5 block py-1.5 text-base font-medium text-ink"
+                            className="-my-1.5 flex py-1.5 text-base font-medium text-ink"
                           />
                         </li>
                       ))}

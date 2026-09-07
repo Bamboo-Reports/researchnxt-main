@@ -39,7 +39,7 @@ export function Pagination({
         </span>
       )}
 
-      <ol className="flex items-center gap-1 px-2">
+      <ol className="flex flex-wrap items-center justify-center gap-1 px-2">
         {Array.from({ length: totalPages }, (_, index) => index + 1).map(
           (page) => {
             const isCurrent = page === current;

@@ -3,7 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import { ReportCard } from "@/components/report-card";
 import { cn } from "@/lib/cn";
+import type { ReactNode } from "react";
 import type { ReportCardItem } from "@/content/resources";
+
+/** The report rails on the detail pages: one `ReportCard` per item. */
+export function ReportCardRail({
+  items,
+  label,
+}: {
+  items: ReportCardItem[];
+  label: string;
+}) {
+  return (
+    <CardRail
+      label={label}
+      items={items.map((item) => ({
+        key: item.title,
+        node: <ReportCard item={item} />,
+      }))}
+    />
+  );
+}
 
 /**
  * A single row of cards, four in view at a time, scrolling horizontally.
@@ -15,16 +35,31 @@ import type { ReportCardItem } from "@/content/resources";
  * chrome that must know where the rail is: the two arrows, stepping one card
  * and disabling at the ends.
  *
- * Card widths are quarters at `lg`, halves at `sm`, full below, minus their
- * share of the gap, so exactly four (or two, or one) sit in view with no
- * partial card. The arrows are the scroll affordance instead.
+ * Card widths are quarters at `lg` and halves at `sm`, minus their share of
+ * the gap, so exactly four (or two) sit in view with no partial card and the
+ * arrows are the scroll affordance. On a phone the card is narrower than the
+ * rail so the next one peeks in from the edge, which is the cue that the row
+ * scrolls; the arrows still step it.
  */
-export function ReportCardRail({
+export function CardRail({
   items,
   label,
+  grid,
 }: {
-  items: ReportCardItem[];
+  /**
+   * `className` lands on the card's `li`, so a caller whose cards share
+   * subgrid rows can keep them level once the rail becomes a grid.
+   */
+  items: { key: string; node: ReactNode; className?: string }[];
   label: string;
+  /**
+   * Set to make the rail a phone-only device: from `sm` the row becomes a
+   * plain grid with these column and gap classes (`sm:grid-cols-2
+   * lg:grid-cols-4 sm:gap-3`) and the arrows go away. Four text blocks
+   * stacked on a phone ran two screens tall; a swipeable row keeps each
+   * section to one.
+   */
+  grid?: string;
 }) {
   const railRef = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
@@ -95,20 +130,36 @@ export function ReportCardRail({
           // Centring a scrollable row can clip its leading edge, so it only
           // applies once the cards genuinely fit.
           !overflowing && "justify-center",
+          grid &&
+            cn(
+              "sm:grid sm:snap-none sm:justify-normal sm:overflow-visible",
+              grid,
+            ),
         )}
       >
         {items.map((item) => (
           <li
-            key={item.title}
-            className="w-full shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-6rem)/4)]"
+            key={item.key}
+            className={cn(
+              "w-[82%] shrink-0 snap-start",
+              grid
+                ? "sm:w-auto"
+                : "sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-6rem)/4)]",
+              item.className,
+            )}
           >
-            <ReportCard item={item} />
+            {item.node}
           </li>
         ))}
       </ul>
 
       {overflowing ? (
-        <div className="flex items-center justify-center gap-3">
+        <div
+          className={cn(
+            "flex items-center justify-center gap-3",
+            grid && "sm:hidden",
+          )}
+        >
           <button
             type="button"
             aria-label="Previous cards"

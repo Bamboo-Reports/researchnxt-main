@@ -11,7 +11,7 @@ import { insightHref, insights, insightsLibrary } from "@/content/insights";
 import { step } from "@/lib/motion";
 
 /**
- * Insights library: a paginated 3x2 grid of articles, newest first, matching
+ * Insights library: a paginated 3x2 grid of articles, shelved by programme and newest first within one, matching
  * the experts-view library. One flat list rather than sections, since the
  * articles are not grouped by anything yet; a filter or grouping band goes
  * here when they are.

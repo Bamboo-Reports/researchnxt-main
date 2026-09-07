@@ -132,6 +132,7 @@ export type {
   InterviewBlock,
   InterviewExchange,
 } from "./types";
+import { byProject } from "../project-order";
 
 /**
  * The library's three sections, in the order they appear on the page. An
@@ -154,18 +155,18 @@ export const expertPerspectives: {
 
 export const expertProjects: ExpertProject[] = [
   {
+    slug: "navigating-corporate-commute-for-gccs-in-india",
+    name: "Navigating Corporate Commute for GCCs in India",
+    lede: "Five conversations with the administration, workplace and procurement leaders who run employee transport for global capability centres in India.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the "[RM] Microsite Report Download" id.
+    reportSlug: "navigating-corporate-commute-for-gccs-in-india",
+  },
+  {
     slug: "implementors-guide-to-ai",
     name: "Implementor's Guide to AI",
     lede: "Sixteen conversations with leaders putting AI to work across finance, retail, manufacturing, insurance and healthcare, conducted for the Implementor's Guide to AI.",
     reportSlug: "implementors-guide-to-ai",
-  },
-  {
-    slug: "automation-campaign-management",
-    name: "Automation & Campaign Management",
-    lede: "Nineteen conversations on marketing automation, campaign management and personalisation, conducted in partnership with Zoho.",
-    // The landing exists now, so the interviews take their download form from
-    // it rather than carrying the "[Z IND] Report Download" id themselves.
-    reportSlug: "automation-campaign-management",
   },
   {
     slug: "unlocking-the-power-unified-cx",
@@ -176,20 +177,20 @@ export const expertProjects: ExpertProject[] = [
     reportSlug: "unlocking-the-power-unified-cx",
   },
   {
+    slug: "automation-campaign-management",
+    name: "Automation & Campaign Management",
+    lede: "Nineteen conversations on marketing automation, campaign management and personalisation, conducted in partnership with Zoho.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the "[Z IND] Report Download" id themselves.
+    reportSlug: "automation-campaign-management",
+  },
+  {
     slug: "transforming-cx-through-gccs",
     name: "Transforming CX through GCCs",
     lede: "Four conversations with leaders building global capability centres in India, conducted for the Leaders Speak whitepaper on transforming customer experience through GCCs.",
     // The eBook landing exists now, so the interviews take their download form
     // from it rather than carrying the id themselves.
     reportSlug: "transforming-cx-through-gccs",
-  },
-  {
-    slug: "navigating-corporate-commute-for-gccs-in-india",
-    name: "Navigating Corporate Commute for GCCs in India",
-    lede: "Five conversations with the administration, workplace and procurement leaders who run employee transport for global capability centres in India.",
-    // The landing exists now, so the interviews take their download form from
-    // it rather than carrying the "[RM] Microsite Report Download" id.
-    reportSlug: "navigating-corporate-commute-for-gccs-in-india",
   },
   {
     slug: "cloud-computing-new-normal-beyond",
@@ -200,14 +201,6 @@ export const expertProjects: ExpertProject[] = [
     reportSlug: "cloud-computing-new-normal-beyond",
   },
   {
-    slug: "south-east-asia-response-guide",
-    name: "Southeast Asia Response Guide",
-    lede: "Six conversations with founders and executives across Southeast Asia on rebuilding for the growth phase after the pandemic, from the 2021 research programme.",
-    // The landing exists now, so the interviews take their download form from
-    // it rather than carrying the 2021 report id themselves.
-    reportSlug: "south-east-asia-response-guide",
-  },
-  {
     slug: "ai-led-personalization",
     name: "AI Led Personalization",
     lede: "Twenty one conversations with marketing leaders, analysts and platform builders on personalisation, from the 2020 AI Led Personalization strategy and trends programme.",
@@ -216,12 +209,26 @@ export const expertProjects: ExpertProject[] = [
     reportSlug: "ai-led-personalization",
   },
   {
+    slug: "south-east-asia-response-guide",
+    name: "Southeast Asia Response Guide",
+    lede: "Six conversations with founders and executives across Southeast Asia on rebuilding for the growth phase after the pandemic, from the 2021 research programme.",
+    // The landing exists now, so the interviews take their download form from
+    // it rather than carrying the 2021 report id themselves.
+    reportSlug: "south-east-asia-response-guide",
+  },
+  {
     slug: "content-marketing-done-right",
     name: "Content Marketing Done Right",
     lede: "Five conversations with marketing leaders in FinTech, asset management, hospitality technology and quality engineering, from the 2019 Content Marketing Done Right research programme.",
     // The landing exists now, so the interviews take their download form from
     // it rather than carrying the 2019 report id themselves.
     reportSlug: "content-marketing-done-right",
+  },
+  {
+    slug: "state-of-consumer-engagement-gcc-2019",
+    name: "State of Consumer Engagement, GCC 2019",
+    lede: "The sponsor's own view on how B2C consumer engagement evolved, and what the GCC study set out to establish.",
+    reportSlug: "state-of-consumer-engagement-gcc-2019",
   },
   {
     slug: "abm-best-practices-report-india-2018",
@@ -240,10 +247,10 @@ export const expertProjects: ExpertProject[] = [
     reportSlug: "b2c-marketing-automation-india-2017",
   },
   {
-    slug: "state-of-consumer-engagement-gcc-2019",
-    name: "State of Consumer Engagement, GCC 2019",
-    lede: "The sponsor's own view on how B2C consumer engagement evolved, and what the GCC study set out to establish.",
-    reportSlug: "state-of-consumer-engagement-gcc-2019",
+    slug: "publishers-guide-to-smarter-monetization",
+    name: "A Publisher's Guide to Smarter Monetization",
+    lede: "One conversation on mobile video, programmatic and how publishers monetise their real estate, from the 2020 ad revenue optimization guide.",
+    reportSlug: "publishers-guide-to-smarter-monetization",
   },
   {
     slug: "etutoring-best-practices-whitepaper-2016",
@@ -251,18 +258,13 @@ export const expertProjects: ExpertProject[] = [
     lede: "One conversation on the growth and challenges of the Indian e-tutoring industry, from the 2016 whitepaper.",
     reportSlug: "etutoring-best-practices-whitepaper-2016",
   },
-  {
-    slug: "publishers-guide-to-smarter-monetization",
-    name: "A Publisher's Guide to Smarter Monetization",
-    lede: "One conversation on mobile video, programmatic and how publishers monetise their real estate, from the 2020 ad revenue optimization guide.",
-    reportSlug: "publishers-guide-to-smarter-monetization",
-  },
 ];
 
 /**
- * Every published interview, sorted alphabetically by title. The library, each
- * perspective section and the sibling band on an interview page all read from
- * this one list, so they stay in the same order.
+ * Every published interview, shelved by project (see `projectOrder`) and
+ * alphabetically by title within a project. The library, each perspective
+ * section and the sibling band on an interview page all read from this one
+ * list, so they stay in the same order.
  *
  * Some people appear in more than one project, so their modules are namespaced
  * by project folder and aliased here; the routes stay distinct because a person
@@ -407,7 +409,9 @@ export const expertInterviews = [
 
   // A Publisher's Guide to Smarter Monetization
   rajeshPantina,
-].sort((a, b) => a.title.localeCompare(b.title, "en"));
+].sort(
+  (a, b) => byProject(a, b) || a.title.localeCompare(b.title, "en"),
+);
 
 export function getExpertProject(slug: string) {
   return expertProjects.find((project) => project.slug === slug);
@@ -419,12 +423,12 @@ export function getExpertInterview(project: string, person: string) {
   );
 }
 
-/** Interviews belonging to a project, in publication order. */
+/** Interviews belonging to a project, alphabetically by title. */
 export function getProjectInterviews(project: string) {
   return expertInterviews.filter((interview) => interview.project === project);
 }
 
-/** Interviews in one library section, in publication order. */
+/** Interviews in one library section, shelved by project. */
 export function getPerspectiveInterviews(perspective: ExpertPerspective) {
   return expertInterviews.filter(
     (interview) => interview.perspective === perspective,

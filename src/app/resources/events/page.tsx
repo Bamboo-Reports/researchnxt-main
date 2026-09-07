@@ -73,7 +73,10 @@ export default async function EventsPage({ searchParams }: Params) {
             </p>
           ) : null}
           {/* Keyed on the page so the stagger replays when the set changes. */}
-          <Reveal key={current} className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal
+            key={current}
+            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {page.map((event, index) => (
               <Link
                 key={`${event.project}/${event.slug}`}

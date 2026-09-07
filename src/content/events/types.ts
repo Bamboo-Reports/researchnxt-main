@@ -34,6 +34,11 @@ export type Event = {
    * the article, the events listing or its metadata.
    */
   date?: string;
+  /**
+   * When the write-up went live, for an event that carries no `date`. Used
+   * only to place the event in the newest-first listing; never rendered.
+   */
+  published?: string;
   /** One or two sentences for the library card. */
   excerpt: string;
 

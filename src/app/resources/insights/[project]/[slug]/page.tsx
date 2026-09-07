@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { FormAnchorBar } from "@/components/forms/form-anchor-bar";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { ReportCardRail } from "@/components/report-card-rail";
@@ -18,6 +19,7 @@ import {
   insights,
   insightsLibrary,
 } from "@/content/insights";
+import { downloadBar } from "@/content/resources";
 import { delay, step } from "@/lib/motion";
 import { og } from "@/lib/og";
 import type { ArticleBlock } from "@/content/insights";
@@ -193,7 +195,7 @@ export default async function InsightPage({ params }: Params) {
 
             {/* The form sits on the page with no panel and no heading of its
                 own: the embed carries its own title and framing. */}
-            <aside className="lg:sticky lg:top-24 lg:self-start">
+            <aside className="lg:sticky lg:top-32 lg:self-start">
               <div
                 id="download"
                 className="anim-rise scroll-mt-32"
@@ -208,6 +210,8 @@ export default async function InsightPage({ params }: Params) {
           </div>
         </Container>
       </Section>
+
+      <FormAnchorBar target="download" cta={downloadBar.cta} />
 
       {others.length > 0 ? (
         <Section surface="subtle" bordered spacing="default">

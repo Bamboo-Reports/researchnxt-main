@@ -631,7 +631,8 @@ export default async function ReportLandingPage({ params }: Params) {
       {/* Hero. The cover carries the title, so the visible band is only the
           artifact and the single action: the cover on the light brand wash,
           the form beside it. The h1 stays for assistive tech and the document
-          outline.
+          outline. Below `lg` the hero is the form alone, on user direction,
+          and the mockup moves down to open the About band instead.
 
           The two columns are sized and centred as a pair rather than letting
           the cover float in a 1fr column, which left a lot of dead width at
@@ -641,9 +642,9 @@ export default async function ReportLandingPage({ params }: Params) {
         <Container className="py-8 sm:py-10">
           {/* No breadcrumb here: the report landings read as microsites, and
               a trail crowds their cover-and-form hero. */}
+          <h1 className="sr-only">{report.hero.title}</h1>
           <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,24rem)_minmax(0,26rem)] lg:justify-center lg:gap-16">
-            <div className="flex flex-col justify-center">
-              <h1 className="sr-only">{report.hero.title}</h1>
+            <div className="hidden flex-col justify-center lg:flex">
               {/* The tablet mockup set: every hero cover is the same 768x909
                   frame, so the intrinsic ratio here matches the files. */}
               <Image
@@ -652,7 +653,7 @@ export default async function ReportLandingPage({ params }: Params) {
                 width={768}
                 height={909}
                 priority
-                className="anim-rise w-52 self-center sm:w-64 lg:w-full"
+                className="anim-rise w-full"
               />
             </div>
 
@@ -685,6 +686,16 @@ export default async function ReportLandingPage({ params }: Params) {
           band has a lead rather than two paragraphs of equal voice. */}
       <Section spacing="tight">
         <Container>
+          {/* The mockup's phone and tablet home: above the paragraphs, where
+              the hero no longer shows it. Not `priority`, since it sits below
+              the form and the fold. */}
+          <Image
+            src={report.hero.cover}
+            alt={report.hero.coverAlt}
+            width={768}
+            height={909}
+            className="mx-auto mb-8 w-52 sm:w-64 lg:hidden"
+          />
           {/* Justified on user direction, with `hyphens-auto` so the flush
               right edge does not open rivers of white space between words. */}
           <div className="mx-auto flex max-w-[68ch] flex-col gap-5 text-justify hyphens-auto">

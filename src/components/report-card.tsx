@@ -6,8 +6,8 @@ import type { ReportCardItem } from "@/content/resources";
 /**
  * One plate-and-caption card, shared by the report landing's grids and rails.
  *
- * PHASE B: an item without an `href` still renders as an inert plate with the
- * placeholder image, until its article page exists.
+ * An item without an `href` renders as an inert plate with the placeholder
+ * image, so a card can be listed before its page exists.
  */
 export function ReportCard({
   item,
