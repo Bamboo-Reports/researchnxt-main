@@ -29,7 +29,7 @@ export default function HomePage() {
   const [reportsLink, interviewsLink] = resourcesNav;
 
   return (
-    <main id="main">
+    <main id="main" className="anim-rise">
       {/* Promise over the user-supplied field photograph (used as is, PNG
           included on direction), composed the way the Bamboo Reports HeroV2
           composes its artwork: the photo drifts slowly under a white veil

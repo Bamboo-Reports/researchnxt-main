@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { syncMotionPreference } from "@/lib/motion";
 
 /**
  * The hero's animated field: the four CSS layers documented with the
@@ -21,7 +22,7 @@ export function HeroField() {
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (document.documentElement.dataset.motion !== "on") return;
+    if (!syncMotionPreference()) return;
 
     const el = ref.current;
     if (!el) return;

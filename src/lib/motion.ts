@@ -16,3 +16,11 @@ export function step(index: number): CSSProperties {
 export function delay(ms: number): CSSProperties {
   return { "--delay": `${ms}ms` } as CSSProperties;
 }
+
+/** Call from browser effects, never render: preferences must not change SSR markup. */
+export function syncMotionPreference() {
+  const allowed = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (allowed) document.documentElement.dataset.motion = "on";
+  else delete document.documentElement.dataset.motion;
+  return allowed;
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { syncMotionPreference } from "@/lib/motion";
 
 /**
  * The rotating questions that open the hero: one is shown at a time and they
@@ -73,7 +74,7 @@ export function HeroQuestions({
   useLayoutEffect(() => {
     const previous = previousRef.current;
     previousRef.current = active;
-    if (document.documentElement.dataset.motion !== "on") return;
+    if (!syncMotionPreference()) return;
 
     const items = listRef.current?.children;
     const incoming = items?.[active] as HTMLElement | undefined;
@@ -113,7 +114,7 @@ export function HeroQuestions({
   // Keyed on `active`, so jumping to a question restarts its full dwell rather
   // than inheriting whatever was left of the previous one.
   useEffect(() => {
-    if (document.documentElement.dataset.motion !== "on") return;
+    if (!syncMotionPreference()) return;
     if (paused) return;
 
     const timer = setTimeout(

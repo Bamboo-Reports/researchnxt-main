@@ -4,6 +4,20 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-07
 
+## Shared animation recovery prepared for push, 2026-09-07
+
+User authorized committing and pushing the shared motion-preference recovery, homepage entrance, and restored step/delay exports to main. Targeted lint and diff whitespace checks passed. The missing-export cause is corrected by inspection; a production build and browser verification have not been run under project command restrictions. The staging hydration mismatch remains undiagnosed. Git history and origin tracking state record the commit/push outcome.
+
+## Motion helper exports restored after build regression, 2026-09-07
+
+The shared motion update accidentally replaced existing `src/lib/motion.ts`, removing `step` and `delay` and causing the user-reported missing-export build failure. Restored both helpers verbatim from HEAD while retaining `syncMotionPreference`. Inspected all motion-module imports: existing consumers require step/delay and new animation consumers require syncMotionPreference; all three are now exported. Targeted lint and diff whitespace checks passed. Build was not rerun under project command restrictions. Changes remain local and uncommitted.
+
+## Shared animation recovery and homepage entrance, 2026-09-07
+
+Audited remaining animation gates. FigureValue, HeroField and HeroQuestions still exited on missing root motion flags; now they and HeroIntro use `syncMotionPreference` to read the browser preference directly and synchronize the CSS flag. Added MotionPreference in the root layout to restore CSS animation activation after client mount on every route, including direct inner-page visits, and synchronize later preference changes. Existing inline startup remains as the early path. User clarified the whole page should enter: current homepage had no page-level entrance class, so applied the existing `anim-rise` to main while retaining HeroIntro's word sequence. Reduced-motion rules remain in force.
+
+Verified: targeted ESLint and diff whitespace checks passed; search finds no remaining `dataset.motion !==` early exits. Browser/build/server checks were not run under project permissions. These are local uncommitted changes; deployment animation and the underlying React #418 cause remain unverified. CSS activation recovery does not claim to solve the hydration mismatch.
+
 ## Hero animation fix prepared for commit and push, 2026-09-07
 
 User authorized committing and pushing HeroIntro's direct motion-preference check and flag restoration to `main`, together with diagnosis notes. Targeted lint and diff whitespace checks passed. Browser/deployment verification and the underlying React #418 diagnosis remain outstanding. Commit/push result is recorded by Git history and origin tracking state.

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Footer } from "@/components/layout/footer";
+import { MotionPreference } from "@/components/motion/motion-preference";
 import { Navbar } from "@/components/layout/navbar";
 import { site } from "@/config/site";
 import "./globals.css";
@@ -87,6 +88,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: motionGate }} />
       </head>
       <body className="flex min-h-screen flex-col">
+        <MotionPreference />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

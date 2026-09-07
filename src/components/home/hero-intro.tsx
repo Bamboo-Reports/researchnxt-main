@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { syncMotionPreference } from "@/lib/motion";
 
 /**
  * The hero's entrance, choreographed as one GSAP timeline: the headline
@@ -27,8 +28,7 @@ export function HeroIntro({
   useLayoutEffect(() => {
     // Read the preference directly: the early inline script's flag can be
     // absent after hydration recovery. Do not silently skip the entrance.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    document.documentElement.dataset.motion = "on";
+    if (!syncMotionPreference()) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });

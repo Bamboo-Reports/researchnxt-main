@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { syncMotionPreference } from "@/lib/motion";
 
 /**
  * A measured figure that counts up the first time it is seen.
@@ -36,7 +37,7 @@ export function FigureValue({
 
     if (
       typeof IntersectionObserver === "undefined" ||
-      document.documentElement.dataset.motion !== "on"
+      !syncMotionPreference()
     ) {
       return;
     }
