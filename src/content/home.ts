@@ -9,7 +9,7 @@ import type { FeaturedResource } from "./types";
 /** Copy transcribed from the live homepage at researchnxt.com. */
 
 export const hero = {
-  headline: "Know the market. Name the accounts.",
+  headline: "Know your market, name your accounts",
   /* The payoff, set as its own accent-coloured line the way the Bamboo
      Reports hero sets "GCC GTM enablement". */
   headlineAccent: "Reach the people inside them.",
@@ -53,9 +53,8 @@ export const whatWeDo = {
   ],
 } as const;
 
-/** The engagement as four steps, Define to Engage. The last step is the
-    band's one saturated card: the engagement ends in pipeline, so the card
-    that says so carries the weight. */
+/** The engagement as a connected sequence, Define to Engage, with the
+    deliverable at each stage leading toward qualified pipeline. */
 export const engagementSteps = {
   eyebrow: "How an engagement runs",
   title: "From a definition workshop to a conversation your sales team can take",

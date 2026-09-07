@@ -4,6 +4,80 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-07
 
+## Homepage changes prepared for commit and push, 2026-09-07
+
+User authorized committing and pushing the accumulated homepage work on `main` to `origin`. Scope includes headline copy, selected engagement/Why Research NXT layouts, mobile solutions grid, spacing fixes, comparison routes and spotlight components. Targeted lint and diff whitespace checks passed as recorded below. Browser QA remains unperformed; no new build/server/test permission was inferred from the commit request. Commit and push are the current handoff operation; confirm their result from Git history and remote tracking state.
+
+## Homepage source QA and spacing fixes, 2026-09-07
+
+Used Impeccable polish guidance for a bounded source review of the homepage, heading/button patterns, resource cards/rails, and logo strip. Removed the hero's bottom border because the next section already supplies a top border. Restored Why Research NXT to shared SectionHeading so its orange marker, dotted rule and spacing match other labels, retaining full-width heading text. Resource heading/CTA rows now stack until `md` to reduce tablet crowding. Mobile heading-to-content gaps are 2rem, retaining prior desktop spacing. Resource and solution links have 44px minimum height; Bamboo CTA text has its own shrinkable wrapping span beside the arrow. Existing selected layouts/copy and mobile 2x2 solutions without descriptions are preserved.
+
+Verified: ESLint passed for the homepage and its home components, resource rail/card and SectionHeading; `git diff --check` passed. This is source QA only. Browser viewport, exact line wrapping, overflow, focus and interactive verification remain pending permission to run the relevant development/browser commands under AGENTS.md. No server/build/test commands were run. Next: obtain permission for a desktop/mobile browser pass and fix any rendered defects it reveals.
+
+## Why Research NXT orange marker restored, 2026-09-07
+
+Restored the decorative orange square beside the homepage Why Research NXT eyebrow using the existing `bg-signal`, size, radius, and spacing from SectionHeading. Verified by source inspection and `git diff --check`. No build/server/browser commands run; rendered appearance remains unverified. Requested fix complete.
+
+## Engagement Stepped journey applied, 2026-09-07
+
+User selected round-two option 1. Homepage engagement now uses the preview's Stepped journey: four open stages descending across desktop with connected blue rules, stacking on mobile. All descriptions and outcomes remain visible. Replaced the prior expandable layout and updated comparison-page status. This resolves the pending engagement selection below.
+
+Verified: targeted ESLint for homepage and engagement preview, plus diff whitespace check, passed. No build/server/browser commands run under project permissions; rendered verification remains outstanding. Implementation complete.
+
+## Engagement round two and mobile solutions copy, 2026-09-07
+
+User requested more distinctive engagement alternatives. Replaced `/design/engagement` with (1) Stepped journey, four descending open stages on desktop that stack on mobile; (2) The handoff, three research stages leading into a large blue Qualified pipeline destination; and (3) Stage spotlight, manually selected stage/outcome presentation. Added `src/components/home/engagement-spotlight.tsx` with native selector buttons, pressed states, unique panel ID and live region. No autoplay. Existing copy retained. Homepage engagement remains expandable pending user selection; earlier preview options are superseded.
+
+Also hid What we do descriptions below `sm` on user direction. The mobile 2x2 grid retains markers, titles, and links; subgrid spans use three rows on mobile and four from `sm` to avoid an empty description row. Desktop descriptions remain visible.
+
+Verified: targeted ESLint passed for the new preview, spotlight and homepage; diff whitespace checks passed. No build, server, or browser commands run under project restrictions. Rendered appearance and spotlight interaction remain unverified. Next: user selects a round-two engagement option at `/design/engagement`.
+
+## Why Research NXT heading width, 2026-09-07
+
+Removed the homepage heading's `max-w-4xl` constraint so the existing balanced headline can use the full container and target two lines on desktop. Copy and font scale are unchanged; mobile continues to wrap naturally. Targeted ESLint and diff whitespace checks passed. Browser line count remains unverified because no server/browser commands were run under project permissions.
+
+## Why Research NXT: Experience leads applied, 2026-09-07
+
+User selected round-two option 1. Replaced the homepage differentiator bento/carousel with the chosen Experience leads composition: white section, large blue 7+ years statement with a curved top-right corner on desktop, and three open supporting reasons alongside (stacked on mobile). Preserved supplied claims and descriptions. Comparison page status now identifies option 1 as applied. This resolves the pending selection below.
+
+Verified: targeted ESLint for the homepage and comparison page and `git diff --check` passed. No server/build/browser commands run per project permissions; browser visual verification remains outstanding. Requested implementation complete.
+
+## Why Research NXT round two and mobile solutions grid, 2026-09-07
+
+User rejected the first Why Research NXT studies because they were not visually different enough. Replaced `/design/why-research-nxt` with three new compositions: (1) a large 7+ experience statement on a shaped blue panel with supporting reasons alongside, (2) staggered oversized typographic statements, and (3) a manually selected reason spotlight. New `src/components/home/reason-spotlight.tsx` uses native buttons, pressed states, and a live region, with no autoplay. Existing claims are retained. Homepage Why Research NXT is unchanged pending selection; earlier options are superseded.
+
+Also changed homepage What we do from CardRail to a semantic static grid: two columns on mobile/tablet, four on desktop, with no previous/next controls or horizontal carousel. All four solutions and links remain; chosen title line breaks now apply on mobile too. Other rails are unaffected.
+
+Verified: targeted ESLint passed for all three changed TSX files; diff whitespace check passed. No build/server/browser commands run under project permissions, so rendered responsive layout and spotlight interaction remain unverified. Next: user chooses a round-two Why Research NXT option at `/design/why-research-nxt`.
+
+## Why Research NXT layout alternatives, 2026-09-07
+
+Added comparison route `/design/why-research-nxt` in `src/app/design/why-research-nxt/page.tsx`. Three variations preserve the differentiators headline and all four reasons from `src/content/home.ts`: (1) an open two-column list beside the heading, (2) a full brand-blue band with four open columns, and (3) native expandable reasons with the first initially open. All adapt to mobile. Frontend-design and Impeccable guidance informed reducing card framing and comparing spatial hierarchy, colour emphasis, and disclosure. Homepage remains unchanged pending the user's selection. Preview has noindex/nofollow metadata and is not linked in site navigation.
+
+Verified: targeted ESLint and `git diff --check` passed. No build, server, or browser commands run under project permissions; visual verification remains outstanding. Skill scripts remain skipped under the same command restrictions. Next: user chooses option 1, 2, or 3, then apply it to the homepage.
+
+## Engagement option 3 selected and applied, 2026-09-07
+
+User chose Expandable steps. Applied the preview's option 3 layout to the homepage in `src/app/page.tsx`: native details/summary rows, first step open initially, names and outcomes always visible, plus/minus indicators, and independently expandable descriptions. Preserved all engagement copy. Updated the comparison page's status text; it remains available at `/design/engagement`. This supersedes the pending selection and vertical sequence described below.
+
+Verified: targeted ESLint passed for the homepage and comparison page; `git diff --check` passed. No build/server/browser commands run under project permissions, so visual and interactive browser verification remains outstanding. Requested implementation is complete.
+
+## Engagement layout alternatives, 2026-09-07
+
+Added `src/app/design/engagement/page.tsx`, a comparison page at `/design/engagement` with three alternatives: an open horizontal timeline (vertical on smaller screens), deliverable-led rows, and native expandable steps with the first description initially open. All use the existing engagement copy and brand tokens. Frontend-design and Impeccable guidance informed varying structure rather than card styling. The homepage remains on the previously implemented vertical sequence until the user chooses. Preview metadata requests no indexing; the page is not linked in site navigation.
+
+Verified: targeted ESLint and diff whitespace checks passed. No server, build, or browser commands run under project restrictions; rendered desktop/mobile appearance remains unverified. Next: user compares the options on their running site at `/design/engagement` and chooses one to apply to the homepage. Skill scripts remain skipped under the same command restrictions documented below.
+
+## Homepage engagement sequence simplified, 2026-09-07
+
+Replaced the four engagement cards and their mobile carousel in `src/app/page.tsx` with an ordered vertical sequence connected by a thin rule. Desktop places the introduction beside the process; mobile stacks the introduction and all four steps. Stage outcomes sit beside the names on wider screens and below them on phones. All original content is retained; Engage and Qualified pipeline receive blue text emphasis. Existing DM Sans typography and brand tokens are reused. Frontend-design and Impeccable distill guidance informed removing card surfaces and presenting the stages as one process.
+
+Verified: targeted ESLint passed for `src/app/page.tsx` and `src/content/home.ts`; diff whitespace check passed. No build, server, or browser verification run under the user's project command restrictions. Impeccable setup script was skipped under those restrictions; incumbent source and tokens were read directly. Implementation complete; visual verification remains outstanding.
+
+## Homepage hero copy updated, 2026-09-07
+
+Changed `hero.headline` in `src/content/home.ts` to "Know your market, name your accounts". The third line remains "Reach the people inside them." Verified the content and diff by read-only inspection. No builds, servers, or tests run, per project command permissions; browser layout remains unverified. No implementation work remains for this copy change.
+
 ## Careers: Trainee Research Associate removed, 2026-09-07
 
 User direction. The opening is deleted from `openings` in

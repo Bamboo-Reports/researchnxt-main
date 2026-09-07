@@ -40,7 +40,7 @@ export default function HomePage() {
           do band below carries the four solutions.) */}
       <Section
         spacing="none"
-        className="hero-wash relative overflow-hidden border-b border-line"
+        className="hero-wash relative overflow-hidden"
       >
         <Image
           src="/hero-updated.png"
@@ -97,7 +97,7 @@ export default function HomePage() {
           item is a plate plus its caption, sized alike and scanned in parallel. */}
       <Section surface="subtle" bordered spacing="default">
         <Container>
-          <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 flex flex-col gap-6 sm:mb-12 md:flex-row md:items-end md:justify-between">
             <SectionHeading
               eyebrow={homeBands.featuredReports.eyebrow}
               title={homeBands.featuredReports.title}
@@ -105,7 +105,7 @@ export default function HomePage() {
             />
             <NavLink
               item={reportsLink}
-              className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
+              className="group min-h-11 shrink-0 self-start text-sm font-semibold text-accent hover:text-accent-hover md:self-auto"
             >
               {homeBands.featuredReports.cta}
               <TrailingArrow />
@@ -128,7 +128,7 @@ export default function HomePage() {
           scan consistently, while the white band keeps them distinct. */}
       <Section surface="bright" bordered spacing="default">
         <Container>
-          <div className="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 flex flex-col gap-6 sm:mb-12 md:flex-row md:items-end md:justify-between">
             <SectionHeading
               eyebrow={homeBands.expertsView.eyebrow}
               title={homeBands.expertsView.title}
@@ -136,7 +136,7 @@ export default function HomePage() {
             />
             <NavLink
               item={interviewsLink}
-              className="group shrink-0 text-sm font-semibold text-accent hover:text-accent-hover"
+              className="group min-h-11 shrink-0 self-start text-sm font-semibold text-accent hover:text-accent-hover md:self-auto"
             >
               {homeBands.expertsView.cta}
               <TrailingArrow />
@@ -164,28 +164,22 @@ export default function HomePage() {
           <SectionHeading
             eyebrow={whatWeDo.eyebrow}
             title={whatWeDo.title}
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           />
-          <CardRail
-            label={whatWeDo.title}
-            grid="sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-0 sm:gap-y-12"
-            items={whatWeDo.items.map((item) => ({
-              key: item.title,
-              className:
-                "row-span-4 grid grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:pr-8 lg:pr-10",
-              node: (
-                <>
+          <ul
+            aria-label={whatWeDo.title}
+            className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-0 sm:gap-y-12 lg:grid-cols-4"
+          >
+            {whatWeDo.items.map((item) => (
+                <li key={item.title} className="row-span-3 grid min-w-0 grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:row-span-4 sm:pr-8 lg:pr-10">
                   <span
                     aria-hidden="true"
                     className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
                   />
-                  {/* The chosen "\n" break applies once the cards sit in a
-                    grid; in the single mobile column it collapses to a
-                    space. */}
-                  <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                  <h3 className="whitespace-pre-line text-title font-display-soft">
                     {item.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-ink-soft">
+                  <p className="hidden text-sm leading-relaxed text-ink-soft sm:block">
                     {item.description}
                   </p>
                   {item.external ? (
@@ -193,155 +187,77 @@ export default function HomePage() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                      className="group inline-flex min-h-11 min-w-0 items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
                     >
-                      {homeBands.bambooCta}
+                      <span className="min-w-0">{homeBands.bambooCta}</span>
                       <span className="sr-only"> (opens in a new tab)</span>
                       <TrailingArrow />
                     </a>
                   ) : (
                     <Link
                       href={item.href}
-                      className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                      className="group inline-flex min-h-11 min-w-0 items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
                     >
                       {homeBands.exploreCta}
                       <span className="sr-only"> {item.title}</span>
                       <TrailingArrow />
                     </Link>
                   )}
-                </>
-              ),
-            }))}
-          />
+                </li>
+            ))}
+          </ul>
         </Container>
       </Section>
 
-      {/* How an engagement runs: the four steps as cards, numbered because
-          the order is the information. The closing Engage card is the
-          band's one saturated moment on the accent blue, the stats-bento
-          feature treatment; its outcome line is white because brand orange
-          is never text on any surface. */}
-      <Section bordered spacing="default">
+      {/* Stepped journey: descending stages on desktop, stacked on mobile. */}
+      <Section surface="bright" bordered spacing="default">
         <Container>
           <SectionHeading
             eyebrow={engagementSteps.eyebrow}
             title={engagementSteps.title}
-            className="mb-12"
+            className="max-w-3xl"
           />
-          {/* No auto-rows-fr here: the subgrid alone keeps the four cards'
-              rows level, and fr rows would stretch the cards with dead
-              space. */}
-          <CardRail
-            label={engagementSteps.title}
-            grid="sm:grid-cols-2 lg:grid-cols-4 sm:gap-3"
-            items={engagementSteps.steps.map((stage, index) => {
-              const closing = index === engagementSteps.steps.length - 1;
-
-              return {
-                key: stage.name,
-                className: `row-span-4 grid grid-rows-subgrid gap-y-2.5 rounded-md p-5 sm:p-6 ${
-                  closing ? "bg-accent" : "border border-line bg-surface"
-                }`,
-                node: (
-                  <>
-                    <p
-                      className={`flex items-center gap-3 text-sm font-semibold ${
-                        closing ? "text-white/85" : "text-accent"
-                      }`}
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`size-1.5 shrink-0 rounded-[1px] ${
-                          closing ? "bg-white/60" : "bg-signal"
-                        }`}
-                      />
-                      Step {index + 1}
-                    </p>
-                    <h3
-                      className={`text-title font-display-soft ${
-                        closing ? "text-white" : "text-ink"
-                      }`}
-                    >
-                      {stage.name}
-                    </h3>
-                    <p
-                      className={`text-sm leading-relaxed ${
-                        closing ? "text-white/85" : "text-ink-soft"
-                      }`}
-                    >
-                      {stage.description}
-                    </p>
-                    <p
-                      className={`self-end text-sm font-semibold ${
-                        closing ? "text-white" : "text-accent"
-                      }`}
-                    >
-                      {stage.outcome}
-                    </p>
-                  </>
-                ),
-              };
-            })}
-          />
+          <ol aria-label="Engagement stages" className="mt-8 grid gap-y-8 sm:mt-14 lg:grid-cols-4 lg:gap-y-0">
+            {engagementSteps.steps.map((stage, index) => (
+              <li
+                key={stage.name}
+                className={`relative border-t border-accent pt-6 lg:pr-8 ${["lg:mt-0", "lg:mt-14", "lg:mt-28", "lg:mt-42"][index]}`}
+              >
+                {index > 0 && <span aria-hidden="true" className="absolute -top-14 left-0 hidden h-14 w-px bg-accent lg:block" />}
+                <p className="text-sm font-semibold tabular-nums text-accent">Step {String(index + 1).padStart(2, "0")}</p>
+                <h3 className="mt-4 text-headline font-display-soft">{stage.name}</h3>
+                <p className="mt-4 max-w-[42ch] text-sm leading-relaxed text-ink-soft">{stage.description}</p>
+                <p className="mt-6 text-sm font-semibold text-accent"><span className="sr-only">Outcome: </span>{stage.outcome}</p>
+              </li>
+            ))}
+          </ol>
         </Container>
       </Section>
 
-      {/* Why Research NXT. Bento tiles in the same system as the About stats:
-          the lead claim carries the brand blue as the double-height feature
-          tile, the rest stay quiet white so the highlight reads once. */}
-      <Section surface="subtle" bordered spacing="default">
+      {/* Experience leads: the selected blue statement with open reasons. */}
+      <Section surface="bright" bordered spacing="default">
         <Container>
-          {/* No max-width on this one: the long title needs the full container
-              to settle onto two balanced lines at desktop widths. */}
           <SectionHeading
             eyebrow={differentiators.eyebrow}
             title={differentiators.title}
-            className="mb-12"
           />
-          <CardRail
-            label={differentiators.title}
-            grid="sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-fr sm:gap-3"
-            items={differentiators.items.map((item, index) => {
-              const tiles = [
-                "sm:col-span-2 lg:row-span-2 bg-accent text-white",
-                "sm:col-span-2 border border-line bg-surface",
-                "border border-line bg-surface",
-                "border border-line bg-surface",
-              ] as const;
-              const inverted = index === 0;
-
-              return {
-                key: item.title,
-                className: `flex min-h-36 flex-col justify-between gap-6 rounded-md p-6 sm:p-7 ${tiles[index % tiles.length]}`,
-                node: (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className={`h-1 w-6 rounded-[1px] ${
-                        inverted ? "bg-white/60" : "bg-signal"
-                      }`}
-                    />
-                    <div className="flex flex-col gap-1.5">
-                      <h3
-                        className={`font-display-soft ${
-                          index === 0 ? "text-headline" : "text-title"
-                        }`}
-                      >
-                        {item.title}
-                      </h3>
-                      <p
-                        className={`text-sm leading-relaxed ${
-                          inverted ? "text-white" : "text-ink-soft"
-                        }`}
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                  </>
-                ),
-              };
-            })}
-          />
+          <div className="mt-8 grid gap-10 sm:mt-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-20">
+            <div className="flex flex-col justify-center bg-accent px-8 py-12 text-white sm:px-12 sm:py-16 lg:rounded-tr-[6rem]">
+              <h3 className="font-display">
+                <span className="block text-[6rem] leading-none tracking-[-0.04em]">7+</span>
+                <span className="mt-4 block text-headline">years of experience</span>
+              </h3>
+              <p className="mt-6 max-w-[36ch] text-lg leading-relaxed">{differentiators.items[0].description}</p>
+            </div>
+            <ul className="flex flex-col justify-center gap-8 sm:gap-10">
+              {differentiators.items.slice(1).map((item) => (
+                <li key={item.title}>
+                  <h3 className="text-title font-display-soft">{item.title}</h3>
+                  <p className="mt-3 max-w-[42ch] text-base leading-relaxed text-ink-soft">{item.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Container>
       </Section>
 
@@ -353,7 +269,7 @@ export default function HomePage() {
             eyebrow={homeBands.trustedBy.eyebrow}
             title={homeBands.trustedBy.title}
             lede={homeBands.trustedBy.lede}
-            className="mb-12 max-w-3xl"
+            className="mb-8 max-w-3xl sm:mb-12"
           />
           <TrustedLogos />
         </Container>
