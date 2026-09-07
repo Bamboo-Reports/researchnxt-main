@@ -10,7 +10,7 @@ import gsap from "gsap";
  * `data-hero-cta`; anything unmarked is left alone.
  *
  * The content is visible by default and GSAP only ever animates it FROM a
- * hidden state once the motion flag is set, so a no-JS visit, a failed
+ * hidden state when the browser allows motion, so a no-JS visit, a failed
  * bundle or a reduced-motion preference ships the finished layout with no
  * animation at all. `gsap.context` scopes the selectors to this subtree and
  * reverts every inline style on unmount.
@@ -25,7 +25,10 @@ export function HeroIntro({
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (document.documentElement.dataset.motion !== "on") return;
+    // Read the preference directly: the early inline script's flag can be
+    // absent after hydration recovery. Do not silently skip the entrance.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.documentElement.dataset.motion = "on";
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });

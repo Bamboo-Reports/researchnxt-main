@@ -4,6 +4,20 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-07
 
+## Hero animation fix prepared for commit and push, 2026-09-07
+
+User authorized committing and pushing HeroIntro's direct motion-preference check and flag restoration to `main`, together with diagnosis notes. Targeted lint and diff whitespace checks passed. Browser/deployment verification and the underlying React #418 diagnosis remain outstanding. Commit/push result is recorded by Git history and origin tracking state.
+
+## Hero entrance resilient to missing motion flag, 2026-09-07
+
+User reproduced missing `data-motion` in Guest mode. Downloaded staging HTML read-only and confirmed the expected inline motion script is present, ruling out omission from the response. Exact reason the flag is absent afterward remains unproven; user previously reported React #418. Updated HeroIntro to read the actual reduced-motion preference directly and restore the root motion flag before constructing its GSAP entrance timeline. It no longer silently exits solely because the early script flag is missing. Reduced-motion users still skip the entrance. This is a resilience fix, not a verified resolution of the hydration mismatch.
+
+Verified: targeted ESLint and diff whitespace checks passed. No build/server/browser execution under project permissions. Fix is local, not committed or pushed. Next: deploy this fix when authorized and verify entrance; investigate any remaining #418 separately.
+
+## Staging animation console evidence, 2026-09-07
+
+User reports `reducedMotion: false`, missing root motion flag, and active logo CSS animation after the fix. Console shows extension-resource failures, React #418 hydration mismatch, and favicon 404; no supplied CSP violation. Official React error documentation confirms #418 means server/client HTML mismatch and client regeneration; browser extensions are one possible cause, not proven here. HeroIntro checks the root flag once in useLayoutEffect and exits when absent, explaining the skipped entrance. Next diagnostic: compare staging in a Guest/extension-free browser and check whether #418 and missing flag persist. No further UI change or development commands run. Logo fix was pushed as `68eca23`; current work is diagnosis of the separate entrance issue.
+
 ## Logo scrolling fix prepared for push, 2026-09-07
 
 User authorized committing and pushing the CSS motion-gate fix to `main`. Scope is `src/app/globals.css` and these progress notes. Diff whitespace check passed. Browser animation and deployment verification remain outstanding; no build or server commands run. Git history and origin tracking state record the commit/push result.
