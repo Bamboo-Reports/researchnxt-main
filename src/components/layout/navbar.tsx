@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button, TrailingArrow } from "@/components/ui/button";
@@ -199,21 +200,7 @@ export function Navbar() {
                             groupActive ? "scale-x-100" : "scale-x-0",
                           )}
                         />
-                        <svg
-                          viewBox="0 0 10 6"
-                          aria-hidden="true"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className={cn(
-                            "size-2.5 transition-transform duration-150",
-                            open && "rotate-180",
-                          )}
-                        >
-                          <path d="m1 1 4 4 4-4" />
-                        </svg>
+                        <RemixIcon name="arrow-down-s-line" className={cn("size-4 transition-transform duration-150", open && "rotate-180")} />
                       </button>
 
                       {/* Dropdowns are intentionally label-only: the navigation
@@ -269,21 +256,7 @@ export function Navbar() {
                 <span className="sr-only">
                   {mobileOpen ? "Close menu" : "Open menu"}
                 </span>
-                <svg
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  className="size-5"
-                >
-                  {mobileOpen ? (
-                    <path d="m5 5 10 10M15 5 5 15" />
-                  ) : (
-                    <path d="M3 6h14M3 10h14M3 14h14" />
-                  )}
-                </svg>
+                <RemixIcon name={mobileOpen ? "close-line" : "menu-line"} className="size-5" />
               </button>
             </div>
           </div>

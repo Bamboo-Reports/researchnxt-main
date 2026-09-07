@@ -28,7 +28,7 @@ export function ResourceCard({
     <Card
       href={resource.href}
       external={resource.external}
-      className="gap-4"
+      className="h-full gap-4"
       style={style}
     >
       {withPlate ? (

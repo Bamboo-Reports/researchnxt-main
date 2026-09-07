@@ -33,6 +33,7 @@ export default function SuccessStoriesPage() {
         eyebrow="Resources"
         title={successStoriesLibrary.title}
         lede={successStoriesLibrary.lede}
+        backgroundImage="/hero-backgrounds/success-stories.png"
       />
 
       <Section spacing="default">

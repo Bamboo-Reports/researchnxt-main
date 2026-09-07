@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/page-hero";
-import { CardRail } from "@/components/report-card-rail";
 import { StatsBand } from "@/components/stats-band";
 import { accentedTitle } from "@/components/ui/accented-title";
 import { Button, TrailingArrow } from "@/components/ui/button";
@@ -30,14 +29,14 @@ function OutcomeSection({
   const equation = sides.length === 2 ? sides : null;
 
   return (
-    <Section surface="muted" bordered spacing="tight">
+    <Section spacing="tight" className="bg-accent text-white">
       <Container>
         <div className="flex flex-col items-center gap-8 text-center">
           {/* The statement is one line by design: the size clamps against the
               viewport at desktop widths so even the longest equation fits
               without wrapping, and only stacks below lg. */}
           {equation ? (
-            <p className="font-display-soft text-ink text-[clamp(1.5rem,6vw,2rem)] lg:text-[clamp(1rem,1.65vw,2rem)]">
+            <p className="font-display-soft text-[clamp(1.5rem,6vw,2rem)] lg:text-[clamp(1rem,1.65vw,2rem)]">
               <span className="sr-only">{outcome.statement}</span>
               <span
                 aria-hidden="true"
@@ -48,17 +47,17 @@ function OutcomeSection({
                   <span className="h-1 w-6 rounded-[1px] bg-signal" />
                   <span className="h-1 w-6 rounded-[1px] bg-signal" />
                 </span>
-                <span className="text-accent">{equation[1]}</span>
+                <span>{equation[1]}</span>
               </span>
             </p>
           ) : (
-            <p className="text-headline font-display-soft text-ink">
+            <p className="text-headline font-display-soft">
               {outcome.statement}
             </p>
           )}
 
           {outcome.description ? (
-            <p className="max-w-[62ch] text-base leading-relaxed text-ink-soft">
+            <p className="max-w-[62ch] text-base leading-relaxed">
               {outcome.description}
             </p>
           ) : null}
@@ -94,54 +93,57 @@ export default async function SolutionPage({ params }: Params) {
   return (
     <main id="main">
       <PageHero
-        eyebrow={solution.hero.eyebrow || undefined}
+        eyebrow="Solution"
         title={solution.hero.headline}
         lede={solution.hero.lede}
+        backgroundImage={`/hero-backgrounds/${solution.slug}.png`}
       >
-        <div className="flex flex-wrap gap-3">
-          <Button
-            href={solution.hero.primary.href}
-            external={solution.hero.primary.external}
-          >
-            {solution.hero.primary.label}
-          </Button>
-          {solution.hero.secondary ? (
-            <Button
-              href={solution.hero.secondary.href}
-              external={solution.hero.secondary.external}
-              variant="secondary"
-              className="group"
-            >
-              {solution.hero.secondary.label}
-              <TrailingArrow />
-            </Button>
-          ) : null}
-        </div>
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  href={solution.hero.primary.href}
+                  external={solution.hero.primary.external}
+                  className="h-auto min-h-11 py-3 text-center"
+                >
+                  {solution.hero.primary.label}
+                </Button>
+                {solution.hero.secondary ? (
+                  <Button
+                    href={solution.hero.secondary.href}
+                    external={solution.hero.secondary.external}
+                    variant="secondary"
+                    className="group"
+                  >
+                    {solution.hero.secondary.label}
+                    <TrailingArrow />
+                  </Button>
+                ) : null}
+              </div>
       </PageHero>
 
-      {/* Proposition. Mirrors the old page's structure: two-tone headline,
-          a short orange rule, then the argument beneath. */}
+      {/* Preserve content order while giving each paragraph a readable measure. */}
       <Section spacing="default">
         <Container>
-          <div className="flex flex-col gap-6">
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-10">
             <h2
               className={cn(
-                "text-headline font-display-soft",
+                "text-headline font-display-soft lg:col-span-2 lg:max-w-5xl",
                 solution.proposition.singleLine &&
                   "lg:whitespace-nowrap lg:text-[clamp(1.25rem,2.5vw,2.125rem)]",
               )}
             >
               {accentedTitle(solution.proposition.title)}
             </h2>
-            <span
-              aria-hidden="true"
-              className="h-0.5 w-12 rounded-[1px] bg-signal"
-            />
-            <div className="flex flex-col gap-5">
+            <div className={cn(
+              "grid gap-6 lg:col-span-2",
+              solution.slug !== "prospect-database" && "lg:grid-cols-2 lg:gap-16",
+            )}>
               {solution.proposition.body.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-base leading-relaxed text-ink-soft"
+                  className={cn(
+                    "text-base leading-relaxed text-ink-soft sm:text-lg",
+                    solution.slug !== "prospect-database" && "max-w-[65ch]",
+                  )}
                 >
                   {paragraph}
                 </p>
@@ -153,7 +155,7 @@ export default async function SolutionPage({ params }: Params) {
 
       <OutcomeSection outcome={solution.outcome} />
 
-      <Section surface="subtle" bordered spacing="default">
+      <Section surface="bright" spacing="default">
         <Container>
           <SectionHeading
             eyebrow={solution.capabilities.eyebrow}
@@ -163,11 +165,11 @@ export default async function SolutionPage({ params }: Params) {
           />
 
           {solution.capabilities.body ? (
-            <div className="mb-12 flex flex-col gap-5">
+            <div className="mb-12 grid gap-5 lg:grid-cols-2 lg:gap-16">
               {solution.capabilities.body.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-base leading-relaxed text-ink-soft"
+                  className="max-w-[65ch] text-base leading-relaxed text-ink-soft"
                 >
                   {paragraph}
                 </p>
@@ -175,30 +177,27 @@ export default async function SolutionPage({ params }: Params) {
             </div>
           ) : null}
 
-          {/* Subgrid rows keep every card's icon, title and list on shared
-              baselines, however many lines a title wraps to. */}
-          <CardRail
-            label={solution.capabilities.title}
-            grid={cn(
-              "sm:gap-x-10 sm:gap-y-12",
-              capabilityCount === 2 && "lg:grid-cols-2",
-              capabilityCount === 3 && "sm:grid-cols-2 lg:grid-cols-3",
-              capabilityCount >= 4 && "sm:grid-cols-2 lg:grid-cols-4",
-            )}
-            items={solution.capabilities.items.map((capability, index) => ({
-              key: capability.title,
-              className:
-                "grid grid-rows-subgrid row-span-3 gap-y-4 border-t border-line pt-6",
-              node: (
-                <>
+          {/* Capabilities stay visible at every viewport, without a carousel. */}
+          <div className={cn(
+            "grid gap-10",
+            capabilityCount === 2 && "md:grid-cols-2 md:gap-8",
+            capabilityCount === 3 && "lg:grid-cols-3 lg:gap-12",
+            capabilityCount >= 4 && "md:grid-cols-2 md:gap-x-16 md:gap-y-12",
+          )}>
+            {solution.capabilities.items.map((capability, index) => (
+              <article key={capability.title} className={cn(
+                "min-w-0 border-t border-line-strong pt-8",
+                capabilityCount === 2 && "rounded-xl border-0 bg-surface-subtle p-6 sm:p-9",
+                capabilityCount >= 4 && "grid grid-cols-[auto_1fr] content-start gap-x-5 sm:gap-x-7",
+              )}>
                   {capability.icon ? (
                     <span
                       aria-hidden="true"
-                      className="grid size-11 place-items-center rounded-md bg-accent-soft text-accent"
+                      className="mb-6 grid size-12 shrink-0 place-items-center text-accent"
                     >
                       <CapabilityIcon
                         name={capability.icon}
-                        className="size-5"
+                        className="size-10"
                       />
                     </span>
                   ) : (
@@ -207,29 +206,27 @@ export default async function SolutionPage({ params }: Params) {
                       className="mt-4 h-1 w-6 self-start rounded-[1px] bg-signal"
                     />
                   )}
-                  {/* The chosen "\n" break only applies once the cards sit in a
-                    grid; in the single mobile column it collapses to a space. */}
-                  <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                  <h3 className="mb-5 self-center text-title font-display-soft">
                     {capability.title}
                   </h3>
-                  <div className="flex flex-col gap-4">
+                  <div className={cn("flex flex-col gap-4", capabilityCount >= 4 && "col-start-2")}>
                     {capability.description ? (
                       <p className="text-sm leading-relaxed text-ink-soft">
                         {capability.description}
                       </p>
                     ) : null}
                     {capability.points ? (
-                      <ul className="flex flex-col gap-2.5 border-t border-line pt-4">
+                      <ul className="flex flex-col divide-y divide-line">
                         {capability.points.map((point, pointIndex) => (
                           <li
                             key={
                               typeof point === "string" ? point : point.label
                             }
-                            className="flex gap-2.5 text-sm leading-relaxed text-ink-soft"
+                            className="flex items-start gap-3 py-3 text-base leading-relaxed text-ink-soft"
                           >
                             <span
                               aria-hidden="true"
-                              className="mt-2 size-1 shrink-0 rounded-[1px] bg-line-strong"
+                              className="mt-2.5 size-1 shrink-0 rounded-full bg-accent"
                             />
                             {typeof point === "string" ? (
                               point
@@ -259,10 +256,9 @@ export default async function SolutionPage({ params }: Params) {
                       </ul>
                     ) : null}
                   </div>
-                </>
-              ),
-            }))}
-          />
+              </article>
+            ))}
+          </div>
         </Container>
       </Section>
 

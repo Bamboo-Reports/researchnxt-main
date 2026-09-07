@@ -1,21 +1,11 @@
 import Link from "next/link";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import type { NavItem } from "@/config/nav";
 import { cn } from "@/lib/cn";
 
 export function ExternalIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 12 12"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={cn("size-3 shrink-0", className)}
-    >
-      <path d="M4 2h6v6M10 2 2.5 9.5" />
-    </svg>
+    <RemixIcon name="arrow-right-up-line" className={cn("size-4 shrink-0", className)} />
   );
 }
 

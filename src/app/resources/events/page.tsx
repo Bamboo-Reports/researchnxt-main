@@ -63,6 +63,7 @@ export default async function EventsPage({ searchParams }: Params) {
         eyebrow="Resources"
         title={eventsLibrary.title}
         lede={eventsLibrary.lede}
+        backgroundImage="/hero-backgrounds/events.png"
       />
 
       <Section spacing="default">

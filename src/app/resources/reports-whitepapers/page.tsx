@@ -64,6 +64,7 @@ export default async function ReportsWhitepapersPage({ searchParams }: Params) {
         eyebrow="Resources"
         title={reportsLibrary.title}
         lede={reportsLibrary.lede}
+        backgroundImage="/hero-backgrounds/reports-whitepapers.png"
       />
 
       <Section spacing="default">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import Link from "next/link";
 import { EngagementSpotlight } from "@/components/home/engagement-spotlight";
 import { Container } from "@/components/ui/container";
@@ -31,7 +32,7 @@ export default function EngagementOptionsPage() {
     <main id="main">
       <Section surface="subtle" spacing="tight">
         <Container>
-          <Link href="/" className="text-sm font-semibold text-accent hover:underline">← Back to homepage</Link>
+          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-accent hover:underline"><RemixIcon name="arrow-left-line" className="size-4" />Back to homepage</Link>
           <h1 className="mt-6 text-headline font-display-soft">How an engagement runs: round two</h1>
           <p className="mt-4 max-w-2xl text-ink-soft">Option 1, Stepped journey, is now used on the homepage.</p>
           <nav aria-label="Layout options" className="mt-6 flex flex-wrap gap-x-8 gap-y-3">

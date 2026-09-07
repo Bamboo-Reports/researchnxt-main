@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { cn } from "@/lib/cn";
 
 type Variant = "primary" | "secondary" | "ghost";
@@ -89,20 +90,12 @@ export function Button({
  */
 export function TrailingArrow({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 14 10"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+    <RemixIcon
+      name="arrow-right-line"
       className={cn(
-        "size-3 shrink-0 transition-[transform,color] duration-200 [transition-timing-function:var(--ease-out-quart)] group-hover:translate-x-1",
+        "size-4 shrink-0 transition-[transform,color] duration-200 [transition-timing-function:var(--ease-out-quart)] group-hover:translate-x-1",
         className,
       )}
-    >
-      <path d="M1 5h11M8.5 1.5 12 5l-3.5 3.5" />
-    </svg>
+    />
   );
 }

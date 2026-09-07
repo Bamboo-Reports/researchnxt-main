@@ -134,6 +134,7 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
         eyebrow="Resources"
         title={expertsViewLibrary.title}
         lede={expertsViewLibrary.lede}
+        backgroundImage="/hero-backgrounds/experts-view.png"
       />
 
       {sections.length === 0 ? (

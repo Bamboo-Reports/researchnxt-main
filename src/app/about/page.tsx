@@ -255,7 +255,11 @@ function ModesStations() {
 export default function AboutPage() {
   return (
     <main id="main">
-      <PageHero title={aboutHero.title} />
+      <PageHero
+        title={aboutHero.title}
+        lede={aboutHero.lede}
+        backgroundImage="/hero-backgrounds/about.png"
+      />
 
       {/* The positioning statement is the page's thesis, so it carries the
           display face, with the fact split beneath it. */}

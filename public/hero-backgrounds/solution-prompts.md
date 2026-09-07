@@ -1,0 +1,16 @@
+# Solution background artwork
+
+Generated with the built-in image generation tool on 2026-09-07. Wide compositions with left-side whitespace and right-side subjects, fitted by height through the shared PageHero background treatment. Original separate-panel assets remain in public/solutions.
+
+## prospect-database.png
+
+Use case: ads-marketing. Research NXT website hero BACKGROUND. Generate a wide landscape editorial 3D illustration with a small complete subject scene clustered on the RIGHT 40% and LEFT 55% entirely empty pale cool white #f2f6fa for HTML text. It will be fitted by height into a shallow 352px website banner, so maintain generous upper/lower whitespace and place essential scene within central 55% of height. Match sophisticated tactile matte white and saturated blue #0073b6 with restrained orange #ff7d24 accents, soft daylight, precise soft shadows. Pulled-back camera, whole scene visible, no clipping. No text, letters, numbers, logos, watermark, fake UI, dark background, neon or decorative clutter. Subject: a compact orderly archive of blue and white contact-record tiles with embossed person silhouettes, one orange selected profile in front and a clear magnifying lens beside the archive. Low horizontal still-life, conveys curated accurate business contacts.
+
+## account-intelligence.png
+
+Use case: ads-marketing. Research NXT website hero BACKGROUND. Generate a wide landscape editorial 3D illustration with a small complete subject scene clustered on the RIGHT 40% and LEFT 55% entirely empty pale cool white #f2f6fa for HTML text. It will be fitted by height into a shallow 352px website banner, so maintain generous upper/lower whitespace and place essential scene within central 55% of height. Match sophisticated tactile matte white and saturated blue #0073b6 with restrained orange #ff7d24 accents, soft daylight, precise soft shadows. Pulled-back camera, whole scene visible, no clipping. No text, letters, numbers, logos, watermark, fake UI, dark background, neon or decorative clutter. Subject: a compact miniature blue business headquarters and three smaller white company blocks on a low white platform, connected by subtle blue physical channels with one orange strategic marker. Low architectural model, conveys company understanding and business relationships.
+
+## research-based-marketing.png
+
+Use case: ads-marketing. Research NXT website hero BACKGROUND. Generate a wide landscape editorial 3D illustration with a small complete subject scene clustered on the RIGHT 40% and LEFT 55% entirely empty pale cool white #f2f6fa for HTML text. It will be fitted by height into a shallow 352px website banner, so maintain generous upper/lower whitespace and place essential scene within central 55% of height. Match sophisticated tactile matte white and saturated blue #0073b6 with restrained orange #ff7d24 accents, soft daylight, precise soft shadows. Pulled-back camera, whole scene visible, no clipping. No text, letters, numbers, logos, watermark, fake UI, dark background, neon or decorative clutter. Subject: open white research publication with abstract blue graphic shapes, small blue broadcast cone and three simple white audience tokens connected by physical blue curved ribbons. Small orange bookmark. Low horizontal sculptural still-life of research becoming targeted communication, no lettering.
+

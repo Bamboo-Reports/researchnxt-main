@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { useState } from "react";
 
 /**
@@ -74,9 +75,7 @@ export function VideoEmbed({
         aria-hidden="true"
         className="absolute left-1/2 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 shadow-lg transition-transform duration-200 [transition-timing-function:var(--ease-out-quart)] group-hover:scale-110"
       >
-        <svg viewBox="0 0 24 24" className="ml-0.5 size-6 fill-accent">
-          <path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.1-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14Z" />
-        </svg>
+        <RemixIcon name="play-fill" className="ml-0.5 size-6 text-accent" />
       </span>
     </button>
   );

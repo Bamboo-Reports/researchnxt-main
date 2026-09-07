@@ -4,6 +4,144 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-07
 
+## Hero, solution and icon updates prepared for commit/push, 2026-09-07
+
+User authorized committing and pushing all accumulated session work to main: redesigned solution presentation, generated hero backgrounds for solutions/resources/About/Careers with source prompts and retained earlier artwork, About description, Careers application row, Remix icon migration and source/license files, aligned resource-card CTAs, and navbar About Us label. Full-site ESLint and diff whitespace checks passed during implementation; final commit checks repeat them. Browser/build verification remains outstanding under project command restrictions. Git history and origin tracking state record the commit/push result.
+
+## Navbar About Us label, 2026-09-07
+
+Changed the primary navigation label from “About” to “About Us”, covering desktop and mobile navigation through shared config. Destination remains `/about`; footer label is unchanged. Verified by source inspection and `git diff --check`. No project execution required.
+
+## Resource card Read more links aligned, 2026-09-07
+
+Added `h-full` to ResourceCard so it fills its stretched rail item and the existing `mt-auto` on Read more aligns links along the row bottom despite one- versus two-line titles. Applies to homepage report and interview cards using this shared component; copy and links are unchanged. Targeted ResourceCard lint and `git diff --check` passed. Browser verification remains pending under project command restrictions.
+
+## Site icon QA and Remix migration, 2026-09-07
+
+Completed source icon inventory and replaced remaining custom UI glyphs with official Remix Icon v4.6.0 geometry via `src/components/ui/remix-icon.tsx`. Updated shared navigation/menu/close controls, social icons, email, button/external arrows, carousel chevrons, video play button, report theme and offer icons, design preview arrows and 404 close marker. Solutions' already-migrated CapabilityIcon was left unchanged. Brand logos, 404 connecting-line illustration, bullets and brand square/rule decorations remain. Official SVG sources and provenance are in `public/icons/remix/`; Apache-2.0 license remains in public/licenses/remixicon.txt. No dependency installation.
+
+Full-site ESLint and diff whitespace checks passed. Source QA checked decorative aria-hidden/nonfocusable icons, parent accessible labels, arrow direction/rotation and existing interaction handlers. Remaining inline SVG is limited to official Remix renderers, brand logo and 404 illustration. Full rendered/browser/build QA has NOT run under AGENTS.md command restrictions; this remains outstanding rather than claimed complete. Changes are local and uncommitted.
+
+## Solutions adopt regenerated background heroes, 2026-09-07
+
+Generated three new wide solution backgrounds using the built-in image generator, with empty left space and right-side contact archive, company network, and research-to-audience scenes. Saved `public/hero-backgrounds/prospect-database.png` (1932x814), `account-intelligence.png` (1922x818), and `research-based-marketing.png` (1802x873). Exact prompts are in `public/hero-backgrounds/solution-prompts.md`; previous separate-panel art remains in public/solutions.
+
+Switched the shared solution route to PageHero backgroundImage, matching the approved white fade, right alignment, desktop scale and compact minimum height used by Resources/About/Careers. Actual height can grow to accommodate longer solution copy and buttons. Preserved all solution copy, Solution eyebrow/square, CTAs and body layouts. No shared layout changes were needed.
+
+Verified new images visually, checked file dimensions and source references, passed targeted solution-page ESLint and `git diff --check`. No build/server/browser commands run under project restrictions; rendered responsive appearance remains unverified. Changes are local and uncommitted.
+
+## Previous background artwork position restored, 2026-09-07
+
+Reverted the last 5% desktop left shift at user request. All seven background heroes again use the previous right alignment and 125% desktop scale; height, fade and images are unchanged. This supersedes the left-shift entry below. Targeted PageHero ESLint and `git diff --check` passed; browser verification remains pending.
+
+## Background artwork shifted slightly left, 2026-09-07
+
+Moved the shared background hero image 5% left at desktop widths, retaining its existing scale, hero height and fade. Applies to all five resource categories, About and Careers; mobile positioning is unchanged. Targeted PageHero ESLint and `git diff --check` passed. Browser positioning remains unverified under project command restrictions.
+
+## Seven hero backgrounds regenerated for shallow headers, 2026-09-07
+
+Regenerated artwork for all active background heroes: five Resources indexes, About and Careers. Built-in generation prompts requested a 1920x352 panoramic canvas, left-side text whitespace and small right-side scenes with vertical safety margins. The generator returned landscape files approximately 1700x920, not the exact requested ratio. Saved them non-destructively in `public/hero-backgrounds/` and recorded exact prompts and this limitation in `prompts.md`. Solutions remain on their existing separate image panels.
+
+Updated all seven backgroundImage references. PageHero now fits background art by height using object-contain/right alignment with a 25% desktop enlargement, replacing cover cropping and the 65%-width image region. This adapts the new scene whitespace to the existing approximately 352px desktop hero without stretching the illustrations. Existing subtle white fade, copy, CTAs, and labels are retained. Exact 1920x352 raster deliverables were not produced by the generator.
+
+Verified each generated image visually, checked actual PNG dimensions and asset paths, passed targeted ESLint for PageHero and all seven pages, and passed `git diff --check`. No browser/server/build commands run under AGENTS.md restrictions; rendered scene scale, edge blending and responsive crop remain unverified. Changes are local and uncommitted.
+
+## Background hero height and artwork framing adjusted, 2026-09-07
+
+User asked to zoom artwork out, then suggested a slight height increase or regenerating at the banner ratio. Applied the sizing option: raised desktop background hero content minimum from 240px to 272px (approximately 352px total including padding), and narrowed the desktop artwork area from 80vw to 65vw, keeping it aligned right. With object-cover this reduces image enlargement and exposes more vertical scene detail. Responsive image sizes now match. Reuses current assets for Resources, About and Careers; no images regenerated. Targeted PageHero ESLint and `git diff --check` passed. Browser crop/appearance remains unverified under project command restrictions.
+
+## Background hero heights reduced, 2026-09-07
+
+Reduced shared background hero padding from 48/64px to 32/40px per side. Removed mobile/tablet minimum heights and lowered desktop content minimum from 384px to 240px, reducing the typical desktop banner from 512px to 320px while allowing long copy to expand naturally. Applies to all five resource categories, About and Careers. Separate-image solution heroes and other hero variants retain their existing sizing. Targeted PageHero ESLint and `git diff --check` passed. Browser wrapping/cropping remains unverified; no build/server commands run under project restrictions.
+
+## Resource heroes use subtle white background fade, 2026-09-07
+
+Applied the approved About/Careers background treatment to all five resource category indexes: Reports & Whitepapers, Experts View, Insights, Events and Success Stories. Replaced their separate PageHero media panels with backgroundImage props, reusing the shared subtle white fade and responsive background layout. Experts View retains the corrected interview artwork. Resources labels/squares, all copy, listings and pagination are preserved; solution heroes are unchanged.
+
+Verified targeted ESLint across all five resource pages and `git diff --check` passed. Browser cropping, contrast and responsive appearance remain unverified; no build/server commands run under project restrictions. Changes remain local and uncommitted.
+
+## About/Careers fade returned to softer white, 2026-09-07
+
+User rejected the black treatment. Restored light background and original dark heading/description colors for background heroes. Reduced the white fade opacity and made it clear earlier on desktop (transparent by 75%, with 20% opacity at 60%) to expose more artwork than the original pale version. Mobile opacity is also reduced while retaining a reading veil. Only About/Careers currently use this treatment. Targeted PageHero lint and diff whitespace checks passed; rendered contrast and appearance remain unverified under project command restrictions.
+
+## About and Careers black hero fade, 2026-09-07
+
+Changed the background-hero trial from pale to black fades at user request. About/Careers now have a black base, stronger dark overlay behind white headings and near-white descriptions, fading toward the artwork on desktop. Mobile retains a dark veil across the image for readability. Scoped text overrides apply only to background-image heroes; separate-image resource and solution heroes are unchanged. Existing copy and assets are retained.
+
+Verified targeted ESLint for PageHero and `git diff --check` passed. Browser rendering remains unverified; no build/server commands run under project restrictions.
+
+## About and Careers background hero trial, 2026-09-07
+
+On user request, switched only About and Careers to background artwork using an optional `backgroundImage` prop on shared PageHero. Images sit behind the hero with a pale left-to-right fade, limited text measure, and taller hero space. Mobile uses a stronger veil for readability. Solution and resource pages retain their separate artwork panels. All copy and Careers application links remain unchanged; existing artwork is reused.
+
+Verified targeted ESLint for PageHero, About and Careers and `git diff --check`. Browser appearance, cropping and rendered contrast remain unverified; no build/server/browser commands run under project restrictions. Trial is local and uncommitted.
+
+## Careers opening layout connected to application, 2026-09-07
+
+Addressed the isolated single-role presentation: replaced the half-width openings grid with full-width ruled rows, tightened section spacing, increased summary text to base size with readable measure, and placed an “Apply now” anchor alongside each role (below on mobile). Links point to the existing form section via `#application` with scroll margin for the sticky header and role-specific accessible names. Existing role title, summary and form are retained; no role preselection is implied. Targeted ESLint and `git diff --check` passed. Browser layout/anchor verification remains pending; no build/server commands run under project restrictions.
+
+## About hero description added, 2026-09-07
+
+Added user-requested description beneath “About us” via `aboutHero.lede`, using existing positioning: boutique market intelligence for B2B technology leaders, understanding markets, identifying accounts and turning research into business conversations. The existing introduction and generated hero image remain. Targeted ESLint and `git diff --check` passed; browser rendering remains unverified under project command restrictions.
+
+## Experts View interview correction and About/Careers banners, 2026-09-07
+
+Replaced the podcast-style Experts View banner with an editorial face-to-face executive interview illustration, using `public/resources/banners/experts-view-interview.png`. The old artwork remains unused; the new filename avoids stale cached imagery. Exact replacement prompt is in the adjacent `experts-view-interview-prompt.md`.
+
+Generated and integrated About (research analysts examining company models) and Careers (welcoming collaborative workplace) hero images at `public/company/banners/about.png` and `public/company/banners/careers.png`. Both use the existing PageHero media slot, matching resource and solution banners. All original page copy remains; About retains its title-only hero and separate introduction. Artwork is fictional editorial illustration, not real team photography. Built-in image generation was used; exact prompts are in `public/company/banners/prompts.md`, and originals remain in Codex generated_images.
+
+Verified all three generated images visually, copied final assets into the workspace, and passed targeted ESLint for About, Careers and Experts View plus `git diff --check`. No build/server/browser commands run under project restrictions. Rendered responsive layout and runtime image optimization remain unverified. Changes are local and uncommitted.
+
+## All five resource hero images generated and integrated, 2026-09-07
+
+Created coordinated blue/white/orange 1536x1024 artwork using the built-in image generator for Reports & Whitepapers (publications), Experts View (interview setting), Insights (optical prism and research), Events (conference stage), and Success Stories (milestone path). Saved all five PNGs in `public/resources/banners/`; exact prompts and generation method are in `public/resources/banners/prompts.md`. Originals remain in the Codex generated_images directory.
+
+Integrated each image into its resource category index through the existing PageHero media slot. Preserved Resources eyebrow/square, headings, descriptions, metadata, pagination and listings. Images sit beside text on desktop and below on mobile, with intrinsic dimensions, responsive Next Image sizes, preload and empty decorative alt text. No dependencies or client components added.
+
+Verified generated images visually, confirmed files exist, and passed targeted ESLint for all five changed resource pages plus `git diff --check`. No build/server/browser commands run under AGENTS.md restrictions. Rendered desktop/mobile heroes and runtime image optimization remain unverified. Local work is uncommitted.
+
+## Solution hero eyebrow added, 2026-09-07
+
+Added the user-requested “Solution” eyebrow to all three shared solution heroes. PageHero/SectionHeading supplies the existing orange square marker and dotted rule, matching the Resources treatment. Other copy and artwork are unchanged. Targeted ESLint and `git diff --check` passed; no build/server/browser commands run.
+
+## Solution heroes use shared PageHero, 2026-09-07
+
+User requested the hero treatment used on `/resources/reports-whitepapers`, with the generated images added. Replaced custom solution hero markup with shared `PageHero`, retaining all original headings, descriptions and CTA links. Added optional `media` slot to PageHero: artwork sits beside copy on desktop and below it on mobile. Shared heading weight, lede size, tight section spacing, hero wash and text entrance now match the resources hero. Existing PageHero callers without media retain their styling. Removed custom orange rule from solution heroes; no new eyebrow copy was added. Earlier stacked Prospect Database paragraphs and capability improvements are retained.
+
+Verified targeted ESLint for both modified components and `git diff --check` passed. No builds, servers or browser commands were run under AGENTS.md restrictions; rendered responsive layout remains unverified. Changes remain local and uncommitted.
+
+## Prospect introduction paragraphs stacked, 2026-09-07
+
+Changed only the Prospect Database proposition body to two full-width paragraphs stacked vertically at every breakpoint, as requested. Wording is unchanged; the other solution introduction layouts retain their desktop columns. Verified with targeted ESLint and `git diff --check`; browser verification remains pending under project command restrictions.
+
+## Separate solution banner layout restored, 2026-09-07
+
+User preferred the preceding layout. Reverted only the background-image/fade treatment: all three heroes again show copy on the left and a separate rounded artwork panel on the right on desktop, stacked below copy on mobile. Removed `.solution-hero-fade` CSS. Generated assets, original copy, CTAs and earlier page improvements remain. This supersedes the background-banner entry below.
+
+Verified: targeted ESLint and `git diff --check` passed. No build/server/browser commands run; rendered verification remains pending. Changes remain local and uncommitted.
+
+## Solution banners moved behind hero copy, 2026-09-07
+
+User requested background images with a fade. All three solution heroes now use their generated banner as an absolutely positioned decorative Next Image, with a pale horizontal gradient above the image and existing copy/CTAs above both. Desktop artwork occupies the right 75% and fades into the solid left text surface. Small screens use a stronger pale veil across the full image to preserve readability. Removed the separate image panel; copy and links are unchanged. CSS is scoped to `.solution-hero-fade` and image sizes reflect the new background width.
+
+Verified by source review, targeted ESLint and `git diff --check`. Browser rendering, crop and visual contrast remain unverified; no build/server commands run under project command restrictions. Changes remain local and uncommitted.
+
+## Generated solution hero banners, 2026-09-07
+
+Generated three coordinated blue/white/orange 1536x1024 editorial 3D illustrations using the built-in image generation tool. Saved final assets as `public/solutions/prospect-database-banner.png`, `public/solutions/account-intelligence-banner.png`, and `public/solutions/research-based-marketing-banner.png`. Exact prompts and generation method are recorded in `public/solutions/banner-prompts.md`. Original generated files remain in the Codex generated_images directory.
+
+Updated the shared solution hero to group the existing heading, description and CTA on the left with the relevant banner on the right at desktop widths; mobile stacks artwork below copy. Images use Next Image with intrinsic dimensions, responsive sizes, preload and decorative empty alt text. All existing copy, links, capability layouts and Remix icons remain intact.
+
+Verified all three generated artworks visually, checked asset presence, and passed targeted ESLint and `git diff --check`. No build/server/browser commands were run under AGENTS.md command restrictions. Rendered desktop/mobile layout and image optimization remain unverified. Local changes are uncommitted.
+
+## Three solution pages presentation refresh, 2026-09-07
+
+Updated the shared `/solutions/[slug]` template for prospect-database, account-intelligence and research-based-marketing. Added split desktop heroes, readable two-column proposition paragraphs, brand-blue outcome bands, and always-visible responsive capabilities instead of the mobile carousel. Prospect capabilities use a two-column icon-led layout, account intelligence uses paired tinted panels, and marketing uses open desktop columns. All existing solution copy, order, links, metadata and tooltip text are retained; `src/content/solutions.ts` is unchanged. CTA height can expand for wrapping on narrow screens.
+
+Replaced all nine hand-drawn capability glyphs with official Remix Icon v4.6.0 SVG paths, adapted to the existing server-rendered component without dependencies. Upstream Apache-2.0 license is stored at `public/licenses/remixicon.txt`; source names and attribution are in the component.
+
+Verified: targeted ESLint passed for both TSX files, source review confirmed copy bindings remain, and `git diff --check` passed. Build, browser, and skill setup/detector scripts were not run under AGENTS.md command restrictions. Desktop/mobile rendering, exact wrapping and tooltip behavior remain unverified. Changes are local and uncommitted.
+
 ## Shared animation recovery prepared for push, 2026-09-07
 
 User authorized committing and pushing the shared motion-preference recovery, homepage entrance, and restored step/delay exports to main. Targeted lint and diff whitespace checks passed. The missing-export cause is corrected by inspection; a production build and browser verification have not been run under project command restrictions. The staging hydration mismatch remains undiagnosed. Git history and origin tracking state record the commit/push outcome.

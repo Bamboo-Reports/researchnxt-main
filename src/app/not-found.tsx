@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
@@ -85,17 +86,12 @@ export default function NotFound() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <path
-                    d="M236 88L284 136M284 88L236 136"
-                    stroke="var(--color-signal)"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                  />
                   <circle cx="20" cy="112" r="6" fill="var(--color-ink)" />
                   <circle cx="164" cy="112" r="6" fill="var(--color-accent)" />
                   <circle cx="356" cy="112" r="6" fill="var(--color-accent)" />
                   <circle cx="500" cy="112" r="6" fill="var(--color-ink)" />
                 </svg>
+                <RemixIcon name="close-line" className="absolute left-1/2 top-1/2 size-14 -translate-x-1/2 -translate-y-1/2 text-signal" />
               </div>
 
               <div className="mt-8 grid grid-cols-[auto_1fr_auto] items-center gap-4 text-xs text-ink-muted">

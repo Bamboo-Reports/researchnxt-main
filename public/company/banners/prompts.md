@@ -1,0 +1,12 @@
+# Company hero artwork
+
+Generated using the built-in image generation tool on 2026-09-07. Decorative fictional editorial scenes, not photographs of Research NXT employees. Final 1536x1024 PNG assets are served through Next Image.
+
+## careers.png
+
+Use case: ads-marketing. Generate a premium editorial 3D illustration for Research NXT corporate website hero, 1536x1024 landscape. Cohesive tactile sculptural business world: matte white, saturated blue #0073b6, small orange #ff7d24 accents, pale cool blue-white studio backdrop, natural soft daylight and precise shadows. Sophisticated professional composition, whole central scene visible with breathing room. No text, letters, numbers, logos, watermarks, fake UI, neon or dark backgrounds. Stylized figures are fictional representations, not photographs of real employees. Subject: a welcoming collaborative workplace moment, three stylized adult professionals in smart casual blue and white clothing around a white worktable, one seated colleague showing an open notebook to a new colleague joining the table while another smiles and makes space. Blue chairs, closed blue research publications, an orange notebook, one small plant. Natural friendly body language, editorial 3D figures, career opportunity and belonging, not a formal job interview or podcast setup.
+
+## about.png
+
+Use case: ads-marketing. Generate a premium editorial 3D illustration for Research NXT corporate website hero, 1536x1024 landscape. Cohesive tactile sculptural business world: matte white, saturated blue #0073b6, small orange #ff7d24 accents, pale cool blue-white studio backdrop, natural soft daylight and precise shadows. Sophisticated professional composition, whole central scene visible with breathing room. No text, letters, numbers, logos, watermarks, fake UI, neon or dark backgrounds. Stylized figures are fictional representations, not photographs of real employees. Subject: boutique market intelligence team at work. Three stylized professional adult research analysts standing and sitting around a broad white studio table, collaboratively examining an orderly physical landscape of small blue company models and white research publications. One analyst points to a company model while another takes notes. A single orange selected company block. An elegant miniature research workshop expressing human expertise and business intelligence. No microphones or screens with fake data, no corporate handshake.
+

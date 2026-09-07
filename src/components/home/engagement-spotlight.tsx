@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { engagementSteps } from "@/content/home";
 
 /** Manual stage selection keeps the sequence readable without timed cycling. */
@@ -23,7 +24,7 @@ export function EngagementSpotlight() {
             >
               <span className="text-sm tabular-nums"><span className="sr-only">Step </span>{String(index + 1).padStart(2, "0")}</span>
               <span className="text-title font-display-soft">{item.name}</span>
-              <span aria-hidden="true" className={`ml-auto ${active === index ? "visible" : "invisible"}`}>→</span>
+              <RemixIcon name="arrow-right-line" className={`ml-auto ${active === index ? "visible" : "invisible"}`} />
             </button>
           </li>
         ))}

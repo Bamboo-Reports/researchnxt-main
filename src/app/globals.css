@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Background heroes: a light reading surface fades away early enough to keep
+   the artwork clear. Phones retain a veil where text overlaps the image. */
+.page-hero-background-fade {
+  background: linear-gradient(90deg, rgb(242 246 250 / 90%), rgb(242 246 250 / 78%) 65%, rgb(242 246 250 / 60%));
+}
+
+@media (min-width: 1024px) {
+  .page-hero-background-fade {
+    background: linear-gradient(90deg, #f2f6fa 0%, rgb(242 246 250 / 98%) 20%, rgb(242 246 250 / 88%) 35%, rgb(242 246 250 / 68%) 48%, rgb(242 246 250 / 20%) 60%, transparent 75%);
+  }
+}
+
 /* ---------------------------------------------------------------------------
    Design tokens — Research NXT
 

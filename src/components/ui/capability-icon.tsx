@@ -1,93 +1,37 @@
 import type { CapabilityIconName } from "@/content/types";
 
-/**
- * Stroke glyphs for the capability cards, drawn to match the site's line
- * language: 1.6 stroke, round caps, no fills. One glyph per capability so a
- * scanning reader can tell the cards apart before reading the titles.
+/** Remix Icon v4.6.0 (https://remixicon.com/), Apache-2.0.
+ * Official SVGs adapted to React; path data unchanged.
+ * License: public/licenses/remixicon.txt.
  */
-
-const glyphs: Record<CapabilityIconName, React.ReactNode> = {
-  target: (
-    <>
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="3.75" />
-      <path d="M12 12h.01" />
-    </>
-  ),
-  "list-search": (
-    <>
-      <path d="M4 6h10M4 11h6M4 16h5.5" />
-      <circle cx="15.5" cy="14.5" r="3.5" />
-      <path d="M18.1 17.1l3.4 3.4" />
-    </>
-  ),
-  append: (
-    <>
-      <ellipse cx="10" cy="5.5" rx="6.5" ry="2.5" />
-      <path d="M3.5 5.5v9c0 1.4 2.9 2.5 6.5 2.5.7 0 1.4 0 2-.1" />
-      <path d="M16.5 5.5v4.5" />
-      <path d="M18.5 14.5v6M15.5 17.5h6" />
-    </>
-  ),
-  cleanse: (
-    <>
-      <path d="M11 4.5 12.6 8.9 17 10.5l-4.4 1.6L11 16.5 9.4 12.1 5 10.5l4.4-1.6L11 4.5Z" />
-      <path d="M18.5 14.5l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9.9-2.6Z" />
-    </>
-  ),
-  account: (
-    <>
-      <path d="M5.5 21V4.8A1.8 1.8 0 0 1 7.3 3h9.4a1.8 1.8 0 0 1 1.8 1.8V21" />
-      <path d="M3 21h18" />
-      <path d="M9 7.5h1.5M13.5 7.5H15M9 11.5h1.5M13.5 11.5H15M9 15.5h1.5M13.5 15.5H15" />
-    </>
-  ),
-  competitor: (
-    <>
-      <circle cx="12" cy="12" r="8.5" />
-      <circle cx="12" cy="12" r="4.5" />
-      <path d="M12 12l5.5-5.5" />
-      <path d="M9 14.5h.01" />
-    </>
-  ),
-  content: (
-    <>
-      <path d="M17.5 2.9 21.1 6.5 8 19.6l-4.9 1.3 1.3-4.9L17.5 2.9Z" />
-      <path d="M15 5.4l3.6 3.6" />
-    </>
-  ),
-  campaign: (
-    <>
-      <path d="M19.5 4.5v13l-9-3.5H5a1.5 1.5 0 0 1-1.5-1.5v-3A1.5 1.5 0 0 1 5 8h5.5l9-3.5Z" />
-      <path d="M7.5 14.3v4.2a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-3.7" />
-    </>
-  ),
-  funnel: (
-    <>
-      <path d="M3.5 4.5h17L14 12.6v5.9l-4 2v-7.9L3.5 4.5Z" />
-    </>
-  ),
+const glyphs: Record<CapabilityIconName, string> = {
+  // Design/focus-3-line
+  target: "M13 1L13.001 4.06201C16.6192 4.51365 19.4869 7.38163 19.9381 11L23 11V13L19.938 13.001C19.4864 16.6189 16.6189 19.4864 13.001 19.938L13 23H11L11 19.9381C7.38163 19.4869 4.51365 16.6192 4.06201 13.001L1 13V11L4.06189 11C4.51312 7.38129 7.38129 4.51312 11 4.06189L11 1H13ZM12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6ZM12 10C13.1046 10 14 10.8954 14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10Z",
+  // System/search-line
+  "list-search": "M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z",
+  // System/add-circle-line
+  append: "M11 11V7H13V11H17V13H13V17H11V13H7V11H11ZM12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z",
+  // System/check-double-line
+  cleanse: "M11.602 13.7599L13.014 15.1719L21.4795 6.7063L22.8938 8.12051L13.014 18.0003L6.65 11.6363L8.06421 10.2221L10.189 12.3469L11.6025 13.7594L11.602 13.7599ZM11.6037 10.9322L16.5563 5.97949L17.9666 7.38977L13.014 12.3424L11.6037 10.9322ZM8.77698 16.5873L7.36396 18.0003L1 11.6363L2.41421 10.2221L3.82723 11.6352L3.82604 11.6363L8.77698 16.5873Z",
+  // Buildings/building-4-line
+  account: "M21 20H23V22H1V20H3V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V20ZM19 20V4H5V20H19ZM8 11H11V13H8V11ZM8 7H11V9H8V7ZM8 15H11V17H8V15ZM13 15H16V17H13V15ZM13 11H16V13H13V11ZM13 7H16V9H13V7Z",
+  // Business/bar-chart-box-line
+  competitor: "M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM4 5V19H20V5H4ZM7 13H9V17H7V13ZM11 7H13V17H11V7ZM15 10H17V17H15V10Z",
+  // Document/article-line
+  content: "M20 22H4C3.44772 22 3 21.5523 3 21V3C3 2.44772 3.44772 2 4 2H20C20.5523 2 21 2.44772 21 3V21C21 21.5523 20.5523 22 20 22ZM19 20V4H5V20H19ZM7 6H11V10H7V6ZM7 12H17V14H7V12ZM7 16H17V18H7V16ZM13 7H17V9H13V7Z",
+  // Business/megaphone-line
+  campaign: "M9 17C9 17 16 18 19 21H20C20.5523 21 21 20.5523 21 20V13.937C21.8626 13.715 22.5 12.9319 22.5 12C22.5 11.0681 21.8626 10.285 21 10.063V4C21 3.44772 20.5523 3 20 3H19C16 6 9 7 9 7H5C3.89543 7 3 7.89543 3 9V15C3 16.1046 3.89543 17 5 17H6L7 22H9V17ZM11 8.6612C11.6833 8.5146 12.5275 8.31193 13.4393 8.04373C15.1175 7.55014 17.25 6.77262 19 5.57458V18.4254C17.25 17.2274 15.1175 16.4499 13.4393 15.9563C12.5275 15.6881 11.6833 15.4854 11 15.3388V8.6612ZM5 9H9V15H5V9Z",
+  // System/filter-3-line
+  funnel: "M10 18H14V16H10V18ZM3 6V8H21V6H3ZM6 13H18V11H6V13Z",
 };
 
-export function CapabilityIcon({
-  name,
-  className,
-}: {
+export function CapabilityIcon({ name, className }: {
   name: CapabilityIconName;
   className?: string;
 }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      {glyphs[name]}
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor" className={className}>
+      <path d={glyphs[name]} />
     </svg>
   );
 }

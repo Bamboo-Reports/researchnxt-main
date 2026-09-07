@@ -1,0 +1,17 @@
+# Solution banner artwork
+
+Generated using the built-in image generation tool on 2026-09-07.
+Decorative 1536 × 1024 PNGs; served through Next Image for responsive optimization.
+
+## prospect-database-banner.png
+
+Use case: ads-marketing. Generate a premium editorial 3D illustration for a Research NXT B2B research website hero banner. Landscape 1536x1024. Pale cool blue-white studio background (#eff4f8), precise matte white and saturated blue (#0073b6) objects with restrained orange (#ff7d24) accents. Beautiful tactile materials, soft daylight shadows, sophisticated art direction, crisp sculptural forms, generous breathing room, no dark background, no glowing sci-fi effects. Composition centered, entire subject within central 75%, suitable for a right-hand hero image beside live HTML text. No text, letters, numbers, logos, watermarks, UI screenshots or fake charts. Subject: a carefully arranged collection of translucent blue and white contact-record tiles in an orderly physical archive, small embossed person silhouettes on the tiles, one orange selected profile pulled forward, a clear precision magnifying lens resting beside the records. Visually convey curated accurate business contacts. One coherent still-life, not floating disconnected icons.
+
+## account-intelligence-banner.png
+
+Use case: ads-marketing. Generate a premium editorial 3D illustration for a Research NXT B2B research website hero banner. Landscape 1536x1024. Pale cool blue-white studio background (#eff4f8), precise matte white and saturated blue (#0073b6) objects with restrained orange (#ff7d24) accents. Beautiful tactile materials, soft daylight shadows, sophisticated art direction, crisp sculptural forms, generous breathing room, no dark background, no glowing sci-fi effects. Composition centered, entire subject within central 75%, suitable for a right-hand hero image beside live HTML text. No text, letters, numbers, logos, watermarks, UI screenshots or fake charts. Subject: a sculptural architectural model of a blue business headquarters surrounded by a few smaller white company blocks on a circular white platform, subtle physical blue connecting channels and one orange strategic marker. Close-up elevated three-quarter view, convey understanding a company and its network. One coherent sophisticated still-life, no city skyline background.
+
+## research-based-marketing-banner.png
+
+Use case: ads-marketing. Generate a premium editorial 3D illustration for a Research NXT B2B research website hero banner. Landscape 1536x1024. Pale cool blue-white studio background (#eff4f8), precise matte white and saturated blue (#0073b6) objects with restrained orange (#ff7d24) accents. Beautiful tactile materials, soft daylight shadows, sophisticated art direction, crisp sculptural forms, generous breathing room, no dark background, no glowing sci-fi effects. Composition centered, entire subject within central 75%, suitable for a right-hand hero image beside live HTML text. No text, letters, numbers, logos, watermarks, UI screenshots or fake charts. Subject: a sculptural still-life of open research publication pages with abstract blue graphic blocks (no lettering), a blue broadcast cone and three carefully arranged white audience tokens reached by physical curved blue ribbons; one restrained orange accent on the publication. Convey original research becoming targeted communication. Cohesive elegant object composition, no floating disconnected icons.
+

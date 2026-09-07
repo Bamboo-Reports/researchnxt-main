@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -42,119 +43,24 @@ import { og } from "@/lib/og";
 
 type Params = { params: Promise<{ slug: string }> };
 
-/**
- * Stroke glyphs for the theme index, drawn in the house line language: 1.6
- * stroke, round caps, no fills, same hand as the capability and offer
- * icons. One glyph per theme so a scanning reader can tell the cells apart
- * before reading the labels, which is what the source microsites used their
- * stock icons for.
- */
+/** Official Remix glyphs matched to existing report theme names. */
 const THEME_GLYPHS = {
-  route: (
-    <>
-      <circle cx="6" cy="19" r="2.5" />
-      <path d="M8.5 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h4.5" />
-      <path d="M18 2.5c1.9 1.9 3 3.4 3 5a3 3 0 0 1-6 0c0-1.6 1.1-3.1 3-5Z" />
-    </>
-  ),
-  coins: (
-    <>
-      <ellipse cx="9" cy="7" rx="6" ry="2.6" />
-      <path d="M3 7v6c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6V7" />
-      <path d="M3 13v4c0 1.4 2.7 2.6 6 2.6 1.1 0 2.2-.1 3.1-.4" />
-      <path d="M18.5 13.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" />
-    </>
-  ),
-  tap: (
-    <>
-      <rect x="7" y="3" width="10" height="18" rx="2.2" />
-      <path d="M12 17.5h.01" />
-      <path d="M10.5 8.5 12 10l3-3" />
-    </>
-  ),
-  waveform: (
-    <>
-      <path d="M3 10v4M6.5 7.5v9M10 5v14M13.5 8.5v7M17 6.5v11M20.5 10v4" />
-    </>
-  ),
-  sliders: (
-    <>
-      <path d="M4 8h9M17 8h3M4 16h3M11 16h9" />
-      <circle cx="15" cy="8" r="2" />
-      <circle cx="9" cy="16" r="2" />
-    </>
-  ),
-  nodes: (
-    <>
-      <rect x="9.5" y="3" width="5" height="4.5" rx="1" />
-      <rect x="3" y="16.5" width="5" height="4.5" rx="1" />
-      <rect x="16" y="16.5" width="5" height="4.5" rx="1" />
-      <path d="M12 7.5v4M12 11.5 5.5 16.5M12 11.5l6.5 5" />
-    </>
-  ),
-  laptop: (
-    <>
-      <rect x="5" y="5" width="14" height="9.5" rx="1.4" />
-      <path d="M2.8 18.5h18.4" />
-      <path d="M9.5 9.2 11 10.7l3.5-3.2" />
-    </>
-  ),
-  chip: (
-    <>
-      <rect x="6.5" y="6.5" width="11" height="11" rx="1.6" />
-      <rect x="10" y="10" width="4" height="4" />
-      <path d="M9 3.5v3M15 3.5v3M9 17.5v3M15 17.5v3M3.5 9h3M3.5 15h3M17.5 9h3M17.5 15h3" />
-    </>
-  ),
-  bulb: (
-    <>
-      <path d="M12 3.5a6 6 0 0 1 3.5 10.9c-.8.6-1 1.2-1 2.1h-5c0-.9-.2-1.5-1-2.1A6 6 0 0 1 12 3.5Z" />
-      <path d="M10 19.5h4M10.8 21.5h2.4" />
-    </>
-  ),
-  chart: (
-    <>
-      <path d="M4 4v15.5h16" />
-      <path d="M8 15.5v-4M12 15.5V8M16 15.5v-5.5" />
-      <path d="M7.5 6.5 11 5l3 1.5 3.5-2" />
-    </>
-  ),
-  target: (
-    <>
-      <circle cx="12" cy="12" r="8" />
-      <circle cx="12" cy="12" r="3.75" />
-      <path d="M12 12h.01" />
-    </>
-  ),
-  heart: (
-    <>
-      <path d="M12 20.5S4 15.6 4 9.9A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 8 2.9c0 5.7-8 10.6-8 10.6Z" />
-    </>
-  ),
-  chat: (
-    <>
-      <path d="M4 5.5h11a1.8 1.8 0 0 1 1.8 1.8v5.4a1.8 1.8 0 0 1-1.8 1.8H9l-3.6 3v-3H4a1.8 1.8 0 0 1-1.8-1.8V7.3A1.8 1.8 0 0 1 4 5.5Z" />
-      <path d="M19.5 9.5h.7A1.8 1.8 0 0 1 22 11.3v5.4a1.8 1.8 0 0 1-1.8 1.8h-.7v2.6l-3.1-2.6H13" />
-    </>
-  ),
-  flag: (
-    <>
-      <path d="M6 21.5v-18" />
-      <path d="M6 4.5c4-2 8 2 12 0v9c-4 2-8-2-12 0" />
-    </>
-  ),
-  gear: (
-    <>
-      <circle cx="12" cy="12" r="3.2" />
-      <path d="M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M18.5 5.5l-2.1 2.1M7.6 16.4l-2.1 2.1" />
-    </>
-  ),
-  compass: (
-    <>
-      <circle cx="12" cy="12" r="8.5" />
-      <path d="m15.2 8.8-1.8 4.6-4.6 1.8 1.8-4.6 4.6-1.8Z" />
-    </>
-  ),
+  "route": "route-line",
+  "coins": "coins-line",
+  "tap": "smartphone-line",
+  "waveform": "voiceprint-line",
+  "sliders": "equalizer-line",
+  "nodes": "node-tree",
+  "laptop": "macbook-line",
+  "chip": "cpu-line",
+  "bulb": "lightbulb-line",
+  "chart": "bar-chart-line",
+  "target": "focus-3-line",
+  "heart": "heart-line",
+  "chat": "discuss-line",
+  "flag": "flag-line",
+  "gear": "settings-3-line",
+  "compass": "compass-3-line"
 } as const;
 
 type ThemeGlyphName = keyof typeof THEME_GLYPHS;
@@ -204,20 +110,7 @@ function themeGlyph(label: string): ThemeGlyphName {
 }
 
 function ThemeIcon({ name }: { name: ThemeGlyphName }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="size-5"
-    >
-      {THEME_GLYPHS[name]}
-    </svg>
-  );
+  return <RemixIcon name={THEME_GLYPHS[name]} className="size-5" />;
 }
 
 /**
@@ -550,49 +443,10 @@ function CardCountLayout({
   return <ReportCardRail items={items} label={label} />;
 }
 
-/**
- * The offer band's three line icons, drawn in the house stroke so the band
- * does not pull in an icon library for three marks: heads in conversation for
- * consulting, a checked cloud for the assessment, a ticket for the waiver.
- */
+/** Official Remix icons for consulting, assessment and fee waivers. */
 function OfferIcon({ name }: { name: "consulting" | "assessment" | "waiver" }) {
-  const paths = {
-    consulting: (
-      <>
-        <circle cx="8" cy="9" r="3" />
-        <path d="M2.8 20c.6-3.2 2.7-5 5.2-5s4.6 1.8 5.2 5" />
-        <path d="M15 4.6a4 4 0 0 1 4.7 6.3" />
-        <path d="M16.6 15.2c2.4.3 4.1 2 4.6 4.8" />
-      </>
-    ),
-    assessment: (
-      <>
-        <path d="M7 18a4.5 4.5 0 0 1-.4-9 6 6 0 0 1 11.6 1.6A4 4 0 0 1 17.5 18H7Z" />
-        <path d="m9.5 13.5 2 2 3.5-4" />
-      </>
-    ),
-    waiver: (
-      <>
-        <path d="M3 9.5V7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2.5a2.5 2.5 0 0 0 0 5V17a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-2.5a2.5 2.5 0 0 0 0-5Z" />
-        <path d="M14 6v2.2M14 11v2M14 15.8V18" />
-      </>
-    ),
-  } as const;
-
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-      className="size-9 text-accent"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      {paths[name]}
-    </svg>
-  );
+  const icons = { consulting: "team-line", assessment: "cloud-line", waiver: "coupon-line" } as const;
+  return <RemixIcon name={icons[name]} className="size-9 text-accent" />;
 }
 
 export function generateStaticParams() {

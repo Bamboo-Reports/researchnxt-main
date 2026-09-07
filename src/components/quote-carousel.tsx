@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import type { ReportLanding } from "@/content/resources";
@@ -185,19 +186,6 @@ export function QuoteCarousel({
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      aria-hidden="true"
-      className={cn("size-4", className)}
-    >
-      <path
-        d="M6 3.5 10.5 8 6 12.5"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <RemixIcon name="arrow-right-s-line" className={cn("size-4", className)} />
   );
 }

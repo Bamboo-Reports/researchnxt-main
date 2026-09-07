@@ -64,6 +64,7 @@ export default async function InsightsPage({ searchParams }: Params) {
         eyebrow="Resources"
         title={insightsLibrary.title}
         lede={insightsLibrary.lede}
+        backgroundImage="/hero-backgrounds/insights.png"
       />
 
       <Section spacing="default">

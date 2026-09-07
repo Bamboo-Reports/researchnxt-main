@@ -4,6 +4,8 @@
 
 export const aboutHero = {
   title: "About us",
+  lede:
+    "We’re a boutique market intelligence firm helping B2B technology leaders understand their markets, identify the right accounts, and turn research into meaningful business conversations.",
   /** Search-snippet length; the page lede runs longer than a SERP shows. */
   metaDescription:
     "A boutique market intelligence firm for B2B technology leaders: we size markets, name accounts and carry research through to conversations sales can act on.",

@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/container";
+import { RemixIcon } from "@/components/ui/remix-icon";
 import { footerNav, legalNav } from "@/config/nav";
 import { site } from "@/config/site";
 import { NavLink } from "./nav-link";
@@ -52,19 +53,7 @@ export function Footer() {
                   aria-label={`Email ${site.email}`}
                   className="-m-2.5 block p-2.5 text-ink-soft transition-colors duration-200 hover:text-ink"
                 >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="size-5"
-                  >
-                    <rect x="2" y="4" width="20" height="16" rx="2" />
-                    <path d="m2 7 10 7L22 7" />
-                  </svg>
+                  <RemixIcon name="mail-line" className="size-5" />
                 </a>
               </li>
             </ul>
