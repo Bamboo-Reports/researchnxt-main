@@ -2,7 +2,169 @@
 
 Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
 
-Last updated: 2026-08-14
+Last updated: 2026-09-07
+
+## Careers: Trainee Research Associate removed, 2026-09-07
+
+User direction. The opening is deleted from `openings` in
+`src/content/careers.ts`; the Sales Development Representative role
+remains. Nothing else referenced the slug.
+
+## Report landings on phones: form-only hero, mockup above About, 2026-09-07
+
+User direction. Below `lg` the report landing hero is the download form
+alone; the tablet mockup (`hero.cover`, the 768x909 render every report
+has) is rendered a second time at the top of the About band, `lg:hidden`,
+centred at w-52 / sm:w-64, without `priority`. The hero's mockup column is
+`hidden lg:flex` and the sr-only h1 moved out of it so assistive tech
+still gets the title on phones. Desktop is unchanged. Lint and tsc clean;
+verified at 390px (form-only hero, mockup centred above the first
+paragraph, no horizontal overflow) and at 1920px (hero mockup shown,
+About copy hidden).
+
+## Phone layout: rails for stacked sections, form anchor bar, 2026-09-07
+
+User direction: on a phone the four Latest reports covers stacked one per
+screen, so the next section was several swipes away; "we can add arrows
+maybe"; then "check other sections where we would need to do such stuff";
+then a sticky bottom bar on interviews and articles anchored to the form.
+
+- `CardRail` (in `report-card-rail.tsx`) grew two things. Items may carry
+  a `className` for their `li`. An optional `grid` prop makes the rail a
+  phone-only device: from `sm` the `ul` becomes a grid with the given
+  column and gap classes, the `li` widths reset, and the arrows hide, so
+  tablets and desktops keep exactly the grids they had (subgrid rows and
+  the bento spans verified at 1200px). On a phone the card is 82% of the
+  rail so the next one peeks in as the scroll cue, and the arrows step it.
+- Home Latest reports moved from the 4-up grid onto the rail (portrait
+  ResourceCards). Converted to phone rail / grid-from-sm: home What we do,
+  How we work (step cards) and Why Research NXT (bento); About milestones,
+  engagement-mode stations and their assurances; the solution pages'
+  capability cards. Those sections lost the `Reveal` stagger, as the
+  other rails never had it.
+- Measured at 376x815 through a same-origin iframe (px, before to after):
+  Latest reports about 2000 to 940; What we do 1270 to 532; How we work
+  1209 to 600; Why 1129 to 649; About milestones 1118 to 476; modes 1263
+  to 690; solution capabilities 1578 to 752.
+- New client component `src/components/forms/form-anchor-bar.tsx`
+  (`FormAnchorBar`): a bar fixed to the bottom of the viewport below
+  `lg` (where the form sits under the article instead of beside it),
+  with a title and a button linking to `#download`. Visible by default;
+  an IntersectionObserver hides it while the form is on screen. Renders
+  a spacer so the footer clears it, and pads for the iOS safe area.
+  Mounted on the interview page (only when the interview has a form) and
+  the article page. Copy is `downloadBar` in `content/resources.ts`. On
+  user direction the bar is a single full-width button, "Get the full
+  report", with no title beside it, and the same label is now every
+  report landing's `submitLabel`.
+  CLAUDE.md's client-component list updated.
+- Verified: lint and tsc clean; bar visible on load, hidden once the
+  form is in view; arrows on all five home rails once the tab has a
+  frame (they never appear in a hidden tab, see below).
+
+## Mobile menu fix and QA sweep, 2026-09-07
+
+User reported the menu did not work on mobile. Cause: the sticky header
+carried `backdrop-blur-md`, and a backdrop filter makes its element the
+containing block for `fixed` descendants, so the mobile sheet was sized
+against the 112px header instead of the viewport and collapsed. Fix in
+`src/components/layout/navbar.tsx`: the blur, background and border moved
+to an inner div; the header itself is only sticky. Verified against the
+user's running dev server (port 3000) through same-origin iframes at 320,
+390, 600 and 1200px: the sheet opens with all twelve links, closes on
+navigation, restores body scroll, and no page scrolls sideways.
+
+Browser QA at phone width, every route, plus a source audit. Fixed:
+
+- Experts-view library overflowed horizontally on phones: the pager's
+  page-number list did not wrap (Buyer's perspective has 16 pages).
+  `pagination.tsx` now wraps and centres the numbers.
+- External-link icon dropped onto its own line in the mobile sheet
+  (`block` overrode NavLink's `inline-flex`); the sheet links are `flex`.
+- Solutions and Resources never showed the active underline, because the
+  groups have no `href`; a group is now active when any child route is.
+- `aria-controls="mobile-nav"` pointed at nothing while closed; it is set
+  only while the sheet is rendered. The toggle got a 44px hit area.
+- Sticky asides on interview, article and event pages pinned at 96px
+  under a 112px header; now `lg:top-32`.
+- Download-form internal links announced "(opens in a new tab)".
+- Solution-page capability tooltips were read twice (tooltip text was in
+  the button name and its description); `aria-label` on the button.
+- Touch targets: quote-carousel dots 24px to 40px, About founder social
+  icons padded to 40px like the footer's.
+- Required-field marker was `text-signal` (orange text, against the
+  rule); now `text-accent`. Logo's raw `#FF7D24` now `var(--color-signal)`.
+- Latent duplicate React key in the experts-view grid (same person slug
+  in two programmes within one section); keyed on project/slug.
+- Stale comments: Phase B notes in `next.config.ts`, `nav.ts`,
+  `report-card.tsx` and the quick-reads block in `resources.ts`; the
+  three library page comments that still said "newest first".
+
+Found but deliberately not touched (user's call):
+
+- Dead code: `hero-questions.tsx` and `hero-field.tsx` are imported by
+  nothing (CLAUDE.md still lists them as live client components), with
+  their `.q-rotator*` and `.hero-field*` CSS in `globals.css`, plus
+  `.on-signal`, `.anim-wipe`/`wipe-up` and the `Textarea` field.
+- Unused assets: `public/hero2.jpg` (1.8 MB) and
+  `public/logos/trusted/insideview.png`.
+- Copy hardcoded in JSX on the four detail templates, `not-found.tsx`
+  and `error.tsx`, against the "copy lives in src/content" rule.
+- Test-environment note: `requestAnimationFrame` does not fire in a
+  hidden Chrome tab, so rail arrows and GSAP hero motion appear frozen
+  under automation; both work once the tab is visible.
+
+## Libraries shelved by project order, 2026-09-07
+
+User direction: sort the experts-view perspectives (starting with Buyer's
+perspective), the reports and whitepapers shelf, and anything else that
+can take it, by research programme, most recent first: Routematic
+(corporate commute), Salesforce (Implementor's Guide to AI), Zoho Qatar
+(Unified CX), Zoho India (Automation & Campaign Management), Transforming
+CX through GCCs, Cloud Computing, AI Led Personalization, Southeast Asia,
+then the rest as they were.
+
+- New `src/content/project-order.ts` holds that list once (`projectOrder`)
+  with `projectRank(slug)` and a `byProject` comparator. Slugs not on the
+  list (industry-events, prospect-database, bamboo-reports) rank last.
+- `expertInterviews` now sorts by project rank, then title, so every
+  perspective section, its pagination and the sibling band on an
+  interview page read Routematic first. `expertProjects` reordered to
+  match (display only; lookups are by slug).
+- `reportLandings` sorts by project rank, so the reports shelf and the
+  sitemap follow it. `latestReports(count)` is now the head of that shelf
+  rather than a publication-date sort, so the home page "Latest reports"
+  band shows Routematic, Salesforce, Zoho Qatar, Zoho India. Note the
+  hand order differs from the dates only in the 2020-2021 tail (cloud,
+  then AI led, then Southeast Asia).
+- `insights` sorts by project rank, then newest first within a project;
+  `insightProjects` reordered to match.
+- Success stories sort by project rank too, then newest first within a
+  project; the prospect database story is not a research programme, so
+  it sits last.
+- Events went back to a plain chronology on user direction ("H-1B is the
+  newest then redefining marketing excellence and then rest"). The
+  undated marketing automation roundtable gained `published: "2025-01-13"`
+  (the write-up's go-live date, a new optional `Event` field, never
+  rendered) so the sort can place it second; the listing runs
+  `date ?? published`, newest first.
+- The home page Experts view band ("Perspectives from the people doing
+  the work") is no longer hand-picked. On user direction it now reads
+  the Buyer's perspective section of the sorted library, keeps the first
+  two buyers from each programme (`BUYERS_PER_PROJECT`), and renders
+  them as a scrolling rail, so the latest buyers sit in view, the rest scroll, and the band
+  updates itself as programmes are added. `report-card-rail.tsx` was
+  split for this: `CardRail` is the generic scroll-snap row taking
+  `{ key, node }` items, and `ReportCardRail` is the `ReportCard` wrapper
+  the three detail pages still use. The home rail drops the `Reveal`
+  stagger, matching the other rails.
+- Removed `src/app/loading.tsx` on user direction: the root loading
+  skeleton (grey placeholder bars on the hero wash) flashed on every
+  route change and read as stale UI. Pages are static content, so
+  navigation has nothing to wait on; no other route carries a
+  `loading.tsx`.
+- Verified: `npm run lint` and `tsc --noEmit` clean. Not run: dev server
+  or build (no permission asked).
 
 ## Full UI/UX QA round two: fixes applied, 2026-08-14
 

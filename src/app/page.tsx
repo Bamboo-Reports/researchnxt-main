@@ -4,7 +4,7 @@ import Link from "next/link";
 import { HeroIntro } from "@/components/home/hero-intro";
 import { TrustedLogos } from "@/components/home/trusted-logos";
 import { NavLink } from "@/components/layout/nav-link";
-import { Reveal } from "@/components/motion/reveal";
+import { CardRail } from "@/components/report-card-rail";
 import { ResourceCard } from "@/components/resource-card";
 import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -20,7 +20,6 @@ import {
   homeBands,
   whatWeDo,
 } from "@/content/home";
-import { step } from "@/lib/motion";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -113,17 +112,15 @@ export default function HomePage() {
             </NavLink>
           </div>
 
-          <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredReports.map((report, index) => (
-              <ResourceCard
-                key={report.href}
-                resource={report}
-                withPlate
-                portrait
-                style={step(index)}
-              />
-            ))}
-          </Reveal>
+          {/* A rail rather than a grid: four portrait covers stacked on a
+              phone ran several screens tall before the next section. */}
+          <CardRail
+            label={homeBands.featuredReports.title}
+            items={featuredReports.map((report) => ({
+              key: report.href,
+              node: <ResourceCard resource={report} withPlate portrait />,
+            }))}
+          />
         </Container>
       </Section>
 
@@ -146,16 +143,16 @@ export default function HomePage() {
             </NavLink>
           </div>
 
-          <Reveal className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredInterviews.map((interview, index) => (
-              <ResourceCard
-                key={interview.href}
-                resource={interview}
-                withPlate
-                style={step(index)}
-              />
-            ))}
-          </Reveal>
+          {/* A scrolling rail rather than a fixed four: the latest buyers sit
+              in view and the rest of the Buyer's perspective library is a
+              swipe or an arrow away. */}
+          <CardRail
+            label={homeBands.expertsView.title}
+            items={featuredInterviews.map((interview) => ({
+              key: interview.href,
+              node: <ResourceCard resource={interview} withPlate />,
+            }))}
+          />
         </Container>
       </Section>
 
@@ -169,50 +166,53 @@ export default function HomePage() {
             title={whatWeDo.title}
             className="mb-12"
           />
-          <Reveal className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {whatWeDo.items.map((item, index) => (
-              <div
-                key={item.title}
-                className="row-span-4 grid grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:pr-8 lg:pr-10"
-                style={step(index)}
-              >
-                <span
-                  aria-hidden="true"
-                  className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
-                />
-                {/* The chosen "\n" break applies once the cards sit in a
+          <CardRail
+            label={whatWeDo.title}
+            grid="sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-0 sm:gap-y-12"
+            items={whatWeDo.items.map((item) => ({
+              key: item.title,
+              className:
+                "row-span-4 grid grid-rows-subgrid gap-y-4 border-t border-line pt-6 sm:pr-8 lg:pr-10",
+              node: (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
+                  />
+                  {/* The chosen "\n" break applies once the cards sit in a
                     grid; in the single mobile column it collapses to a
                     space. */}
-                <h3 className="text-title font-display-soft sm:whitespace-pre-line">
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {item.description}
-                </p>
-                {item.external ? (
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
-                  >
-                    {homeBands.bambooCta}
-                    <span className="sr-only"> (opens in a new tab)</span>
-                    <TrailingArrow />
-                  </a>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
-                  >
-                    {homeBands.exploreCta}
-                    <span className="sr-only"> {item.title}</span>
-                    <TrailingArrow />
-                  </Link>
-                )}
-              </div>
-            ))}
-          </Reveal>
+                  <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-ink-soft">
+                    {item.description}
+                  </p>
+                  {item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                    >
+                      {homeBands.bambooCta}
+                      <span className="sr-only"> (opens in a new tab)</span>
+                      <TrailingArrow />
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="group inline-flex items-center gap-2 self-start text-sm font-semibold text-accent hover:text-accent-hover"
+                    >
+                      {homeBands.exploreCta}
+                      <span className="sr-only"> {item.title}</span>
+                      <TrailingArrow />
+                    </Link>
+                  )}
+                </>
+              ),
+            }))}
+          />
         </Container>
       </Section>
 
@@ -231,56 +231,58 @@ export default function HomePage() {
           {/* No auto-rows-fr here: the subgrid alone keeps the four cards'
               rows level, and fr rows would stretch the cards with dead
               space. */}
-          <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {engagementSteps.steps.map((stage, index) => {
+          <CardRail
+            label={engagementSteps.title}
+            grid="sm:grid-cols-2 lg:grid-cols-4 sm:gap-3"
+            items={engagementSteps.steps.map((stage, index) => {
               const closing = index === engagementSteps.steps.length - 1;
 
-              return (
-                <div
-                  key={stage.name}
-                  className={`row-span-4 grid grid-rows-subgrid gap-y-2.5 rounded-md p-5 sm:p-6 ${
-                    closing ? "bg-accent" : "border border-line bg-surface"
-                  }`}
-                  style={step(index)}
-                >
-                  <p
-                    className={`flex items-center gap-3 text-sm font-semibold ${
-                      closing ? "text-white/85" : "text-accent"
-                    }`}
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`size-1.5 shrink-0 rounded-[1px] ${
-                        closing ? "bg-white/60" : "bg-signal"
+              return {
+                key: stage.name,
+                className: `row-span-4 grid grid-rows-subgrid gap-y-2.5 rounded-md p-5 sm:p-6 ${
+                  closing ? "bg-accent" : "border border-line bg-surface"
+                }`,
+                node: (
+                  <>
+                    <p
+                      className={`flex items-center gap-3 text-sm font-semibold ${
+                        closing ? "text-white/85" : "text-accent"
                       }`}
-                    />
-                    Step {index + 1}
-                  </p>
-                  <h3
-                    className={`text-title font-display-soft ${
-                      closing ? "text-white" : "text-ink"
-                    }`}
-                  >
-                    {stage.name}
-                  </h3>
-                  <p
-                    className={`text-sm leading-relaxed ${
-                      closing ? "text-white/85" : "text-ink-soft"
-                    }`}
-                  >
-                    {stage.description}
-                  </p>
-                  <p
-                    className={`self-end text-sm font-semibold ${
-                      closing ? "text-white" : "text-accent"
-                    }`}
-                  >
-                    {stage.outcome}
-                  </p>
-                </div>
-              );
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`size-1.5 shrink-0 rounded-[1px] ${
+                          closing ? "bg-white/60" : "bg-signal"
+                        }`}
+                      />
+                      Step {index + 1}
+                    </p>
+                    <h3
+                      className={`text-title font-display-soft ${
+                        closing ? "text-white" : "text-ink"
+                      }`}
+                    >
+                      {stage.name}
+                    </h3>
+                    <p
+                      className={`text-sm leading-relaxed ${
+                        closing ? "text-white/85" : "text-ink-soft"
+                      }`}
+                    >
+                      {stage.description}
+                    </p>
+                    <p
+                      className={`self-end text-sm font-semibold ${
+                        closing ? "text-white" : "text-accent"
+                      }`}
+                    >
+                      {stage.outcome}
+                    </p>
+                  </>
+                ),
+              };
             })}
-          </Reveal>
+          />
         </Container>
       </Section>
 
@@ -296,8 +298,10 @@ export default function HomePage() {
             title={differentiators.title}
             className="mb-12"
           />
-          <Reveal className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-fr">
-            {differentiators.items.map((item, index) => {
+          <CardRail
+            label={differentiators.title}
+            grid="sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-fr sm:gap-3"
+            items={differentiators.items.map((item, index) => {
               const tiles = [
                 "sm:col-span-2 lg:row-span-2 bg-accent text-white",
                 "sm:col-span-2 border border-line bg-surface",
@@ -306,38 +310,38 @@ export default function HomePage() {
               ] as const;
               const inverted = index === 0;
 
-              return (
-                <div
-                  key={item.title}
-                  className={`flex min-h-36 flex-col justify-between gap-6 rounded-md p-6 sm:p-7 ${tiles[index % tiles.length]}`}
-                  style={step(index)}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`h-1 w-6 rounded-[1px] ${
-                      inverted ? "bg-white/60" : "bg-signal"
-                    }`}
-                  />
-                  <div className="flex flex-col gap-1.5">
-                    <h3
-                      className={`font-display-soft ${
-                        index === 0 ? "text-headline" : "text-title"
+              return {
+                key: item.title,
+                className: `flex min-h-36 flex-col justify-between gap-6 rounded-md p-6 sm:p-7 ${tiles[index % tiles.length]}`,
+                node: (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className={`h-1 w-6 rounded-[1px] ${
+                        inverted ? "bg-white/60" : "bg-signal"
                       }`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-sm leading-relaxed ${
-                        inverted ? "text-white" : "text-ink-soft"
-                      }`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              );
+                    />
+                    <div className="flex flex-col gap-1.5">
+                      <h3
+                        className={`font-display-soft ${
+                          index === 0 ? "text-headline" : "text-title"
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                      <p
+                        className={`text-sm leading-relaxed ${
+                          inverted ? "text-white" : "text-ink-soft"
+                        }`}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
+                  </>
+                ),
+              };
             })}
-          </Reveal>
+          />
         </Container>
       </Section>
 

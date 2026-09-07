@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { DownloadForm } from "@/components/forms/download-form";
+import { FormAnchorBar } from "@/components/forms/form-anchor-bar";
 import { JotformEmbed } from "@/components/forms/jotform-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { ReportCardRail } from "@/components/report-card-rail";
@@ -18,7 +19,7 @@ import {
   getProjectInterviews,
   interviewHref,
 } from "@/content/experts-view";
-import { getReportLanding } from "@/content/resources";
+import { downloadBar, getReportLanding } from "@/content/resources";
 import { delay, step } from "@/lib/motion";
 import { og } from "@/lib/og";
 import type { InterviewBlock } from "@/content/experts-view";
@@ -226,7 +227,7 @@ export default async function ExpertInterviewPage({ params }: Params) {
             {/* The form sits on the page with no panel and no heading of its
                 own: the embed carries its own title and framing. */}
             {showForm ? (
-              <aside className="lg:sticky lg:top-24 lg:self-start">
+              <aside className="lg:sticky lg:top-32 lg:self-start">
                 <div
                   id="download"
                   className="anim-rise scroll-mt-32"
@@ -250,6 +251,10 @@ export default async function ExpertInterviewPage({ params }: Params) {
           </div>
         </Container>
       </Section>
+
+      {showForm ? (
+        <FormAnchorBar target="download" cta={downloadBar.cta} />
+      ) : null}
 
       {others.length > 0 ? (
         <Section surface="subtle" bordered spacing="default">

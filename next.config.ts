@@ -5,9 +5,9 @@ import type { NextConfig } from "next";
  * being retired. Sources are written without a trailing slash: Next normalises
  * `/about-us/` to `/about-us` before matching, so both forms are covered.
  *
- * Content URLs (/blog/…, /experts-view/…, /microsite/…, /case-study/… and the
- * other WP category prefixes) are deliberately NOT here — their targets do not
- * exist until Phase B, and redirecting them now would break working pages.
+ * Content URLs (/blog/…, /experts-view/…, /research-report/… and the other
+ * WP category prefixes) map onto the /resources tree; see "Content URLs" in
+ * README.md for the rule.
  */
 const redirectMap: { source: string; destination: string }[] = [
   // Core page renames

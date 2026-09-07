@@ -1,4 +1,7 @@
-import { getExpertInterview, interviewHref } from "@/content/experts-view";
+import {
+  getPerspectiveInterviews,
+  interviewHref,
+} from "@/content/experts-view";
 import { latestReports } from "@/content/resources";
 import { gccIntelligenceLink, solutions } from "@/content/solutions";
 import type { FeaturedResource } from "./types";
@@ -155,36 +158,33 @@ export const featuredReports: FeaturedResource[] = latestReports(4).map(
   }),
 );
 
-/**
- * Four interviews from across the library, chosen for range rather than
- * recency: the two analysts most readers will recognise, and two operators
- * from the newest programme. Named by project and person, and resolved
- * through the registry so the title, banner and URL stay in one place.
- */
-const featured: [project: string, person: string][] = [
-  ["ai-led-personalization", "scott-brinker"],
-  ["ai-led-personalization", "david-raab"],
-  ["implementors-guide-to-ai", "karthik-anantharaman"],
-  ["navigating-corporate-commute-for-gccs-in-india", "protick-basu"],
-];
+/** How many buyers each programme contributes to the home page rail. */
+const BUYERS_PER_PROJECT = 2;
 
-export const featuredInterviews: FeaturedResource[] = featured.map(
-  ([project, person]) => {
-    const interview = getExpertInterview(project, person);
-    if (!interview) {
-      throw new Error(`Unknown interview: ${project}/${person}`);
-    }
-    return {
-      kind: "Interview",
-      title: interview.title,
-      /* No byline under the card: the banner artwork already names the
-         person, so repeating it below the title read as duplication. */
-      summary: "",
-      href: interviewHref(interview),
-      image: interview.thumbnail,
-    };
-  },
-);
+/**
+ * The first two Buyer's perspective interviews from every programme, in
+ * shelf order, for the home page rail: the latest programme's buyers sit in
+ * view and the rest scroll. The library sorts by `projectOrder`, then title,
+ * and this reads the same list, so the rail and the library agree and the
+ * band updates itself as programmes are added.
+ */
+export const featuredInterviews: FeaturedResource[] = getPerspectiveInterviews(
+  "buyer",
+)
+  .filter(
+    (interview, index, all) =>
+      all.filter((other, i) => i < index && other.project === interview.project)
+        .length < BUYERS_PER_PROJECT,
+  )
+  .map((interview) => ({
+    kind: "Interview",
+    title: interview.title,
+    /* No byline under the card: the banner artwork already names the
+       person, so repeating it below the title read as duplication. */
+    summary: "",
+    href: interviewHref(interview),
+    image: interview.thumbnail,
+  }));
 
 /**
  * Band headings and link labels on the homepage that are not derived from

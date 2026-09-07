@@ -169,7 +169,7 @@ export default async function ExpertsViewPage({ searchParams }: Params) {
               >
                 {interviews.map((interview, cardIndex) => (
                   <InterviewCard
-                    key={interview.slug}
+                    key={`${interview.project}/${interview.slug}`}
                     interview={interview}
                     index={cardIndex}
                   />

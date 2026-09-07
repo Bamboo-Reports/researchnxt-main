@@ -34,10 +34,7 @@ export const solutionsNav: NavItem[] = [
   },
 ];
 
-/**
- * PHASE B: these now point at internal placeholder pages under /resources
- * (see `src/content/resources.ts`); real content replaces the placeholders.
- */
+/** The five resource libraries, in the order the navbar and footer list them. */
 export const resourcesNav: NavItem[] = [
   {
     label: "Reports & whitepapers",

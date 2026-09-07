@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PageHero } from "@/components/layout/page-hero";
 import { FigureValue } from "@/components/motion/figure-value";
 import { Reveal } from "@/components/motion/reveal";
+import { CardRail } from "@/components/report-card-rail";
 import { accentedTitle } from "@/components/ui/accented-title";
 import { Button, TrailingArrow } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -123,7 +124,7 @@ function PersonSocials({ person }: { person: Person }) {
           href={channel.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-ink transition-opacity duration-150 hover:opacity-70"
+          className="-m-2.5 block p-2.5 text-ink transition-opacity duration-150 hover:opacity-70"
         >
           <SocialIcon label={channel.label} className="size-5" />
           <span className="sr-only">
@@ -135,13 +136,7 @@ function PersonSocials({ person }: { person: Person }) {
   );
 }
 
-function PersonPortrait({
-  person,
-  sizes,
-}: {
-  person: Person;
-  sizes: string;
-}) {
+function PersonPortrait({ person, sizes }: { person: Person; sizes: string }) {
   return (
     <div className="relative aspect-square w-full max-w-sm self-start overflow-hidden rounded-md">
       <Image
@@ -233,24 +228,27 @@ function TeamSplit() {
     joined-timeline grammar. Chosen from a four-way variant review. */
 function ModesStations() {
   return (
-    <Reveal className="grid gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-      {engagementModes.modes.map((mode, index) => (
-        <div
-          key={mode.title}
-          className="row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10"
-          style={step(index)}
-        >
-          <span
-            aria-hidden="true"
-            className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
-          />
-          <h3 className="text-title font-display-soft">{mode.title}</h3>
-          <p className="text-sm leading-relaxed text-ink-soft">
-            {mode.description}
-          </p>
-        </div>
-      ))}
-    </Reveal>
+    <CardRail
+      label={engagementModes.title}
+      grid="sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-0 sm:gap-y-10"
+      items={engagementModes.modes.map((mode) => ({
+        key: mode.title,
+        className:
+          "row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10",
+        node: (
+          <>
+            <span
+              aria-hidden="true"
+              className="mt-2 h-1 w-6 self-start rounded-[1px] bg-signal"
+            />
+            <h3 className="text-title font-display-soft">{mode.title}</h3>
+            <p className="text-sm leading-relaxed text-ink-soft">
+              {mode.description}
+            </p>
+          </>
+        ),
+      }))}
+    />
   );
 }
 
@@ -315,34 +313,37 @@ export default function AboutPage() {
           {/* Stations on one line: no horizontal gap, so each column's top
               rule joins its neighbour's into a single timeline; the tick and
               year mark the stations along it. */}
-          <Reveal className="grid gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {milestones.items.map((milestone, index) => (
-              <div
-                key={milestone.year}
-                className="row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10"
-                style={step(index)}
-              >
-                <span className="flex items-center gap-3 text-sm font-semibold text-accent">
-                  <span
-                    aria-hidden="true"
-                    className="size-1.5 shrink-0 rounded-[1px] bg-signal"
-                  />
-                  <span className="font-figure tabular-nums">
-                    {milestone.year}
+          <CardRail
+            label={milestones.title}
+            grid="sm:grid-cols-2 lg:grid-cols-4 sm:gap-x-0 sm:gap-y-12"
+            items={milestones.items.map((milestone) => ({
+              key: milestone.year,
+              className:
+                "row-span-3 grid grid-rows-subgrid gap-y-3 border-t border-line pt-6 sm:pr-8 lg:pr-10",
+              node: (
+                <>
+                  <span className="flex items-center gap-3 text-sm font-semibold text-accent">
+                    <span
+                      aria-hidden="true"
+                      className="size-1.5 shrink-0 rounded-[1px] bg-signal"
+                    />
+                    <span className="font-figure tabular-nums">
+                      {milestone.year}
+                    </span>
                   </span>
-                </span>
-                {/* The chosen "\n" break applies once the cards sit in a
+                  {/* The chosen "\n" break applies once the cards sit in a
                     grid; in the single mobile column it collapses to a
                     space. */}
-                <h3 className="text-title font-display-soft sm:whitespace-pre-line">
-                  {milestone.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {milestone.description}
-                </p>
-              </div>
-            ))}
-          </Reveal>
+                  <h3 className="text-title font-display-soft sm:whitespace-pre-line">
+                    {milestone.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-ink-soft">
+                    {milestone.description}
+                  </p>
+                </>
+              ),
+            }))}
+          />
         </Container>
       </Section>
 
@@ -357,22 +358,27 @@ export default function AboutPage() {
             className="mb-12"
           />
           <ModesStations />
-          <Reveal className="mt-12 grid gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-            {engagementModes.assurances.map((assurance, index) => (
-              <div
-                key={assurance.title}
-                className="row-span-2 grid grid-rows-subgrid gap-y-2 border-t border-line pt-5 sm:pr-8 lg:pr-10"
-                style={step(index)}
-              >
-                <p className="text-base font-semibold text-ink">
-                  {assurance.title}
-                </p>
-                <p className="text-sm leading-relaxed text-ink-soft">
-                  {assurance.description}
-                </p>
-              </div>
-            ))}
-          </Reveal>
+          <div className="mt-12">
+            <CardRail
+              label={`${engagementModes.title}, assurances`}
+              grid="sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-0 sm:gap-y-8"
+              items={engagementModes.assurances.map((assurance) => ({
+                key: assurance.title,
+                className:
+                  "row-span-2 grid grid-rows-subgrid gap-y-2 border-t border-line pt-5 sm:pr-8 lg:pr-10",
+                node: (
+                  <>
+                    <p className="text-base font-semibold text-ink">
+                      {assurance.title}
+                    </p>
+                    <p className="text-sm leading-relaxed text-ink-soft">
+                      {assurance.description}
+                    </p>
+                  </>
+                ),
+              }))}
+            />
+          </div>
         </Container>
       </Section>
 
@@ -386,7 +392,6 @@ export default function AboutPage() {
           <TeamSplit />
         </Container>
       </Section>
-
     </main>
   );
 }

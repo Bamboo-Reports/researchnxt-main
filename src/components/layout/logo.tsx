@@ -22,7 +22,7 @@ function LogoMark({ className }: { className?: string }) {
         fillRule="evenodd"
         clipRule="evenodd"
         d="M61.9483 0.000209808H92.5057C93.3276 0.000209808 93.9999 0.67597 93.9999 1.50162V13.6941C93.9999 14.5199 93.3276 15.1955 92.5057 15.1955H61.9483C61.1266 15.1955 60.4543 14.5199 60.4543 13.6941V1.50162C60.4543 0.67597 61.1266 0.000209808 61.9483 0.000209808Z"
-        fill="#FF7D24"
+        fill="var(--color-signal)"
       />
       <path
         fillRule="evenodd"

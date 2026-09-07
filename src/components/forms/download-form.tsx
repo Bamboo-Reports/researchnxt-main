@@ -148,7 +148,6 @@ export function DownloadForm({
                     className="text-accent underline underline-offset-2"
                   >
                     {segment.text}
-                    <span className="sr-only"> (opens in a new tab)</span>
                   </Link>
                 )
               ) : (

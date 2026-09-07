@@ -384,7 +384,7 @@ export default async function EventPage({ params }: Params) {
                 <aside
                   className={
                     hasPiece
-                      ? "flex flex-col gap-10 lg:sticky lg:top-24 lg:self-start"
+                      ? "flex flex-col gap-10 lg:sticky lg:top-32 lg:self-start"
                       : "flex flex-col gap-10"
                   }
                 >

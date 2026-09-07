@@ -14,7 +14,7 @@ import {
 import { step } from "@/lib/motion";
 
 /**
- * Success stories library: client engagements, newest first, in the same card
+ * Success stories library: client engagements, shelved by programme and newest first within one, in the same card
  * grammar as the events, insights and experts-view libraries. The client leads
  * the card rather than the title, since that is what a reader scans for.
  * Pagination joins when the list outgrows one view, as those libraries page.

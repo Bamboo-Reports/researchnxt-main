@@ -37,7 +37,7 @@ export function Field({
       <label htmlFor={htmlFor} className="text-sm font-semibold text-ink">
         {label}
         {required ? (
-          <span className="ml-1 text-signal" aria-hidden="true">
+          <span className="ml-1 text-accent" aria-hidden="true">
             *
           </span>
         ) : null}

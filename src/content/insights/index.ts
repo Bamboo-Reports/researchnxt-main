@@ -41,18 +41,20 @@ import { stepsToDefineYourKeyAccounts } from "./abm-best-practices-report-india-
 import { artificialIntelligenceIn2020 } from "./ai-led-personalization/artificial-intelligence-what-can-business-professionals-expect-in-2020";
 import type { InsightProject } from "./types";
 
+import { byProject } from "../project-order";
+
 export type { ArticleBlock, Insight, InsightProject } from "./types";
 
 export const insightProjects: InsightProject[] = [
   {
+    slug: "navigating-corporate-commute-for-gccs-in-india",
+    name: "Navigating Corporate Commute for GCCs in India",
+    reportSlug: "navigating-corporate-commute-for-gccs-in-india",
+  },
+  {
     slug: "implementors-guide-to-ai",
     name: "Implementor's Guide to AI",
     reportSlug: "implementors-guide-to-ai",
-  },
-  {
-    slug: "automation-campaign-management",
-    name: "Automation & Campaign Management",
-    reportSlug: "automation-campaign-management",
   },
   {
     slug: "unlocking-the-power-unified-cx",
@@ -60,9 +62,9 @@ export const insightProjects: InsightProject[] = [
     reportSlug: "unlocking-the-power-unified-cx",
   },
   {
-    slug: "navigating-corporate-commute-for-gccs-in-india",
-    name: "Navigating Corporate Commute for GCCs in India",
-    reportSlug: "navigating-corporate-commute-for-gccs-in-india",
+    slug: "automation-campaign-management",
+    name: "Automation & Campaign Management",
+    reportSlug: "automation-campaign-management",
   },
   {
     slug: "transforming-cx-through-gccs",
@@ -75,14 +77,14 @@ export const insightProjects: InsightProject[] = [
     reportSlug: "cloud-computing-new-normal-beyond",
   },
   {
-    slug: "south-east-asia-response-guide",
-    name: "Southeast Asia Response Guide",
-    reportSlug: "south-east-asia-response-guide",
-  },
-  {
     slug: "ai-led-personalization",
     name: "AI Led Personalization",
     reportSlug: "ai-led-personalization",
+  },
+  {
+    slug: "south-east-asia-response-guide",
+    name: "Southeast Asia Response Guide",
+    reportSlug: "south-east-asia-response-guide",
   },
   {
     slug: "content-marketing-done-right",
@@ -126,8 +128,9 @@ export const insightProjects: InsightProject[] = [
 ];
 
 /**
- * Every published article, newest first. Two articles share a publication
- * date, so the title breaks the tie and the order stays stable between builds.
+ * Every published article, shelved by project (see `projectOrder`) and newest
+ * first within a project. Two articles share a publication date, so the title
+ * breaks the tie and the order stays stable between builds.
  */
 export const insights = [
   // Implementor's Guide to AI
@@ -175,6 +178,7 @@ export const insights = [
   artificialIntelligenceIn2020,
 ].sort(
   (a, b) =>
+    byProject(a, b) ||
     b.published.localeCompare(a.published) ||
     a.title.localeCompare(b.title, "en"),
 );
