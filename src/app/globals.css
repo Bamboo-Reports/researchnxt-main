@@ -309,9 +309,9 @@
 /* ---------------------------------------------------------------------------
    Trusted customer logos
 
-   The no-motion default is a calm wrapping grid. The continuous track is only
-   enabled by the page-level motion gate, so reduced-motion and no-JS visitors
-   get every logo without duplicated content or horizontal clipping.
+   The continuous track uses the browser's motion preference directly, so it
+   also scrolls when the page-level JavaScript motion gate has not run.
+   Reduced-motion visitors get every logo in a static, nonduplicated grid.
 --------------------------------------------------------------------------- */
 
 .trusted-logos-list {
@@ -350,38 +350,40 @@
   }
 }
 
-[data-motion="on"] .trusted-logos-viewport {
-  overflow: hidden;
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    black 7%,
-    black 93%,
-    transparent
-  );
-}
+@media (prefers-reduced-motion: no-preference) {
+  .trusted-logos-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      black 7%,
+      black 93%,
+      transparent
+    );
+  }
 
-[data-motion="on"] .trusted-logos-track {
-  display: flex;
-  width: max-content;
-  animation: trusted-logos-scroll 38s linear infinite;
-}
+  .trusted-logos-track {
+    display: flex;
+    width: max-content;
+    animation: trusted-logos-scroll 38s linear infinite;
+  }
 
-[data-motion="on"] .trusted-logos-track:hover {
-  animation-play-state: paused;
-}
+  .trusted-logos-track:hover {
+    animation-play-state: paused;
+  }
 
-[data-motion="on"] .trusted-logos-list,
-[data-motion="on"] .trusted-logos-list[aria-hidden="true"] {
-  display: flex;
-  flex-shrink: 0;
-  gap: 3rem;
-  padding-right: 3rem;
-}
+  .trusted-logos-list,
+  .trusted-logos-list[aria-hidden="true"] {
+    display: flex;
+    flex-shrink: 0;
+    gap: 3rem;
+    padding-right: 3rem;
+  }
 
-[data-motion="on"] .trusted-logos-list > li {
-  width: 11rem;
-  flex-shrink: 0;
+  .trusted-logos-list > li {
+    width: 11rem;
+    flex-shrink: 0;
+  }
 }
 
 /* ---------------------------------------------------------------------------

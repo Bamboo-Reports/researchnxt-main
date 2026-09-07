@@ -4,6 +4,18 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-07
 
+## Logo scrolling fix prepared for push, 2026-09-07
+
+User authorized committing and pushing the CSS motion-gate fix to `main`. Scope is `src/app/globals.css` and these progress notes. Diff whitespace check passed. Browser animation and deployment verification remain outstanding; no build or server commands run. Git history and origin tracking state record the commit/push result.
+
+## Trusted logos scrolling independent of JavaScript, 2026-09-07
+
+User confirmed the intended appearance is the scrolling strip. Replaced logo-specific `[data-motion="on"]` selectors with a `prefers-reduced-motion: no-preference` CSS media query. The existing 38-second seamless strip now activates without the layout startup script; hover still pauses it. Reduced-motion visitors retain the complete static grid, and changing the preference updates via CSS. Other motion gates are untouched. Source/diff inspection verified the selector replacement and duplicate-list override; no build/server/browser commands run under project restrictions. Not yet committed, pushed or deployed; live cause and animation remain unverified.
+
+## Staging Trusted by screenshot diagnosis, 2026-09-07
+
+User supplied staging screenshot showing logos in a static grid. Source inspection confirms this is the default `.trusted-logos-list` layout; the horizontal marquee requires the root `data-motion="on"` flag. Layout's inline motion gate sets that flag only when reduced motion is not requested and JavaScript executes successfully. Screenshot is consistent with the fallback, but does not establish whether reduced motion, blocked JavaScript, or another deployment condition caused it. Web fetch of staging failed; live DOM/browser state was not verified. No UI change made. Next: establish whether the user wants the static grid restyled or expects the scrolling strip, and inspect live motion preference/root flag if needed.
+
 ## Homepage changes prepared for commit and push, 2026-09-07
 
 User authorized committing and pushing the accumulated homepage work on `main` to `origin`. Scope includes headline copy, selected engagement/Why Research NXT layouts, mobile solutions grid, spacing fixes, comparison routes and spotlight components. Targeted lint and diff whitespace checks passed as recorded below. Browser QA remains unperformed; no new build/server/test permission was inferred from the commit request. Commit and push are the current handoff operation; confirm their result from Git history and remote tracking state.
