@@ -4,6 +4,14 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-09
 
+## Hostinger build fixed for Next 16.3 (wasm + webpack), 2026-09-09
+
+The first Hostinger redeploy after the dependency patch failed: the build host's glibc is older than 2.29, and `@next/swc-linux-x64-gnu` raised its floor from GLIBC 2.17 (16.2.12) to 2.30 (16.3.3+), verified by inspecting the published binaries. Next fell back to the WebAssembly SWC bindings, which cannot transpile `next.config.ts` (hash-named module not found) and cannot run Turbopack. No patched 16.2.x exists; the only patched lines are 16.3.3+ and the 15.5.24+ backport (glibc 2.17). User chose to stay on 16.3.4.
+
+Fix: renamed `next.config.ts` to `next.config.mjs` (JSDoc types replace the TypeScript annotations, redirect map unchanged) and changed the build script to `next build --webpack`. README's reference to the config file updated. Verified locally with the wasm bindings forced via `NEXT_TEST_WASM=1`: `npm run build` completed in 24 seconds with webpack, all routes generated, and `npm run lint` is clean. Hostinger will hit the same wasm path automatically after its native load fails. Local dev still uses Turbopack natively.
+
+Outstanding: confirm the Hostinger redeploy succeeds and the vulnerability scan reports zero; if Hostinger later moves to glibc 2.30+, the `--webpack` flag can be dropped. `netlify.toml` and the Vercel mentions in CLAUDE.md remain to be cleaned up.
+
 ## Dependency vulnerability fixes prepared, 2026-09-09
 
 A dependency scan flagged 14 unpatched advisories (2 critical, 9 high, 3 moderate): next 16.2.12 (two unauthenticated RCE advisories, fixed in 16.3.3), sharp 0.34.5 (libheif, fixed in 0.35.4), js-yaml 4.3.0 (fixed in 4.3.2), brace-expansion 1.1.16 and 5.0.8 (DoS, fixed in 1.1.18 and 5.0.9) and postcss 8.4.31 pinned by next (fixed in 8.5.18). Bumped `next` and `eslint-config-next` to ^16.3.3 in package.json; next 16.3.3 itself pins postcss 8.5.23 and sharp ^0.35.3. Added npm `overrides` for js-yaml, both brace-expansion majors, postcss and sharp so the transitive copies resolve to patched versions. Fixed versions were confirmed to exist on the registry with `npm view`.

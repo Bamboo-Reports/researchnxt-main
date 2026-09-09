@@ -69,7 +69,7 @@ The rules that follow from this:
   `/resources/success-stories` and `/resources/reports-whitepapers`, each a
   grid. The intermediate `/resources/<library>/<project>` has no page of its
   own.
-- **A moved WordPress URL gets an explicit redirect** in `next.config.ts`,
+- **A moved WordPress URL gets an explicit redirect** in `next.config.mjs`,
   listed one by one. Content prefixes are never redirected as a rule while some
   of their pages still have no target here.
 

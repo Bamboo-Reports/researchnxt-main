@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+/** @typedef {import("next").NextConfig} NextConfig */
 
 /**
  * Phase A redirect map — every WordPress URL for a core page, plus the pages
@@ -9,7 +9,8 @@ import type { NextConfig } from "next";
  * WP category prefixes) map onto the /resources tree; see "Content URLs" in
  * README.md for the rule.
  */
-const redirectMap: { source: string; destination: string }[] = [
+/** @type {{ source: string; destination: string }[]} */
+const redirectMap = [
   // Core page renames
   { source: "/about-us", destination: "/about" },
   { source: "/career", destination: "/careers" },
@@ -947,7 +948,8 @@ const redirectMap: { source: string; destination: string }[] = [
   { source: "/the-2021-india-cloud-computing-survey", destination: "/" },
 ];
 
-const nextConfig: NextConfig = {
+/** @type {NextConfig} */
+const nextConfig = {
   async redirects() {
     return redirectMap.map((entry) => ({ ...entry, permanent: true }));
   },
