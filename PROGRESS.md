@@ -10,7 +10,7 @@ The first Hostinger redeploy after the dependency patch failed: the build host's
 
 Fix: renamed `next.config.ts` to `next.config.mjs` (JSDoc types replace the TypeScript annotations, redirect map unchanged) and changed the build script to `next build --webpack`. README's reference to the config file updated. Verified locally with the wasm bindings forced via `NEXT_TEST_WASM=1`: `npm run build` completed in 24 seconds with webpack, all routes generated, and `npm run lint` is clean. Hostinger will hit the same wasm path automatically after its native load fails. Local dev still uses Turbopack natively.
 
-Outstanding: confirm the Hostinger redeploy succeeds and the vulnerability scan reports zero; if Hostinger later moves to glibc 2.30+, the `--webpack` flag can be dropped. `netlify.toml` and the Vercel mentions in CLAUDE.md remain to be cleaned up.
+Outstanding: confirm the Hostinger redeploy succeeds and the vulnerability scan reports zero; if Hostinger later moves to glibc 2.30+, the `--webpack` flag can be dropped. Removed the legacy `netlify.toml` and rewrote the CLAUDE.md project line to name Hostinger and the webpack build; no other Netlify or Vercel hosting references remain outside this log and third-party skill metadata.
 
 ## Dependency vulnerability fixes prepared, 2026-09-09
 
