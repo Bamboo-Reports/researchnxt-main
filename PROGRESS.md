@@ -4,6 +4,10 @@ Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, 
 
 Last updated: 2026-09-09
 
+## Announcement bar CTA now says Download, 2026-09-09
+
+Changed the announcement strip's button copy in `src/content/announcement.ts` from "Register for free" / "Register" to "Download for free" / "Download", matching the bar on bambooreports.com (checked in the browser). Message and link are unchanged; the href already points at the same Q2 2026 India GCC report page Bamboo's own bar uses, with the `src=rnxt-announce` tag kept. Lint passed. No layout change.
+
 ## Hostinger build fixed for Next 16.3 (wasm + webpack), 2026-09-09
 
 The first Hostinger redeploy after the dependency patch failed: the build host's glibc is older than 2.29, and `@next/swc-linux-x64-gnu` raised its floor from GLIBC 2.17 (16.2.12) to 2.30 (16.3.3+), verified by inspecting the published binaries. Next fell back to the WebAssembly SWC bindings, which cannot transpile `next.config.ts` (hash-named module not found) and cannot run Turbopack. No patched 16.2.x exists; the only patched lines are 16.3.3+ and the 15.5.24+ backport (glibc 2.17). User chose to stay on 16.3.4.

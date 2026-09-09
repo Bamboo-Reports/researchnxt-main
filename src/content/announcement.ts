@@ -9,7 +9,7 @@ export const announcement = {
   message: "The Q2 India GCC report: every GCC move, tracked.",
   /** Shorter line for narrow viewports. */
   messageShort: "The Q2 India GCC report.",
-  cta: "Register for free",
-  ctaShort: "Register",
+  cta: "Download for free",
+  ctaShort: "Download",
   href: `${site.bambooReports}reports/india-gcc-report-q2-2026?src=rnxt-announce`,
 } as const;
