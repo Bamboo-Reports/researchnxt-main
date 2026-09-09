@@ -1,8 +1,16 @@
 # Progress
 
-Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, targeting Netlify.
+Migration of researchnxt.com from WordPress + Elementor (Hostinger) to Next.js, now hosted on Hostinger (staging: lightgrey-weasel-803291.hostingersite.com); the earlier Netlify target and netlify.toml are legacy.
 
-Last updated: 2026-09-07
+Last updated: 2026-09-09
+
+## Dependency vulnerability fixes prepared, 2026-09-09
+
+A dependency scan flagged 14 unpatched advisories (2 critical, 9 high, 3 moderate): next 16.2.12 (two unauthenticated RCE advisories, fixed in 16.3.3), sharp 0.34.5 (libheif, fixed in 0.35.4), js-yaml 4.3.0 (fixed in 4.3.2), brace-expansion 1.1.16 and 5.0.8 (DoS, fixed in 1.1.18 and 5.0.9) and postcss 8.4.31 pinned by next (fixed in 8.5.18). Bumped `next` and `eslint-config-next` to ^16.3.3 in package.json; next 16.3.3 itself pins postcss 8.5.23 and sharp ^0.35.3. Added npm `overrides` for js-yaml, both brace-expansion majors, postcss and sharp so the transitive copies resolve to patched versions. Fixed versions were confirmed to exist on the registry with `npm view`.
+
+Page 2 of the scan added nanoid 3.3.16 (fixed in 3.3.18, pulled in by postcss) plus further sharp and postcss advisories; added a nanoid override. A read-only `npm audit` against the current lockfile confirmed the same six package groups and nothing beyond them: brace-expansion, js-yaml, nanoid, next, postcss, sharp. Note npm requires postcss >=8.5.23 (not the 8.5.18 the Hostinger scan suggests), which the override already targets.
+
+User then authorized installation. `npm install` completed (2 added, 1 removed, 14 changed); next resolved to 16.3.4, sharp 0.35.4, postcss 8.5.23, js-yaml 4.3.2, nanoid 3.3.18, brace-expansion 1.1.18 and 5.0.9. `npm audit` now reports 0 vulnerabilities and `npm run lint` passes clean. `next build` has NOT been run (no permission asked for it yet) and should be smoke-tested since this crosses a Next minor (16.2 to 16.3). Changes are local and uncommitted; the Hostinger scan should be rerun after redeploy.
 
 ## Hero, solution and icon updates prepared for commit/push, 2026-09-07
 
